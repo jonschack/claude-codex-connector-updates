@@ -1,0 +1,6 @@
+{
+  "name": "auditor-addon",
+  "version": "2.0.0",
+  "description": "Auditor Addon helps estimate and audit code and write issues",
+  "contextFileName": "GEMINI.md"
+}

@@ -1,0 +1,1391 @@
+[
+  {
+    "confidence": "high",
+    "current_hash": "552d3d28f9773954531d4f57a8d3cb925e4affd19ed97c2ad26e44154b228eed",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 1,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "atlassian-rovo",
+    "summary": "New write-capable codex plugin: Atlassian Rovo",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "4f139af8ac82db2ee7ab26cb37324678a21b8bf072583aee6ced89a679074c0a",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 2,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "google-calendar",
+    "summary": "New write-capable codex plugin: Google Calendar",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "008123f5a4303cb350d93b87c37cfb229ccd7a2e6fe589a98bf7614ad7361ef4",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 3,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "gmail",
+    "summary": "New write-capable codex plugin: Gmail",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "26a162e3be1dc0bc84f274026e301ae63a3f69708a3127d639e7e9d6d09aa500",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 4,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "slack",
+    "summary": "New write-capable codex plugin: Slack",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "02de357e2c5071c2768a29441fedc1d1c9ac58ca13b281765ebda3bdeab6feaa",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 5,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "teams",
+    "summary": "New write-capable codex plugin: Teams",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "e6958cf7b71b52ede4ccda2438eeabc71ed4a727847a4d8c329dbc1f913667df",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 6,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "sharepoint",
+    "summary": "New write-capable codex plugin: SharePoint",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "eb6218f9bed742c023dc602d02671f659dbc59abc049b3d89835cd1c662f85fc",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 7,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "outlook-email",
+    "summary": "New write-capable codex plugin: Outlook Email",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "02ae1fd4ff230c624eb37b31bbf5aa37a2df37efa6a75dbe7d8bc4cd5fd3ed18",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 8,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "outlook-calendar",
+    "summary": "New write-capable codex plugin: Outlook Calendar",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "5cf04bd567e353db80d4dc6f6d92ab4c491c456337b646a60adf0763b91cda18",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 9,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "figma",
+    "summary": "New write-capable codex plugin: Figma",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "62e5c73d86f248274fe767a7d36d9d2ce75e78b50c206d8995e60d69d3f0db0b",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 10,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "hugging-face",
+    "summary": "New write-capable codex plugin: Hugging Face",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "5abfe367cc92e2723d0547d2bc64df48ddf74c2509007510c58cf7aedf4ceec1",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 11,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "netlify",
+    "summary": "New write-capable codex plugin: Netlify",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "7e93c1d0b3533f10d457063fd2112228c32700f187452ea0874626ccd9901988",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 12,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "vercel",
+    "summary": "New write-capable codex plugin: Vercel",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "cf3d7274f8777afcaaa8f2eb8cfc7d978e99efc4825ece36da66d74c322e87b7",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 13,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "game-studio",
+    "summary": "New write-capable codex plugin: Game Studio",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "69cef397ba5767fa0abd449c6775a9138e6248324e76d19f88a119054f2e8a95",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 14,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "superpowers",
+    "summary": "New write-capable codex plugin: Superpowers",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "6f14bf04fbf3abf046086f14a14ed092e66cbb4055797d7ad1f672adb6b0d697",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 15,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "github",
+    "summary": "New write-capable codex plugin: GitHub",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "4071abcf52896548bab1cf95ffe5325d59faccd38dea10eead5d4e23a7f9a18f",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 16,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "circleci",
+    "summary": "New write-capable codex plugin: CircleCI",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "7eb327480e3239738bac42711d89df84c85a93cdbbfc782a0254d81654f51cba",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 17,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "google-drive",
+    "summary": "New write-capable codex plugin: Google Drive",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "0db673d559532875db1464df4e18ab59a07db053ddf4e78d921e305f23f04a85",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 18,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "notion",
+    "summary": "New write-capable codex plugin: Notion",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "85bf244d11d1c4f5e117da39b5cf758ac8140cc9d8c731934274155b002925fd",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 19,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "cloudflare",
+    "summary": "New write-capable codex plugin: Cloudflare",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "2aa9247880a0688ad4379760c50c5628d543d4f8c5ee0e64b9b775fbbe80f960",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 20,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "sentry",
+    "summary": "New write-capable codex plugin: Sentry",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "1fd88f22d9f60da7eba79e7f883179619a213ed6db3ddf2868df92da0b8dfde7",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 21,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "build-ios-apps",
+    "summary": "New write-capable codex plugin: Build iOS Apps",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "0f768dd5beea274678e5e691787d8460b4896c53cadc6fdd423aadf817951ee3",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 22,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "build-macos-apps",
+    "summary": "New write-capable codex plugin: Build macOS Apps",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "cf76768f2f9d80991feea4fc727e78a9f1a7843683e5b08ac3be50f7b87c2141",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 23,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "build-web-apps",
+    "summary": "New write-capable codex plugin: Build Web Apps",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "3f3b6ba1e2df9ff931bcc0696c6f71445eb1e73b3998eec0062c940d3f35b1dd",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 24,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "life-science-research",
+    "summary": "New write-capable codex plugin: Life Science Research",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "9060bd51f3b6683575e6ee4cb38b4a64f0459d00036ae7144d4fbce9e706f056",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 25,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "zotero",
+    "summary": "New write-capable codex plugin: Zotero",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "689ca3439cc95d30586fd3d882d7f56adf920524b220daf7a2daa019123e2603",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 26,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "expo",
+    "summary": "New write-capable codex plugin: Expo",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "4e0047133178cefd5726b9a369db515e90abde9e7608a1d8d62ee870117169e7",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 27,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "coderabbit",
+    "summary": "New write-capable codex plugin: CodeRabbit",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "03bb8eca8eb130f3c23278a9e80e1997810c1d4a706033b92fdcc76b0f86422d",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 28,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "neon-postgres",
+    "summary": "New write-capable codex plugin: Neon Postgres",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "fa0195d060b9671a5017c613ba2a9014bceeed8be3b7c28825461574597e2258",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 29,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "remotion",
+    "summary": "New write-capable codex plugin: Remotion",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "b896592c85e38e5d5d0368adc527000d2b19367ee066920b47585ee69b3e61d2",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 30,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "plugin-eval",
+    "summary": "New write-capable codex plugin: Plugin Eval",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "02a3ee909606154b3d7834405943117bc85b50d68fb6035a1963c6f192bb7c05",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 31,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "attio",
+    "summary": "New write-capable codex plugin: Attio",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "0886b1a5bdbc5103b6b395b1b1550000c17b1dec7f5152fabd34f3e886b96f92",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 32,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "cloudinary",
+    "summary": "New write-capable codex plugin: Cloudinary",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "2061b3a9f839e38d9e969e8c49fd92a3a965aa8de387394012b4383fca6cc71a",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 33,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "domotz-preview",
+    "summary": "New write-capable codex plugin: Domotz (Preview)",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "e10ab813e8ed2469d650b8f888656b275993ff941b6d3c1114c8e09f501a8aee",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 34,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "hubspot",
+    "summary": "New write-capable codex plugin: HubSpot",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "37d2d15ab85ec7ae02352596632994c2734ff421667d892d520fc034b742ba76",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 35,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "pylon",
+    "summary": "New write-capable codex plugin: Pylon",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "b7e5204e3d843a9e87fbfbff58df6f2854f7c96ff0a5daa3c6df3575a11ae157",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 36,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "quicknode",
+    "summary": "New write-capable codex plugin: Quicknode",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "55781116238a53cedc8773d2908ced19a41779f5bea17a1260eb2218737b9a89",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "id": 37,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "render",
+    "summary": "New write-capable codex plugin: Render",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "1315e48a5a60afb4278e6eaa9c156006cb40c7f3811502ae1ae96f00f2daca86",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 38,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "temporal",
+    "summary": "New write-capable codex plugin: Temporal",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "78ab6accafca0ed7676fa5945befa53b93df4eec6d2a31230beac8c5086445a1",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 39,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "hyperframes",
+    "summary": "New write-capable codex plugin: HyperFrames by HeyGen",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "bf43115f5dd702c8a7c9616d3f024f72c7b061c3e5c65239d50dd780761941f4",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 40,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "supabase",
+    "summary": "New write-capable codex plugin: Supabase",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "1802d5604725470953f50b0b55358038e42819939c4e9b9df9be655b73bc8ecb",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 41,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "codex-security",
+    "summary": "New write-capable codex plugin: Codex Security",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "c70996a15d7fbfc9b0f54da05bc61ec2415776e81680c46c0f1f8406bb745838",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 42,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "twilio-developer-kit",
+    "summary": "New write-capable codex plugin: Twilio Developer Kit",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "bd009c5e66ebb2951fba54ed0531c71c9836c9e5793f3cb985b969bc7fd81c16",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 43,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-11",
+    "server_id": "openai-developers",
+    "summary": "New write-capable codex plugin: OpenAI Developers",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "6f9ba59cd329b9571c6985c62a4eda8aaf54934d06efb3cbf2408541b1390c66",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 44,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "documentdb-documentdb",
+    "summary": "New write-capable gemini extension: documentdb: documentdb",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "7101e4ff16acf4ccfaad2a8cf560a1bc8af3d43a74f993fbad589d610a40e3d0",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 45,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "pluginx-pluginx",
+    "summary": "New write-capable gemini extension: pluginx: pluginx",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "4b1d5379edd96437612ee426fa5eb8e019fbb13dd53fb326f1a125b261609aec",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 46,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "bigtable-bigtable",
+    "summary": "New write-capable gemini extension: bigtable: bigtable",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "126dadf9d6f6fbc6a832df3dd46f1df7fe6d740f7893650ad2f1ba60a01ca2aa",
+    "event_type": "new_write_tool",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "create"
+      }
+    ],
+    "id": 47,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "bigtable-bigtable",
+    "summary": "New write-capable tool: gemini/bigtable-bigtable/create_instance",
+    "tool_name": "create_instance"
+  },
+  {
+    "confidence": "high",
+    "current_hash": "efa23a58975d434b919f9e7c181a99751971c79f109455062a83d5cef6e6b5ee",
+    "event_type": "new_write_tool",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "mcp_annotation",
+        "value": "destructiveHint=true"
+      },
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "delete"
+      }
+    ],
+    "id": 48,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "bigtable-bigtable",
+    "summary": "New write-capable tool: gemini/bigtable-bigtable/delete_instance",
+    "tool_name": "delete_instance"
+  },
+  {
+    "confidence": "high",
+    "current_hash": "17fb7a4667c2b4c49ddc33d413d6bdea7bf41cb87ca4313b1e4b567b60396c9d",
+    "event_type": "new_write_tool",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "create"
+      }
+    ],
+    "id": 49,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "bigtable-bigtable",
+    "summary": "New write-capable tool: gemini/bigtable-bigtable/create_table",
+    "tool_name": "create_table"
+  },
+  {
+    "confidence": "high",
+    "current_hash": "878a738d27fdd4790a4747addfa5e01ba278abf6e309329cd8b19bca6c103f02",
+    "event_type": "new_write_tool",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "mcp_annotation",
+        "value": "destructiveHint=true"
+      },
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "delete"
+      }
+    ],
+    "id": 50,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "bigtable-bigtable",
+    "summary": "New write-capable tool: gemini/bigtable-bigtable/delete_table",
+    "tool_name": "delete_table"
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "51f21d7a8d46a546e457582fe447881dd1d0126aecb260037fc0eb89fbc55563",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 51,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "matkorgen-matkorgen",
+    "summary": "New write-capable gemini extension: matkorgen: matkorgen",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "1726614f9dc2783d0ea10c72301a6c5b1d9eda4eb47348a28a2ed921d65dbc20",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 52,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "todoist-extension-todoist",
+    "summary": "New write-capable gemini extension: todoist-extension: todoist",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "541cae00b53e6d236219299124d747a404ad311c0e6efb24625cf5f19bb14384",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 53,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "slidev",
+    "summary": "New write-capable gemini extension: slidev",
+    "tool_name": null
+  },
+  {
+    "confidence": "medium",
+    "current_hash": "2b09908bf1a3217931f8d1e16b6af749bd9b1e6c9272407b96f4f70850f36b2d",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "id": 54,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-11",
+    "server_id": "rootly-rootly",
+    "summary": "New write-capable gemini extension: rootly: rootly",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "8fcbd6a0a7f41237900590748841afef503c5a6b8858644b3c345f18585b0ca9",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 55,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "10x-genomics-cloud",
+    "summary": "New write-capable claude connector: 10x Genomics Cloud",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "ebeaefc9ed11ebf8448a49941df4dff150a2d5923cf4034ad0808fb9b5a14cfd",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 56,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "activecampaign",
+    "summary": "New write-capable claude connector: ActiveCampaign",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "2fc18eb3587d4a99ed741f0b43c89b05b21a02efd254e95757db9f398be7a864",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 57,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "adobe-experience-manager",
+    "summary": "New write-capable claude connector: Adobe Experience Manager",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "367a723c59dc4d33a222c86cc077c0e940397170af7c48d8734438417eb765c5",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 58,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "airtable",
+    "summary": "New write-capable claude connector: Airtable",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "066753a188b5229fa6a83ae7182b2a9d557fef6021a8481d191c8cab631d32bc",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 59,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "airwallex",
+    "summary": "New write-capable claude connector: Airwallex",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "45d6fb27ce1d05de2395fde4b8cf83511842d3944958fa3f3f3a784d363ebca7",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 60,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "apollo",
+    "summary": "New write-capable claude connector: Apollo.io",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "c20df5ad8be5374f4c9bde498ff9c5e5535aec7e3f8af8514a94435967478f01",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 61,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "atlassian",
+    "summary": "New write-capable claude connector: Atlassian Rovo",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "a34f71541470fb05f77284311ab4d10dd2930b812b38b7c1a5c559f8dfd770ce",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 62,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "attio",
+    "summary": "New write-capable claude connector: Attio",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "95349844dd70a29d685001d86513f5a6d3cbcf7c48b5cfe8787468a6d31145d9",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 63,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "aws-marketplace",
+    "summary": "New write-capable claude connector: AWS Marketplace",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "98b69c49d68b21da0eac3f20eb97b7a58d13e559849bc6c1e5c84234a2acbb84",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 64,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-05-11",
+    "server_id": "base44",
+    "summary": "New write-capable claude connector: Base44",
+    "tool_name": null
+  }
+]

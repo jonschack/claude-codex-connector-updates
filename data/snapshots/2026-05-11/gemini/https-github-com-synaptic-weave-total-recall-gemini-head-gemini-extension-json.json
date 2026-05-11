@@ -1,0 +1,9 @@
+{
+  "name": "total-recall-gemini",
+  "version": "0.1.0",
+  "description": "Weaving long-term memory and semantic intelligence into the Gemini CLI. A Synaptic Weave Utility.",
+  "hooks": {
+    "SessionEnd": "bash ./hooks/ingest.sh",
+    "PreCompress": "bash ./hooks/ingest.sh"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "mcp-game-asset-gen",
+  "version": "0.1.0",
+  "mcpServers": {
+    "asset-gen": {
+      "command": "npx",
+      "args": [
+        "mcp-game-asset-gen"
+      ]
+    }
+  }
+}
