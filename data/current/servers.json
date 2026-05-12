@@ -576,6 +576,35 @@
     "capabilities": [
       "Read"
     ],
+    "description": "Aurora | Claude Meet Claude Products Claude Claude Code Claude Cowork Claude Security Features Claude for Chrome Claude for Slack Claude for Microsoft 365 Skills Models Opus Sonnet Haiku Platform Overview Developer docs Pricing Console login Solutions Use cases AI agents Coding Departments Security Industries Customer support Education Financial services Government Healthcare Life sciences Nonprofits Pricing Overview API Plans Pro Max Team Enterprise Resources Insights Blog Customer stories Anthropic news Learn Anthropic Academy Courses Tutorials Use cases Tools Connectors Plugins Connect Events Community Login Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Meet Claude Products Claude Claude Code Claude Cowork Claude Security Features Cl",
+    "evidence": [
+      {
+        "confidence": "low",
+        "kind": "catalog_capability",
+        "value": [
+          "Read"
+        ]
+      }
+    ],
+    "metadata": {
+      "catalog_text_hash_source": "detail_page"
+    },
+    "name": "Aurora",
+    "native_surface": "connector",
+    "provider": "claude",
+    "remote_url": "",
+    "server_id": "aurora",
+    "source_urls": [
+      "https://claude.com/connectors",
+      "https://claude.com/connectors/aurora"
+    ],
+    "transport": "catalog",
+    "write_confidence": "low"
+  },
+  {
+    "capabilities": [
+      "Read"
+    ],
     "description": "Autodesk Product Help | Claude Meet Claude Products Claude Claude Code Claude Cowork Claude Security Features Claude for Chrome Claude for Slack Claude for Microsoft 365 Skills Models Opus Sonnet Haiku Platform Overview Developer docs Pricing Console login Solutions Use cases AI agents Coding Departments Security Industries Customer support Education Financial services Government Healthcare Life sciences Nonprofits Pricing Overview API Plans Pro Max Team Enterprise Resources Insights Blog Customer stories Anthropic news Learn Anthropic Academy Courses Tutorials Use cases Tools Connectors Plugins Connect Events Community Login Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Meet Claude Products Claude Claude Code Claude Cowork Claude Secur",
     "evidence": [
       {
@@ -5836,7 +5865,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.1.6"
+        "version": "1.3.0"
       }
     },
     "name": "aegis",
@@ -8064,7 +8093,7 @@
         "license": "MIT",
         "name": "everything-gemini-code",
         "repository": "https://github.com/Jamkris/everything-gemini-code.git",
-        "version": "1.3.7"
+        "version": "1.3.10"
       }
     },
     "name": "everything-gemini-code",
@@ -11464,7 +11493,7 @@
           }
         },
         "name": "neo-skills",
-        "version": "0.57.1"
+        "version": "0.59.0"
       },
       "mcp_server": {
         "args": [
@@ -18927,7 +18956,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail &",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Ma",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -18949,7 +18978,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Ou",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calend",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -18990,7 +19019,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Ca",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Goog",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -19011,7 +19040,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catal",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -19034,7 +19063,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive G",
     "evidence": [],
     "metadata": {
       "matched_terms": [

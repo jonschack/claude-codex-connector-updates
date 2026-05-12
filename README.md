@@ -1,79 +1,14 @@
-# MCP Write-Capability Report: 2026-05-11
+# MCP Write-Capability Report: 2026-05-12
 
 ## Write Alerts
 
-| Event | Provider | Server | Tool | Confidence | Summary |
-| --- | --- | --- | --- | --- | --- |
-| new_write_server | codex | `atlassian-rovo` |  | high | New write-capable codex plugin: Atlassian Rovo |
-| new_write_server | codex | `google-calendar` |  | high | New write-capable codex plugin: Google Calendar |
-| new_write_server | codex | `gmail` |  | high | New write-capable codex plugin: Gmail |
-| new_write_server | codex | `slack` |  | high | New write-capable codex plugin: Slack |
-| new_write_server | codex | `teams` |  | high | New write-capable codex plugin: Teams |
-| new_write_server | codex | `sharepoint` |  | high | New write-capable codex plugin: SharePoint |
-| new_write_server | codex | `outlook-email` |  | high | New write-capable codex plugin: Outlook Email |
-| new_write_server | codex | `outlook-calendar` |  | high | New write-capable codex plugin: Outlook Calendar |
-| new_write_server | codex | `figma` |  | high | New write-capable codex plugin: Figma |
-| new_write_server | codex | `hugging-face` |  | high | New write-capable codex plugin: Hugging Face |
-| new_write_server | codex | `netlify` |  | high | New write-capable codex plugin: Netlify |
-| new_write_server | codex | `vercel` |  | high | New write-capable codex plugin: Vercel |
-| new_write_server | codex | `game-studio` |  | high | New write-capable codex plugin: Game Studio |
-| new_write_server | codex | `superpowers` |  | high | New write-capable codex plugin: Superpowers |
-| new_write_server | codex | `github` |  | high | New write-capable codex plugin: GitHub |
-| new_write_server | codex | `circleci` |  | high | New write-capable codex plugin: CircleCI |
-| new_write_server | codex | `google-drive` |  | high | New write-capable codex plugin: Google Drive |
-| new_write_server | codex | `notion` |  | high | New write-capable codex plugin: Notion |
-| new_write_server | codex | `cloudflare` |  | high | New write-capable codex plugin: Cloudflare |
-| new_write_server | codex | `sentry` |  | high | New write-capable codex plugin: Sentry |
-| new_write_server | codex | `build-ios-apps` |  | high | New write-capable codex plugin: Build iOS Apps |
-| new_write_server | codex | `build-macos-apps` |  | high | New write-capable codex plugin: Build macOS Apps |
-| new_write_server | codex | `build-web-apps` |  | high | New write-capable codex plugin: Build Web Apps |
-| new_write_server | codex | `life-science-research` |  | high | New write-capable codex plugin: Life Science Research |
-| new_write_server | codex | `zotero` |  | high | New write-capable codex plugin: Zotero |
-| new_write_server | codex | `expo` |  | high | New write-capable codex plugin: Expo |
-| new_write_server | codex | `coderabbit` |  | high | New write-capable codex plugin: CodeRabbit |
-| new_write_server | codex | `neon-postgres` |  | high | New write-capable codex plugin: Neon Postgres |
-| new_write_server | codex | `remotion` |  | high | New write-capable codex plugin: Remotion |
-| new_write_server | codex | `plugin-eval` |  | high | New write-capable codex plugin: Plugin Eval |
-| new_write_server | codex | `attio` |  | medium | New write-capable codex plugin: Attio |
-| new_write_server | codex | `cloudinary` |  | medium | New write-capable codex plugin: Cloudinary |
-| new_write_server | codex | `domotz-preview` |  | medium | New write-capable codex plugin: Domotz (Preview) |
-| new_write_server | codex | `hubspot` |  | medium | New write-capable codex plugin: HubSpot |
-| new_write_server | codex | `pylon` |  | medium | New write-capable codex plugin: Pylon |
-| new_write_server | codex | `quicknode` |  | medium | New write-capable codex plugin: Quicknode |
-| new_write_server | codex | `render` |  | high | New write-capable codex plugin: Render |
-| new_write_server | codex | `temporal` |  | high | New write-capable codex plugin: Temporal |
-| new_write_server | codex | `hyperframes` |  | high | New write-capable codex plugin: HyperFrames by HeyGen |
-| new_write_server | codex | `supabase` |  | high | New write-capable codex plugin: Supabase |
-| new_write_server | codex | `codex-security` |  | high | New write-capable codex plugin: Codex Security |
-| new_write_server | codex | `twilio-developer-kit` |  | high | New write-capable codex plugin: Twilio Developer Kit |
-| new_write_server | codex | `openai-developers` |  | high | New write-capable codex plugin: OpenAI Developers |
-| new_write_server | gemini | `documentdb-documentdb` |  | medium | New write-capable gemini extension: documentdb: documentdb |
-| new_write_server | gemini | `pluginx-pluginx` |  | medium | New write-capable gemini extension: pluginx: pluginx |
-| new_write_server | gemini | `bigtable-bigtable` |  | high | New write-capable gemini extension: bigtable: bigtable |
-| new_write_tool | gemini | `bigtable-bigtable` | `create_instance` | high | New write-capable tool: gemini/bigtable-bigtable/create_instance |
-| new_write_tool | gemini | `bigtable-bigtable` | `delete_instance` | high | New write-capable tool: gemini/bigtable-bigtable/delete_instance |
-| new_write_tool | gemini | `bigtable-bigtable` | `create_table` | high | New write-capable tool: gemini/bigtable-bigtable/create_table |
-| new_write_tool | gemini | `bigtable-bigtable` | `delete_table` | high | New write-capable tool: gemini/bigtable-bigtable/delete_table |
-| new_write_server | gemini | `matkorgen-matkorgen` |  | medium | New write-capable gemini extension: matkorgen: matkorgen |
-| new_write_server | gemini | `todoist-extension-todoist` |  | medium | New write-capable gemini extension: todoist-extension: todoist |
-| new_write_server | gemini | `slidev` |  | medium | New write-capable gemini extension: slidev |
-| new_write_server | gemini | `rootly-rootly` |  | medium | New write-capable gemini extension: rootly: rootly |
-| new_write_server | claude | `10x-genomics-cloud` |  | high | New write-capable claude connector: 10x Genomics Cloud |
-| new_write_server | claude | `activecampaign` |  | high | New write-capable claude connector: ActiveCampaign |
-| new_write_server | claude | `adobe-experience-manager` |  | high | New write-capable claude connector: Adobe Experience Manager |
-| new_write_server | claude | `airtable` |  | high | New write-capable claude connector: Airtable |
-| new_write_server | claude | `airwallex` |  | high | New write-capable claude connector: Airwallex |
-| new_write_server | claude | `apollo` |  | high | New write-capable claude connector: Apollo.io |
-| new_write_server | claude | `atlassian` |  | high | New write-capable claude connector: Atlassian Rovo |
-| new_write_server | claude | `attio` |  | high | New write-capable claude connector: Attio |
-| new_write_server | claude | `aws-marketplace` |  | high | New write-capable claude connector: AWS Marketplace |
-| new_write_server | claude | `base44` |  | high | New write-capable claude connector: Base44 |
+No high- or medium-confidence write-capability changes were detected today.
 
 ## Coverage
 
 - Normalized servers: 374
-- Write-capable servers: 60
-- claude: 24 servers, 10 write-capable
+- Write-capable servers: 59
+- claude: 24 servers, 9 write-capable
 - codex: 121 servers, 43 write-capable
 - gemini: 222 servers, 7 write-capable
 - grok: 7 servers, 0 write-capable
