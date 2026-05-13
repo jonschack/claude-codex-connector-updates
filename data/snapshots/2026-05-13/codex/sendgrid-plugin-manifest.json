@@ -1,0 +1,27 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Connector for interacting with the SendGrid email API.",
+  "homepage": "https://sendgrid.com/",
+  "interface": {
+    "capabilities": [],
+    "category": "Coding",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Review email metrics and summarize deliverability"
+    ],
+    "developerName": "OpenAI",
+    "displayName": "SendGrid",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Connector for interacting with the SendGrid email API.",
+    "privacyPolicyURL": "https://www.twilio.com/legal/privacy",
+    "screenshots": [],
+    "shortDescription": "Connector for interacting with the SendGrid email API.",
+    "websiteURL": "https://sendgrid.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "sendgrid",
+  "repository": "https://github.com/openai/plugins",
+  "version": "0.1.0"
+}

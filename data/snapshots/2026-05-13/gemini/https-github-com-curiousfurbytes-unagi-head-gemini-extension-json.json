@@ -1,0 +1,6 @@
+{
+  "name": "unagi",
+  "description": "AFK coding with the ralph loop — autonomous TDD-driven implementation of PRD items. Includes /afk, /ralph, and /ralph-loop skills.",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}

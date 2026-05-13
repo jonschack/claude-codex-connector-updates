@@ -1,0 +1,15 @@
+{
+  "name": "gfw-mcp",
+  "version": "0.2.4",
+  "description": "Global Fishing Watch data — search vessels, retrieve fishing/port-visit/encounter events, calculate fishing or presence hours inside MPAs, EEZs and RFMOs, and compute event statistics.",
+  "mcpServers": {
+    "gfw": {
+      "command": "npx",
+      "args": ["-y", "@globalfishingwatch/gfw-cli", "mcp"],
+      "env": {
+        "GFW_TOKEN": "${GFW_TOKEN}"
+      }
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}

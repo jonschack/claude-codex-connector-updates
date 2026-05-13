@@ -1,0 +1,5 @@
+{
+  "name": "unity-game-generator",
+  "version": "1.0.0",
+  "description": "Unity 游戏生成扩展，包含 Unity 相关的 agents 和 skills"
+}

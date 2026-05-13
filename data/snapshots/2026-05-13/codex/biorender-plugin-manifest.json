@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "BioRender helps scientists create professional figures in minutes.",
+  "homepage": "https://biorender.com/",
+  "interface": {
+    "capabilities": [],
+    "category": "Design",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Can you find me some GLP-1 diagram templates"
+    ],
+    "developerName": "BioRender",
+    "displayName": "BioRender",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "BioRender helps scientists create professional figures in minutes. Access thousands of scientifically accurate templates and icons directly in Codex to visualize protocols, pathways, molecular structures, and more. Brainstorm with your team, communicate research concepts, or build publication-ready figures for presentations, manuscripts, grant proposals, and posters.",
+    "privacyPolicyURL": "https://biorender.com/privacy",
+    "screenshots": [],
+    "shortDescription": "BioRender helps scientists create professional figures in minutes.",
+    "termsOfServiceURL": "https://www.biorender.com/terms-of-service",
+    "websiteURL": "https://biorender.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "biorender",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

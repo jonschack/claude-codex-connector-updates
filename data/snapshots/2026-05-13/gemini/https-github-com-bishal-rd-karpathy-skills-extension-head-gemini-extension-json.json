@@ -1,0 +1,9 @@
+{
+  "name": "karpathy-skills-extension",
+  "version": "1.0.0",
+  "description": "Systems programming and computer architecture skills",
+  "publisher": "Bishal-RD",
+  "engines": {
+    "gemini": ">=0.40.0"
+  }
+}

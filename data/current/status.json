@@ -1,23 +1,11 @@
 {
-  "event_count": 0,
+  "event_count": 2,
   "issues": [
     {
       "message": "Manifest not found or invalid after probing common paths",
       "provider": "gemini",
       "severity": "warning",
-      "source": "https://github.com/AvaTar-ArTs/my-powers"
-    },
-    {
-      "message": "Manifest not found or invalid after probing common paths",
-      "provider": "gemini",
-      "severity": "warning",
-      "source": "https://github.com/Banny-Gao/expert-bazi-skill"
-    },
-    {
-      "message": "Manifest not found or invalid after probing common paths",
-      "provider": "gemini",
-      "severity": "warning",
-      "source": "https://github.com/Jylhis/skills"
+      "source": "https://github.com/Hypho/ledger-protocol"
     },
     {
       "message": "Manifest not found or invalid after probing common paths",
@@ -26,13 +14,25 @@
       "source": "https://github.com/OutlineDriven/outline-driven-development"
     },
     {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith"
+    },
+    {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/ahundt/autorun"
+    },
+    {
       "message": "HTTP Error 403: Forbidden",
       "provider": "grok",
       "severity": "warning",
       "source": "https://x.ai/news/grok-connectors"
     }
   ],
-  "run_date": "2026-05-12",
-  "server_count": 374,
+  "run_date": "2026-05-13",
+  "server_count": 366,
   "tool_count": 8
 }

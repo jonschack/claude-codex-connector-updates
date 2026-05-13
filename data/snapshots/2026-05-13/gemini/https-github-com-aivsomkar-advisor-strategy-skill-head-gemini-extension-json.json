@@ -1,0 +1,6 @@
+{
+  "name": "advisor-strategy",
+  "description": "Advisor Strategy skill — multi-model advisor for architecture, security, and debugging decisions",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}

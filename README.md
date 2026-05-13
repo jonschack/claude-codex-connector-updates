@@ -1,16 +1,19 @@
-# MCP Write-Capability Report: 2026-05-12
+# MCP Write-Capability Report: 2026-05-13
 
 ## Write Alerts
 
-No high- or medium-confidence write-capability changes were detected today.
+| Event | Provider | Server | Tool | Confidence | Summary |
+| --- | --- | --- | --- | --- | --- |
+| new_write_server | codex | `heygen` |  | high | New write-capable codex plugin: HeyGen |
+| new_write_server | gemini | `adspirer-ads-adspirer` |  | medium | New write-capable gemini extension: adspirer-ads: adspirer |
 
 ## Coverage
 
-- Normalized servers: 374
-- Write-capable servers: 59
+- Normalized servers: 366
+- Write-capable servers: 61
 - claude: 24 servers, 9 write-capable
-- codex: 121 servers, 43 write-capable
-- gemini: 222 servers, 7 write-capable
+- codex: 122 servers, 44 write-capable
+- gemini: 213 servers, 8 write-capable
 - grok: 7 servers, 0 write-capable
 
 ## Crawl Issues
@@ -18,10 +21,10 @@ No high- or medium-confidence write-capability changes were detected today.
 - gemini: 4 issue(s)
 - grok: 1 issue(s)
 
-- `gemini` `warning` `https://github.com/AvaTar-ArTs/my-powers`: Manifest not found or invalid after probing common paths
-- `gemini` `warning` `https://github.com/Banny-Gao/expert-bazi-skill`: Manifest not found or invalid after probing common paths
-- `gemini` `warning` `https://github.com/Jylhis/skills`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/Hypho/ledger-protocol`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/ahundt/autorun`: Manifest not found or invalid after probing common paths
 - `grok` `warning` `https://x.ai/news/grok-connectors`: HTTP Error 403: Forbidden
 
 ## Notes

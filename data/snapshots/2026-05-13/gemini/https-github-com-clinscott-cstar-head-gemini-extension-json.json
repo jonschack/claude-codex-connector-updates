@@ -1,0 +1,31 @@
+{
+  "name": "corvus-star",
+  "version": "1.0.0",
+  "description": "Corvus Star host-native extension with Hall discovery, Augury routing, and kernel-backed CStar control.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "pennyone": {
+      "command": "node",
+      "args": [
+        "bin/pennyone-mcp.js"
+      ],
+      "cwd": ".",
+      "env": {
+        "GEMINI_CLI_ACTIVE": "true"
+      },
+      "note": "Authoritative Corvus Hall and PennyOne MCP surface."
+    },
+    "corvus-control": {
+      "command": "node",
+      "args": [
+        "scripts/run-tsx.mjs",
+        "src/tools/corvus-control-mcp.ts"
+      ],
+      "cwd": ".",
+      "env": {
+        "GEMINI_CLI_ACTIVE": "true"
+      },
+      "note": "Kernel-backed Corvus workflow and control-plane MCP surface."
+    }
+  }
+}
