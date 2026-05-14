@@ -1,0 +1,68 @@
+{
+  "name": "notion-expert",
+  "displayName": "Notion Expert v1.0.6",
+  "description": "Notion Expert is a powerful Notion integration with 46+ tools, file processing, database templates, monitoring, and MCP stdio mode support",
+  "version": "1.0.6",
+  "author": "André Cardoso",
+  "license": "MIT",
+  "repository": "https://github.com/andrecrjr/gemini-notion-extension",
+  "mcpServers": {
+    "notion": {
+      "command": "node",
+      "args": [
+        "${extensionPath}${/}dist${/}bundle.js"
+      ],
+      "cwd": "${extensionPath}"
+    }
+  },
+  "settings": [
+    {
+      "name": "Notion API Key",
+      "description": "Your internal integration secret from https://www.notion.so/profile/integrations/internal",
+      "envVar": "NOTION_API_KEY"
+    }
+  ],
+  "contextPath": "GEMINI.md",
+  "commands": [
+    {
+      "name": "export-conversation",
+      "description": "Export current Gemini conversation to Notion",
+      "usage": "/export-conversation [--title TITLE] [--tags TAGS] [--project PROJECT]"
+    },
+    {
+      "name": "list-databases",
+      "description": "List all Notion databases",
+      "usage": "/list-databases"
+    },
+    {
+      "name": "search-notion",
+      "description": "Search across Notion workspace",
+      "usage": "/search-notion [query]"
+    },
+    {
+      "name": "recent-changes",
+      "description": "Show recently modified pages",
+      "usage": "/recent-changes [--limit NUMBER]"
+    },
+    {
+      "name": "add-database-entry",
+      "description": "Add a new row to a Notion database",
+      "usage": "/add-database-entry [content]"
+    },
+    {
+      "name": "delete-notion-page",
+      "description": "Delete a specific Notion page",
+      "usage": "/delete-notion-page [page name]"
+    },
+    {
+      "name": "update-database-entry",
+      "description": "Update an existing item inside a database",
+      "usage": "/update-database-entry [update details]"
+    },
+    {
+      "name": "update-database-schema",
+      "description": "Add, remove, or modify database columns",
+      "usage": "/update-database-schema [schema changes]"
+    }
+  ]
+}

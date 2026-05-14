@@ -1,27 +1,23 @@
-# MCP Write-Capability Report: 2026-05-13
+# MCP Write-Capability Report: 2026-05-14
 
 ## Write Alerts
 
-| Event | Provider | Server | Tool | Confidence | Summary |
-| --- | --- | --- | --- | --- | --- |
-| new_write_server | codex | `heygen` |  | high | New write-capable codex plugin: HeyGen |
-| new_write_server | gemini | `adspirer-ads-adspirer` |  | medium | New write-capable gemini extension: adspirer-ads: adspirer |
+No high- or medium-confidence write-capability changes were detected today.
 
 ## Coverage
 
-- Normalized servers: 366
-- Write-capable servers: 61
+- Normalized servers: 364
+- Write-capable servers: 60
 - claude: 24 servers, 9 write-capable
 - codex: 122 servers, 44 write-capable
-- gemini: 213 servers, 8 write-capable
+- gemini: 211 servers, 7 write-capable
 - grok: 7 servers, 0 write-capable
 
 ## Crawl Issues
 
-- gemini: 4 issue(s)
+- gemini: 3 issue(s)
 - grok: 1 issue(s)
 
-- `gemini` `warning` `https://github.com/Hypho/ledger-protocol`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/ahundt/autorun`: Manifest not found or invalid after probing common paths

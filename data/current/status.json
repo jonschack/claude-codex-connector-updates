@@ -1,12 +1,6 @@
 {
-  "event_count": 2,
+  "event_count": 0,
   "issues": [
-    {
-      "message": "Manifest not found or invalid after probing common paths",
-      "provider": "gemini",
-      "severity": "warning",
-      "source": "https://github.com/Hypho/ledger-protocol"
-    },
     {
       "message": "Manifest not found or invalid after probing common paths",
       "provider": "gemini",
@@ -32,7 +26,7 @@
       "source": "https://x.ai/news/grok-connectors"
     }
   ],
-  "run_date": "2026-05-13",
-  "server_count": 366,
+  "run_date": "2026-05-14",
+  "server_count": 364,
   "tool_count": 8
 }

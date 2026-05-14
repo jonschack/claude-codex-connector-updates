@@ -1,0 +1,33 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Use Google Drive as the single entrypoint for Drive, Docs, Sheets, and Slides work.",
+  "homepage": "https://workspace.google.com/products/drive/",
+  "interface": {
+    "brandColor": "#0F9D58",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find the right Drive file, then summarize a Doc, update a Sheet, or edit a Slides deck"
+    ],
+    "developerName": "OpenAI",
+    "displayName": "Google Drive",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Use Google Drive as one unified Google file plugin for search, file organization, sharing, and Google Docs, Google Sheets, and Google Slides workflows.",
+    "privacyPolicyURL": "https://policies.google.com/privacy",
+    "screenshots": [],
+    "shortDescription": "Work across Drive, Docs, Sheets, and Slides",
+    "termsOfServiceURL": "https://policies.google.com/terms",
+    "websiteURL": "https://workspace.google.com/products/drive/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "google-drive",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "0.1.0"
+}

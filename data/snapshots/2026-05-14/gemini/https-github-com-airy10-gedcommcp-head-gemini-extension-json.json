@@ -1,0 +1,13 @@
+
+{
+  "name": "gedcom",
+  "version": "0.0.1",
+  "description": "A Gemini CLI extension for working with GEDCOM files.",
+  "mcpServers": {
+      "gedcom_mcp" : {
+      "description": "A tool for creating, editing, and querying genealogical data from GEDCOM files.",
+      "command": "python",
+      "args" : [ "$HOME/Developer/GedcomMCP/src/gedcom_mcp/fastmcp_server.py", "--transport", "stdio" ]
+    }
+}
+}

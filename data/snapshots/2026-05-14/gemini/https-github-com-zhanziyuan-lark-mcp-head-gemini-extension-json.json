@@ -1,0 +1,22 @@
+{
+  "name": "lark-mcp",
+  "version": "1.0.1",
+  "description": "A Gemini CLI extension for Lark's MCP server.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "lark-mcp": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@larksuiteoapi/lark-mcp",
+        "mcp",
+        "-a",
+        "<your_app_id>",
+        "-s",
+        "<your_app_secret>",
+        "-u",
+        "<your_user_token>"
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "rc-apps",
+  "version": "0.1.0",
+  "description": "Gemini CLI extension for generating Rocket.Chat Apps",
+  "contextFileName": "GEMINI.md"
+}

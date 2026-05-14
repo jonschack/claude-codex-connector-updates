@@ -1,0 +1,12 @@
+{
+  "name": "refactor",
+  "version": "1.0.0",
+  "description": "Senior Software Architect extension for intelligent code refactoring and modernization.",
+  "author": "Ankit",
+  "commands": [
+    {
+      "name": "/refactor",
+      "description": "Analyze and refactor code in a specific path"
+    }
+  ]
+}
