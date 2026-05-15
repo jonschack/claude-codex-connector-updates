@@ -1,0 +1,23 @@
+{
+  "name": "google-cloud-db-context-enrichment",
+  "version": "0.5.0",
+  "contextFileName": "./GEMINI.md",
+  "mcpServers": {
+    "mcp_db_context_enrichment": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "${extensionPath}",
+        "google-cloud-db-context-enrichment"
+      ]
+    }
+  },
+  "settings": [
+    {
+      "name": "Gemini API Key",
+      "description": "Your Gemini API key",
+      "envVar": "GEMINI_API_KEY"
+    }
+  ]
+}

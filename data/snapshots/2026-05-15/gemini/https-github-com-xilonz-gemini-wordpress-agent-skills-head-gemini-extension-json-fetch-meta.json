@@ -1,0 +1,6 @@
+{
+  "content_type": "",
+  "error": "<urlopen error [Errno 65] No route to host>",
+  "status": null,
+  "url": "https://raw.githubusercontent.com/Xilonz/gemini-wordpress-agent-skills/HEAD/gemini-extension.json"
+}

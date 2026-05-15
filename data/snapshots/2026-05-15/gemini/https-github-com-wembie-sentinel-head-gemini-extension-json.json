@@ -1,0 +1,88 @@
+{
+  "name": "sentinel",
+  "version": "1.0.0",
+  "description": "AI-powered contextual security auditing platform. Performs offensive-minded SAST: taint flow tracing, attack graph generation, exploit chain narratives, and hardening checklists.",
+  "author": "Wembie",
+  "repo": "https://github.com/Wembie/Sentinel",
+  "contextFileName": "GEMINI.md",
+  "mcp": {
+    "command": "uv",
+    "args": [
+      "run",
+      "--project",
+      "~/.sentinel",
+      "python",
+      "-m",
+      "sentinel.mcp"
+    ],
+    "transport": "stdio"
+  },
+  "tools": [
+    {
+      "name": "sentinel_audit",
+      "description": "Full deep security audit of a codebase"
+    },
+    {
+      "name": "sentinel_surface",
+      "description": "Fast attack surface map: endpoints, auth entry points, data exposure"
+    },
+    {
+      "name": "sentinel_trace",
+      "description": "Taint flow: user input to dangerous sinks (SQLi, RCE, SSRF paths)"
+    },
+    {
+      "name": "sentinel_attack_graph",
+      "description": "Trust boundary and privilege escalation graph (Mermaid)"
+    },
+    {
+      "name": "sentinel_logic",
+      "description": "IDOR, BAC, unvalidated redirects, business logic flaws"
+    },
+    {
+      "name": "sentinel_review",
+      "description": "Deep single-file security review"
+    },
+    {
+      "name": "sentinel_diff",
+      "description": "Security impact of a git diff or PR"
+    },
+    {
+      "name": "sentinel_harden",
+      "description": "Hardening checklist from live codebase scan"
+    },
+    {
+      "name": "sentinel_exploit_chain",
+      "description": "Full exploitation chain narrative for a specific finding"
+    },
+    {
+      "name": "sentinel_hunt",
+      "description": "Category-focused scan: injection, auth, secrets"
+    },
+    {
+      "name": "sentinel_rules",
+      "description": "List all registered detection rules"
+    },
+    {
+      "name": "sentinel_report",
+      "description": "Export audit as markdown, JSON, or SARIF"
+    }
+  ],
+  "activationKeywords": [
+    "security",
+    "vulnerability",
+    "audit",
+    "SAST",
+    "injection",
+    "SQL injection",
+    "command injection",
+    "XSS",
+    "IDOR",
+    "authorization",
+    "authentication",
+    "attack surface",
+    "exploit",
+    "CVE",
+    "penetration testing",
+    "hardening"
+  ]
+}

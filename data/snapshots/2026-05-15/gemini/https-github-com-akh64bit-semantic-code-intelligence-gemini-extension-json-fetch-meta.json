@@ -1,0 +1,6 @@
+{
+  "content_type": "",
+  "error": "<urlopen error [Errno 51] Network is unreachable>",
+  "status": null,
+  "url": "https://raw.githubusercontent.com/akh64bit/semantic-code-intelligence/master/.gemini/extension.json"
+}

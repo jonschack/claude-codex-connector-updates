@@ -6080,7 +6080,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.4.0"
+        "version": "1.4.3"
       }
     },
     "name": "aegis",
@@ -7477,58 +7477,6 @@
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
-              "name": "caveman",
-              "version": "1.0.1"
-            }
-          },
-          "name": "caveman",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "caveman",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/aayu22809/crackstack",
-            "https://raw.githubusercontent.com/aayu22809/crackstack/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
-              "name": "caveman",
-              "version": "1.0.1"
-            }
-          },
-          "name": "caveman",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "caveman",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/anthonystepvoy/caveman-opencode",
-            "https://raw.githubusercontent.com/anthonystepvoy/caveman-opencode/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
         }
       ],
       "gallery_text_seen": true,
@@ -7548,12 +7496,8 @@
       "https://geminicli.com/extensions/",
       "https://github.com/ArogyaReddy/https-github.com-JuliusBrussee-caveman",
       "https://github.com/JuliusBrussee/caveman",
-      "https://github.com/aayu22809/crackstack",
-      "https://github.com/anthonystepvoy/caveman-opencode",
       "https://raw.githubusercontent.com/ArogyaReddy/https-github.com-JuliusBrussee-caveman/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/JuliusBrussee/caveman/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/aayu22809/crackstack/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/anthonystepvoy/caveman-opencode/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/JuliusBrussee/caveman/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -10980,7 +10924,7 @@
         "license": "MIT",
         "name": "everything-gemini-code",
         "repository": "https://github.com/Jamkris/everything-gemini-code.git",
-        "version": "1.3.12"
+        "version": "1.3.13"
       }
     },
     "name": "everything-gemini-code",
@@ -12663,6 +12607,234 @@
     "metadata": {
       "manifest_fetch": "not_found"
     },
+    "name": "babysitter-gemini",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-a5c-ai-babysitter-gemini",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/a5c-ai/babysitter-gemini"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "hcom",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-aannoo-hcom",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/aannoo/hcom"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "seo-geo-claude-skills",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-aaron-he-zhu-seo-geo-claude-skills",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "redmine-cli",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-aarondpn-redmine-cli",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/aarondpn/redmine-cli"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "crackstack",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-aayu22809-crackstack",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/aayu22809/crackstack"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "slash-criticalthink",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-abagames-slash-criticalthink",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/abagames/slash-criticalthink"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "scripthis",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-abengkris-scripthis",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/abengkris/scripthis"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "superpowers",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-abudhahir-superpowers",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/abudhahir/superpowers"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "brass-monkey",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-actinon-com-brass-monkey",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/actinon-com/brass-monkey"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "raindrop-mcp",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-adeze-raindrop-mcp",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/adeze/raindrop-mcp"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "Marlin",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-adisingh-cs-marlin",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/adisingh-cs/Marlin"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "agentrq-gemini-extension",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-agentrq-agentrq-gemini-extension",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/agentrq/agentrq-gemini-extension"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
     "name": "autorun",
     "native_surface": "extension",
     "provider": "gemini",
@@ -12671,6 +12843,405 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/ahundt/autorun"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "omnigit-mcp",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-aifity-omnigit-mcp",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/aifity/omnigit-mcp"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "ralph-wiggum-js",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-aircrack-ng-debug-ralph-wiggum-js",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/aircrack-ng-debug/ralph-wiggum-js"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "GedcomMCP",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-airy10-gedcommcp",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/airy10/GedcomMCP"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "semantic-code-intelligence",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-akh64bit-semantic-code-intelligence",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/akh64bit/semantic-code-intelligence"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "namely",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-alete-ai-namely",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/alete-ai/namely"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "cc-thingz",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-alexei-led-cc-thingz",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/alexei-led/cc-thingz"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "alibabacloud-ack-mcp-server",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-aliyun-alibabacloud-ack-mcp-server",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/aliyun/alibabacloud-ack-mcp-server"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "leanContext",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-allytag-leancontext",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/allytag/leanContext"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "ads-mcp",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-amekala-ads-mcp",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/amekala/ads-mcp"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "github-mcp-server",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-amelianoir-github-mcp-server",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/amelianoir/github-mcp-server"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "impeccable-gemini-extension",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-amiruluniten-impeccable-gemini-extension",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/amiruluniten/impeccable-gemini-extension"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "24-880-workshop",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-amoghbalaji02-24-880-workshop",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/amoghbalaji02/24-880-workshop"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "arxitect",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-andonimichael-arxitect",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/andonimichael/arxitect"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "notion-expert-extension",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-andrecrjr-notion-expert-extension",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/andrecrjr/notion-expert-extension"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "superartes",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-andybrandt-superartes",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/andybrandt/superartes"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "parrot",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-animeshpatni94-parrot",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/animeshpatni94/parrot"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "refactor",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-ankitchiplunkar-refactor",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/ankitchiplunkar/refactor"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "razorback",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-anortham-razorback",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/anortham/razorback"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "caveman-opencode",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-anthonystepvoy-caveman-opencode",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/anthonystepvoy/caveman-opencode"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "gemini-cli-engram",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-anthuanvasquez-gemini-cli-engram",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/anthuanvasquez/gemini-cli-engram"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "vibe",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-anubhavg-icpl-vibe",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/anubhavg-icpl/vibe"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -12758,6 +13329,25 @@
     "metadata": {
       "manifest_fetch": "not_found"
     },
+    "name": "gemini-security-skills",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-masriyan-gemini-security-skills",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Masriyan/gemini-security-skills"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
     "name": "outline-driven-development",
     "native_surface": "extension",
     "provider": "gemini",
@@ -12785,6 +13375,101 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "gemini-wordpress-agent-skills",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-xilonz-gemini-wordpress-agent-skills",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Xilonz/gemini-wordpress-agent-skills"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "cloudflare-mcp",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-zhanziyuan-cloudflare-mcp",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/ZhanZiyuan/cloudflare-mcp"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "lark-mcp",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-zhanziyuan-lark-mcp",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/ZhanZiyuan/lark-mcp"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "vercel-mcp",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-zhanziyuan-vercel-mcp",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/ZhanZiyuan/vercel-mcp"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
+    "name": "winget-mcp",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-zhanziyuan-winget-mcp",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/ZhanZiyuan/winget-mcp"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -14593,7 +15278,7 @@
           }
         },
         "name": "mcp-server-kubernetes",
-        "version": "3.5.1"
+        "version": "3.6.2"
       },
       "mcp_server": {
         "args": [
@@ -15309,7 +15994,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/PatelPratikkumar/gemini-notion-extension",
-      "https://raw.githubusercontent.com/PatelPratikkumar/gemini-notion-extension/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/PatelPratikkumar/gemini-notion-extension/main/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -18572,58 +19257,6 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "Universal skills and agent framework for coding agents",
-          "evidence": [],
-          "metadata": {
-            "discovery": {
-              "ok": false,
-              "reason": "local_or_unconfigured_mcp_discovery_deferred"
-            },
-            "excludeTools": null,
-            "includeTools": null,
-            "manifest": {
-              "author": "[REDACTED]",
-              "description": "Universal skills and agent framework for coding agents",
-              "mcpServers": {
-                "supremepower": {
-                  "args": [
-                    "mcp-server/dist/server.js"
-                  ],
-                  "command": "node",
-                  "cwd": "${extensionPath}",
-                  "timeout": 5000
-                }
-              },
-              "name": "supremepower",
-              "postInstall": "bash scripts/install.sh",
-              "version": "2.0.0"
-            },
-            "mcp_server": {
-              "args": [
-                "mcp-server/dist/server.js"
-              ],
-              "command": "node",
-              "cwd": "${extensionPath}",
-              "timeout": 5000
-            }
-          },
-          "name": "supremepower: supremepower",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "supremepower-supremepower",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/abudhahir/superpowers",
-            "https://raw.githubusercontent.com/abudhahir/superpowers/HEAD/gemini-extension.json"
-          ],
-          "transport": "stdio",
-          "write_confidence": "unknown"
-        }
-      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -18660,9 +19293,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/AvaTar-ArTs/my-supremepowers",
-      "https://github.com/abudhahir/superpowers",
-      "https://raw.githubusercontent.com/AvaTar-ArTs/my-supremepowers/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/abudhahir/superpowers/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/AvaTar-ArTs/my-supremepowers/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -23244,7 +23875,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/addyosmani/web-quality-skills",
-      "https://raw.githubusercontent.com/addyosmani/web-quality-skills/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/addyosmani/web-quality-skills/master/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -23453,7 +24084,7 @@
   },
   {
     "capabilities": [],
-    "description": "ers a growing catalog of pre-configured connectors for popular third-party services like HubSpot, Slack, Notion, and more. These authenticate via OAuth and are ready to use with minimal setup. Browse the full catalog at grok.com/connectors , or see the Connector Catalog page for connectors with dedicated setup guides. Custom MCP connectors If you need to connect Grok to a service not available in the catalog, you can bring your own Model Context Protocol (MCP) server. MCP is an open standard that lets AI assistants interact with external tools and data sources through a unified protocol. With a custom MCP connector you can: Expose a",
+    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Conn",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -23467,7 +24098,6 @@
     "remote_url": "",
     "server_id": "custom-mcp",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -23475,7 +24105,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Ma",
+    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -23489,7 +24119,6 @@
     "remote_url": "",
     "server_id": "gmail-google-calendar",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -23497,7 +24126,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calend",
+    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview ShareP",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -23510,7 +24139,6 @@
     "remote_url": "",
     "server_id": "google-drive",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -23538,7 +24166,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Goog",
+    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overvi",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -23551,7 +24179,6 @@
     "remote_url": "",
     "server_id": "onedrive",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -23559,7 +24186,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector",
+    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Go",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -23574,7 +24201,6 @@
     "remote_url": "",
     "server_id": "outlook-mail-calendar",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -23582,7 +24208,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Connector Catalog FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive G",
+    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connec",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -23595,7 +24221,6 @@
     "remote_url": "",
     "server_id": "sharepoint",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",

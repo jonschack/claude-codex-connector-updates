@@ -1,0 +1,6 @@
+{
+  "content_type": "",
+  "error": "<urlopen error [Errno 54] Connection reset by peer>",
+  "status": null,
+  "url": "https://raw.githubusercontent.com/Masriyan/gemini-security-skills/HEAD/gemini-extension.json"
+}

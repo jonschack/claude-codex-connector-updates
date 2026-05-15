@@ -1,0 +1,6 @@
+{
+  "content_type": "",
+  "error": "<urlopen error _ssl.c:1112: The handshake operation timed out>",
+  "status": null,
+  "url": "https://raw.githubusercontent.com/adeze/raindrop-mcp/HEAD/gemini-extension.json"
+}

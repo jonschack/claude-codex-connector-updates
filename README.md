@@ -1,4 +1,4 @@
-# MCP Write-Capability Report: 2026-05-14
+# MCP Write-Capability Report: 2026-05-15
 
 ## Write Alerts
 
@@ -6,22 +6,44 @@ No high- or medium-confidence write-capability changes were detected today.
 
 ## Coverage
 
-- Normalized servers: 364
-- Write-capable servers: 60
-- claude: 24 servers, 9 write-capable
+- Normalized servers: 329
+- Write-capable servers: 50
 - codex: 122 servers, 44 write-capable
-- gemini: 211 servers, 7 write-capable
-- grok: 7 servers, 0 write-capable
+- gemini: 201 servers, 6 write-capable
+- grok: 6 servers, 0 write-capable
 
 ## Crawl Issues
 
-- gemini: 3 issue(s)
-- grok: 1 issue(s)
+- claude: 1 issue(s)
+- gemini: 42 issue(s)
+- grok: 2 issue(s)
 
+- `gemini` `warning` `https://github.com/Masriyan/gemini-security-skills`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/Xilonz/gemini-wordpress-agent-skills`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/ZhanZiyuan/cloudflare-mcp`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/ZhanZiyuan/lark-mcp`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/ZhanZiyuan/vercel-mcp`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/ZhanZiyuan/winget-mcp`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/a5c-ai/babysitter-gemini`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/aannoo/hcom`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/aaron-he-zhu/seo-geo-claude-skills`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/aarondpn/redmine-cli`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/aayu22809/crackstack`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/abagames/slash-criticalthink`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/abengkris/scripthis`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/abudhahir/superpowers`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/actinon-com/brass-monkey`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/adeze/raindrop-mcp`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/adisingh-cs/Marlin`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/agentrq/agentrq-gemini-extension`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/ahundt/autorun`: Manifest not found or invalid after probing common paths
-- `grok` `warning` `https://x.ai/news/grok-connectors`: HTTP Error 403: Forbidden
+- `gemini` `warning` `https://github.com/aifity/omnigit-mcp`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/aircrack-ng-debug/ralph-wiggum-js`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/airy10/GedcomMCP`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/akh64bit/semantic-code-intelligence`: Manifest not found or invalid after probing common paths
+- ... 20 additional issue(s) omitted from README; see `data/current/status.json`.
 
 ## Notes
 

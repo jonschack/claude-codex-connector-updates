@@ -1,0 +1,6 @@
+{
+  "content_type": "",
+  "error": "<urlopen error [Errno 51] Network is unreachable>",
+  "status": null,
+  "url": "https://raw.githubusercontent.com/abudhahir/superpowers/master/.gemini/extension.json"
+}
