@@ -770,6 +770,57 @@
       "Interactive",
       "Write"
     ],
+    "description": "Work with your Asana tasks, subtasks, comments, due dates, and project details to create summaries, understand priorities, and prepare clear status updates.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "asana": {
+            "id": "asdk_app_69616780bd208191b4fb44ba44f72b61"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "asana",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/asana",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Asana",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "asana",
+    "source_urls": [
+      "https://asana.com",
+      "https://github.com/openai/plugins"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
+  },
+  {
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
     "description": "Manage Jira and Confluence fast",
     "evidence": [
       {
@@ -6588,7 +6639,7 @@
         "contextFileName": "AGENTS.md",
         "description": "Portable development skills for Claude Code, Codex CLI, Gemini CLI, and Pi \u2014 code review, language tooling, infrastructure, testing, and more",
         "name": "alexei-led-cc-thingz",
-        "version": "4.5.3"
+        "version": "4.7.0"
       }
     },
     "name": "alexei-led-cc-thingz",
@@ -7477,6 +7528,58 @@
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
+        },
+        {
+          "capabilities": [],
+          "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
+              "name": "caveman",
+              "version": "1.0.1"
+            }
+          },
+          "name": "caveman",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "caveman",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/aayu22809/crackstack",
+            "https://raw.githubusercontent.com/aayu22809/crackstack/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        },
+        {
+          "capabilities": [],
+          "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
+              "name": "caveman",
+              "version": "1.0.1"
+            }
+          },
+          "name": "caveman",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "caveman",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/anthonystepvoy/caveman-opencode",
+            "https://raw.githubusercontent.com/anthonystepvoy/caveman-opencode/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
         }
       ],
       "gallery_text_seen": true,
@@ -7496,8 +7599,12 @@
       "https://geminicli.com/extensions/",
       "https://github.com/ArogyaReddy/https-github.com-JuliusBrussee-caveman",
       "https://github.com/JuliusBrussee/caveman",
+      "https://github.com/aayu22809/crackstack",
+      "https://github.com/anthonystepvoy/caveman-opencode",
       "https://raw.githubusercontent.com/ArogyaReddy/https-github.com-JuliusBrussee-caveman/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/JuliusBrussee/caveman/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/JuliusBrussee/caveman/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/aayu22809/crackstack/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/anthonystepvoy/caveman-opencode/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -11485,7 +11592,7 @@
       "manifest": {
         "contextFileName": "GEMINI.md",
         "name": "gemini-redteam",
-        "version": "1.0.1"
+        "version": "1.2.0"
       }
     },
     "name": "gemini-redteam",
@@ -12284,7 +12391,7 @@
             "name": "Gemini API Key"
           }
         ],
-        "version": "0.5.0"
+        "version": "0.5.1"
       },
       "mcp_server": {
         "args": [
@@ -15994,7 +16101,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/PatelPratikkumar/gemini-notion-extension",
-      "https://raw.githubusercontent.com/PatelPratikkumar/gemini-notion-extension/main/gemini-extension.json"
+      "https://raw.githubusercontent.com/PatelPratikkumar/gemini-notion-extension/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -18648,7 +18755,7 @@
       "gallery_text_seen": true,
       "manifest": {
         "name": "shopify-plugin",
-        "version": "1.2.1"
+        "version": "1.2.2"
       }
     },
     "name": "shopify-plugin",
@@ -19257,6 +19364,58 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "Universal skills and agent framework for coding agents",
+          "evidence": [],
+          "metadata": {
+            "discovery": {
+              "ok": false,
+              "reason": "local_or_unconfigured_mcp_discovery_deferred"
+            },
+            "excludeTools": null,
+            "includeTools": null,
+            "manifest": {
+              "author": "[REDACTED]",
+              "description": "Universal skills and agent framework for coding agents",
+              "mcpServers": {
+                "supremepower": {
+                  "args": [
+                    "mcp-server/dist/server.js"
+                  ],
+                  "command": "node",
+                  "cwd": "${extensionPath}",
+                  "timeout": 5000
+                }
+              },
+              "name": "supremepower",
+              "postInstall": "bash scripts/install.sh",
+              "version": "2.0.0"
+            },
+            "mcp_server": {
+              "args": [
+                "mcp-server/dist/server.js"
+              ],
+              "command": "node",
+              "cwd": "${extensionPath}",
+              "timeout": 5000
+            }
+          },
+          "name": "supremepower: supremepower",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "supremepower-supremepower",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/abudhahir/superpowers",
+            "https://raw.githubusercontent.com/abudhahir/superpowers/HEAD/gemini-extension.json"
+          ],
+          "transport": "stdio",
+          "write_confidence": "unknown"
+        }
+      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -19293,7 +19452,9 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/AvaTar-ArTs/my-supremepowers",
-      "https://raw.githubusercontent.com/AvaTar-ArTs/my-supremepowers/HEAD/gemini-extension.json"
+      "https://github.com/abudhahir/superpowers",
+      "https://raw.githubusercontent.com/AvaTar-ArTs/my-supremepowers/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/abudhahir/superpowers/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -23875,7 +24036,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/addyosmani/web-quality-skills",
-      "https://raw.githubusercontent.com/addyosmani/web-quality-skills/master/gemini-extension.json"
+      "https://raw.githubusercontent.com/addyosmani/web-quality-skills/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -24084,7 +24245,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Conn",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Conn",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -24098,6 +24259,7 @@
     "remote_url": "",
     "server_id": "custom-mcp",
     "source_urls": [
+      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -24105,7 +24267,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -24119,6 +24281,7 @@
     "remote_url": "",
     "server_id": "gmail-google-calendar",
     "source_urls": [
+      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -24126,7 +24289,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview ShareP",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview ShareP",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -24139,6 +24302,7 @@
     "remote_url": "",
     "server_id": "google-drive",
     "source_urls": [
+      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -24166,7 +24330,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overvi",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overvi",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -24179,6 +24343,7 @@
     "remote_url": "",
     "server_id": "onedrive",
     "source_urls": [
+      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -24186,7 +24351,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Go",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Go",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -24201,6 +24366,7 @@
     "remote_url": "",
     "server_id": "outlook-mail-calendar",
     "source_urls": [
+      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",
@@ -24208,7 +24374,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connector Catalog | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connec",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connec",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -24221,6 +24387,7 @@
     "remote_url": "",
     "server_id": "sharepoint",
     "source_urls": [
+      "https://docs.x.ai/grok/connectors",
       "https://docs.x.ai/grok/connectors/catalog"
     ],
     "transport": "catalog",

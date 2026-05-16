@@ -1,0 +1,16 @@
+{
+  "name": "agents-example",
+  "description": "Example extension for 24-880 workshop",
+  "version": "0.0.1",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "agents-example": {
+      "command": "uv",
+      "args": ["run", "--directory", "${extensionPath}", "python", "-m", "agents_example.mcp"],
+      "env": {
+        "PYTHONPATH": "${extensionPath}/src",
+        "AGENTS_EXAMPLE_PROJECT_DIR": "${workspacePath}"
+      }
+    }
+  }
+}

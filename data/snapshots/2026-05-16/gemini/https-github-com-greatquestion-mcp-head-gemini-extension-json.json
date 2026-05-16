@@ -1,0 +1,10 @@
+{
+  "name": "great-question",
+  "version": "1.0.0",
+  "description": "Run user research from any AI tool. Create studies, recruit participants, and query insights from your Great Question repository.",
+  "mcpServers": {
+    "great-question": {
+      "httpUrl": "https://greatquestion.co/api/mcp/v1"
+    }
+  }
+}

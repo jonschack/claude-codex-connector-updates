@@ -1,0 +1,12 @@
+{
+  "name": "agentrq",
+  "version": "1.0.0",
+  "description": "Human-in-the-loop task manager for agents",
+  "mcpServers": {
+    "agentrq": {
+      "type": "http",
+      "url": "https://mcp.agentrq.com/mcp"
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}

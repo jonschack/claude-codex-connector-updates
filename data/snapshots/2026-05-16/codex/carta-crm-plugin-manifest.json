@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Carta CRM helps investment teams stay on top of deal flow by keeping deals, companies, and relationships in...",
+  "homepage": "https://carta.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find the latest relationship context in Carta CRM"
+    ],
+    "developerName": "Carta Inc.",
+    "displayName": "Carta CRM",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Carta CRM helps investment teams stay on top of deal flow by keeping deals, companies, and relationships in one place. Track opportunities through each stage, capture meeting notes and key takeaways alongside the right deal or contact, and quickly find past context when you need it.",
+    "privacyPolicyURL": "https://carta.com/legal/privacy/privacy-policy/",
+    "screenshots": [],
+    "shortDescription": "Carta CRM helps investment teams stay on top of deal flow by keeping deals, companies, and relationships in...",
+    "termsOfServiceURL": "https://carta.com/legal/terms-agreements/terms-service/",
+    "websiteURL": "https://carta.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "carta-crm",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}
