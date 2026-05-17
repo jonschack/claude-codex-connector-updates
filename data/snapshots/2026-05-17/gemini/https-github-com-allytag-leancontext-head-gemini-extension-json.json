@@ -1,0 +1,6 @@
+{
+  "name": "leancontext",
+  "description": "Token-efficient AI coding chat. Cuts filler and replay while keeping full technical accuracy.",
+  "version": "1.0.1",
+  "contextFileName": "GEMINI.md"
+}

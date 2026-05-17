@@ -1,0 +1,25 @@
+{
+  "name": "v0_gemini_extension",
+  "version": "1.0.1",
+  "description": "A Gemini CLI extension for v0.dev. Access v0's AI-powered code generation and design expertise directly from your CLI.",
+  "settings": [
+    {
+      "name": "v0 API Key",
+      "description": "Your v0.dev API key. Get it from your v0 account settings.",
+      "envVar": "V0_API_KEY",
+      "sensitive": true
+    }
+  ],
+  "mcpServers": {
+    "v0": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.v0.dev",
+        "--header",
+        "Authorization: Bearer ${V0_API_KEY}"
+      ]
+    }
+  }
+}

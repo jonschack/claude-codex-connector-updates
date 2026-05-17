@@ -6131,7 +6131,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.4.3"
+        "version": "1.4.5"
       }
     },
     "name": "aegis",
@@ -6392,8 +6392,9 @@
     "evidence": [],
     "metadata": {
       "discovery": {
-        "error": "<urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1129)>",
-        "ok": false
+        "error": "HTTP Error 401: Unauthorized",
+        "ok": false,
+        "status": 401
       },
       "excludeTools": null,
       "includeTools": null,
@@ -19929,7 +19930,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/Nemo-G/unity-extensions",
-      "https://raw.githubusercontent.com/Nemo-G/unity-extensions/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/Nemo-G/unity-extensions/master/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"

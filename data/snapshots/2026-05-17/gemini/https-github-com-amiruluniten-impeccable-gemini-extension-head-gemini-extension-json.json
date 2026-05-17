@@ -1,0 +1,12 @@
+{
+  "name": "impeccable-gemini-extension",
+  "version": "1.0.0",
+  "mcpServers": {
+    "impeccable": {
+      "command": "node",
+      "args": ["${extensionPath}${/}mcp-server.js"],
+      "cwd": "${extensionPath}"
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}

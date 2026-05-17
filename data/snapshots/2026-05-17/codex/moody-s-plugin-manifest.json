@@ -1,0 +1,24 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Credit and risk intelligence",
+  "interface": {
+    "capabilities": [],
+    "category": "Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Pull the latest Moody's context for this company"
+    ],
+    "developerName": "Moody's",
+    "displayName": "Moody's",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Credit and risk intelligence",
+    "screenshots": [],
+    "shortDescription": "Credit and risk intelligence"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "moody-s",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

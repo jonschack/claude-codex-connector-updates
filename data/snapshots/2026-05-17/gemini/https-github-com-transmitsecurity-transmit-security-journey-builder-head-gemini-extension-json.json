@@ -1,0 +1,18 @@
+{
+  "name": "transmit-security-journey-builder",
+  "version": "1.0.0",
+  "contextFileName": "instructions.md",
+  "mcpServers": {
+    "journey-tools": {
+      "command": "node",
+      "args": ["${extensionPath}${/}mcp${/}server.js"],
+      "env": {
+        "WORKSPACE_FOLDER": "${workspaceFolder}",
+        "EXTENSION_PATH": "${extensionPath}"
+      }
+    }
+  },
+  "excludeTools": [
+    "run_shell_command(gemini)"
+  ]
+}

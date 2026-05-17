@@ -1,0 +1,9 @@
+{
+  "name": "namely",
+  "version": "1.0.1",
+  "description": "Dual-Signal Trademark & Domain availability checks for new ventures.",
+  "author": "Stoyan Dimitrov <https://github.com/StoyanD>",
+  "contextFileName": "GEMINI.md",
+  "settings": [],
+  "excludeTools": []
+}

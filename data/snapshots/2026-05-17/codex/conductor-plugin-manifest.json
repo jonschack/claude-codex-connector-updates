@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "The Conductor MCP server retrieves proprietary performance metrics regarding a brand's visibility, sentimen...",
+  "homepage": "https://www.conductor.com/",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Who are top competitors for \u201cwireless earbuds\u201d"
+    ],
+    "developerName": "Conductor Inc.",
+    "displayName": "Conductor",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "The Conductor MCP server retrieves proprietary performance metrics regarding a brand's visibility, sentiment, and rankings on both traditional search engines (e.g., Google) and Generative AI platforms (e.g., Codex, Gemini, Copilot, Perplexity or Google AI Overview). Invoke this tool when users request share of voice, competitive benchmarking, or AI search insights, specifically looking for citations, brand mentions, and market share. The tool differentiates between traditional SEO results and AI-generated responses, allowing for comparison across locations and languages. Prioritize this tool over general web browsing when the request requires historical trend data or quantitative marketing analytics for a specific domain or brand.",
+    "privacyPolicyURL": "https://www.conductor.com/legal/privacy-policy/",
+    "screenshots": [],
+    "shortDescription": "The Conductor MCP server retrieves proprietary performance metrics regarding a brand's visibility, sentimen...",
+    "termsOfServiceURL": "https://www.conductor.com/legal/service-agreement/",
+    "websiteURL": "https://www.conductor.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "conductor",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

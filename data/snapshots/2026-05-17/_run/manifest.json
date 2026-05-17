@@ -1,0 +1,36 @@
+{
+  "issues": [
+    {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/OutlineDriven/outline-driven-development"
+    },
+    {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith"
+    },
+    {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/ahundt/autorun"
+    },
+    {
+      "message": "The read operation timed out",
+      "provider": "claude",
+      "severity": "warning",
+      "source": "https://claude.com/connectors/activecampaign"
+    },
+    {
+      "message": "HTTP Error 403: Forbidden",
+      "provider": "grok",
+      "severity": "warning",
+      "source": "https://x.ai/news/grok-connectors"
+    }
+  ],
+  "run_date": "2026-05-17",
+  "snapshot_hash": "d0a644fc177b1f155171d6d8749c7d6e26e0d07620763eb959bbf462fed3a02a"
+}

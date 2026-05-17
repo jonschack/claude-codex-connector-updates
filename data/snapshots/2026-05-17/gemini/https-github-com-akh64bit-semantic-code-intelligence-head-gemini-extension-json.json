@@ -1,0 +1,30 @@
+{
+  "name": "gemini-code-intel",
+  "version": "0.1.3",
+  "description": "Semantic code search and indexing for Gemini CLI",
+  "configuration": {
+    "GEMINI_API_KEY": {
+      "type": "string",
+      "description": "Google AI API Key for Gemini embeddings",
+      "required": true
+    },
+    "DB_URI": {
+      "type": "string",
+      "description": "Path to the local vector database",
+      "default": "~/.gemini-code-intel/db"
+    }
+  },
+  "mcpServers": {
+    "gemini-code-intel": {
+      "command": "node",
+      "args": [
+        "./packages/mcp/dist/index.js"
+      ],
+      "env": {
+        "DB_URI": "~/.gemini-code-intel/db"
+      }
+    }
+  }
+}
+
+

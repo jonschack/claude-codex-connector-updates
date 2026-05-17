@@ -1,0 +1,25 @@
+{
+  "name": "GeminiCloudAssist",
+  "version": "0.8.0",
+  "description": "Integrate GCA and ADC capabilities into Gemini CLI.",
+  "mcpServers": {
+    "application_design_center": {
+      "httpUrl": "https://designcenter.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      }
+    },
+    "gemini_cloud_assist": {
+      "httpUrl": "https://geminicloudassist.googleapis.com/mcp",
+      "authProviderType": "google_credentials",
+      "oauth": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ]
+      }
+    }
+  }
+}

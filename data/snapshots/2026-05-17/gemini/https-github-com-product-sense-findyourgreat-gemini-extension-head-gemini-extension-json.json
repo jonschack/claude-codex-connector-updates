@@ -1,0 +1,10 @@
+{
+  "name": "findyourgreat",
+  "version": "1.0.0",
+  "description": "Access your work activity, career signals, behavioral patterns, development plans, impact updates, and team data from FindYourGreat.",
+  "mcpServers": {
+    "findyourgreat": {
+      "httpUrl": "https://findyourgreat.com/mcp/v1"
+    }
+  }
+}
