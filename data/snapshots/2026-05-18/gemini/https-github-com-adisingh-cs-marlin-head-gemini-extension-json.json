@@ -1,0 +1,6 @@
+{
+  "name": "marlin",
+  "version": "1.0.0",
+  "description": "AI-native input prompt optimizer. Compress prompts 20-70% before sending to any model.",
+  "contextFileName": "GEMINI.md"
+}

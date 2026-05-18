@@ -1,0 +1,12 @@
+{
+  "id": "catenary",
+  "name": "Catenary",
+  "version": "1.6.1",
+  "description": "High-performance multiplexing bridge between MCP and LSP servers.",
+  "publisher": "TwoWells",
+  "mcpServers": {
+    "catenary": {
+      "command": "catenary"
+    }
+  }
+}

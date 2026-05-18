@@ -1,0 +1,6 @@
+{
+  "name": "parrot",
+  "description": "Kills self-repetition in LLM responses. Cuts 30-40% wasted tokens by eliminating restated questions, echoed instructions, and repeated ideas.",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}

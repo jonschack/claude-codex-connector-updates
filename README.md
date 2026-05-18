@@ -1,28 +1,28 @@
-# MCP Write-Capability Report: 2026-05-17
+# MCP Write-Capability Report: 2026-05-18
 
 ## Write Alerts
 
-No high- or medium-confidence write-capability changes were detected today.
+| Event | Provider | Server | Tool | Confidence | Summary |
+| --- | --- | --- | --- | --- | --- |
+| new_write_server | codex | `zoom` |  | high | New write-capable codex plugin: Zoom |
 
 ## Coverage
 
-- Normalized servers: 364
-- Write-capable servers: 60
-- claude: 23 servers, 8 write-capable
-- codex: 123 servers, 45 write-capable
+- Normalized servers: 366
+- Write-capable servers: 62
+- claude: 24 servers, 9 write-capable
+- codex: 124 servers, 46 write-capable
 - gemini: 211 servers, 7 write-capable
 - grok: 7 servers, 0 write-capable
 
 ## Crawl Issues
 
-- claude: 1 issue(s)
 - gemini: 3 issue(s)
 - grok: 1 issue(s)
 
 - `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/ahundt/autorun`: Manifest not found or invalid after probing common paths
-- `claude` `warning` `https://claude.com/connectors/activecampaign`: The read operation timed out
 - `grok` `warning` `https://x.ai/news/grok-connectors`: HTTP Error 403: Forbidden
 
 ## Notes

@@ -1,0 +1,36 @@
+{
+  "name": "gemini-cli-engram",
+  "version": "1.0.0",
+  "description": "Persistent long-term memory for Gemini CLI using Engram MCP.",
+  "repository": "https://github.com/Gentleman-Programming/engram",
+  "homepage": "https://github.com/Gentleman-Programming/engram",
+  "license": "MIT",
+  "mcpServers": {
+    "engram": {
+      "type": "stdio",
+      "command": "engram",
+      "args": [
+        "mcp",
+        "--tools=agent"
+      ]
+    }
+  },
+  "commands": [
+    {
+      "name": "mem:stats",
+      "description": "Show memory system statistics",
+      "command": "engram stats"
+    },
+    {
+      "name": "mem:search",
+      "description": "Full-text search across all memories",
+      "command": "engram search \"$1\""
+    },
+    {
+      "name": "mem:context",
+      "description": "Show recent context from previous sessions",
+      "command": "engram context \"$1\""
+    }
+  ],
+  "contextFileName": "GEMINI.md"
+}

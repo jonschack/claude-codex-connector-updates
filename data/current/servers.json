@@ -5898,6 +5898,59 @@
       "Read",
       "Write"
     ],
+    "description": "Zoom connector for Codex",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "zoom": {
+            "id": "asdk_app_69373a13116c819189d046aea1278836"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "zoom",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/zoom",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Zoom",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "zoom",
+    "source_urls": [
+      "https://developers.zoom.us/",
+      "https://github.com/openai/plugins"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
+  },
+  {
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
     "description": "Work with Zotero from Codex: search your library, export BibTeX, insert citations, and import references through the Zotero desktop app.",
     "evidence": [
       {
@@ -6131,7 +6184,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.4.5"
+        "version": "1.4.6"
       }
     },
     "name": "aegis",
@@ -6640,7 +6693,7 @@
         "contextFileName": "AGENTS.md",
         "description": "Portable development skills for Claude Code, Codex CLI, Gemini CLI, and Pi \u2014 code review, language tooling, infrastructure, testing, and more",
         "name": "alexei-led-cc-thingz",
-        "version": "4.7.0"
+        "version": "4.8.1"
       }
     },
     "name": "alexei-led-cc-thingz",
@@ -11032,7 +11085,7 @@
         "license": "MIT",
         "name": "everything-gemini-code",
         "repository": "https://github.com/Jamkris/everything-gemini-code.git",
-        "version": "1.3.13"
+        "version": "1.3.14"
       }
     },
     "name": "everything-gemini-code",
@@ -16149,7 +16202,7 @@
         "name": "oh-my-gemini-cli",
         "settings": [],
         "sourceUrl": "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
-        "version": "0.8.5"
+        "version": "0.8.6"
       }
     },
     "name": "oh-my-gemini-cli",
@@ -17140,7 +17193,7 @@
             "name": "PostHog MCP URL"
           }
         ],
-        "version": "1.0.19"
+        "version": "1.0.20"
       },
       "mcp_server": {
         "args": [
@@ -18220,7 +18273,7 @@
           "skills/root/SKILL.md",
           "skills/mcp-local-rag/SKILL.md"
         ],
-        "version": "2.5.1"
+        "version": "2.6.0"
       },
       "mcp_server": {
         "args": [
@@ -18293,7 +18346,7 @@
           "skills/root/SKILL.md",
           "skills/mcp-local-rag/SKILL.md"
         ],
-        "version": "2.5.1"
+        "version": "2.6.0"
       },
       "mcp_server": {
         "args": [
@@ -19930,7 +19983,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/Nemo-G/unity-extensions",
-      "https://raw.githubusercontent.com/Nemo-G/unity-extensions/master/gemini-extension.json"
+      "https://raw.githubusercontent.com/Nemo-G/unity-extensions/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"

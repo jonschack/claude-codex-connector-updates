@@ -1,0 +1,28 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "Bridge Telegram messages to Gemini CLI for remote coding agent access",
+  "contextFileName": "GEMINI.md",
+  "settings": [
+    {
+      "name": "Telegram Bot Token",
+      "description": "Bot token from @BotFather on Telegram",
+      "envVariable": "TELEGRAM_BOT_TOKEN"
+    },
+    {
+      "name": "Allowed User IDs",
+      "description": "Comma-separated Telegram user IDs allowed to interact (leave empty to allow all)",
+      "envVariable": "ALLOWED_USER_IDS"
+    },
+    {
+      "name": "Working Directory",
+      "description": "Directory where Gemini CLI operates when invoked from Telegram",
+      "envVariable": "GEMINI_WORKING_DIR"
+    },
+    {
+      "name": "Approval Mode",
+      "description": "Tool approval mode: default, auto_edit, or yolo",
+      "envVariable": "GEMINI_APPROVAL_MODE"
+    }
+  ]
+}

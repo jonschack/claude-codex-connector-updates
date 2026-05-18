@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "confidence": "high",
+    "current_hash": "544b19b20fbcc17bd5dbd2a3e01f9d3c0c5cd68cd0b8411ecb1547f393da7394",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 68,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-18",
+    "server_id": "zoom",
+    "summary": "New write-capable codex plugin: Zoom",
+    "tool_name": null
+  }
+]

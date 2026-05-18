@@ -1,0 +1,34 @@
+{
+  "author": "[REDACTED]",
+  "description": "Remotion video creation skills \u2014 best practices, animations, audio, captions, 3D, and more for building programmatic videos with React.",
+  "homepage": "https://remotion.dev",
+  "interface": {
+    "brandColor": "#0B84F3",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "category": "Design",
+    "composerIcon": "./assets/icon.png",
+    "defaultPrompt": [
+      "Create an animated chart with 5 bars",
+      "Make an animated call-to-action subscribe button for our YouTube channel",
+      "Use Remotion to add captions and audio to a video composition."
+    ],
+    "developerName": "Remotion",
+    "displayName": "Remotion",
+    "logo": "./assets/logo.png",
+    "longDescription": "Build videos programmatically with Remotion and React. Covers animations, timing, audio, captions, 3D, transitions, charts, text effects, and more.",
+    "privacyPolicyURL": "https://remotion.pro/privacy",
+    "screenshots": [],
+    "shortDescription": "Create motion graphics from prompts",
+    "termsOfServiceURL": "https://remotion.pro/terms",
+    "websiteURL": "https://remotion.dev"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "remotion",
+  "repository": "https://github.com/remotion-dev/remotion",
+  "skills": "./skills/",
+  "version": "1.0.0"
+}

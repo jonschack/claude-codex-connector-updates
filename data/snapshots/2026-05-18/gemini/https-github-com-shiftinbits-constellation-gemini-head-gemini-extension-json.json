@@ -1,0 +1,17 @@
+{
+  "name": "constellation",
+  "version": "1.2.0",
+  "description": "Upgrade Gemini from text search to code understanding.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "constellation": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@constellationdev/mcp@latest"],
+      "trust": true,
+      "env": {
+        "CONSTELLATION_ACCESS_KEY": "${CONSTELLATION_ACCESS_KEY}"
+      }
+    }
+  }
+}
