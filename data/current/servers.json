@@ -6399,7 +6399,7 @@
         "contextFileName": "AGENTS.md",
         "description": "A collection of skills for agentic coding tools: next-ticket, get-it-right, code-review, apply-review, pr, ship, convert-worktree, triage-bugs, triage-product, triage-architecture, update-deps, compress-markdown",
         "name": "agentic-toolkit",
-        "version": "0.11.0"
+        "version": "0.12.0"
       }
     },
     "name": "agentic-toolkit",
@@ -7210,6 +7210,55 @@
   },
   {
     "capabilities": [],
+    "description": "Agent-first CLI for trading crypto, stocks, forex, and derivatives on BitMEX.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "contextFileName": "CONTEXT.md",
+        "description": "Agent-first CLI for trading crypto, stocks, forex, and derivatives on BitMEX.",
+        "mcpServers": {
+          "bitmex": {
+            "args": [
+              "mcp",
+              "-s",
+              "all"
+            ],
+            "command": "bitmex"
+          }
+        },
+        "name": "bitmex-cli",
+        "version": "0.1.0"
+      },
+      "mcp_server": {
+        "args": [
+          "mcp",
+          "-s",
+          "all"
+        ],
+        "command": "bitmex"
+      }
+    },
+    "name": "bitmex-cli: bitmex",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "bitmex-cli-bitmex",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/BitMEX/bitmex-cli",
+      "https://raw.githubusercontent.com/BitMEX/bitmex-cli/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Control Blender using Gemini via the Model Context Protocol",
     "evidence": [],
     "metadata": {
@@ -7513,6 +7562,40 @@
   },
   {
     "capabilities": [],
+    "description": "CARTO skills for Gemini CLI: connect, explore live schemas, write spatial SQL, manage workflows, subscribe to Data Observatory data, and administer the org.",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
+      }
+    ],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "CARTO skills for Gemini CLI: connect, explore live schemas, write spatial SQL, manage workflows, subscribe to Data Observatory data, and administer the org.",
+        "name": "carto-skills",
+        "plan": {
+          "directory": ".gemini/plans"
+        }
+      }
+    },
+    "name": "carto-skills",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "carto-skills",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/CartoDB/agent-skills",
+      "https://raw.githubusercontent.com/CartoDB/agent-skills/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "medium"
+  },
+  {
+    "capabilities": [],
     "description": "High-performance multiplexing bridge between MCP and LSP servers.",
     "evidence": [],
     "metadata": {
@@ -7582,58 +7665,6 @@
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
-              "name": "caveman",
-              "version": "1.0.1"
-            }
-          },
-          "name": "caveman",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "caveman",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/aayu22809/crackstack",
-            "https://raw.githubusercontent.com/aayu22809/crackstack/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Ultra-compressed communication mode. Cuts ~75% of tokens while keeping full technical accuracy by speaking like a caveman.",
-              "name": "caveman",
-              "version": "1.0.1"
-            }
-          },
-          "name": "caveman",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "caveman",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/anthonystepvoy/caveman-opencode",
-            "https://raw.githubusercontent.com/anthonystepvoy/caveman-opencode/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
         }
       ],
       "gallery_text_seen": true,
@@ -7653,12 +7684,8 @@
       "https://geminicli.com/extensions/",
       "https://github.com/ArogyaReddy/https-github.com-JuliusBrussee-caveman",
       "https://github.com/JuliusBrussee/caveman",
-      "https://github.com/aayu22809/crackstack",
-      "https://github.com/anthonystepvoy/caveman-opencode",
       "https://raw.githubusercontent.com/ArogyaReddy/https-github.com-JuliusBrussee-caveman/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/JuliusBrussee/caveman/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/aayu22809/crackstack/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/anthonystepvoy/caveman-opencode/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/JuliusBrussee/caveman/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -7917,66 +7944,6 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "Tencent CloudBase MCP Server - AI-powered development toolkit for building and deploying full-stack applications, mini-programs, and cloud functions to Tencent CloudBase platform",
-          "evidence": [],
-          "metadata": {
-            "discovery": {
-              "ok": false,
-              "reason": "local_or_unconfigured_mcp_discovery_deferred"
-            },
-            "excludeTools": null,
-            "includeTools": null,
-            "manifest": {
-              "author": "[REDACTED]",
-              "contextFileName": "config/.gemini/GEMINI.md",
-              "description": "Tencent CloudBase MCP Server - AI-powered development toolkit for building and deploying full-stack applications, mini-programs, and cloud functions to Tencent CloudBase platform",
-              "homepage": "https://github.com/TencentCloudBase/CloudBase-AI-ToolKit",
-              "license": "MIT",
-              "mcpServers": {
-                "cloudbase": {
-                  "args": [
-                    "npm-global-exec@latest",
-                    "@cloudbase/cloudbase-mcp@latest"
-                  ],
-                  "command": "npx",
-                  "cwd": "${extensionPath}",
-                  "env": {
-                    "INTEGRATION_IDE": "Gemini"
-                  }
-                }
-              },
-              "name": "cloudbase-ai-toolkit",
-              "version": "1.8.44"
-            },
-            "mcp_server": {
-              "args": [
-                "npm-global-exec@latest",
-                "@cloudbase/cloudbase-mcp@latest"
-              ],
-              "command": "npx",
-              "cwd": "${extensionPath}",
-              "env": {
-                "INTEGRATION_IDE": "Gemini"
-              }
-            }
-          },
-          "name": "cloudbase-ai-toolkit: cloudbase",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "cloudbase-ai-toolkit-cloudbase",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/TencentCloudBase/CloudBase-MCP",
-            "https://raw.githubusercontent.com/TencentCloudBase/CloudBase-MCP/HEAD/gemini-extension.json"
-          ],
-          "transport": "stdio",
-          "write_confidence": "unknown"
-        }
-      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -8021,9 +7988,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/Beltran12138/cambodia-toilet-monopoly",
-      "https://github.com/TencentCloudBase/CloudBase-MCP",
-      "https://raw.githubusercontent.com/Beltran12138/cambodia-toilet-monopoly/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/TencentCloudBase/CloudBase-MCP/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/Beltran12138/cambodia-toilet-monopoly/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -10585,6 +10550,61 @@
         "contextFileName": "GEMINI.md",
         "description": "Corvus Star host-native extension with Hall discovery, Augury routing, and kernel-backed CStar control.",
         "mcpServers": {
+          "cstar-kernel": {
+            "args": [
+              "bin/cstar-kernel-mcp.js"
+            ],
+            "command": "node",
+            "cwd": ".",
+            "env": {
+              "GEMINI_CLI_ACTIVE": "true"
+            },
+            "note": "CStar kernel MCP \u2014 20-tool surface. See docs/integrations/cstar-kernel-mcp.md for the full API reference."
+          }
+        },
+        "name": "corvus-star",
+        "version": "1.0.0"
+      },
+      "mcp_server": {
+        "args": [
+          "bin/cstar-kernel-mcp.js"
+        ],
+        "command": "node",
+        "cwd": ".",
+        "env": {
+          "GEMINI_CLI_ACTIVE": "true"
+        },
+        "note": "CStar kernel MCP \u2014 20-tool surface. See docs/integrations/cstar-kernel-mcp.md for the full API reference."
+      }
+    },
+    "name": "corvus-star: cstar-kernel",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "corvus-star-cstar-kernel",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Clinscott/CStar",
+      "https://raw.githubusercontent.com/Clinscott/CStar/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Corvus Star host-native extension with Hall discovery, Augury routing, and kernel-backed CStar control.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Corvus Star host-native extension with Hall discovery, Augury routing, and kernel-backed CStar control.",
+        "mcpServers": {
           "corvus-control": {
             "args": [
               "scripts/run-tsx.mjs",
@@ -11124,7 +11144,7 @@
           }
         },
         "name": "falcon-mcp",
-        "version": "0.9.0"
+        "version": "0.10.0"
       },
       "mcp_server": {
         "args": [
@@ -11885,6 +11905,40 @@
       "https://raw.githubusercontent.com/Rishabjs03/gemini-supermemory/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Multi-agent development environment with tmux orchestration and persistent mailboxes.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "author": "[REDACTED]",
+        "description": "Multi-agent development environment with tmux orchestration and persistent mailboxes.",
+        "engines": {
+          "gemini": ">=0.42.0"
+        },
+        "license": "MIT",
+        "name": "gemini-teams",
+        "repository": {
+          "type": "git",
+          "url": "https://github.com/Synaptic-Weave/gemini-teams.git"
+        },
+        "version": "0.1.0"
+      }
+    },
+    "name": "gemini-teams",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "gemini-teams",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Synaptic-Weave/gemini-teams",
+      "https://raw.githubusercontent.com/Synaptic-Weave/gemini-teams/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
     "write_confidence": "unknown"
   },
   {
@@ -13745,6 +13799,88 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "",
+          "evidence": [],
+          "metadata": {
+            "discovery": {
+              "ok": false,
+              "reason": "local_or_unconfigured_mcp_discovery_deferred"
+            },
+            "excludeTools": null,
+            "includeTools": null,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "mcpServers": {
+                "java": {
+                  "args": [
+                    "-y",
+                    "@sachiewonder/java-jdtls-mcp-server@latest"
+                  ],
+                  "command": "npx",
+                  "cwd": "${workspacePath}"
+                }
+              },
+              "name": "java-jdtls-mcp-server",
+              "settings": [
+                {
+                  "description": "Absolute path to your Eclipse JDT.LS installation directory (e.g., /opt/jdtls).",
+                  "envVar": "JDTLS_HOME",
+                  "name": "JDT.LS Home"
+                },
+                {
+                  "description": "Absolute path to the JDK used to verify and launch JDT.LS (overrides system JAVA_HOME).",
+                  "envVar": "JDTLS_JAVA_HOME",
+                  "name": "Java Home"
+                },
+                {
+                  "description": "JSON array of Java runtimes for different Java versions (e.g., [{\"name\": \"JavaSE-17\", \"path\": \"/path/to/jdk-17\"}]).",
+                  "envVar": "JDTLS_JAVA_RUNTIMES",
+                  "name": "Java Runtimes"
+                },
+                {
+                  "description": "Path to custom Maven user settings.xml.",
+                  "envVar": "JDTLS_MAVEN_USER_SETTINGS",
+                  "name": "Maven User Settings"
+                },
+                {
+                  "description": "Path to custom Maven global settings.xml.",
+                  "envVar": "JDTLS_MAVEN_GLOBAL_SETTINGS",
+                  "name": "Maven Global Settings"
+                },
+                {
+                  "description": "Whether to enable Maven offline mode ('true' or 'false').",
+                  "envVar": "JDTLS_MAVEN_OFFLINE",
+                  "name": "Maven Offline Mode"
+                }
+              ],
+              "version": "1.0.4"
+            },
+            "mcp_server": {
+              "args": [
+                "-y",
+                "@sachiewonder/java-jdtls-mcp-server@latest"
+              ],
+              "command": "npx",
+              "cwd": "${workspacePath}"
+            }
+          },
+          "name": "java-jdtls-mcp-server: java",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "java-jdtls-mcp-server-java",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/SachieWang/java-jdtls-mcp-server",
+            "https://raw.githubusercontent.com/SachieWang/java-jdtls-mcp-server/HEAD/gemini-extension.json"
+          ],
+          "transport": "stdio",
+          "write_confidence": "unknown"
+        }
+      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -13753,7 +13889,7 @@
           "java": {
             "args": [
               "-y",
-              "@sachiewonder/java-jdtls-mcp-server@latest"
+              "@cleverdonaldduck/java-jdtls-mcp-server@latest"
             ],
             "command": "npx",
             "cwd": "${workspacePath}"
@@ -13797,7 +13933,7 @@
       "mcp_server": {
         "args": [
           "-y",
-          "@sachiewonder/java-jdtls-mcp-server@latest"
+          "@cleverdonaldduck/java-jdtls-mcp-server@latest"
         ],
         "command": "npx",
         "cwd": "${workspacePath}"
@@ -13810,7 +13946,9 @@
     "server_id": "java-jdtls-mcp-server-java",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/CleverDonaldDuck/Java-Sentient-MCP",
       "https://github.com/SachieWang/java-jdtls-mcp-server",
+      "https://raw.githubusercontent.com/CleverDonaldDuck/Java-Sentient-MCP/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/SachieWang/java-jdtls-mcp-server/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
@@ -14359,6 +14497,35 @@
           "server_id": "liku",
           "source_urls": [
             "https://geminicli.com/extensions/",
+            "https://github.com/TayDa64/LikuBuddy",
+            "https://raw.githubusercontent.com/TayDa64/LikuBuddy/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        },
+        {
+          "capabilities": [],
+          "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "commands": {
+                "liku": "commands/liku.toml"
+              },
+              "contextFileName": "GEMINI.md",
+              "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
+              "name": "liku",
+              "version": "1.0.0"
+            }
+          },
+          "name": "liku",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "liku",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
             "https://github.com/TayDa64/Liku_AI",
             "https://raw.githubusercontent.com/TayDa64/Liku_AI/HEAD/gemini-extension.json"
           ],
@@ -14371,7 +14538,7 @@
         "commands": {
           "liku": "commands/liku.toml"
         },
-        "contextFileName": "GEMINI.md",
+        "contextFileName": "LIKU-CORE.md",
         "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
         "name": "liku",
         "version": "1.0.0"
@@ -14384,8 +14551,10 @@
     "server_id": "liku",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/TayDa64/Liku-AI",
       "https://github.com/TayDa64/LikuBuddy",
       "https://github.com/TayDa64/Liku_AI",
+      "https://raw.githubusercontent.com/TayDa64/Liku-AI/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/TayDa64/LikuBuddy/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/TayDa64/Liku_AI/HEAD/gemini-extension.json"
     ],
@@ -14419,6 +14588,32 @@
       "https://geminicli.com/extensions/",
       "https://github.com/Elmanda1/pemuda-berprestasi-legacy",
       "https://raw.githubusercontent.com/Elmanda1/pemuda-berprestasi-legacy/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Universal Logseq plugin for AI coding tools \u2014 daily journaling, session logging, quick capture, and knowledge management",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Universal Logseq plugin for AI coding tools \u2014 daily journaling, session logging, quick capture, and knowledge management",
+        "name": "logseq",
+        "version": "1.1.0"
+      }
+    },
+    "name": "logseq",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "logseq",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/KaushalKishorMishra/logseq-plugins",
+      "https://raw.githubusercontent.com/KaushalKishorMishra/logseq-plugins/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -15614,6 +15809,32 @@
   },
   {
     "capabilities": [],
+    "description": "AI ecosystem for mobile development \u2014 skills, specialized agents, and automated pipelines for Android, iOS, KMP, Flutter, and React Native",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "AI ecosystem for mobile development \u2014 skills, specialized agents, and automated pipelines for Android, iOS, KMP, Flutter, and React Native",
+        "name": "mobiai-core",
+        "version": "2.0.0"
+      }
+    },
+    "name": "mobiai-core",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "mobiai-core",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/ArisGuimera/MobiAI-Core",
+      "https://raw.githubusercontent.com/ArisGuimera/MobiAI-Core/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Autonomous Technical Disclosure Document (TDD) generator for IP protection.",
     "evidence": [],
     "metadata": {
@@ -15708,6 +15929,32 @@
     "description": "",
     "evidence": [],
     "metadata": {
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "name": "my-company",
+              "version": "0.0.1"
+            }
+          },
+          "name": "my-company",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "my-company",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/Nabila-nct/my-company",
+            "https://raw.githubusercontent.com/Nabila-nct/my-company/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        }
+      ],
       "gallery_text_seen": true,
       "manifest": {
         "name": "my-company",
@@ -15721,7 +15968,9 @@
     "server_id": "my-company",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/AndresTrujo/my-company",
       "https://github.com/Nabila-nct/my-company",
+      "https://raw.githubusercontent.com/AndresTrujo/my-company/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Nabila-nct/my-company/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
@@ -16162,6 +16411,32 @@
   },
   {
     "capabilities": [],
+    "description": "AI application security \u2014 generate an AI Bill of Materials (AI-SBOM), run static analysis, behavioral validation, and adversarial red-team testing for AI agents and LLM-powered applications. Slash-command exposure is host-dependent and not claimed by this manifest.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "CLAUDE.md",
+        "description": "AI application security \u2014 generate an AI Bill of Materials (AI-SBOM), run static analysis, behavioral validation, and adversarial red-team testing for AI agents and LLM-powered applications. Slash-command exposure is host-dependent and not claimed by this manifest.",
+        "name": "nuguard",
+        "version": "0.5.1"
+      }
+    },
+    "name": "nuguard",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "nuguard",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/NuGuardAI/nuguard",
+      "https://raw.githubusercontent.com/NuGuardAI/nuguard/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Agent skills for NVIDIA cuOpt optimization engine: routing, LP/MILP/QP, installation, and server.",
     "evidence": [],
     "metadata": {
@@ -16188,21 +16463,55 @@
   },
   {
     "capabilities": [],
-    "description": "Context engineering and multi-agent workflow extension for Gemini CLI.",
+    "description": "FCAR-maintained Gemini CLI workflow extension with Antigravity proxy support, Gemini capability routing, and UltraQA gates.",
     "evidence": [],
     "metadata": {
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "Context engineering and multi-agent workflow extension for Gemini CLI.",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/packages/cli/schemas/gemini-extension.json",
+              "author": "[REDACTED]",
+              "contextFileName": "GEMINI.md",
+              "description": "Context engineering and multi-agent workflow extension for Gemini CLI.",
+              "homepage": "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
+              "license": "MIT",
+              "name": "oh-my-gemini-cli",
+              "settings": [],
+              "sourceUrl": "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
+              "version": "0.8.6"
+            }
+          },
+          "name": "oh-my-gemini-cli",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "oh-my-gemini-cli",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
+            "https://raw.githubusercontent.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        }
+      ],
       "gallery_text_seen": true,
       "manifest": {
         "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/packages/cli/schemas/gemini-extension.json",
         "author": "[REDACTED]",
         "contextFileName": "GEMINI.md",
-        "description": "Context engineering and multi-agent workflow extension for Gemini CLI.",
-        "homepage": "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
+        "description": "FCAR-maintained Gemini CLI workflow extension with Antigravity proxy support, Gemini capability routing, and UltraQA gates.",
+        "homepage": "https://github.com/FCAR2025/oh-my-gemini-cli",
         "license": "MIT",
         "name": "oh-my-gemini-cli",
         "settings": [],
-        "sourceUrl": "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
-        "version": "0.8.6"
+        "sourceUrl": "https://github.com/FCAR2025/oh-my-gemini-cli",
+        "version": "0.8.4-fcar.1"
       }
     },
     "name": "oh-my-gemini-cli",
@@ -16212,7 +16521,9 @@
     "server_id": "oh-my-gemini-cli",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/FCAR2025/oh-my-gemini-cli",
       "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
+      "https://raw.githubusercontent.com/FCAR2025/oh-my-gemini-cli/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
@@ -16333,6 +16644,7 @@
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
+        "contextFileName": "GEMINI.md",
         "description": "OS\u30c7\u30b9\u30af\u30c8\u30c3\u30d7\u901a\u77e5\u3068Discord Webhook\u901a\u77e5\u3092\u9001\u4fe1\u3059\u308bMCP\u30b5\u30fc\u30d0\u30fc",
         "mcpServers": {
           "oshirase": {
@@ -16897,6 +17209,159 @@
   },
   {
     "capabilities": [],
+    "description": "",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "mcpServers": {
+          "paddle-docs": {
+            "httpUrl": "https://paddlehq.mcp.kapa.ai"
+          },
+          "paddle-live": {
+            "headers": {
+              "Authorization": "[REDACTED]"
+            },
+            "httpUrl": "https://mcp.paddle.com/mcp"
+          },
+          "paddle-sandbox": {
+            "headers": {
+              "Authorization": "[REDACTED]"
+            },
+            "httpUrl": "https://sandbox-mcp.paddle.com/mcp"
+          }
+        },
+        "name": "paddle",
+        "version": "0.1.0"
+      },
+      "mcp_server": {
+        "httpUrl": "https://paddlehq.mcp.kapa.ai"
+      }
+    },
+    "name": "paddle: paddle-docs",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "paddle-paddle-docs",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/PaddleHQ/paddle-agent-skills",
+      "https://raw.githubusercontent.com/PaddleHQ/paddle-agent-skills/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "mcpServers": {
+          "paddle-docs": {
+            "httpUrl": "https://paddlehq.mcp.kapa.ai"
+          },
+          "paddle-live": {
+            "headers": {
+              "Authorization": "[REDACTED]"
+            },
+            "httpUrl": "https://mcp.paddle.com/mcp"
+          },
+          "paddle-sandbox": {
+            "headers": {
+              "Authorization": "[REDACTED]"
+            },
+            "httpUrl": "https://sandbox-mcp.paddle.com/mcp"
+          }
+        },
+        "name": "paddle",
+        "version": "0.1.0"
+      },
+      "mcp_server": {
+        "headers": {
+          "Authorization": "[REDACTED]"
+        },
+        "httpUrl": "https://mcp.paddle.com/mcp"
+      }
+    },
+    "name": "paddle: paddle-live",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "paddle-paddle-live",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/PaddleHQ/paddle-agent-skills",
+      "https://raw.githubusercontent.com/PaddleHQ/paddle-agent-skills/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "mcpServers": {
+          "paddle-docs": {
+            "httpUrl": "https://paddlehq.mcp.kapa.ai"
+          },
+          "paddle-live": {
+            "headers": {
+              "Authorization": "[REDACTED]"
+            },
+            "httpUrl": "https://mcp.paddle.com/mcp"
+          },
+          "paddle-sandbox": {
+            "headers": {
+              "Authorization": "[REDACTED]"
+            },
+            "httpUrl": "https://sandbox-mcp.paddle.com/mcp"
+          }
+        },
+        "name": "paddle",
+        "version": "0.1.0"
+      },
+      "mcp_server": {
+        "headers": {
+          "Authorization": "[REDACTED]"
+        },
+        "httpUrl": "https://sandbox-mcp.paddle.com/mcp"
+      }
+    },
+    "name": "paddle: paddle-sandbox",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "paddle-paddle-sandbox",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/PaddleHQ/paddle-agent-skills",
+      "https://raw.githubusercontent.com/PaddleHQ/paddle-agent-skills/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Evidence-aware literature screening for coding agents. Search candidate papers, screen abstracts conservatively, review full text when available, and emit structured JSON.",
     "evidence": [],
     "metadata": {
@@ -17159,6 +17624,33 @@
     ],
     "transport": "stdio",
     "write_confidence": "medium"
+  },
+  {
+    "capabilities": [],
+    "description": "Use when starting a product initiative, writing or reviewing a PRD, clarifying ambiguous requirements, planning a feature, or comparing product trade-offs.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Use when starting a product initiative, writing or reviewing a PRD, clarifying ambiguous requirements, planning a feature, or comparing product trade-offs.",
+        "license": "MIT",
+        "name": "pm-solution-design",
+        "version": "2.0.1"
+      }
+    },
+    "name": "pm-solution-design",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "pm-solution-design",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/StayerYao/PM-Solution-Design-Skills",
+      "https://raw.githubusercontent.com/StayerYao/PM-Solution-Design-Skills/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
   },
   {
     "capabilities": [],
@@ -18028,6 +18520,139 @@
       "https://raw.githubusercontent.com/ankitchiplunkar/refactor/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "A curated collection of high-signal engineering and professional agent skills distilled from real collaborative sessions.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "agents": [
+          "agents/adversarial-reviewer.md"
+        ],
+        "contextFileName": "EXTENSION-GEMINI.md",
+        "description": "A curated collection of high-signal engineering and professional agent skills distilled from real collaborative sessions.",
+        "license": "MIT",
+        "mcpServers": {
+          "github": {
+            "args": [
+              "${extensionPath}/skills/interacting-with-github/scripts/server.js"
+            ],
+            "command": "node",
+            "env": {
+              "GH_TOKEN": "[REDACTED]",
+              "GITHUB_TOKEN": "[REDACTED]"
+            }
+          },
+          "gitlab": {
+            "args": [
+              "${extensionPath}/skills/interacting-with-gitlab/scripts/server.js"
+            ],
+            "command": "node",
+            "env": {
+              "GITLAB_TOKEN": "[REDACTED]"
+            }
+          }
+        },
+        "name": "refined-agent-skills",
+        "publisher": "jeremy sebayhi",
+        "version": "0.3.0"
+      },
+      "mcp_server": {
+        "args": [
+          "${extensionPath}/skills/interacting-with-github/scripts/server.js"
+        ],
+        "command": "node",
+        "env": {
+          "GH_TOKEN": "[REDACTED]",
+          "GITHUB_TOKEN": "[REDACTED]"
+        }
+      }
+    },
+    "name": "refined-agent-skills: github",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "refined-agent-skills-github",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Jsebayhi/refined-agent-skills",
+      "https://raw.githubusercontent.com/Jsebayhi/refined-agent-skills/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "A curated collection of high-signal engineering and professional agent skills distilled from real collaborative sessions.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "agents": [
+          "agents/adversarial-reviewer.md"
+        ],
+        "contextFileName": "EXTENSION-GEMINI.md",
+        "description": "A curated collection of high-signal engineering and professional agent skills distilled from real collaborative sessions.",
+        "license": "MIT",
+        "mcpServers": {
+          "github": {
+            "args": [
+              "${extensionPath}/skills/interacting-with-github/scripts/server.js"
+            ],
+            "command": "node",
+            "env": {
+              "GH_TOKEN": "[REDACTED]",
+              "GITHUB_TOKEN": "[REDACTED]"
+            }
+          },
+          "gitlab": {
+            "args": [
+              "${extensionPath}/skills/interacting-with-gitlab/scripts/server.js"
+            ],
+            "command": "node",
+            "env": {
+              "GITLAB_TOKEN": "[REDACTED]"
+            }
+          }
+        },
+        "name": "refined-agent-skills",
+        "publisher": "jeremy sebayhi",
+        "version": "0.3.0"
+      },
+      "mcp_server": {
+        "args": [
+          "${extensionPath}/skills/interacting-with-gitlab/scripts/server.js"
+        ],
+        "command": "node",
+        "env": {
+          "GITLAB_TOKEN": "[REDACTED]"
+        }
+      }
+    },
+    "name": "refined-agent-skills: gitlab",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "refined-agent-skills-gitlab",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Jsebayhi/refined-agent-skills",
+      "https://raw.githubusercontent.com/Jsebayhi/refined-agent-skills/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
     "write_confidence": "unknown"
   },
   {
@@ -19038,6 +19663,52 @@
   },
   {
     "capabilities": [],
+    "description": "",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "mcpServers": {
+          "socraticode": {
+            "args": [
+              "-y",
+              "socraticode"
+            ],
+            "command": "npx"
+          }
+        },
+        "name": "socraticode",
+        "version": "1.4.1"
+      },
+      "mcp_server": {
+        "args": [
+          "-y",
+          "socraticode"
+        ],
+        "command": "npx"
+      }
+    },
+    "name": "socraticode: socraticode",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "socraticode-socraticode",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/DorianGallo/SocratiCode-local",
+      "https://raw.githubusercontent.com/DorianGallo/SocratiCode-local/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Priority-1 Solon SFS Gemini CLI extension \u2014 `sfs <subcommand>` routes through the globally installed `sfs` binary (Homebrew/Scoop). When Solon work is in scope, route through SFS first.",
     "evidence": [],
     "metadata": {
@@ -19154,7 +19825,7 @@
           }
         },
         "name": "sonarqube",
-        "version": "2.0.0"
+        "version": "2.1.0"
       },
       "mcp_server": {
         "args": [
@@ -19341,7 +20012,7 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
-              "version": "5.1.0"
+              "version": "5.0.7"
             }
           },
           "name": "superpowers",
@@ -19351,8 +20022,34 @@
           "server_id": "superpowers",
           "source_urls": [
             "https://geminicli.com/extensions/",
-            "https://github.com/Quon/superpowers",
-            "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
+            "https://github.com/JustinDube21/superpowers",
+            "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        },
+        {
+          "capabilities": [],
+          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
+              "name": "superpowers",
+              "version": "5.0.6"
+            }
+          },
+          "name": "superpowers",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "superpowers",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/QtImM/mySuperPower",
+            "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json"
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
@@ -19377,8 +20074,8 @@
           "server_id": "superpowers",
           "source_urls": [
             "https://geminicli.com/extensions/",
-            "https://github.com/WeekendGoCo/WeekendGo_W",
-            "https://raw.githubusercontent.com/WeekendGoCo/WeekendGo_W/HEAD/gemini-extension.json"
+            "https://github.com/Quon/superpowers",
+            "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
@@ -19389,7 +20086,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "superpowers",
-        "version": "5.0.6"
+        "version": "0.1.3"
       }
     },
     "name": "superpowers",
@@ -19399,12 +20096,14 @@
     "server_id": "superpowers",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/FuZhiyu/superRA",
+      "https://github.com/JustinDube21/superpowers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
-      "https://github.com/WeekendGoCo/WeekendGo_W",
+      "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/WeekendGoCo/WeekendGo_W/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -19418,58 +20117,6 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "Universal skills and agent framework for coding agents",
-          "evidence": [],
-          "metadata": {
-            "discovery": {
-              "ok": false,
-              "reason": "local_or_unconfigured_mcp_discovery_deferred"
-            },
-            "excludeTools": null,
-            "includeTools": null,
-            "manifest": {
-              "author": "[REDACTED]",
-              "description": "Universal skills and agent framework for coding agents",
-              "mcpServers": {
-                "supremepower": {
-                  "args": [
-                    "mcp-server/dist/server.js"
-                  ],
-                  "command": "node",
-                  "cwd": "${extensionPath}",
-                  "timeout": 5000
-                }
-              },
-              "name": "supremepower",
-              "postInstall": "bash scripts/install.sh",
-              "version": "2.0.0"
-            },
-            "mcp_server": {
-              "args": [
-                "mcp-server/dist/server.js"
-              ],
-              "command": "node",
-              "cwd": "${extensionPath}",
-              "timeout": 5000
-            }
-          },
-          "name": "supremepower: supremepower",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "supremepower-supremepower",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/abudhahir/superpowers",
-            "https://raw.githubusercontent.com/abudhahir/superpowers/HEAD/gemini-extension.json"
-          ],
-          "transport": "stdio",
-          "write_confidence": "unknown"
-        }
-      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -19506,9 +20153,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/AvaTar-ArTs/my-supremepowers",
-      "https://github.com/abudhahir/superpowers",
-      "https://raw.githubusercontent.com/AvaTar-ArTs/my-supremepowers/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/abudhahir/superpowers/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/AvaTar-ArTs/my-supremepowers/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -19847,6 +20492,50 @@
       "https://raw.githubusercontent.com/Synaptic-Weave/total-recall-gemini/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Weaving long-term memory and semantic intelligence into the Gemini CLI. A Synaptic Weave Utility.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "description": "Weaving long-term memory and semantic intelligence into the Gemini CLI. A Synaptic Weave Utility.",
+        "mcpServers": {
+          "total-recall": {
+            "args": [
+              "${extensionPath}/scripts/mcp_server.py"
+            ],
+            "command": "python3"
+          }
+        },
+        "name": "total-recall-gemini",
+        "version": "0.2.0"
+      },
+      "mcp_server": {
+        "args": [
+          "${extensionPath}/scripts/mcp_server.py"
+        ],
+        "command": "python3"
+      }
+    },
+    "name": "total-recall-gemini: total-recall",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "total-recall-gemini-total-recall",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Synaptic-Weave/total-recall-gemini",
+      "https://raw.githubusercontent.com/Synaptic-Weave/total-recall-gemini/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
     "write_confidence": "unknown"
   },
   {
@@ -24066,6 +24755,51 @@
       "https://geminicli.com/extensions/",
       "https://github.com/Jakedismo/visual-explainer-extension",
       "https://raw.githubusercontent.com/Jakedismo/visual-explainer-extension/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Agent-first CLI for trading perpetual futures on Phoenix DEX (Solana). Paper trading by default; live trading opt-in.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "contextFileName": "CONTEXT.md",
+        "description": "Agent-first CLI for trading perpetual futures on Phoenix DEX (Solana). Paper trading by default; live trading opt-in.",
+        "mcpServers": {
+          "vulcan": {
+            "args": [
+              "mcp"
+            ],
+            "command": "vulcan"
+          }
+        },
+        "name": "vulcan",
+        "version": "0.5.0"
+      },
+      "mcp_server": {
+        "args": [
+          "mcp"
+        ],
+        "command": "vulcan"
+      }
+    },
+    "name": "vulcan: vulcan",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "vulcan-vulcan",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Ellipsis-Labs/vulcan-cli",
+      "https://raw.githubusercontent.com/Ellipsis-Labs/vulcan-cli/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"

@@ -1,25 +1,21 @@
 [
   {
-    "confidence": "high",
-    "current_hash": "544b19b20fbcc17bd5dbd2a3e01f9d3c0c5cd68cd0b8411ecb1547f393da7394",
+    "confidence": "medium",
+    "current_hash": "60e1c66833085e77c4d668e49b430e6045190df4d9546915ea9787c7a2086248",
     "event_type": "new_write_server",
     "evidence": [
       {
-        "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Interactive",
-          "Read",
-          "Write"
-        ]
+        "confidence": "medium",
+        "kind": "catalog_description",
+        "value": "action-oriented description"
       }
     ],
-    "id": 68,
+    "id": 69,
     "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-05-18",
-    "server_id": "zoom",
-    "summary": "New write-capable codex plugin: Zoom",
+    "provider": "gemini",
+    "run_date": "2026-05-19",
+    "server_id": "carto-skills",
+    "summary": "New write-capable gemini extension: carto-skills",
     "tool_name": null
   }
 ]

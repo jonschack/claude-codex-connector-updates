@@ -1,28 +1,26 @@
-# MCP Write-Capability Report: 2026-05-18
+# MCP Write-Capability Report: 2026-05-19
 
 ## Write Alerts
 
 | Event | Provider | Server | Tool | Confidence | Summary |
 | --- | --- | --- | --- | --- | --- |
-| new_write_server | codex | `zoom` |  | high | New write-capable codex plugin: Zoom |
+| new_write_server | gemini | `carto-skills` |  | medium | New write-capable gemini extension: carto-skills |
 
 ## Coverage
 
-- Normalized servers: 366
-- Write-capable servers: 62
+- Normalized servers: 378
+- Write-capable servers: 63
 - claude: 24 servers, 9 write-capable
 - codex: 124 servers, 46 write-capable
-- gemini: 211 servers, 7 write-capable
+- gemini: 223 servers, 8 write-capable
 - grok: 7 servers, 0 write-capable
 
 ## Crawl Issues
 
-- gemini: 3 issue(s)
+- gemini: 1 issue(s)
 - grok: 1 issue(s)
 
 - `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
-- `gemini` `warning` `https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith`: Manifest not found or invalid after probing common paths
-- `gemini` `warning` `https://github.com/ahundt/autorun`: Manifest not found or invalid after probing common paths
 - `grok` `warning` `https://x.ai/news/grok-connectors`: HTTP Error 403: Forbidden
 
 ## Notes

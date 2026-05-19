@@ -1,0 +1,52 @@
+{
+  "name": "nano-banana-skills",
+  "description": "A collection of AI agent skills designed for Nano Banana, focusing on advanced image generation capabilities.",
+  "version": "1.0.0",
+  "skills": [
+    {
+      "name": "anime-to-life",
+      "description": "Transforms anime, art, or 3D rendering images into photorealistic cosplay-style photographs using a specific JSON-based prompt structure.",
+      "path": "skills/anime-to-life/SKILL.md"
+    },
+    {
+      "name": "character-reference-sheet",
+      "description": "Generates a 3:2 aspect ratio character reference sheet with three columns: detailed portrait, full-body front view, and full-body back view, mirroring the exact style and material details of the source.",
+      "path": "skills/character-reference-sheet/SKILL.md"
+    },
+    {
+      "name": "figure-to-life",
+      "description": "Converts figure photos to photorealistic human cosplayer images using a strict JSON-based reasoning mandate.",
+      "path": "skills/figure-to-life/SKILL.md"
+    },
+    {
+      "name": "imax-portrait",
+      "description": "Expands and recomposes images into an IMAX 70mm portrait style (1.43:1 aspect ratio) with high-fidelity Christopher Nolan-esque aesthetics.",
+      "path": "skills/imax-portrait/SKILL.md"
+    },
+    {
+      "name": "j-cover",
+      "description": "Designs J-Media magazine covers via 20% outpainting, auto-sampling outfit palettes, and adding bilingual typography with barcodes and lore-accurate details.",
+      "path": "skills/j-cover/SKILL.md"
+    },
+    {
+      "name": "j-idol",
+      "description": "Creates photorealistic J-Idol gravure portraits featuring 2:3 knee-up framing, dreamy bokeh, moist skin textures, and professional rim lighting.",
+      "path": "skills/j-idol/SKILL.md"
+    },
+    {
+      "name": "photo-restoration",
+      "description": "Restores vintage and blurry photos to high-definition 8k images while preserving identity.",
+      "path": "skills/photo-restoration/SKILL.md"
+    },
+    {
+      "name": "real-mecha",
+      "description": "Converts 2D/anime mecha art into photorealistic 3D/real-world visualizations with high-fidelity material textures.",
+      "path": "skills/real-mecha/SKILL.md"
+    },
+    {
+      "name": "j-poses",
+      "description": "A library of Japanese style photography poses.",
+      "path": "skills/j-poses/SKILL.md"
+    }
+  ]
+}

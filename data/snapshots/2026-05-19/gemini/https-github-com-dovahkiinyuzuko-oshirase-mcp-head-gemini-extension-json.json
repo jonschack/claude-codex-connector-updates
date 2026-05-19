@@ -1,0 +1,34 @@
+{
+  "name": "oshirase-mcp",
+  "version": "0.1.0",
+  "description": "OSデスクトップ通知とDiscord Webhook通知を送信するMCPサーバー",
+  "mcpServers": {
+    "oshirase": {
+      "command": "${extensionPath}${/}oshirase-mcp${binExtension}",
+      "args": ["--mcp"],
+      "env": {
+        "DISCORD_WEBHOOK_URL": "${settings.discord_webhook_url}",
+        "OS_NOTIFICATION_DEFAULT_TITLE": "${settings.default_title}"
+      }
+    }
+  },
+  "settings": [
+    {
+      "name": "discord_webhook_url",
+      "label": "Discord Webhook URL",
+      "description": "Discordに通知を送信するためのWebhook URL（任意）",
+      "type": "string",
+      "required": false,
+      "sensitive": true
+    },
+    {
+      "name": "default_title",
+      "label": "デフォルトの通知タイトル",
+      "description": "通知に表示されるデフォルトのタイトル",
+      "type": "string",
+      "default": "Gemini CLI",
+      "required": true
+    }
+  ],
+  "contextFileName": "GEMINI.md"
+}
