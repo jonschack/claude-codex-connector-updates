@@ -1,5 +1,5 @@
 {
-  "event_count": 1,
+  "event_count": 0,
   "issues": [
     {
       "message": "Manifest not found or invalid after probing common paths",
@@ -8,13 +8,19 @@
       "source": "https://github.com/OutlineDriven/outline-driven-development"
     },
     {
+      "message": "The read operation timed out",
+      "provider": "claude",
+      "severity": "warning",
+      "source": "https://claude.com/connectors/attio"
+    },
+    {
       "message": "HTTP Error 403: Forbidden",
       "provider": "grok",
       "severity": "warning",
       "source": "https://x.ai/news/grok-connectors"
     }
   ],
-  "run_date": "2026-05-19",
+  "run_date": "2026-05-20",
   "server_count": 378,
   "tool_count": 8
 }

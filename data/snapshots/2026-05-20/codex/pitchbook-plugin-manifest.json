@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "PitchBook provides structured access to private capital market data across  companies, investors, funds, de...",
+  "homepage": "https://www.pitchbook.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Use PitchBook to help with this task"
+    ],
+    "developerName": "PitchBook",
+    "displayName": "PitchBook",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "PitchBook provides structured access to private capital market data across  companies, investors, funds, deals, limited partners, and people. It returns normalized fields such as  firmographics, financing rounds, deal terms, ownership information, financials, fund performance  metrics when available, LP commitments, investor portfolios, and team details with associated source  metadata. Use this connector when a query requires factual private market information or retrieval of  structured data related to private companies, investment activity, or market participants. It supports  queries that involve identifying entities, summarizing historical activity, or assembling datasets for  further analysis.",
+    "privacyPolicyURL": "https://www.pitchbook.com/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "PitchBook provides structured access to private capital market data across  companies, investors, funds, de...",
+    "termsOfServiceURL": "https://www.pitchbook.com/terms-of-use",
+    "websiteURL": "https://www.pitchbook.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "pitchbook",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

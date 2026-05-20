@@ -1,26 +1,26 @@
-# MCP Write-Capability Report: 2026-05-19
+# MCP Write-Capability Report: 2026-05-20
 
 ## Write Alerts
 
-| Event | Provider | Server | Tool | Confidence | Summary |
-| --- | --- | --- | --- | --- | --- |
-| new_write_server | gemini | `carto-skills` |  | medium | New write-capable gemini extension: carto-skills |
+No high- or medium-confidence write-capability changes were detected today.
 
 ## Coverage
 
 - Normalized servers: 378
-- Write-capable servers: 63
-- claude: 24 servers, 9 write-capable
+- Write-capable servers: 62
+- claude: 23 servers, 8 write-capable
 - codex: 124 servers, 46 write-capable
-- gemini: 223 servers, 8 write-capable
+- gemini: 224 servers, 8 write-capable
 - grok: 7 servers, 0 write-capable
 
 ## Crawl Issues
 
+- claude: 1 issue(s)
 - gemini: 1 issue(s)
 - grok: 1 issue(s)
 
 - `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
+- `claude` `warning` `https://claude.com/connectors/attio`: The read operation timed out
 - `grok` `warning` `https://x.ai/news/grok-connectors`: HTTP Error 403: Forbidden
 
 ## Notes

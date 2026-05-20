@@ -5898,7 +5898,7 @@
       "Read",
       "Write"
     ],
-    "description": "Zoom connector for Codex",
+    "description": "Connect Codex to Zoom meeting context and build Zoom apps, bots, API integrations, SDK workflows, webhooks, and automations.",
     "evidence": [
       {
         "confidence": "high",
@@ -5940,7 +5940,7 @@
     "server_id": "zoom",
     "source_urls": [
       "https://developers.zoom.us/",
-      "https://github.com/openai/plugins"
+      "https://github.com/zoom/zoom-plugin-codex"
     ],
     "transport": "app",
     "write_confidence": "high"
@@ -7944,6 +7944,66 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "Tencent CloudBase MCP Server - AI-powered development toolkit for building and deploying full-stack applications, mini-programs, and cloud functions to Tencent CloudBase platform",
+          "evidence": [],
+          "metadata": {
+            "discovery": {
+              "ok": false,
+              "reason": "local_or_unconfigured_mcp_discovery_deferred"
+            },
+            "excludeTools": null,
+            "includeTools": null,
+            "manifest": {
+              "author": "[REDACTED]",
+              "contextFileName": "config/.gemini/GEMINI.md",
+              "description": "Tencent CloudBase MCP Server - AI-powered development toolkit for building and deploying full-stack applications, mini-programs, and cloud functions to Tencent CloudBase platform",
+              "homepage": "https://github.com/TencentCloudBase/CloudBase-AI-ToolKit",
+              "license": "MIT",
+              "mcpServers": {
+                "cloudbase": {
+                  "args": [
+                    "npm-global-exec@latest",
+                    "@cloudbase/cloudbase-mcp@latest"
+                  ],
+                  "command": "npx",
+                  "cwd": "${extensionPath}",
+                  "env": {
+                    "INTEGRATION_IDE": "Gemini"
+                  }
+                }
+              },
+              "name": "cloudbase-ai-toolkit",
+              "version": "1.8.44"
+            },
+            "mcp_server": {
+              "args": [
+                "npm-global-exec@latest",
+                "@cloudbase/cloudbase-mcp@latest"
+              ],
+              "command": "npx",
+              "cwd": "${extensionPath}",
+              "env": {
+                "INTEGRATION_IDE": "Gemini"
+              }
+            }
+          },
+          "name": "cloudbase-ai-toolkit: cloudbase",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "cloudbase-ai-toolkit-cloudbase",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/TencentCloudBase/CloudBase-MCP",
+            "https://raw.githubusercontent.com/TencentCloudBase/CloudBase-MCP/HEAD/gemini-extension.json"
+          ],
+          "transport": "stdio",
+          "write_confidence": "unknown"
+        }
+      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -7988,7 +8048,9 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/Beltran12138/cambodia-toilet-monopoly",
-      "https://raw.githubusercontent.com/Beltran12138/cambodia-toilet-monopoly/HEAD/gemini-extension.json"
+      "https://github.com/TencentCloudBase/CloudBase-MCP",
+      "https://raw.githubusercontent.com/Beltran12138/cambodia-toilet-monopoly/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/TencentCloudBase/CloudBase-MCP/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -16419,7 +16481,7 @@
         "contextFileName": "CLAUDE.md",
         "description": "AI application security \u2014 generate an AI Bill of Materials (AI-SBOM), run static analysis, behavioral validation, and adversarial red-team testing for AI agents and LLM-powered applications. Slash-command exposure is host-dependent and not claimed by this manifest.",
         "name": "nuguard",
-        "version": "0.5.1"
+        "version": "0.5.2"
       }
     },
     "name": "nuguard",
@@ -16463,43 +16525,41 @@
   },
   {
     "capabilities": [],
+    "description": "Context engineering and multi-agent workflow extension for Gemini CLI.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/packages/cli/schemas/gemini-extension.json",
+        "author": "[REDACTED]",
+        "contextFileName": "GEMINI.md",
+        "description": "Context engineering and multi-agent workflow extension for Gemini CLI.",
+        "homepage": "https://github.com/Joonghyun-Lee-Frieren/oh-my-antigravity",
+        "license": "MIT",
+        "name": "oh-my-antigravity",
+        "settings": [],
+        "sourceUrl": "https://github.com/Joonghyun-Lee-Frieren/oh-my-antigravity",
+        "version": "0.9.0"
+      }
+    },
+    "name": "oh-my-antigravity",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "oh-my-antigravity",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Joonghyun-Lee-Frieren/oh-my-antigravity",
+      "https://raw.githubusercontent.com/Joonghyun-Lee-Frieren/oh-my-antigravity/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "FCAR-maintained Gemini CLI workflow extension with Antigravity proxy support, Gemini capability routing, and UltraQA gates.",
     "evidence": [],
     "metadata": {
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "Context engineering and multi-agent workflow extension for Gemini CLI.",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/packages/cli/schemas/gemini-extension.json",
-              "author": "[REDACTED]",
-              "contextFileName": "GEMINI.md",
-              "description": "Context engineering and multi-agent workflow extension for Gemini CLI.",
-              "homepage": "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
-              "license": "MIT",
-              "name": "oh-my-gemini-cli",
-              "settings": [],
-              "sourceUrl": "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
-              "version": "0.8.6"
-            }
-          },
-          "name": "oh-my-gemini-cli",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "oh-my-gemini-cli",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
-            "https://raw.githubusercontent.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        }
-      ],
       "gallery_text_seen": true,
       "manifest": {
         "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/packages/cli/schemas/gemini-extension.json",
@@ -16522,9 +16582,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/FCAR2025/oh-my-gemini-cli",
-      "https://github.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli",
-      "https://raw.githubusercontent.com/FCAR2025/oh-my-gemini-cli/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/Joonghyun-Lee-Frieren/oh-my-gemini-cli/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/FCAR2025/oh-my-gemini-cli/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -16677,7 +16735,7 @@
             "type": "string"
           }
         ],
-        "version": "0.1.0"
+        "version": "0.1.1"
       },
       "mcp_server": {
         "args": [
@@ -16760,7 +16818,7 @@
           }
         },
         "name": "outline-driven-development",
-        "version": "1.3.1"
+        "version": "1.3.2"
       },
       "mcp_server": {
         "args": [
@@ -16840,7 +16898,7 @@
           }
         },
         "name": "outline-driven-development",
-        "version": "1.3.1"
+        "version": "1.3.2"
       },
       "mcp_server": {
         "args": [
@@ -16919,7 +16977,7 @@
           }
         },
         "name": "outline-driven-development",
-        "version": "1.3.1"
+        "version": "1.3.2"
       },
       "mcp_server": {
         "args": [
@@ -17000,7 +17058,7 @@
           }
         },
         "name": "outline-driven-development",
-        "version": "1.3.1"
+        "version": "1.3.2"
       },
       "mcp_server": {
         "args": [
@@ -17080,7 +17138,7 @@
           }
         },
         "name": "outline-driven-development",
-        "version": "1.3.1"
+        "version": "1.3.2"
       },
       "mcp_server": {
         "args": [
@@ -17160,7 +17218,7 @@
           }
         },
         "name": "outline-driven-development",
-        "version": "1.3.1"
+        "version": "1.3.2"
       },
       "mcp_server": {
         "args": [
@@ -17421,6 +17479,37 @@
       "https://geminicli.com/extensions/",
       "https://github.com/Bryce199805/paper-skills",
       "https://raw.githubusercontent.com/Bryce199805/paper-skills/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Full-stack academic paper assistance: search, literature review, writing, plagiarism check, AI detection reduction, citation management",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "author": "[REDACTED]",
+        "description": "Full-stack academic paper assistance: search, literature review, writing, plagiarism check, AI detection reduction, citation management",
+        "display_name": "PaperCash - Academic Paper Skill",
+        "entry_point": "SKILL.md",
+        "keywords": "[REDACTED]",
+        "license": "MIT",
+        "name": "papercash",
+        "repository": "https://github.com/Jesseovo/PaperCash",
+        "version": "1.0.0"
+      }
+    },
+    "name": "papercash",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "papercash",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Jesseovo/PaperCash",
+      "https://raw.githubusercontent.com/Jesseovo/PaperCash/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -19497,7 +19586,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/Ostico/signet-first",
-      "https://raw.githubusercontent.com/Ostico/signet-first/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/Ostico/signet-first/master/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -20012,32 +20101,6 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
-              "version": "5.0.7"
-            }
-          },
-          "name": "superpowers",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "superpowers",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/JustinDube21/superpowers",
-            "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-              "name": "superpowers",
               "version": "5.0.6"
             }
           },
@@ -20097,11 +20160,9 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/FuZhiyu/superRA",
-      "https://github.com/JustinDube21/superpowers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
       "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
     ],

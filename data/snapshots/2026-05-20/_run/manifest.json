@@ -1,0 +1,24 @@
+{
+  "issues": [
+    {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/OutlineDriven/outline-driven-development"
+    },
+    {
+      "message": "The read operation timed out",
+      "provider": "claude",
+      "severity": "warning",
+      "source": "https://claude.com/connectors/attio"
+    },
+    {
+      "message": "HTTP Error 403: Forbidden",
+      "provider": "grok",
+      "severity": "warning",
+      "source": "https://x.ai/news/grok-connectors"
+    }
+  ],
+  "run_date": "2026-05-20",
+  "snapshot_hash": "8fa91c2e5f26dde65c926ad73c5d8cfee14c119a52c3c7858c493a1eb8c4e046"
+}
