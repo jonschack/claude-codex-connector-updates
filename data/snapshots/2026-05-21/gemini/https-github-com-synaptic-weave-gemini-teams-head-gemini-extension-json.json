@@ -1,0 +1,14 @@
+{
+  "name": "gemini-teams",
+  "version": "0.1.0",
+  "description": "Multi-agent development environment with tmux orchestration and persistent mailboxes.",
+  "author": "Synaptic Weave",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Synaptic-Weave/gemini-teams.git"
+  },
+  "engines": {
+    "gemini": ">=0.42.0"
+  }
+}
