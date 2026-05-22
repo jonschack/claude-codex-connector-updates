@@ -1,0 +1,53 @@
+{
+  "name": "brass-monkey",
+  "version": "1.3.7",
+  "description": "A high-fidelity Gemini CLI extension and MCP bridge for Odoo ERP/CRM.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "author": "Matthew Martella",
+  "license": "MIT",
+  "capabilities": {
+    "tools": true,
+    "skills": true
+  },
+  "settings": [
+    {
+      "name": "Instance Name",
+      "description": "A unique alias for this Odoo instance (e.g., 'prod', 'staging')",
+      "envVar": "ODOO_ALIAS",
+      "default": "default",
+      "sensitive": false
+    },
+    {
+      "name": "Odoo Instance URL",
+      "description": "The base URL of your Odoo instance (e.g., https://my-company.odoo.com)",
+      "envVar": "ODOO_URL",
+      "sensitive": false
+    },
+    {
+      "name": "Database Name",
+      "description": "The name of the Odoo database",
+      "envVar": "ODOO_DB",
+      "sensitive": false
+    },
+    {
+      "name": "Username / Email",
+      "description": "Your Odoo login username or email",
+      "envVar": "ODOO_USERNAME",
+      "sensitive": false
+    },
+    {
+      "name": "API Key / Password",
+      "description": "Odoo External API Key (recommended) or user password",
+      "envVar": "ODOO_API_KEY",
+      "sensitive": true
+    }
+  ],
+  "mcpServers": {
+    "brass-monkey-odoo": {
+      "command": "node",
+      "args": ["dist${/}bundle${/}index.js"],
+      "cwd": "${extensionPath}"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "gemini-discord",
+  "version": "0.1.0",
+  "description": "Supervise your Gemini CLI agent from Discord, chat with it, and let it help moderate your server.",
+  "settings": [
+    {
+      "name": "Discord Bot Token",
+      "description": "Bot token from the Discord Developer Portal.",
+      "envVar": "DISCORD_BOT_TOKEN",
+      "sensitive": true
+    },
+    {
+      "name": "Boss Discord User ID",
+      "description": "Stable numeric Discord user ID for full bridge authority.",
+      "envVar": "DISCORD_BOSS_USER_ID",
+      "sensitive": false
+    },
+    {
+      "name": "Owner Discord User IDs",
+      "description": "Discord user IDs allowed by legacy setup. Does not grant Boss authority.",
+      "envVar": "DISCORD_OWNER_IDS",
+      "sensitive": false
+    },
+    {
+      "name": "Discord Server ID",
+      "description": "ID of the server where the bot is installed.",
+      "envVar": "DISCORD_SERVER_ID",
+      "sensitive": false
+    },
+    {
+      "name": "Enable Guests",
+      "description": "Allow non-boss users to interact with the bot if they are explicitly allowlisted.",
+      "envVar": "DISCORD_ENABLE_GUESTS",
+      "sensitive": false
+    }
+  ],
+  "mcpServers": {
+    "discord-bridge": {
+      "command": "node",
+      "args": ["${extensionPath}${/}dist${/}server.cjs"],
+      "cwd": "${extensionPath}",
+      "env": {
+        "DISCORD_BOT_TOKEN": "${DISCORD_BOT_TOKEN}",
+        "DISCORD_BOSS_USER_ID": "${DISCORD_BOSS_USER_ID}",
+        "DISCORD_OWNER_IDS": "${DISCORD_OWNER_IDS}",
+        "DISCORD_SERVER_ID": "${DISCORD_SERVER_ID}",
+        "DISCORD_ENABLE_GUESTS": "${DISCORD_ENABLE_GUESTS}"
+      }
+    }
+  }
+}

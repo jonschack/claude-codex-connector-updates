@@ -1,0 +1,16 @@
+{
+  "name": "safe-docx",
+  "version": "0.9.1",
+  "description": "AI-powered DOCX editing with tracked changes, redlining, and formatting preservation",
+  "contextFileName": "GEMINI.md",
+  "entrypoint": "GEMINI.md",
+  "mcpServers": {
+    "safe-docx": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@usejunior/safe-docx"
+      ]
+    }
+  }
+}

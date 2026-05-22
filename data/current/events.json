@@ -1,1 +1,127 @@
-[]
+[
+  {
+    "confidence": "high",
+    "current_hash": "46c95b6cd77b91eb0ad5c3734f4f0e0b25a8f5bf5750446fca2c1c2f83417998",
+    "event_type": "tool_schema_changed",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "create"
+      }
+    ],
+    "id": 70,
+    "previous_hash": "126dadf9d6f6fbc6a832df3dd46f1df7fe6d740f7893650ad2f1ba60a01ca2aa",
+    "provider": "gemini",
+    "run_date": "2026-05-22",
+    "server_id": "bigtable-bigtable",
+    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/create_instance",
+    "tool_name": "create_instance"
+  },
+  {
+    "confidence": "high",
+    "current_hash": "40971e0e007b0c092ca30054538effc206a0180140a17c2b71e7574c08323d00",
+    "event_type": "tool_schema_changed",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "create"
+      }
+    ],
+    "id": 71,
+    "previous_hash": "17fb7a4667c2b4c49ddc33d413d6bdea7bf41cb87ca4313b1e4b567b60396c9d",
+    "provider": "gemini",
+    "run_date": "2026-05-22",
+    "server_id": "bigtable-bigtable",
+    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/create_table",
+    "tool_name": "create_table"
+  },
+  {
+    "confidence": "high",
+    "current_hash": "cfb0592346950b8305e7a515da848579636591c49b557c4b275a6851028b3eb4",
+    "event_type": "new_write_tool",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "create"
+      }
+    ],
+    "id": 72,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-22",
+    "server_id": "bigtable-bigtable",
+    "summary": "New write-capable tool: gemini/bigtable-bigtable/create_logical_view",
+    "tool_name": "create_logical_view"
+  },
+  {
+    "confidence": "high",
+    "current_hash": "4c25d01a39618a912103f7299d3ce68b4b9e540c2ddde75e760d7361885a0951",
+    "event_type": "new_write_tool",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "update"
+      }
+    ],
+    "id": 73,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-22",
+    "server_id": "bigtable-bigtable",
+    "summary": "New write-capable tool: gemini/bigtable-bigtable/update_logical_view",
+    "tool_name": "update_logical_view"
+  },
+  {
+    "confidence": "high",
+    "current_hash": "ff627051c324f3a2c58c5e3492f83dbc36f436cb198a1bfaa9aafc7e78f96245",
+    "event_type": "new_write_tool",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "mcp_annotation",
+        "value": "destructiveHint=true"
+      },
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "set"
+      }
+    ],
+    "id": 74,
+    "previous_hash": null,
+    "provider": "gemini",
+    "run_date": "2026-05-22",
+    "server_id": "bigtable-bigtable",
+    "summary": "New write-capable tool: gemini/bigtable-bigtable/delete_logical_view",
+    "tool_name": "delete_logical_view"
+  }
+]

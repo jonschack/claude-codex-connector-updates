@@ -1,0 +1,33 @@
+{
+  "author": "[REDACTED]",
+  "description": "Build web apps with frontend asset design, browser testing, UI components, payments, and database guidance.",
+  "homepage": "https://openai.com/",
+  "interface": {
+    "brandColor": "#111111",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Coding",
+    "composerIcon": "./assets/build-web-apps-small.svg",
+    "defaultPrompt": [
+      "Design a new landing page for my new SaaS product."
+    ],
+    "developerName": "OpenAI",
+    "displayName": "Build Web Apps",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Use Build Web Apps to create frontend application surfaces with Codex-generated visual assets, verify them with the Browser plugin and built-in app browser, compose shadcn/ui, wire Stripe payments, and design or tune Supabase/Postgres data flows.",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "screenshots": [],
+    "shortDescription": "Build frontend-focused web apps with generated assets, browser testing, payments, and databases",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "websiteURL": "https://openai.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "build-web-apps",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "0.1.0"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "winget-mcp",
+  "version": "1.0.2",
+  "description": "A Gemini CLI extension for the Windows Package Manager (WinGet) MCP server.",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "winget-mcp": {
+      "type": "stdio",
+      "command": "C:\\Users\\<username>\\AppData\\Local\\Microsoft\\WindowsApps\\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\\WindowsPackageManagerMCPServer.exe",
+      "args": [],
+      "env": {}
+    }
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "event_count": 0,
+  "event_count": 5,
   "issues": [
     {
       "message": "Manifest not found or invalid after probing common paths",
@@ -8,13 +8,19 @@
       "source": "https://github.com/OutlineDriven/outline-driven-development"
     },
     {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith"
+    },
+    {
       "message": "HTTP Error 403: Forbidden",
       "provider": "grok",
       "severity": "warning",
       "source": "https://x.ai/news/grok-connectors"
     }
   ],
-  "run_date": "2026-05-21",
-  "server_count": 355,
-  "tool_count": 8
+  "run_date": "2026-05-22",
+  "server_count": 365,
+  "tool_count": 13
 }

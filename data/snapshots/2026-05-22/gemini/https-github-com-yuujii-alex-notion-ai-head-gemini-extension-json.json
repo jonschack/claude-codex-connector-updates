@@ -1,0 +1,24 @@
+{
+  "name": "Notion-AI",
+  "version": "1.0.0",
+  "description": "Full-featured Notion workspace automation for Antigravity CLI.",
+  "contextFileName": "ANTIGRAVITY.md",
+  "settings": [
+    {
+      "name": "API Key",
+      "description": "Internal Integration Token from developers.notion.com",
+      "envVar": "NOTION_API_KEY",
+      "sensitive": true
+    }
+  ],
+  "mcpServers": {
+    "NotionAI": {
+      "command": "npx",
+      "args": [
+        "tsx",
+        "${extensionPath}${/}src${/}index.ts"
+      ],
+      "cwd": "${extensionPath}"
+    }
+  }
+}

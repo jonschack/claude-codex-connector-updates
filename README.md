@@ -1,24 +1,31 @@
-# MCP Write-Capability Report: 2026-05-21
+# MCP Write-Capability Report: 2026-05-22
 
 ## Write Alerts
 
-No high- or medium-confidence write-capability changes were detected today.
+| Event | Provider | Server | Tool | Confidence | Summary |
+| --- | --- | --- | --- | --- | --- |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `create_instance` | high | Write-capable tool changed: gemini/bigtable-bigtable/create_instance |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `create_table` | high | Write-capable tool changed: gemini/bigtable-bigtable/create_table |
+| new_write_tool | gemini | `bigtable-bigtable` | `create_logical_view` | high | New write-capable tool: gemini/bigtable-bigtable/create_logical_view |
+| new_write_tool | gemini | `bigtable-bigtable` | `update_logical_view` | high | New write-capable tool: gemini/bigtable-bigtable/update_logical_view |
+| new_write_tool | gemini | `bigtable-bigtable` | `delete_logical_view` | high | New write-capable tool: gemini/bigtable-bigtable/delete_logical_view |
 
 ## Coverage
 
-- Normalized servers: 355
+- Normalized servers: 365
 - Write-capable servers: 63
 - claude: 24 servers, 9 write-capable
 - codex: 124 servers, 46 write-capable
-- gemini: 200 servers, 8 write-capable
+- gemini: 210 servers, 8 write-capable
 - grok: 7 servers, 0 write-capable
 
 ## Crawl Issues
 
-- gemini: 1 issue(s)
+- gemini: 2 issue(s)
 - grok: 1 issue(s)
 
 - `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/Vani-Nigam07/AI_Agent_Rocketsmith`: Manifest not found or invalid after probing common paths
 - `grok` `warning` `https://x.ai/news/grok-connectors`: HTTP Error 403: Forbidden
 
 ## Notes

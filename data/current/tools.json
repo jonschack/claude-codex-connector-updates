@@ -6,7 +6,7 @@
       "openWorldHint": true,
       "readOnlyHint": false
     },
-    "description": "Create a new instance in the specified project.\nThe request requires project_id, instance_id, display_name, and at least one cluster.\nEach cluster must specify its zone (e.g. us-central1-a).\nExample: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"display_name\": \"This is my instance\", \"clusters\": [ { \"zone\": \"us-central1-a\", \"serve_nodes\": 3, \"default_storage_type\": \"SSD\" } ] }\n",
+    "description": "Create a new instance in the specified project.\nThe request requires project_id, instance_id, display_name, and at least one cluster.\nThe instance_id must be RFC 1035 compliant.\nEach cluster must specify its zone (e.g. us-central1-a).\nExample: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"display_name\": \"This is my instance\", \"clusters\": [ { \"zone\": \"us-central1-a\", \"serve_nodes\": 3, \"default_storage_type\": \"SSD\" } ] }\n",
     "evidence": [
       {
         "confidence": "medium",
@@ -98,7 +98,7 @@
         "openWorldHint": true,
         "readOnlyHint": false
       },
-      "description": "Create a new instance in the specified project.\nThe request requires project_id, instance_id, display_name, and at least one cluster.\nEach cluster must specify its zone (e.g. us-central1-a).\nExample: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"display_name\": \"This is my instance\", \"clusters\": [ { \"zone\": \"us-central1-a\", \"serve_nodes\": 3, \"default_storage_type\": \"SSD\" } ] }\n",
+      "description": "Create a new instance in the specified project.\nThe request requires project_id, instance_id, display_name, and at least one cluster.\nThe instance_id must be RFC 1035 compliant.\nEach cluster must specify its zone (e.g. us-central1-a).\nExample: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"display_name\": \"This is my instance\", \"clusters\": [ { \"zone\": \"us-central1-a\", \"serve_nodes\": 3, \"default_storage_type\": \"SSD\" } ] }\n",
       "inputSchema": {
         "$defs": {
           "Cluster": {
@@ -169,6 +169,208 @@
         "type": "object"
       },
       "name": "create_instance",
+      "outputSchema": {
+        "$defs": {
+          "Status": {
+            "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+            "properties": {
+              "code": {
+                "description": "The status code, which should be an enum value of google.rpc.Code.",
+                "format": "int32",
+                "type": "integer"
+              },
+              "details": {
+                "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+                "items": {
+                  "additionalProperties": {
+                    "description": "Properties of the object. Contains field @type with type URL."
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "message": {
+                "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "description": "This resource represents a long-running operation that is the result of a network API call.",
+        "properties": {
+          "done": {
+            "description": "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.",
+            "type": "boolean"
+          },
+          "error": {
+            "$ref": "#/$defs/Status",
+            "description": "The error result of the operation in case of failure or cancellation."
+          },
+          "metadata": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL."
+            },
+            "description": "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.",
+            "type": "object"
+          },
+          "name": {
+            "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.",
+            "type": "string"
+          },
+          "response": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL."
+            },
+            "description": "The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "server_id": "bigtable-bigtable",
+    "source_urls": [
+      "https://bigtableadmin.googleapis.com/mcp"
+    ],
+    "write_confidence": "high"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": true,
+      "readOnlyHint": false
+    },
+    "description": "Create a new Bigtable logical view within a specified instance.\nThe request requires project_id, instance_id, logical_view_id, and logical_view.\nThe logical_view_id can be any name up to 128 characters.\nExample: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"logical_view_id\": \"my-logical-view\", logical_view: { \"query\": \"SELECT CF FROM my-table\" } }\n",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "create"
+      }
+    ],
+    "input_schema": {
+      "$defs": {
+        "LogicalView": {
+          "description": "A simplified mcp version of the SQL logical view object.",
+          "properties": {
+            "deletionProtection": {
+              "description": "Optional. Set to true to make the LogicalView protected against deletion.",
+              "type": "boolean"
+            },
+            "name": {
+              "description": "Identifier. The name of the logical view.",
+              "type": "string",
+              "x-google-identifier": true
+            },
+            "query": {
+              "description": "Required. The logical view's select query.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "type": "object"
+        }
+      },
+      "description": "Request message for Bigtable.CreateLogicalView",
+      "properties": {
+        "instanceId": {
+          "description": "Required. The instance ID within the project where the logical view will be created (e.g., \"my-instance\").",
+          "type": "string"
+        },
+        "logicalView": {
+          "$ref": "#/$defs/LogicalView",
+          "description": "Required. The logical view to create."
+        },
+        "logicalViewId": {
+          "description": "Required. The ID used for the logical view within its instance, e.g., `mylogicalview`.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "Required. The project ID (e.g., \"my-project\"). If not known from the context, the Agent should attempt to get the current project ID from the gcloud config by running `gcloud config get-value project`. If the attempt fails, prompt the user for the project ID.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "projectId",
+        "instanceId",
+        "logicalViewId",
+        "logicalView"
+      ],
+      "type": "object"
+    },
+    "name": "create_logical_view",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "raw": {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false
+      },
+      "description": "Create a new Bigtable logical view within a specified instance.\nThe request requires project_id, instance_id, logical_view_id, and logical_view.\nThe logical_view_id can be any name up to 128 characters.\nExample: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"logical_view_id\": \"my-logical-view\", logical_view: { \"query\": \"SELECT CF FROM my-table\" } }\n",
+      "inputSchema": {
+        "$defs": {
+          "LogicalView": {
+            "description": "A simplified mcp version of the SQL logical view object.",
+            "properties": {
+              "deletionProtection": {
+                "description": "Optional. Set to true to make the LogicalView protected against deletion.",
+                "type": "boolean"
+              },
+              "name": {
+                "description": "Identifier. The name of the logical view.",
+                "type": "string",
+                "x-google-identifier": true
+              },
+              "query": {
+                "description": "Required. The logical view's select query.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          }
+        },
+        "description": "Request message for Bigtable.CreateLogicalView",
+        "properties": {
+          "instanceId": {
+            "description": "Required. The instance ID within the project where the logical view will be created (e.g., \"my-instance\").",
+            "type": "string"
+          },
+          "logicalView": {
+            "$ref": "#/$defs/LogicalView",
+            "description": "Required. The logical view to create."
+          },
+          "logicalViewId": {
+            "description": "Required. The ID used for the logical view within its instance, e.g., `mylogicalview`.",
+            "type": "string"
+          },
+          "projectId": {
+            "description": "Required. The project ID (e.g., \"my-project\"). If not known from the context, the Agent should attempt to get the current project ID from the gcloud config by running `gcloud config get-value project`. If the attempt fails, prompt the user for the project ID.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "projectId",
+          "instanceId",
+          "logicalViewId",
+          "logicalView"
+        ],
+        "type": "object"
+      },
+      "name": "create_logical_view",
       "outputSchema": {
         "$defs": {
           "Status": {
@@ -338,7 +540,7 @@
                 "type": "string"
               },
               "locations": {
-                "description": "Optional. A list of Cloud Bigtable zones where automated backups are allowed to be created. If empty, automated backups will be created in all zones of the instance. Locations are in the format `projects/{project}/locations/{zone}`. This field can only set for tables in Enterprise Plus instances.",
+                "description": "Optional. A list of Cloud Bigtable zones where automated backups are allowed to be created. If empty, automated backups will be created in all zones of the instance. Locations are in the format `projects/{project}/locations/{zone}`. You can set this field only for tables in Enterprise Plus instances.",
                 "items": {
                   "type": "string"
                 },
@@ -1229,6 +1431,88 @@
       "openWorldHint": true,
       "readOnlyHint": false
     },
+    "description": "Deletes a Bigtable logical view within a specified instance.\nThe request requires the `name` field to be set in the format 'projects/{project}/instances/{instance}/logicalViews/{logical_view}'.\nExample: { \"name\": \"projects/my-project/instances/my-instance/logicalViews/my-logical-view\" }\nBefore executing the deletion, you MUST confirm the action with the user by stating the full logical view name and asking for \"yes/no\" confirmation.\n",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "mcp_annotation",
+        "value": "destructiveHint=true"
+      },
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "set"
+      }
+    ],
+    "input_schema": {
+      "description": "Request message for BigtableInstanceAdmin.DeleteLogicalView.",
+      "properties": {
+        "etag": {
+          "description": "Optional. The current etag of the logical view. If an etag is provided and does not match the current etag of the logical view, deletion will be blocked and an ABORTED error will be returned.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Required. The unique name of the logical view to be deleted. Format: `projects/{project}/instances/{instance}/logicalViews/{logical_view}`.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "name": "delete_logical_view",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "raw": {
+      "annotations": {
+        "destructiveHint": true,
+        "idempotentHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false
+      },
+      "description": "Deletes a Bigtable logical view within a specified instance.\nThe request requires the `name` field to be set in the format 'projects/{project}/instances/{instance}/logicalViews/{logical_view}'.\nExample: { \"name\": \"projects/my-project/instances/my-instance/logicalViews/my-logical-view\" }\nBefore executing the deletion, you MUST confirm the action with the user by stating the full logical view name and asking for \"yes/no\" confirmation.\n",
+      "inputSchema": {
+        "description": "Request message for BigtableInstanceAdmin.DeleteLogicalView.",
+        "properties": {
+          "etag": {
+            "description": "Optional. The current etag of the logical view. If an etag is provided and does not match the current etag of the logical view, deletion will be blocked and an ABORTED error will be returned.",
+            "type": "string"
+          },
+          "name": {
+            "description": "Required. The unique name of the logical view to be deleted. Format: `projects/{project}/instances/{instance}/logicalViews/{logical_view}`.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object"
+      },
+      "name": "delete_logical_view",
+      "outputSchema": {
+        "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
+        "type": "object"
+      }
+    },
+    "server_id": "bigtable-bigtable",
+    "source_urls": [
+      "https://bigtableadmin.googleapis.com/mcp"
+    ],
+    "write_confidence": "high"
+  },
+  {
+    "annotations": {
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": true,
+      "readOnlyHint": false
+    },
     "description": "Delete a table.\nThe request requires the 'name' field to be set in the format 'projects/{project}/instances/{instance}/tables/{table}'.\nExample: { \"name\": \"projects/my-project/instances/my-instance/tables/my-table\" }\nThe table must exist. You can use `list_tables` to verify.\nBefore executing the deletion, you MUST confirm the action with the user by stating the full table name and asking for \"yes/no\" confirmation.\n",
     "evidence": [
       {
@@ -1449,6 +1733,83 @@
       "openWorldHint": true,
       "readOnlyHint": true
     },
+    "description": "Get information about the specified logical view.\nThe request requires the `name` field to be set in the format 'projects/{project}/instances/{instance}/logicalViews/{logical_view}'.\nExample: { \"name\": \"projects/my-project/instances/my-instance/logicalViews/my-logical-view\" }\n",
+    "evidence": [
+      {
+        "confidence": "low",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=true"
+      }
+    ],
+    "input_schema": {
+      "description": "Request message for BigtableInstanceAdmin.GetLogicalView.",
+      "properties": {
+        "name": {
+          "description": "Required. The unique name of the requested logical view. Values are of the form `projects/{project}/instances/{instance}/logicalViews/{logical_view}`.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "name": "get_logical_view",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "raw": {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": true
+      },
+      "description": "Get information about the specified logical view.\nThe request requires the `name` field to be set in the format 'projects/{project}/instances/{instance}/logicalViews/{logical_view}'.\nExample: { \"name\": \"projects/my-project/instances/my-instance/logicalViews/my-logical-view\" }\n",
+      "inputSchema": {
+        "description": "Request message for BigtableInstanceAdmin.GetLogicalView.",
+        "properties": {
+          "name": {
+            "description": "Required. The unique name of the requested logical view. Values are of the form `projects/{project}/instances/{instance}/logicalViews/{logical_view}`.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object"
+      },
+      "name": "get_logical_view",
+      "outputSchema": {
+        "description": "A simplified mcp version of the SQL logical view object.",
+        "properties": {
+          "deletionProtection": {
+            "description": "Optional. Set to true to make the LogicalView protected against deletion.",
+            "type": "boolean"
+          },
+          "name": {
+            "description": "Identifier. The name of the logical view.",
+            "type": "string",
+            "x-google-identifier": true
+          },
+          "query": {
+            "description": "Required. The logical view's select query.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "server_id": "bigtable-bigtable",
+    "source_urls": [
+      "https://bigtableadmin.googleapis.com/mcp"
+    ],
+    "write_confidence": "low"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": true,
+      "readOnlyHint": true
+    },
     "description": "Get metadata information about the specified table.\nThe request requires the 'name' field to be set in the format 'projects/{project}/instances/{instance}/tables/{table}'.\nExample: { \"name\": \"projects/my-project/instances/my-instance/tables/my-table\" }\n",
     "evidence": [
       {
@@ -1549,7 +1910,7 @@
                 "type": "string"
               },
               "locations": {
-                "description": "Optional. A list of Cloud Bigtable zones where automated backups are allowed to be created. If empty, automated backups will be created in all zones of the instance. Locations are in the format `projects/{project}/locations/{zone}`. This field can only set for tables in Enterprise Plus instances.",
+                "description": "Optional. A list of Cloud Bigtable zones where automated backups are allowed to be created. If empty, automated backups will be created in all zones of the instance. Locations are in the format `projects/{project}/locations/{zone}`. You can set this field only for tables in Enterprise Plus instances.",
                 "items": {
                   "type": "string"
                 },
@@ -2549,6 +2910,120 @@
       "openWorldHint": true,
       "readOnlyHint": true
     },
+    "description": "List information about all logical views within a specified instance.\nThe request requires the `parent` field to be set in the format 'projects/{project}/instances/{instance}'.\nExample: { \"parent\": \"projects/my-project/instances/my-instance\" }\n",
+    "evidence": [
+      {
+        "confidence": "low",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=true"
+      }
+    ],
+    "input_schema": {
+      "description": "Request message for BigtableInstanceAdmin.ListLogicalViews.",
+      "properties": {
+        "pageSize": {
+          "description": "Optional. The maximum number of logical views to return. The service may return fewer than this value",
+          "format": "int32",
+          "type": "integer"
+        },
+        "pageToken": {
+          "description": "Optional. A page token, received from a previous `ListLogicalViews` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListLogicalViews` must match the call that provided the page token.",
+          "type": "string"
+        },
+        "parent": {
+          "description": "Required. The unique name of the instance for which the list of logical views is requested. Values are of the form `projects/{project}/instances/{instance}`.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "parent"
+      ],
+      "type": "object"
+    },
+    "name": "list_logical_views",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "raw": {
+      "annotations": {
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "readOnlyHint": true
+      },
+      "description": "List information about all logical views within a specified instance.\nThe request requires the `parent` field to be set in the format 'projects/{project}/instances/{instance}'.\nExample: { \"parent\": \"projects/my-project/instances/my-instance\" }\n",
+      "inputSchema": {
+        "description": "Request message for BigtableInstanceAdmin.ListLogicalViews.",
+        "properties": {
+          "pageSize": {
+            "description": "Optional. The maximum number of logical views to return. The service may return fewer than this value",
+            "format": "int32",
+            "type": "integer"
+          },
+          "pageToken": {
+            "description": "Optional. A page token, received from a previous `ListLogicalViews` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListLogicalViews` must match the call that provided the page token.",
+            "type": "string"
+          },
+          "parent": {
+            "description": "Required. The unique name of the instance for which the list of logical views is requested. Values are of the form `projects/{project}/instances/{instance}`.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "parent"
+        ],
+        "type": "object"
+      },
+      "name": "list_logical_views",
+      "outputSchema": {
+        "$defs": {
+          "LogicalView": {
+            "description": "A simplified mcp version of the SQL logical view object.",
+            "properties": {
+              "deletionProtection": {
+                "description": "Optional. Set to true to make the LogicalView protected against deletion.",
+                "type": "boolean"
+              },
+              "name": {
+                "description": "Identifier. The name of the logical view.",
+                "type": "string",
+                "x-google-identifier": true
+              },
+              "query": {
+                "description": "Required. The logical view's select query.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "description": "Response message for Bigtable.ListLogicalViews",
+        "properties": {
+          "logicalViews": {
+            "description": "The logical views in the instance.",
+            "items": {
+              "$ref": "#/$defs/LogicalView"
+            },
+            "type": "array"
+          },
+          "nextPageToken": {
+            "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "server_id": "bigtable-bigtable",
+    "source_urls": [
+      "https://bigtableadmin.googleapis.com/mcp"
+    ],
+    "write_confidence": "low"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "openWorldHint": true,
+      "readOnlyHint": true
+    },
     "description": "List all tables in a specified instance.\nThe request requires the 'parent' field to be set in the format 'projects/{project}/instances/{instance}'.\nExample: { \"parent\": \"projects/my-project/instances/my-instance\" }\n",
     "evidence": [
       {
@@ -2667,7 +3142,7 @@
                 "type": "string"
               },
               "locations": {
-                "description": "Optional. A list of Cloud Bigtable zones where automated backups are allowed to be created. If empty, automated backups will be created in all zones of the instance. Locations are in the format `projects/{project}/locations/{zone}`. This field can only set for tables in Enterprise Plus instances.",
+                "description": "Optional. A list of Cloud Bigtable zones where automated backups are allowed to be created. If empty, automated backups will be created in all zones of the instance. Locations are in the format `projects/{project}/locations/{zone}`. You can set this field only for tables in Enterprise Plus instances.",
                 "items": {
                   "type": "string"
                 },
@@ -3493,5 +3968,207 @@
       "https://bigtableadmin.googleapis.com/mcp"
     ],
     "write_confidence": "low"
+  },
+  {
+    "annotations": {
+      "destructiveHint": false,
+      "idempotentHint": true,
+      "openWorldHint": true,
+      "readOnlyHint": false
+    },
+    "description": "Updates a Bigtable logical view within a specified instance. You can update the GoogleSQL query and/or the deletion protection setting.\nAt least one field to update (e.g., `query` or `deletion_protection`) must be provided in logical_view field.\nUpdate query example: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"logical_view_id\": \"my-logical-view\", logical_view: { \"query\": \"SELECT CF FROM my-table\" } }\nUpdate deletion protection example: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"logical_view_id\": \"my-logical-view\", logical_view: { \"deletion_protection\": true } }\nUpdate query and deletion protection example: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"logical_view_id\": \"my-logical-view\", logical_view: { \"query\": \"SELECT CF FROM my-table\", \"deletion_protection\": true } }\n",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "update"
+      }
+    ],
+    "input_schema": {
+      "$defs": {
+        "LogicalView": {
+          "description": "A simplified mcp version of the SQL logical view object.",
+          "properties": {
+            "deletionProtection": {
+              "description": "Optional. Set to true to make the LogicalView protected against deletion.",
+              "type": "boolean"
+            },
+            "name": {
+              "description": "Identifier. The name of the logical view.",
+              "type": "string",
+              "x-google-identifier": true
+            },
+            "query": {
+              "description": "Required. The logical view's select query.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "type": "object"
+        }
+      },
+      "description": "Request message for Bigtable.UpdateLogicalView",
+      "properties": {
+        "instanceId": {
+          "description": "Required. The instance ID within the project where the logical view will be created (e.g., \"my-instance\").",
+          "type": "string"
+        },
+        "logicalView": {
+          "$ref": "#/$defs/LogicalView",
+          "description": "Required. The logical view to update."
+        },
+        "logicalViewId": {
+          "description": "Required. The ID used for the logical view within its instance, e.g., `mylogicalview`.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "Required. The project ID (e.g., \"my-project\"). If not known from the context, the Agent should attempt to get the current project ID from the gcloud config by running `gcloud config get-value project`. If the attempt fails, prompt the user for the project ID.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "projectId",
+        "instanceId",
+        "logicalViewId",
+        "logicalView"
+      ],
+      "type": "object"
+    },
+    "name": "update_logical_view",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "raw": {
+      "annotations": {
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true,
+        "readOnlyHint": false
+      },
+      "description": "Updates a Bigtable logical view within a specified instance. You can update the GoogleSQL query and/or the deletion protection setting.\nAt least one field to update (e.g., `query` or `deletion_protection`) must be provided in logical_view field.\nUpdate query example: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"logical_view_id\": \"my-logical-view\", logical_view: { \"query\": \"SELECT CF FROM my-table\" } }\nUpdate deletion protection example: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"logical_view_id\": \"my-logical-view\", logical_view: { \"deletion_protection\": true } }\nUpdate query and deletion protection example: { \"project_id\": \"my-project\", \"instance_id\": \"my-instance\", \"logical_view_id\": \"my-logical-view\", logical_view: { \"query\": \"SELECT CF FROM my-table\", \"deletion_protection\": true } }\n",
+      "inputSchema": {
+        "$defs": {
+          "LogicalView": {
+            "description": "A simplified mcp version of the SQL logical view object.",
+            "properties": {
+              "deletionProtection": {
+                "description": "Optional. Set to true to make the LogicalView protected against deletion.",
+                "type": "boolean"
+              },
+              "name": {
+                "description": "Identifier. The name of the logical view.",
+                "type": "string",
+                "x-google-identifier": true
+              },
+              "query": {
+                "description": "Required. The logical view's select query.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "query"
+            ],
+            "type": "object"
+          }
+        },
+        "description": "Request message for Bigtable.UpdateLogicalView",
+        "properties": {
+          "instanceId": {
+            "description": "Required. The instance ID within the project where the logical view will be created (e.g., \"my-instance\").",
+            "type": "string"
+          },
+          "logicalView": {
+            "$ref": "#/$defs/LogicalView",
+            "description": "Required. The logical view to update."
+          },
+          "logicalViewId": {
+            "description": "Required. The ID used for the logical view within its instance, e.g., `mylogicalview`.",
+            "type": "string"
+          },
+          "projectId": {
+            "description": "Required. The project ID (e.g., \"my-project\"). If not known from the context, the Agent should attempt to get the current project ID from the gcloud config by running `gcloud config get-value project`. If the attempt fails, prompt the user for the project ID.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "projectId",
+          "instanceId",
+          "logicalViewId",
+          "logicalView"
+        ],
+        "type": "object"
+      },
+      "name": "update_logical_view",
+      "outputSchema": {
+        "$defs": {
+          "Status": {
+            "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+            "properties": {
+              "code": {
+                "description": "The status code, which should be an enum value of google.rpc.Code.",
+                "format": "int32",
+                "type": "integer"
+              },
+              "details": {
+                "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+                "items": {
+                  "additionalProperties": {
+                    "description": "Properties of the object. Contains field @type with type URL."
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "message": {
+                "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "description": "This resource represents a long-running operation that is the result of a network API call.",
+        "properties": {
+          "done": {
+            "description": "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.",
+            "type": "boolean"
+          },
+          "error": {
+            "$ref": "#/$defs/Status",
+            "description": "The error result of the operation in case of failure or cancellation."
+          },
+          "metadata": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL."
+            },
+            "description": "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.",
+            "type": "object"
+          },
+          "name": {
+            "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.",
+            "type": "string"
+          },
+          "response": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL."
+            },
+            "description": "The normal, successful response of the operation. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
+            "type": "object"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "server_id": "bigtable-bigtable",
+    "source_urls": [
+      "https://bigtableadmin.googleapis.com/mcp"
+    ],
+    "write_confidence": "high"
   }
 ]
