@@ -1,0 +1,27 @@
+{
+	"name": "everything-gemini-code",
+	"version": "1.3.14",
+	"description": "Complete collection of Gemini CLI configurations adapted from everything-gemini-code - agents, skills, hooks, and rules",
+	"author": {
+		"name": "Jamkris",
+		"url": "https://github.com/Jamkris/everything-gemini-code"
+	},
+	"homepage": "https://github.com/Jamkris/everything-gemini-code",
+	"repository": "https://github.com/Jamkris/everything-gemini-code.git",
+	"license": "MIT",
+	"keywords": [
+		"gemini-code",
+		"gemini-cli",
+		"agents",
+		"skills",
+		"hooks",
+		"rules",
+		"tdd",
+		"code-review",
+		"security",
+		"workflow",
+		"automation",
+		"best-practices"
+	],
+	"contextFileName": "GEMINI.md"
+}

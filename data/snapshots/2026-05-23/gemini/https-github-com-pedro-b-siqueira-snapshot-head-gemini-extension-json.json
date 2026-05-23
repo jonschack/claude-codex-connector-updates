@@ -1,0 +1,6 @@
+{
+  "name": "snapshot",
+  "description": "Freeze your session into a copy-pasteable context block. Type /snapshot to never lose progress between chats.",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}

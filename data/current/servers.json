@@ -6184,7 +6184,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.5.3"
+        "version": "1.5.4"
       }
     },
     "name": "aegis",
@@ -6910,6 +6910,52 @@
       "https://raw.githubusercontent.com/Arize-ai/arize-tracing-assistant/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Self-hosted coordination layer for AI agent fleets \u2014 shared memory, tasks, messaging, and session handoffs over MCP.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "description": "Self-hosted coordination layer for AI agent fleets \u2014 shared memory, tasks, messaging, and session handoffs over MCP.",
+        "mcpServers": {
+          "artel": {
+            "headers": {
+              "x-agent-id": "${ARTEL_AGENT_ID}",
+              "x-api-key": "[REDACTED]"
+            },
+            "httpUrl": "${ARTEL_URL}/mcp"
+          }
+        },
+        "name": "Artel",
+        "version": "1.0.0"
+      },
+      "mcp_server": {
+        "headers": {
+          "x-agent-id": "${ARTEL_AGENT_ID}",
+          "x-api-key": "[REDACTED]"
+        },
+        "httpUrl": "${ARTEL_URL}/mcp"
+      }
+    },
+    "name": "Artel: artel",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "artel-artel",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/NicolasPrimeau/artel",
+      "https://raw.githubusercontent.com/NicolasPrimeau/artel/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
     "write_confidence": "unknown"
   },
   {
@@ -8021,66 +8067,6 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "Tencent CloudBase MCP Server - AI-powered development toolkit for building and deploying full-stack applications, mini-programs, and cloud functions to Tencent CloudBase platform",
-          "evidence": [],
-          "metadata": {
-            "discovery": {
-              "ok": false,
-              "reason": "local_or_unconfigured_mcp_discovery_deferred"
-            },
-            "excludeTools": null,
-            "includeTools": null,
-            "manifest": {
-              "author": "[REDACTED]",
-              "contextFileName": "config/.gemini/GEMINI.md",
-              "description": "Tencent CloudBase MCP Server - AI-powered development toolkit for building and deploying full-stack applications, mini-programs, and cloud functions to Tencent CloudBase platform",
-              "homepage": "https://github.com/TencentCloudBase/CloudBase-AI-ToolKit",
-              "license": "MIT",
-              "mcpServers": {
-                "cloudbase": {
-                  "args": [
-                    "npm-global-exec@latest",
-                    "@cloudbase/cloudbase-mcp@latest"
-                  ],
-                  "command": "npx",
-                  "cwd": "${extensionPath}",
-                  "env": {
-                    "INTEGRATION_IDE": "Gemini"
-                  }
-                }
-              },
-              "name": "cloudbase-ai-toolkit",
-              "version": "1.8.44"
-            },
-            "mcp_server": {
-              "args": [
-                "npm-global-exec@latest",
-                "@cloudbase/cloudbase-mcp@latest"
-              ],
-              "command": "npx",
-              "cwd": "${extensionPath}",
-              "env": {
-                "INTEGRATION_IDE": "Gemini"
-              }
-            }
-          },
-          "name": "cloudbase-ai-toolkit: cloudbase",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "cloudbase-ai-toolkit-cloudbase",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/TencentCloudBase/CloudBase-MCP",
-            "https://raw.githubusercontent.com/TencentCloudBase/CloudBase-MCP/HEAD/gemini-extension.json"
-          ],
-          "transport": "stdio",
-          "write_confidence": "unknown"
-        }
-      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -8125,9 +8111,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/Beltran12138/cambodia-toilet-monopoly",
-      "https://github.com/TencentCloudBase/CloudBase-MCP",
-      "https://raw.githubusercontent.com/Beltran12138/cambodia-toilet-monopoly/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/TencentCloudBase/CloudBase-MCP/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/Beltran12138/cambodia-toilet-monopoly/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -12709,6 +12693,47 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "Gemini CLI extension for Google Kubernetes Engine.",
+          "evidence": [],
+          "metadata": {
+            "discovery": {
+              "ok": false,
+              "reason": "local_or_unconfigured_mcp_discovery_deferred"
+            },
+            "excludeTools": null,
+            "includeTools": null,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "Gemini CLI extension for Google Kubernetes Engine.",
+              "mcpServers": {
+                "gke": {
+                  "command": "${extensionPath}${/}gke-mcp"
+                }
+              },
+              "name": "gke-mcp",
+              "version": "0.12.0"
+            },
+            "mcp_server": {
+              "command": "${extensionPath}${/}gke-mcp"
+            }
+          },
+          "name": "gke-mcp: gke",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "gke-mcp-gke",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/GoogleCloudPlatform/gke-mcp",
+            "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
+          ],
+          "transport": "stdio",
+          "write_confidence": "unknown"
+        }
+      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -12720,7 +12745,7 @@
           }
         },
         "name": "gke-mcp",
-        "version": "0.12.0"
+        "version": "0.11.1"
       },
       "mcp_server": {
         "command": "${extensionPath}${/}gke-mcp"
@@ -12733,7 +12758,9 @@
     "server_id": "gke-mcp-gke",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/AravG7/gke-mcp",
       "https://github.com/GoogleCloudPlatform/gke-mcp",
+      "https://raw.githubusercontent.com/AravG7/gke-mcp/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
@@ -18149,7 +18176,7 @@
             "name": "PostHog MCP URL"
           }
         ],
-        "version": "1.0.21"
+        "version": "1.0.22"
       },
       "mcp_server": {
         "args": [
@@ -20502,7 +20529,7 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
-              "version": "5.1.0"
+              "version": "5.0.7"
             }
           },
           "name": "superpowers",
@@ -20512,8 +20539,8 @@
           "server_id": "superpowers",
           "source_urls": [
             "https://geminicli.com/extensions/",
-            "https://github.com/GIT-PHOENIX-HUB/Phoenix-powers",
-            "https://raw.githubusercontent.com/GIT-PHOENIX-HUB/Phoenix-powers/HEAD/gemini-extension.json"
+            "https://github.com/JustinDube21/superpowers",
+            "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json"
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
@@ -20569,32 +20596,6 @@
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-              "name": "superpowers",
-              "version": "5.1.0"
-            }
-          },
-          "name": "superpowers",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "superpowers",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/WeekendGoCo/WeekendGo_W",
-            "https://raw.githubusercontent.com/WeekendGoCo/WeekendGo_W/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
         }
       ],
       "gallery_text_seen": true,
@@ -20613,15 +20614,13 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/FuZhiyu/superRA",
-      "https://github.com/GIT-PHOENIX-HUB/Phoenix-powers",
+      "https://github.com/JustinDube21/superpowers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
-      "https://github.com/WeekendGoCo/WeekendGo_W",
       "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/GIT-PHOENIX-HUB/Phoenix-powers/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/WeekendGoCo/WeekendGo_W/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"

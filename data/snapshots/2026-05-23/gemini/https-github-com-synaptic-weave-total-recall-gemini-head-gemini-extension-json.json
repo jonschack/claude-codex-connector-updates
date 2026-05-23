@@ -1,0 +1,13 @@
+{
+  "name": "total-recall-gemini",
+  "version": "0.2.0",
+  "description": "Weaving long-term memory and semantic intelligence into the Gemini CLI. A Synaptic Weave Utility.",
+  "mcpServers": {
+    "total-recall": {
+      "command": "python3",
+      "args": [
+        "${extensionPath}/scripts/mcp_server.py"
+      ]
+    }
+  }
+}

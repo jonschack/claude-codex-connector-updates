@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Access structured first-party IR data from over 14,500+ public companies across 65 markets Quartr delivers...",
+  "homepage": "https://quartr.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find the latest relevant Quartr materials"
+    ],
+    "developerName": "Quartr",
+    "displayName": "Quartr",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Access structured first-party IR data from over 14,500+ public companies across 65 markets Quartr delivers live and recorded earnings calls, real-time and historical transcripts with speaker identification, slide presentations, filings, reports, and event summaries. Best-in-class reliability and timeliness. Ideal for financial research, investment analysis, and building data-driven workflows on top of institutional-grade public company data.\n\nYou can use Quartr for:\n\nEarnings call analysis:\n\"List forward-looking statements for NVIDIA from recent transcripts and filings that reference expected progress or results in the upcoming earnings release.\"\n\nCompetitive intelligence:\n\"Compare how semiconductor companies talk about the same end markets and demand.\"\n\nKPI tracking:\n\"What KPIs has Spotify introduced, stopped emphasizing, or reframed across its last eight quarters?\"\n\nNarrative assessment:\n\"What were the most recurring themes in analyst questions during Eli Lilly's last two earnings calls? Highlight key areas of focus and concern.\"",
+    "privacyPolicyURL": "https://quartr.com/terms-of-service/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Access structured first-party IR data from over 14,500+ public companies across 65 markets Quartr delivers...",
+    "termsOfServiceURL": "https://quartr.com/terms-of-service",
+    "websiteURL": "https://quartr.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "quartr",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}
