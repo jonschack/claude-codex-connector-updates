@@ -1,0 +1,13 @@
+{
+  "name": "copilot-mcp",
+  "version": "2.1.0",
+  "description": "GitHub Copilot CLI integration for Gemini CLI via MCP",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": [
+    {
+      "name": "copilot",
+      "command": "npx",
+      "args": ["-y", "@aykahshi/copilot-mcp-server"]
+    }
+  ]
+}

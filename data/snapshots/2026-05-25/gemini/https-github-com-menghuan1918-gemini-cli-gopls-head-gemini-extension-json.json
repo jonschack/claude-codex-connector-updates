@@ -1,0 +1,11 @@
+{
+  "name": "gemini-cli-gopls",
+  "version": "1.0.2",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "gopls": {
+      "command": "node",
+      "args": ["${extensionPath}${/}dist${/}gopls_connect.js"]
+    }
+  }
+}
