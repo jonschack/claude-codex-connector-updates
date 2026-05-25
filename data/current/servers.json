@@ -6184,7 +6184,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.5.4"
+        "version": "1.5.7"
       }
     },
     "name": "aegis",
@@ -6565,6 +6565,31 @@
       "https://raw.githubusercontent.com/amoghbalaji02/24-880-workshop/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "AI Agent rules for Recommended C code style and coding rules for standard C99 or later",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "description": "AI Agent rules for Recommended C code style and coding rules for standard C99 or later",
+        "name": "ai-c_style_and_coding",
+        "version": "1.0.0"
+      }
+    },
+    "name": "ai-c_style_and_coding",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "ai-c-style-and-coding",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/AhmedAbouelkher/ai_c_style_and_coding",
+      "https://raw.githubusercontent.com/AhmedAbouelkher/ai_c_style_and_coding/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
     "write_confidence": "unknown"
   },
   {
@@ -13994,6 +14019,25 @@
     "metadata": {
       "manifest_fetch": "not_found"
     },
+    "name": "odin-gemini-mcp-bridge",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "https-github-com-paulessus-odin-gemini-mcp-bridge",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Paulessus/odin-gemini-mcp-bridge"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Gemini CLI extension listed in gallery; manifest was not available during crawl.",
+    "evidence": [],
+    "metadata": {
+      "manifest_fetch": "not_found"
+    },
     "name": "AI_Agent_Rocketsmith",
     "native_surface": "extension",
     "provider": "gemini",
@@ -14885,43 +14929,12 @@
     "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
     "evidence": [],
     "metadata": {
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "commands": {
-                "liku": "commands/liku.toml"
-              },
-              "contextFileName": "GEMINI.md",
-              "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
-              "name": "liku",
-              "version": "1.0.0"
-            }
-          },
-          "name": "liku",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "liku",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/TayDa64/Liku_AI",
-            "https://raw.githubusercontent.com/TayDa64/Liku_AI/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        }
-      ],
       "gallery_text_seen": true,
       "manifest": {
         "commands": {
           "liku": "commands/liku.toml"
         },
-        "contextFileName": "GEMINI.md",
+        "contextFileName": "LIKU-CORE.md",
         "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
         "name": "liku",
         "version": "1.0.0"
@@ -14934,10 +14947,8 @@
     "server_id": "liku",
     "source_urls": [
       "https://geminicli.com/extensions/",
-      "https://github.com/TayDa64/LikuBuddy",
-      "https://github.com/TayDa64/Liku_AI",
-      "https://raw.githubusercontent.com/TayDa64/LikuBuddy/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/TayDa64/Liku_AI/HEAD/gemini-extension.json"
+      "https://github.com/TayDa64/Liku-AI",
+      "https://raw.githubusercontent.com/TayDa64/Liku-AI/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -16015,7 +16026,7 @@
           }
         },
         "name": "mcp-server-kubernetes",
-        "version": "3.7.0"
+        "version": "3.8.0"
       },
       "mcp_server": {
         "args": [
@@ -16871,6 +16882,32 @@
       "https://raw.githubusercontent.com/PatelPratikkumar/gemini-notion-extension/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Nourivex Runtime: Collaborative AI Engineering Framework with strict TDD discipline.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Nourivex Runtime: Collaborative AI Engineering Framework with strict TDD discipline.",
+        "name": "nourivex-runtime",
+        "version": "2.3.0"
+      }
+    },
+    "name": "nourivex-runtime",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "nourivex-runtime",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Nourivex/nourivex-runtime",
+      "https://raw.githubusercontent.com/Nourivex/nourivex-runtime/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
     "write_confidence": "unknown"
   },
   {
@@ -25576,7 +25613,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Conn",
+    "description": "ch \u2318 K API Console Products Grok Resources llms.txt Discord Email support Terms and Policies Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Custom MCP Tunneling FAQ Grok Website / Apps Team Management Docs REST API gRPC Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Custom MCP Tu",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -25590,15 +25627,34 @@
     "remote_url": "",
     "server_id": "custom-mcp",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
-      "https://docs.x.ai/grok/connectors/catalog"
+      "https://docs.x.ai/grok/connectors"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive",
+    "description": "ces. These require no extra setup beyond signing in. Browse the full catalog at grok.com/connectors . Notable connectors available in the catalog Connector What it connects Box Files, folders, and content in Box Canva Designs, presentations, and visual assets in Canva Gamma Presentations and documents created in Gamma GitHub Repositories, issues, pull requests, and code in GitHub Linear Issues, projects, and roadmaps in Linear Notion Pages, databases, and workspaces in Notion S&P Global Financial data, market intelligence, and company information Vercel Projects, deployments, and logs in Vercel Custom MCP connectors If you need to c",
+    "evidence": [],
+    "metadata": {
+      "matched_terms": [
+        "GitHub"
+      ]
+    },
+    "name": "GitHub",
+    "native_surface": "connector",
+    "provider": "grok",
+    "remote_url": "",
+    "server_id": "github",
+    "source_urls": [
+      "https://docs.x.ai/grok/connectors"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Connectors | xAI Docs Docs Search \u2318 K API Console Products Grok Resources llms.txt Discord Email support Terms and Policies Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Custom MCP Tunneling FAQ Grok Website / Apps Team Management Docs REST API gRPC Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Googl",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -25612,15 +25668,14 @@
     "remote_url": "",
     "server_id": "gmail-google-calendar",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
-      "https://docs.x.ai/grok/connectors/catalog"
+      "https://docs.x.ai/grok/connectors"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview ShareP",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K API Console Products Grok Resources llms.txt Discord Email support Terms and Policies Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Custom MCP Tunneling FAQ Grok Website / Apps Team Management Docs REST API gRPC Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -25633,15 +25688,34 @@
     "remote_url": "",
     "server_id": "google-drive",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
-      "https://docs.x.ai/grok/connectors/catalog"
+      "https://docs.x.ai/grok/connectors"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
   },
   {
     "capabilities": [],
-    "description": "will request only the permissions it needs. Once connected, Grok can use the connector's tools automatically whenever your questions relate to that service. Connector catalog Beyond the built-in connectors, Grok offers a growing catalog of pre-configured connectors for popular third-party services like HubSpot, Slack, Notion, and more. These authenticate via OAuth and are ready to use with minimal setup. Browse the full catalog at grok.com/connectors , or see the Connector Catalog page for connectors with dedicated setup guides. Custom MCP connectors If you need to connect Grok to a service not available in the catalog, you can brin",
+    "description": "full catalog at grok.com/connectors . Notable connectors available in the catalog Connector What it connects Box Files, folders, and content in Box Canva Designs, presentations, and visual assets in Canva Gamma Presentations and documents created in Gamma GitHub Repositories, issues, pull requests, and code in GitHub Linear Issues, projects, and roadmaps in Linear Notion Pages, databases, and workspaces in Notion S&P Global Financial data, market intelligence, and company information Vercel Projects, deployments, and logs in Vercel Custom MCP connectors If you need to connect Grok to a service not available in the catalog, you can",
+    "evidence": [],
+    "metadata": {
+      "matched_terms": [
+        "Linear"
+      ]
+    },
+    "name": "Linear",
+    "native_surface": "connector",
+    "provider": "grok",
+    "remote_url": "",
+    "server_id": "linear",
+    "source_urls": [
+      "https://docs.x.ai/grok/connectors"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "onnectors available in the catalog Connector What it connects Box Files, folders, and content in Box Canva Designs, presentations, and visual assets in Canva Gamma Presentations and documents created in Gamma GitHub Repositories, issues, pull requests, and code in GitHub Linear Issues, projects, and roadmaps in Linear Notion Pages, databases, and workspaces in Notion S&P Global Financial data, market intelligence, and company information Vercel Projects, deployments, and logs in Vercel Custom MCP connectors If you need to connect Grok to a service not available in the catalog, you can bring your own Model Context Protocol (MCP) serv",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -25661,7 +25735,7 @@
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overvi",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K API Console Products Grok Resources llms.txt Discord Email support Terms and Policies Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Custom MCP Tunneling FAQ Grok Website / Apps Team Management Docs REST API gRPC Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Goog",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -25674,15 +25748,14 @@
     "remote_url": "",
     "server_id": "onedrive",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
-      "https://docs.x.ai/grok/connectors/catalog"
+      "https://docs.x.ai/grok/connectors"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Go",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K API Console Products Grok Resources llms.txt Discord Email support Terms and Policies Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Custom MCP Tunneling FAQ Grok Website / Apps Team Management Docs REST API gRPC Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -25697,15 +25770,14 @@
     "remote_url": "",
     "server_id": "outlook-mail-calendar",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
-      "https://docs.x.ai/grok/connectors/catalog"
+      "https://docs.x.ai/grok/connectors"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
   },
   {
     "capabilities": [],
-    "description": "Connectors | xAI Docs Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Connector Catalog Custom MCP Tunneling FAQ Grok Website / Apps Team Management API Console Docs Search \u2318 K Getting Started Grok.com User Guide Organization License & User Management Organization Management Connec",
+    "description": "Connectors | xAI Docs Docs Search \u2318 K API Console Products Grok Resources llms.txt Discord Email support Terms and Policies Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint OneDrive Google Drive Gmail & Google Calendar Outlook Mail & Calendar Microsoft Teams Salesforce Custom MCP Tunneling FAQ Grok Website / Apps Team Management Docs REST API gRPC Getting Started Grok.com User Guide Organization License & User Management Organization Management Connectors Overview SharePoint On",
     "evidence": [],
     "metadata": {
       "matched_terms": [
@@ -25718,8 +25790,7 @@
     "remote_url": "",
     "server_id": "sharepoint",
     "source_urls": [
-      "https://docs.x.ai/grok/connectors",
-      "https://docs.x.ai/grok/connectors/catalog"
+      "https://docs.x.ai/grok/connectors"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"

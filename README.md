@@ -1,4 +1,4 @@
-# MCP Write-Capability Report: 2026-05-23
+# MCP Write-Capability Report: 2026-05-24
 
 ## Write Alerts
 
@@ -6,19 +6,21 @@ No high- or medium-confidence write-capability changes were detected today.
 
 ## Coverage
 
-- Normalized servers: 355
+- Normalized servers: 360
 - Write-capable servers: 63
 - claude: 24 servers, 9 write-capable
 - codex: 124 servers, 46 write-capable
-- gemini: 200 servers, 8 write-capable
-- grok: 7 servers, 0 write-capable
+- gemini: 203 servers, 8 write-capable
+- grok: 9 servers, 0 write-capable
 
 ## Crawl Issues
 
-- gemini: 1 issue(s)
-- grok: 1 issue(s)
+- gemini: 2 issue(s)
+- grok: 2 issue(s)
 
 - `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
+- `gemini` `warning` `https://github.com/Paulessus/odin-gemini-mcp-bridge`: Manifest not found or invalid after probing common paths
+- `grok` `warning` `https://docs.x.ai/grok/connectors/catalog`: HTTP Error 404: Not Found
 - `grok` `warning` `https://x.ai/news/grok-connectors`: HTTP Error 403: Forbidden
 
 ## Notes
