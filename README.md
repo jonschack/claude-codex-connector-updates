@@ -1,4 +1,4 @@
-# MCP Write-Capability Report: 2026-05-25
+# MCP Write-Capability Report: 2026-05-26
 
 ## Write Alerts
 
@@ -7,8 +7,8 @@ No high- or medium-confidence write-capability changes were detected today.
 ## Coverage
 
 - Normalized servers: 384
-- Write-capable servers: 63
-- claude: 24 servers, 9 write-capable
+- Write-capable servers: 62
+- claude: 24 servers, 8 write-capable
 - codex: 124 servers, 46 write-capable
 - gemini: 227 servers, 8 write-capable
 - grok: 9 servers, 0 write-capable

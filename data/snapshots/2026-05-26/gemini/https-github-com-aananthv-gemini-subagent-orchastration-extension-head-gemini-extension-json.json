@@ -1,0 +1,6 @@
+{
+  "name": "orchestrator-workflow",
+  "version": "1.0.0",
+  "description": "A high-quality orchestrator-led coding workflow extension.",
+  "contextFileName": "GEMINI.md"
+}

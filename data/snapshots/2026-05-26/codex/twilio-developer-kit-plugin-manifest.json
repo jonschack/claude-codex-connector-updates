@@ -1,0 +1,30 @@
+{
+  "author": "[REDACTED]",
+  "description": "Twilio Skills provide procedural knowledge for AI coding agents \u2014 which APIs to use, in what order, and what to avoid. Covers Messaging, Voice, Verify, SendGrid, and 30+ products.",
+  "homepage": "https://www.twilio.com/docs",
+  "interface": {
+    "brandColor": "#F22F46",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "category": "APIs",
+    "defaultPrompt": [
+      "Help me send an SMS notification with delivery tracking",
+      "What Twilio API should I use to build a user verification flow?",
+      "How do I register for A2P 10DLC before sending US SMS?"
+    ],
+    "developerName": "Twilio",
+    "displayName": "Twilio Developer Kit",
+    "logo": "./assets/logo.svg",
+    "longDescription": "Procedural knowledge that guides AI coding agents to the right Twilio APIs for any use case. Covers channel selection, production best practices, compliance requirements, and common pitfalls across Messaging, Voice, Verify, SendGrid, and 30+ products. Skills follow a progressive disclosure architecture \u2014 your agent sees lightweight metadata at startup and loads full guidance only when a task matches.",
+    "shortDescription": "Twilio Skills for building, debugging, and shipping on Twilio",
+    "websiteURL": "https://www.twilio.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "twilio-developer-kit",
+  "repository": "https://github.com/twilio/ai",
+  "skills": "./skills/",
+  "version": "0.2.0"
+}

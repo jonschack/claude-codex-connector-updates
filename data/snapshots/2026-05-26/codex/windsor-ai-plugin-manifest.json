@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural...",
+  "homepage": "https://windsor.ai",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Pull the relevant attribution context from Windsor.ai"
+    ],
+    "developerName": "Windsor.ai",
+    "displayName": "Windsor.ai",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural language and get answers from your connected accounts.\n\nCommon data sources customers connect include: Google Ads, Meta (Facebook) Ads, Instagram, LinkedIn Ads, LinkedIn Company Pages, TikTok Ads, GA4, Google Search Console, YouTube Analytics, Google Business Profile, HubSpot, Salesforce, Shopify, Klaviyo, Amazon Ads, Microsoft Ads (Bing), Google Merchant Center, Stripe, GoHighLevel, and more.  \ufffc",
+    "privacyPolicyURL": "https://windsor.ai/privacy-statement/",
+    "screenshots": [],
+    "shortDescription": "Windsor.ai connects your marketing and business data sources to Codex so you can ask questions in natural...",
+    "termsOfServiceURL": "https://windsor.ai/terms-of-service/",
+    "websiteURL": "https://windsor.ai"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "windsor-ai",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

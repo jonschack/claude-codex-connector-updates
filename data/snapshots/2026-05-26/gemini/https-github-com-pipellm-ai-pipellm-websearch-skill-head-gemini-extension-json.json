@@ -1,0 +1,6 @@
+{
+  "name": "pipellm-websearch",
+  "description": "Web search skill for coding agents — search the web, read pages, and find news via PipeLLM API",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}

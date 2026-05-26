@@ -1,0 +1,14 @@
+{
+  "name": "rc-app-generator",
+  "version": "2.0.0",
+  "description": "Modular skill-based AI agent that scaffolds, modifies, tests, and deploys Rocket.Chat Apps.",
+  "contextFileName": "MASTER.md",
+  "skillsDirectory": "skills",
+  "mcpServers": {
+    "rc-tools": {
+      "command": "node",
+      "args": ["${extensionPath}/mcp-server/build/index.js"],
+      "cwd": "${extensionPath}/mcp-server"
+    }
+  }
+}

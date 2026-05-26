@@ -1,0 +1,11 @@
+{
+  "name": "context-reducer",
+  "version": "1.0.0",
+  "mcpServers": {
+    "astServer": {
+      "command": "node",
+      "args": ["${extensionPath}/dist/index.js"],
+      "cwd": "${extensionPath}"
+    }
+  }
+}
