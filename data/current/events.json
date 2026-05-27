@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "confidence": "high",
+    "current_hash": "031a6650028bc99eefa05622161ffcbfded844e72162bb9b3d707cf4013e8439",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 75,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-27",
+    "server_id": "build-web-data-visualization",
+    "summary": "New write-capable codex plugin: Build Web Data Visualization",
+    "tool_name": null
+  }
+]

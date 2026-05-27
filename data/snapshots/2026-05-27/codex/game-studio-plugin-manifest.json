@@ -1,0 +1,32 @@
+{
+  "author": "[REDACTED]",
+  "description": "Design, prototype, and ship browser games with guided 2D and 3D workflows, asset pipelines, and playtesting support.",
+  "homepage": "https://openai.com/",
+  "interface": {
+    "brandColor": "#0F766E",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "category": "Coding",
+    "composerIcon": "./assets/game-studio.svg",
+    "defaultPrompt": [
+      "Design a browser game and plan the core loop"
+    ],
+    "developerName": "OpenAI",
+    "displayName": "Game Studio",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Plan, prototype, and build browser games with guided workflows for gameplay systems, UI, asset pipelines, and playtesting across 2D and 3D projects.",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "screenshots": [],
+    "shortDescription": "Design, prototype, and ship browser games",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "websiteURL": "https://openai.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "game-studio",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "0.1.0"
+}

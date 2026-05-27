@@ -1,0 +1,13 @@
+{
+  "name": "devspec-autopilot",
+  "version": "1.0.0",
+  "description": "DevSpec action item autopilot runner for Gemini CLI",
+  "mcpServers": {
+    "devspec": {
+      "httpUrl": "${DEVSPEC_API_URL}/api/mcp",
+      "headers": {
+        "Authorization": "Bearer ${DEVSPEC_MCP_TOKEN}"
+      }
+    }
+  }
+}
