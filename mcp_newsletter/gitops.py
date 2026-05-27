@@ -61,5 +61,14 @@ def commit_and_push(root: Path, run_date: str = "") -> str:
     remote = run(["git", "remote", "get-url", "origin"], root, check=False)
     if remote.returncode != 0:
         return "Committed locally; origin remote is not configured, so push was skipped."
-    run(["git", "push", "origin", "main"], root)
+    fetch = run(["git", "fetch", "origin", "main"], root, check=False)
+    if fetch.returncode != 0:
+        raise RuntimeError(f"git fetch failed: {fetch.stdout.strip()}")
+    rebase = run(["git", "rebase", "origin/main"], root, check=False)
+    if rebase.returncode != 0:
+        run(["git", "rebase", "--abort"], root, check=False)
+        raise RuntimeError(f"git rebase onto origin/main failed: {rebase.stdout.strip()}")
+    push = run(["git", "push", "origin", "main"], root, check=False)
+    if push.returncode != 0:
+        raise RuntimeError(f"git push failed: {push.stdout.strip()}")
     return "Committed and pushed to origin/main."

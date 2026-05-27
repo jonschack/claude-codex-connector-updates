@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.openclaw.mcp-newsletter</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>-m</string>
+    <string>mcp_newsletter</string>
+    <string>daily</string>
+    <string>--skip-email</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/openclaw/Code/claude-codex-connector-updates</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin</string>
+    <!-- Email is disabled (see USER_TODO.md). When ready: remove --skip-email above
+         and fill in the three MCP_NEWSLETTER_* vars below. -->
+    <key>MCP_NEWSLETTER_EMAIL_TO</key>
+    <string>internonedirection@automationinterns.com</string>
+    <key>MCP_NEWSLETTER_SMTP_USER</key>
+    <string>REPLACE_WITH_YOUR_GMAIL_ADDRESS</string>
+    <key>MCP_NEWSLETTER_SMTP_PASSWORD</key>
+    <string>REPLACE_WITH_GMAIL_APP_PASSWORD</string>
+  </dict>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>7</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/openclaw/Code/claude-codex-connector-updates/tmp/launchd.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/openclaw/Code/claude-codex-connector-updates/tmp/launchd.err.log</string>
+
+  <key>RunAtLoad</key>
+  <false/>
+</dict>
+</plist>

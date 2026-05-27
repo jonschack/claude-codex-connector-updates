@@ -5,6 +5,7 @@ from pathlib import Path
 import subprocess
 import sys
 
+from .emailer import EmailConfigError, send_daily_report
 from .gitops import bootstrap_github, check_prereqs, commit_and_push
 from .updater import run_update
 from .utils import today_iso
@@ -36,10 +37,17 @@ def main(argv: list[str] | None = None) -> int:
     publish.add_argument("--root", default=".", type=_root)
     publish.add_argument("--date", default=today_iso())
 
-    daily = sub.add_parser("daily", help="run update, tests, and publish")
+    daily = sub.add_parser("daily", help="run update, tests, publish, and email")
     daily.add_argument("--root", default=".", type=_root)
     daily.add_argument("--date", default=today_iso())
     daily.add_argument("--max-details", type=int, default=200)
+    daily.add_argument("--email-to", default=None, help="recipient address; defaults to MCP_NEWSLETTER_EMAIL_TO")
+    daily.add_argument("--skip-email", action="store_true")
+
+    email = sub.add_parser("email", help="email the report for a given date")
+    email.add_argument("--root", default=".", type=_root)
+    email.add_argument("--date", default=today_iso())
+    email.add_argument("--to", default=None)
 
     args = parser.parse_args(argv)
 
@@ -66,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
         try:
             print(commit_and_push(args.root, run_date=args.date))
             return 0
-        except RuntimeError as exc:
+        except (RuntimeError, subprocess.CalledProcessError) as exc:
             print(f"Publish failed: {exc}")
             return 1
     if args.command == "daily":
@@ -77,7 +85,19 @@ def main(argv: list[str] | None = None) -> int:
             return tests.returncode
         try:
             print(commit_and_push(args.root, run_date=args.date))
-        except RuntimeError as exc:
+        except (RuntimeError, subprocess.CalledProcessError) as exc:
             print(f"Publish skipped: {exc}")
+        if not args.skip_email:
+            try:
+                print(send_daily_report(args.root, run_date=args.date, to_addr=args.email_to))
+            except EmailConfigError as exc:
+                print(f"Email skipped: {exc}")
         return 0
+    if args.command == "email":
+        try:
+            print(send_daily_report(args.root, run_date=args.date, to_addr=args.to))
+            return 0
+        except EmailConfigError as exc:
+            print(f"Email failed: {exc}")
+            return 1
     return 2
