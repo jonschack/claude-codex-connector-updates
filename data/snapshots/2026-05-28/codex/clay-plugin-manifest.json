@@ -1,0 +1,31 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Find, enrich, and organize GTM accounts, contacts, and prospecting workflows from Clay.",
+  "homepage": "https://www.clay.com",
+  "interface": {
+    "brandColor": "#38D8F8",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find Clay records matching this ICP and summarize the strongest prospect accounts.",
+      "Enrich these leads in Clay with company, role, and outreach context.",
+      "Build a Clay prospecting list for this segment and identify useful signals."
+    ],
+    "developerName": "Clay",
+    "displayName": "Clay",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Clay connects Codex to your GTM workflows so you can find prospects, enrich leads, summarize account context, and organize outreach signals from Clay data.",
+    "privacyPolicyURL": "https://privacy.clay.com/",
+    "screenshots": [],
+    "shortDescription": "Find and enrich GTM accounts, contacts, and prospects.",
+    "termsOfServiceURL": "https://www.clay.com/terms-of-service",
+    "websiteURL": "https://www.clay.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "clay",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

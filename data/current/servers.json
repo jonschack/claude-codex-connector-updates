@@ -719,6 +719,96 @@
   },
   {
     "capabilities": [],
+    "description": "Earnings calls, transcripts, financial events, and market commentary",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "aiera": {
+            "id": "asdk_app_6967ddccc88881918a3733322b6bdf1a"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Research",
+        "name": "aiera",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/aiera",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Aiera",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "aiera",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.aiera.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "description": "Airtable is the database and operations layer for your agents \u2014 whether running product, marketing, sales, ops, HR, or a custom business app. It combines structured data with multiplayer visual surfaces (grid, kanban, calendar, gallery, timeline) humans and agents share \u2014 plus sync integrations to Jira, Salesforce, Zendesk, Google Drive, Databricks, and the rest of your stack, all backed by enterprise governance. This plugin makes Codex fluent in Airtable: creating bases and schema, working with records, and sharing UI for collaboration. Uses the Airtable app connector.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "airtable": {
+            "id": "asdk_app_693ca6ce2db08191bb52d66743c65184"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "airtable",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/airtable",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Airtable",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "airtable",
+    "source_urls": [
+      "https://github.com/airtable/skills",
+      "https://www.airtable.com"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
+  },
+  {
+    "capabilities": [],
     "description": "Stop watching the markets.",
     "evidence": [],
     "metadata": {
@@ -790,6 +880,45 @@
     "server_id": "amplitude",
     "source_urls": [
       "https://github.com/openai/plugins"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "B2B prospecting, account research, contacts, and outreach lists",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "apollo": {
+            "id": "asdk_app_69bd664f2a908191a3a0a47eca8559d1"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "apollo",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/apollo",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Apollo",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "apollo",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.apollo.io"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -1342,6 +1471,45 @@
   },
   {
     "capabilities": [],
+    "description": "Search Calendly events and availability so Codex can reason about meetings and scheduling.",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "calendly": {
+            "id": "asdk_app_69d7f67021c88191bb8aac736eff6cb3"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "calendly",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/calendly",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Calendly",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "calendly",
+    "source_urls": [
+      "https://calendly.com",
+      "https://github.com/openai/plugins"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Search, create, edit designs",
     "evidence": [],
     "metadata": {
@@ -1582,6 +1750,45 @@
   },
   {
     "capabilities": [],
+    "description": "Find, enrich, and organize GTM accounts, contacts, and prospecting workflows from Clay.",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "clay": {
+            "id": "asdk_app_69377d07cd9c8191a988f06f15b8c674"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "clay",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/clay",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Clay",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "clay",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.clay.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Turn Codex into your ClickUp command center.",
     "evidence": [],
     "metadata": {
@@ -1614,6 +1821,45 @@
     "server_id": "clickup",
     "source_urls": [
       "https://github.com/openai/plugins"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "CRM leads, opportunities, activities, and sales pipeline context",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "close": {
+            "id": "asdk_app_694574813e548191bac45327be0a61d1"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "close",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/close",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Close",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "close",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.close.com"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -2088,6 +2334,149 @@
     "write_confidence": "unknown"
   },
   {
+    "capabilities": [
+      "Interactive",
+      "Writes"
+    ],
+    "description": "Investigate Datadog telemetry and workflows from Codex",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Writes"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "datadog": {
+            "id": "asdk_app_69e8c7f174a08191a28b6da96c8062c4"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Developer Tools",
+        "name": "datadog",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/datadog",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Datadog (Preview)",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "datadog",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.datadoghq.com/"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
+  },
+  {
+    "capabilities": [],
+    "description": "Deal room documents, diligence materials, and Q&A workflows",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "datasite": {
+            "id": "asdk_app_69eba17551ac81918231c83822b703b6"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "datasite",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/datasite",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Datasite",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "datasite",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.datasite.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "description": "Use Deepnote's collaborative data workspace to explore data, automate notebooks and SQL workflows, and turn analysis into shareable results.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "deepnote": {
+            "id": "asdk_app_69fb51f9519081919c1f3e44ea9a5a05"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "deepnote",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/deepnote",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Deepnote",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "deepnote",
+    "source_urls": [
+      "https://deepnote.com",
+      "https://github.com/openai/plugins/tree/main/plugins/deepnote"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
+  },
+  {
     "capabilities": [],
     "description": "Demandbase integration with Codex gives sales, marketing, and GTM teams seamless access to rich B2B data...",
     "evidence": [],
@@ -2161,6 +2550,45 @@
     "source_urls": [
       "https://github.com/openai/plugins",
       "https://www.docket.io/"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Agreement envelopes, signing status, recipients, and contract dates",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "docusign": {
+            "id": "asdk_app_69fcc3b7582c81918df4ffae40cb7204"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "docusign",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/docusign",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Docusign",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "docusign",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.docusign.com"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -2374,6 +2802,45 @@
     ],
     "transport": "plugin",
     "write_confidence": "high"
+  },
+  {
+    "capabilities": [],
+    "description": "Financial data, estimates, market analytics, and research context",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "factset": {
+            "id": "asdk_app_699727751b1c819193883394649579e2"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Research",
+        "name": "factset",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/factset",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "FactSet",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "factset",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.factset.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
   },
   {
     "capabilities": [
@@ -3002,6 +3469,45 @@
   },
   {
     "capabilities": [],
+    "description": "Access HG Insights revenue growth intelligence, account data, buyer intent, technographics, and GTM signals from Codex.",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "hg-insights": {
+            "id": "asdk_app_694638aebbec8191a888262fa0ea8561"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "hg-insights",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/hg-insights",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "HG Insights",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "hg-insights",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://hginsights.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "HighLevel gives agencies a unified CRM, automation, and client communication platform.",
     "evidence": [],
     "metadata": {
@@ -3393,6 +3899,45 @@
   },
   {
     "capabilities": [],
+    "description": "Financial market data, company intelligence, and news",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "lseg": {
+            "id": "asdk_app_698aec3092e48191a4484b43a3fc79b8"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Research",
+        "name": "lseg",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/lseg",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "LSEG",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "lseg",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.lseg.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "MarcoPolo spins up a secure container where Codex can work with your actual data.",
     "evidence": [],
     "metadata": {
@@ -3465,6 +4010,122 @@
     "source_urls": [
       "https://github.com/openai/plugins",
       "https://mem.ai"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Company matching, firmographic lookup, and go-to-market account intelligence",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "meticulate": {
+            "id": "asdk_app_69f8fe2bcac08191b6025acec161ce1e"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "meticulate",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/meticulate",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Meticulate",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "meticulate",
+    "source_urls": [
+      "https://github.com/openai/plugins"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Legal research, cases, statutes, regulations, and cited research memos",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "midpage": {
+            "id": "asdk_app_699cc1a043688191a3ee44e6a2c2ebc1"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Research",
+        "name": "midpage",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/midpage",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Midpage",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "midpage",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.midpage.ai"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Product analytics, funnels, retention, cohorts, and event behavior",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "mixpanel": {
+            "id": "asdk_app_69b2e9aed45c8191b254b207dfcc2bb4"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "mixpanel",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/mixpanel",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Mixpanel",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "mixpanel",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://mixpanel.com"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -3990,7 +4651,7 @@
   },
   {
     "capabilities": [],
-    "description": "The Otter.ai MCP server connects Codex to your meeting intelligence, enabling search and retrieval of tra...",
+    "description": "The Otter.ai MCP server connects Codex to your meeting intelligence, enabling search and retrieval of transcripts, summaries, action items, and meeting metadata directly within your workflow.",
     "evidence": [],
     "metadata": {
       "app_manifest": {
@@ -4746,6 +5407,84 @@
   },
   {
     "capabilities": [],
+    "description": "Access Rox revenue agents, account intelligence, and sales workflow automation from Codex.",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "rox": {
+            "id": "asdk_app_6a1480a4a93c8191be8b8686d450db0a"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "rox",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/rox",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Rox",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "rox",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.rox.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Company financials, ratings context, market research, and industry data",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "s-p": {
+            "id": "asdk_app_6980f65d75b881918eaa6d65477d87c6"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Research",
+        "name": "s-p",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/s-p",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "S&P",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "s-p",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.spglobal.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Scite delivers answers grounded in peer-reviewed research you can verify.",
     "evidence": [],
     "metadata": {
@@ -5031,6 +5770,45 @@
     "source_urls": [
       "https://github.com/openai/plugins",
       "https://www.signnow.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Digital market intelligence and web traffic analytics",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "similarweb": {
+            "id": "asdk_app_695cdd7e863c819192b88beffc2033b6"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "similarweb",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/similarweb",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Similarweb",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "similarweb",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.similarweb.com"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -5599,6 +6377,45 @@
   },
   {
     "capabilities": [],
+    "description": "Business intelligence answers, dashboards, metrics, and revenue analysis",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "thoughtspot": {
+            "id": "asdk_app_69d8425f7a1c8191a438821b9c553b79"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "thoughtspot",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/thoughtspot",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "ThoughtSpot",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "thoughtspot",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.thoughtspot.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Tinman AI helps loan officers and underwriters quickly underwrite home financing scenarios and answer compl...",
     "evidence": [],
     "metadata": {
@@ -6021,6 +6838,45 @@
     "write_confidence": "high"
   },
   {
+    "capabilities": [],
+    "description": "B2B company intelligence, contacts, and go-to-market signals",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "zoominfo": {
+            "id": "asdk_app_698a340b9230819188ba5a5eea79022d"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "zoominfo",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/zoominfo",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "ZoomInfo",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "zoominfo",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.zoominfo.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
     "capabilities": [
       "Interactive",
       "Read",
@@ -6259,7 +7115,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.8.0"
+        "version": "1.8.2"
       }
     },
     "name": "aegis",
@@ -6330,11 +7186,38 @@
     "description": "",
     "evidence": [],
     "metadata": {
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "name": "agent-skills",
+              "version": "1.0.0"
+            }
+          },
+          "name": "agent-skills",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "agent-skills",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/Olshansk/agent-skills",
+            "https://raw.githubusercontent.com/Olshansk/agent-skills/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        }
+      ],
       "gallery_text_seen": true,
       "manifest": {
         "contextFileName": "GEMINI.md",
         "name": "agent-skills",
-        "version": "1.0.0"
+        "version": "0.1.0"
       }
     },
     "name": "agent-skills",
@@ -6344,7 +7227,9 @@
     "server_id": "agent-skills",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/MV011/agent-skills",
       "https://github.com/Olshansk/agent-skills",
+      "https://raw.githubusercontent.com/MV011/agent-skills/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Olshansk/agent-skills/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
@@ -7973,17 +8858,17 @@
         "mcpServers": {
           "chrome-devtools": {
             "args": [
-              "chrome-devtools-mcp@1.0.1"
+              "chrome-devtools-mcp@1.1.1"
             ],
             "command": "npx"
           }
         },
         "name": "chrome-devtools-mcp",
-        "version": "1.1.0"
+        "version": "1.1.1"
       },
       "mcp_server": {
         "args": [
-          "chrome-devtools-mcp@1.0.1"
+          "chrome-devtools-mcp@1.1.1"
         ],
         "command": "npx"
       }
@@ -12819,47 +13704,6 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "Gemini CLI extension for Google Kubernetes Engine.",
-          "evidence": [],
-          "metadata": {
-            "discovery": {
-              "ok": false,
-              "reason": "local_or_unconfigured_mcp_discovery_deferred"
-            },
-            "excludeTools": null,
-            "includeTools": null,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Gemini CLI extension for Google Kubernetes Engine.",
-              "mcpServers": {
-                "gke": {
-                  "command": "${extensionPath}${/}gke-mcp"
-                }
-              },
-              "name": "gke-mcp",
-              "version": "0.12.0"
-            },
-            "mcp_server": {
-              "command": "${extensionPath}${/}gke-mcp"
-            }
-          },
-          "name": "gke-mcp: gke",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "gke-mcp-gke",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/GoogleCloudPlatform/gke-mcp",
-            "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
-          ],
-          "transport": "stdio",
-          "write_confidence": "unknown"
-        }
-      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -12871,7 +13715,7 @@
           }
         },
         "name": "gke-mcp",
-        "version": "0.11.1"
+        "version": "0.12.0"
       },
       "mcp_server": {
         "command": "${extensionPath}${/}gke-mcp"
@@ -12884,9 +13728,7 @@
     "server_id": "gke-mcp-gke",
     "source_urls": [
       "https://geminicli.com/extensions/",
-      "https://github.com/AravG7/gke-mcp",
       "https://github.com/GoogleCloudPlatform/gke-mcp",
-      "https://raw.githubusercontent.com/AravG7/gke-mcp/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
@@ -15084,35 +15926,6 @@
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "commands": {
-                "liku": "commands/liku.toml"
-              },
-              "contextFileName": "GEMINI.md",
-              "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
-              "name": "liku",
-              "version": "1.0.0"
-            }
-          },
-          "name": "liku",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "liku",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/TayDa64/Liku_AI",
-            "https://raw.githubusercontent.com/TayDa64/Liku_AI/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
         }
       ],
       "gallery_text_seen": true,
@@ -15135,10 +15948,8 @@
       "https://geminicli.com/extensions/",
       "https://github.com/TayDa64/Liku-AI",
       "https://github.com/TayDa64/LikuBuddy",
-      "https://github.com/TayDa64/Liku_AI",
       "https://raw.githubusercontent.com/TayDa64/Liku-AI/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/TayDa64/LikuBuddy/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/TayDa64/Liku_AI/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/TayDa64/LikuBuddy/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -19858,6 +20669,32 @@
   },
   {
     "capabilities": [],
+    "description": "Agent workflow kit for brainstorming, dated specs, implementation waves, TDD, debugging, review, and delivery.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Agent workflow kit for brainstorming, dated specs, implementation waves, TDD, debugging, review, and delivery.",
+        "name": "s-kit",
+        "version": "1.0.0"
+      }
+    },
+    "name": "s-kit",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "s-kit",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/J03Fr0st/s-kit",
+      "https://raw.githubusercontent.com/J03Fr0st/s-kit/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "AI-powered DOCX editing with tracked changes, redlining, and formatting preservation",
     "evidence": [],
     "metadata": {
@@ -20178,7 +21015,7 @@
       "gallery_text_seen": true,
       "manifest": {
         "name": "shopify-plugin",
-        "version": "1.2.2"
+        "version": "1.3.0"
       }
     },
     "name": "shopify-plugin",
@@ -20513,7 +21350,7 @@
         },
         "migratedTo": "https://github.com/SonarSource/sonarqube-agent-plugins",
         "name": "sonarqube-mcp-server",
-        "version": "1.18.1"
+        "version": "1.19.0"
       },
       "mcp_server": {
         "args": [
@@ -20756,32 +21593,6 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
-              "version": "5.0.7"
-            }
-          },
-          "name": "superpowers",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "superpowers",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/JustinDube21/superpowers",
-            "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-              "name": "superpowers",
               "version": "5.0.6"
             }
           },
@@ -20841,11 +21652,9 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/FuZhiyu/superRA",
-      "https://github.com/JustinDube21/superpowers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
       "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
     ],

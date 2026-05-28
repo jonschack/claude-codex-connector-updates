@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Search and explore satellite imagery from top providers including Vantor, Planet, Airbus, and more, all in...",
+  "homepage": "https://skywatch.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find recent satellite images of the Golden Gate Bridge"
+    ],
+    "developerName": "SkyWatch Space Applications Inc.",
+    "displayName": "SkyWatch",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Search and explore satellite imagery from top providers including Vantor, Planet, Airbus, and more, all in one place. SkyWatch lets you find archive imagery by location, date, resolution, and cloud cover, compare pricing across providers, and browse available satellites and product offerings. Results include direct links to view and order imagery on SkyWatch Explore.",
+    "privacyPolicyURL": "https://skywatch.com/privacy/",
+    "screenshots": [],
+    "shortDescription": "Search and explore satellite imagery from top providers including Vantor, Planet, Airbus, and more, all in...",
+    "termsOfServiceURL": "https://s3-us-west-2.amazonaws.com/skywatch-legal/SkyWatch+Terms+of+Service.pdf",
+    "websiteURL": "https://skywatch.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "skywatch",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

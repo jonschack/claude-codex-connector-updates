@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Product analytics, funnels, retention, cohorts, and event behavior",
+  "homepage": "https://mixpanel.com",
+  "interface": {
+    "brandColor": "#7850F8",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Analyze the funnel from signup to activation in Mixpanel and identify the largest drop-offs.",
+      "Compare retention for users acquired from paid versus organic channels over the last 90 days.",
+      "Find the top events before churn and summarize product behavior patterns."
+    ],
+    "developerName": "Mixpanel",
+    "displayName": "Mixpanel",
+    "logo": "./assets/logo.png",
+    "longDescription": "Product analytics, funnels, retention, cohorts, and event behavior",
+    "screenshots": [],
+    "shortDescription": "Product analytics, funnels, retention, cohorts, and event behavior",
+    "websiteURL": "https://mixpanel.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "mixpanel",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

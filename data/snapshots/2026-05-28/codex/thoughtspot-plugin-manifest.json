@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Business intelligence answers, dashboards, metrics, and revenue analysis",
+  "homepage": "https://www.thoughtspot.com",
+  "interface": {
+    "brandColor": "#000000",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Search ThoughtSpot for sales performance answers and summarize the key drivers.",
+      "Find dashboards related to pipeline health and explain the biggest movement this quarter.",
+      "Analyze revenue by segment in ThoughtSpot and highlight anomalies worth investigating."
+    ],
+    "developerName": "ThoughtSpot",
+    "displayName": "ThoughtSpot",
+    "logo": "./assets/logo.png",
+    "longDescription": "Business intelligence answers, dashboards, metrics, and revenue analysis",
+    "screenshots": [],
+    "shortDescription": "Business intelligence answers, dashboards, metrics, and revenue analysis",
+    "websiteURL": "https://www.thoughtspot.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "thoughtspot",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

@@ -1,7 +1,7 @@
 [
   {
     "confidence": "high",
-    "current_hash": "031a6650028bc99eefa05622161ffcbfded844e72162bb9b3d707cf4013e8439",
+    "current_hash": "142721da3662a67dfda752971d52d4320b1420f1655c5546427327368951bf8b",
     "event_type": "new_write_server",
     "evidence": [
       {
@@ -14,12 +14,56 @@
         ]
       }
     ],
-    "id": 75,
+    "id": 76,
     "previous_hash": null,
     "provider": "codex",
-    "run_date": "2026-05-27",
-    "server_id": "build-web-data-visualization",
-    "summary": "New write-capable codex plugin: Build Web Data Visualization",
+    "run_date": "2026-05-28",
+    "server_id": "deepnote",
+    "summary": "New write-capable codex plugin: Deepnote",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "74b6584385072be90549120e0fd21969ec1adc23083be379a787026fd7dccbd9",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Writes"
+        ]
+      }
+    ],
+    "id": 77,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-28",
+    "server_id": "datadog",
+    "summary": "New write-capable codex plugin: Datadog (Preview)",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "09f315152ac5fa81e417fd6679d739868156d1a9ac9942b0e1acfb145c510998",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 78,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-05-28",
+    "server_id": "airtable",
+    "summary": "New write-capable codex plugin: Airtable",
     "tool_name": null
   }
 ]

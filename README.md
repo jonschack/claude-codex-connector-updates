@@ -1,18 +1,20 @@
-# MCP Write-Capability Report: 2026-05-27
+# MCP Write-Capability Report: 2026-05-28
 
 ## Write Alerts
 
 | Event | Provider | Server | Tool | Confidence | Summary |
 | --- | --- | --- | --- | --- | --- |
-| new_write_server | codex | `build-web-data-visualization` |  | high | New write-capable codex plugin: Build Web Data Visualization |
+| new_write_server | codex | `deepnote` |  | high | New write-capable codex plugin: Deepnote |
+| new_write_server | codex | `datadog` |  | high | New write-capable codex plugin: Datadog (Preview) |
+| new_write_server | codex | `airtable` |  | high | New write-capable codex plugin: Airtable |
 
 ## Coverage
 
-- Normalized servers: 357
-- Write-capable servers: 63
+- Normalized servers: 380
+- Write-capable servers: 66
 - claude: 24 servers, 8 write-capable
-- codex: 125 servers, 47 write-capable
-- gemini: 199 servers, 8 write-capable
+- codex: 146 servers, 50 write-capable
+- gemini: 201 servers, 8 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues
