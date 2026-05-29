@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Digital market intelligence and web traffic analytics",
+  "homepage": "https://www.similarweb.com",
+  "interface": {
+    "brandColor": "#F07028",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Analyze traffic trends for example.com versus its top competitors over the last six months.",
+      "Find the top acquisition channels and referring sites for example.com and summarize growth opportunities.",
+      "Compare audience geography and search keywords for example.com and a competitor."
+    ],
+    "developerName": "Similarweb",
+    "displayName": "Similarweb",
+    "logo": "./assets/logo.png",
+    "longDescription": "Digital market intelligence and web traffic analytics",
+    "screenshots": [],
+    "shortDescription": "Digital market intelligence and web traffic analytics",
+    "websiteURL": "https://www.similarweb.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "similarweb",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

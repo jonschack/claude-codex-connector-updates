@@ -1296,7 +1296,10 @@
         "name": "build-ios-apps",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/build-ios-apps",
@@ -1355,7 +1358,10 @@
         "name": "build-macos-apps",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/build-macos-apps",
@@ -1402,7 +1408,10 @@
         "name": "build-web-apps",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/build-web-apps",
@@ -1449,7 +1458,10 @@
         "name": "build-web-data-visualization",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/build-web-data-visualization",
@@ -1990,7 +2002,10 @@
         "name": "coderabbit",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/coderabbit",
@@ -2034,11 +2049,14 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Security",
         "name": "codex-security",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/codex-security",
@@ -2053,9 +2071,9 @@
     "remote_url": "",
     "server_id": "codex-security",
     "source_urls": [
+      "https://developers.openai.com/codex/security",
       "https://github.com/openai/plugins",
-      "https://openai.com/",
-      "https://openai.com/index/codex-security-now-in-research-preview/"
+      "https://openai.com/"
     ],
     "transport": "plugin",
     "write_confidence": "high"
@@ -2781,7 +2799,10 @@
         "name": "expo",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/expo",
@@ -3036,7 +3057,10 @@
         "name": "game-studio",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/game-studio",
@@ -3421,7 +3445,7 @@
       "Read",
       "Write"
     ],
-    "description": "Create HeyGen avatar videos and personalized video messages. Build a persistent digital identity from a photo, then generate presenter-led videos with your digital twin.",
+    "description": "Create HeyGen avatar videos and personalized video messages. Build a persistent digital identity from a description or hosted photo URL, then generate presenter-led videos with your digital twin.",
     "evidence": [
       {
         "confidence": "high",
@@ -3714,7 +3738,10 @@
         "name": "hyperframes",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/hyperframes",
@@ -4092,9 +4119,23 @@
     "write_confidence": "unknown"
   },
   {
-    "capabilities": [],
-    "description": "Product analytics, funnels, retention, cohorts, and event behavior",
-    "evidence": [],
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "description": "Query and analyze Mixpanel",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
     "metadata": {
       "app_manifest": {
         "apps": {
@@ -4125,10 +4166,58 @@
     "server_id": "mixpanel",
     "source_urls": [
       "https://github.com/openai/plugins",
-      "https://mixpanel.com"
+      "https://mixpanel.com/home"
     ],
     "transport": "app",
-    "write_confidence": "unknown"
+    "write_confidence": "high"
+  },
+  {
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "description": "Analyze Mixpanel data with the mixpanel_headless Python SDK and Codex skills.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {},
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "mixpanel-headless",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/mixpanel-headless",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Mixpanel Headless",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "mixpanel-headless",
+    "source_urls": [
+      "https://github.com/mixpanel/mixpanel-headless",
+      "https://mixpanel.com/home",
+      "https://mixpanel.github.io/mixpanel-headless/"
+    ],
+    "transport": "plugin",
+    "write_confidence": "high"
   },
   {
     "capabilities": [],
@@ -4628,7 +4717,10 @@
         "name": "openai-developers",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/openai-developers",
@@ -4931,7 +5023,10 @@
         "name": "plugin-eval",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/plugin-eval",
@@ -5300,7 +5395,10 @@
         "name": "remotion",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/remotion",
@@ -6097,7 +6195,10 @@
         "name": "superpowers",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/superpowers",
@@ -6315,7 +6416,10 @@
         "name": "test-android-apps",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/test-android-apps",
@@ -6902,7 +7006,10 @@
         "name": "zotero",
         "policy": {
           "authentication": "[REDACTED]",
-          "installation": "AVAILABLE"
+          "installation": "AVAILABLE",
+          "products": [
+            "CODEX"
+          ]
         },
         "source": {
           "path": "./plugins/zotero",
@@ -7849,6 +7956,38 @@
       "https://geminicli.com/extensions/",
       "https://github.com/BillNobill/antigravity-cli-windows-notifier",
       "https://raw.githubusercontent.com/BillNobill/antigravity-cli-windows-notifier/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Commander skills and instruction files for Army of Agents. Provides structured workflows and AoA tool reference for Gemini CLI sessions.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFiles": [
+          "./commander/TOOLS.md",
+          "./commander/AGENTS.md",
+          "./model-overlays/gemini.md"
+        ],
+        "description": "Commander skills and instruction files for Army of Agents. Provides structured workflows and AoA tool reference for Gemini CLI sessions.",
+        "name": "aoa-skills",
+        "sessionHook": "./hooks/session-start",
+        "skills": "./skills/",
+        "version": "0.1.0"
+      }
+    },
+    "name": "aoa-skills",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "aoa-skills",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/MeteoriteLabs/AoA-Skills",
+      "https://raw.githubusercontent.com/MeteoriteLabs/AoA-Skills/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -11336,7 +11475,7 @@
         "contextFileName": "GEMINI.md",
         "description": "\u901a\u7528\u5171\u8bc6\u5f0f\u7814\u53d1 skills \u5e93\uff1a\u504f\u7f6e\u72ec\u7acb\u7684\u591a\u89d2\u5ea6\u5171\u8bc6\u6784\u5efa\u5f15\u64ce",
         "name": "consensus-rnd",
-        "version": "0.1.0"
+        "version": "1.0.0-beta.1"
       }
     },
     "name": "consensus-rnd",
@@ -11793,6 +11932,32 @@
   },
   {
     "capabilities": [],
+    "description": "Official Gemini extension for Azure Cosmos DB (NoSQL). Provides best practice skills for data modeling, partition key design, query optimization, indexing, vector search, full-text search, global distribution, security, and more.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "description": "Official Gemini extension for Azure Cosmos DB (NoSQL). Provides best practice skills for data modeling, partition key design, query optimization, indexing, vector search, full-text search, global distribution, security, and more.",
+        "name": "cosmosdb",
+        "skills": "./skills/",
+        "version": "1.0.0"
+      }
+    },
+    "name": "cosmosdb",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "cosmosdb",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/AzureCosmosDB/cosmosdb-agent-kit",
+      "https://raw.githubusercontent.com/AzureCosmosDB/cosmosdb-agent-kit/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "",
     "evidence": [],
     "metadata": {
@@ -11954,6 +12119,32 @@
       "https://geminicli.com/extensions/",
       "https://github.com/Owl-Listener/designpowers",
       "https://raw.githubusercontent.com/Owl-Listener/designpowers/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "DevMode discipline pack: mode gating, token budget, TDD, debugging, and Dev-Flow coordination",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "DevMode discipline pack: mode gating, token budget, TDD, debugging, and Dev-Flow coordination",
+        "name": "devmode",
+        "version": "0.1.0"
+      }
+    },
+    "name": "devmode",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "devmode",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/870DudeMcgee/DevMode",
+      "https://raw.githubusercontent.com/870DudeMcgee/DevMode/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -13704,6 +13895,47 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "Gemini CLI extension for Google Kubernetes Engine.",
+          "evidence": [],
+          "metadata": {
+            "discovery": {
+              "ok": false,
+              "reason": "local_or_unconfigured_mcp_discovery_deferred"
+            },
+            "excludeTools": null,
+            "includeTools": null,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "Gemini CLI extension for Google Kubernetes Engine.",
+              "mcpServers": {
+                "gke": {
+                  "command": "${extensionPath}${/}gke-mcp"
+                }
+              },
+              "name": "gke-mcp",
+              "version": "0.13.0"
+            },
+            "mcp_server": {
+              "command": "${extensionPath}${/}gke-mcp"
+            }
+          },
+          "name": "gke-mcp: gke",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "gke-mcp-gke",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/GoogleCloudPlatform/gke-mcp",
+            "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
+          ],
+          "transport": "stdio",
+          "write_confidence": "unknown"
+        }
+      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -13715,7 +13947,7 @@
           }
         },
         "name": "gke-mcp",
-        "version": "0.12.0"
+        "version": "0.11.1"
       },
       "mcp_server": {
         "command": "${extensionPath}${/}gke-mcp"
@@ -13728,7 +13960,9 @@
     "server_id": "gke-mcp-gke",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/AravG7/gke-mcp",
       "https://github.com/GoogleCloudPlatform/gke-mcp",
+      "https://raw.githubusercontent.com/AravG7/gke-mcp/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
@@ -15921,8 +16155,8 @@
           "server_id": "liku",
           "source_urls": [
             "https://geminicli.com/extensions/",
-            "https://github.com/TayDa64/LikuBuddy",
-            "https://raw.githubusercontent.com/TayDa64/LikuBuddy/HEAD/gemini-extension.json"
+            "https://github.com/TayDa64/Liku_AI",
+            "https://raw.githubusercontent.com/TayDa64/Liku_AI/HEAD/gemini-extension.json"
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
@@ -15933,7 +16167,7 @@
         "commands": {
           "liku": "commands/liku.toml"
         },
-        "contextFileName": "LIKU-CORE.md",
+        "contextFileName": "GEMINI.md",
         "description": "LikuBuddy: Multi-agent terminal orchestration and live streaming platform",
         "name": "liku",
         "version": "1.0.0"
@@ -15946,10 +16180,10 @@
     "server_id": "liku",
     "source_urls": [
       "https://geminicli.com/extensions/",
-      "https://github.com/TayDa64/Liku-AI",
       "https://github.com/TayDa64/LikuBuddy",
-      "https://raw.githubusercontent.com/TayDa64/Liku-AI/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/TayDa64/LikuBuddy/HEAD/gemini-extension.json"
+      "https://github.com/TayDa64/Liku_AI",
+      "https://raw.githubusercontent.com/TayDa64/LikuBuddy/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/TayDa64/Liku_AI/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -20743,6 +20977,32 @@
   },
   {
     "capabilities": [],
+    "description": "Core skills library: research framing, pre-registration, reproducible analysis, anomaly investigation, and review patterns",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Core skills library: research framing, pre-registration, reproducible analysis, anomaly investigation, and review patterns",
+        "name": "science-superpowers",
+        "version": "0.1.0"
+      }
+    },
+    "name": "science-superpowers",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "science-superpowers",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/K-Dense-AI/science-superpowers",
+      "https://raw.githubusercontent.com/K-Dense-AI/science-superpowers/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Give Gemini CLI the ability to see your screen. Capture full screen or specific windows on-demand for visual debugging, UI analysis, and context gathering.",
     "evidence": [],
     "metadata": {
@@ -20856,6 +21116,48 @@
       "https://raw.githubusercontent.com/NeilLi/seedcore/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Official Seezo plugin for AI clients. Connects shared public skills to the Seezo MCP.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "error": "HTTP Error 401: Unauthorized",
+        "ok": false,
+        "status": 401
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Official Seezo plugin for AI clients. Connects shared public skills to the Seezo MCP.",
+        "mcpServers": {
+          "seezo": {
+            "type": "http",
+            "url": "https://app.seezo.io/mcp"
+          }
+        },
+        "name": "seezo",
+        "version": "0.7.0"
+      },
+      "mcp_server": {
+        "type": "http",
+        "url": "https://app.seezo.io/mcp"
+      }
+    },
+    "name": "seezo: seezo",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "https://app.seezo.io/mcp",
+    "server_id": "seezo-seezo",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Seezo-io/ai-plugin",
+      "https://raw.githubusercontent.com/Seezo-io/ai-plugin/HEAD/gemini-extension.json"
+    ],
+    "transport": "http",
     "write_confidence": "unknown"
   },
   {
@@ -21593,6 +21895,32 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
+              "version": "5.0.7"
+            }
+          },
+          "name": "superpowers",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "superpowers",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/JustinDube21/superpowers",
+            "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        },
+        {
+          "capabilities": [],
+          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
+              "name": "superpowers",
               "version": "5.0.6"
             }
           },
@@ -21652,9 +21980,11 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/FuZhiyu/superRA",
+      "https://github.com/JustinDube21/superpowers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
       "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
     ],

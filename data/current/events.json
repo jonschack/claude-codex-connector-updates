@@ -1,7 +1,30 @@
 [
   {
     "confidence": "high",
-    "current_hash": "142721da3662a67dfda752971d52d4320b1420f1655c5546427327368951bf8b",
+    "current_hash": "73c7f939a66e26449c433e602cc7929ab64bb4be26359add2cba574ee6ff8927",
+    "event_type": "write_status_changed",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 79,
+    "previous_hash": "5a370e68163b3ef1a06e8489b87831b676bb71726f956046e6a6ac1a163178bb",
+    "provider": "codex",
+    "run_date": "2026-05-29",
+    "server_id": "mixpanel",
+    "summary": "codex plugin became write-capable: Mixpanel",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "9026e226b452506ee7778318df4a444191bc85778b1766b4adf2a05e66c31f9a",
     "event_type": "new_write_server",
     "evidence": [
       {
@@ -14,56 +37,12 @@
         ]
       }
     ],
-    "id": 76,
+    "id": 80,
     "previous_hash": null,
     "provider": "codex",
-    "run_date": "2026-05-28",
-    "server_id": "deepnote",
-    "summary": "New write-capable codex plugin: Deepnote",
-    "tool_name": null
-  },
-  {
-    "confidence": "high",
-    "current_hash": "74b6584385072be90549120e0fd21969ec1adc23083be379a787026fd7dccbd9",
-    "event_type": "new_write_server",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Interactive",
-          "Writes"
-        ]
-      }
-    ],
-    "id": 77,
-    "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-05-28",
-    "server_id": "datadog",
-    "summary": "New write-capable codex plugin: Datadog (Preview)",
-    "tool_name": null
-  },
-  {
-    "confidence": "high",
-    "current_hash": "09f315152ac5fa81e417fd6679d739868156d1a9ac9942b0e1acfb145c510998",
-    "event_type": "new_write_server",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Read",
-          "Write"
-        ]
-      }
-    ],
-    "id": 78,
-    "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-05-28",
-    "server_id": "airtable",
-    "summary": "New write-capable codex plugin: Airtable",
+    "run_date": "2026-05-29",
+    "server_id": "mixpanel-headless",
+    "summary": "New write-capable codex plugin: Mixpanel Headless",
     "tool_name": null
   }
 ]

@@ -1,0 +1,24 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Investment and fund research",
+  "interface": {
+    "capabilities": [],
+    "category": "Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Summarize the Morningstar view on this asset"
+    ],
+    "developerName": "Morningstar",
+    "displayName": "Morningstar",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Investment and fund research",
+    "screenshots": [],
+    "shortDescription": "Investment and fund research"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "morningstar",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}
