@@ -26,7 +26,7 @@ class ReportingTests(unittest.TestCase):
         self.assertIn("## Ecosystem Registries", out)
         self.assertIn("Indexed servers (deduped): 2", out)
         self.assertIn("Write-capable", out)
-        self.assertIn("both the vendor", out.lower() if False else out)  # double-count note present
+        self.assertIn("also appear in the vendor", out)
         self.assertIn("new_write_server", out)
 
     def test_rows_capped(self):
@@ -36,6 +36,7 @@ class ReportingTests(unittest.TestCase):
         out = render_registry_section("2026-05-30", self._recs(), events,
                                       ["official"], {"official": 40}, 0, row_cap=25)
         self.assertIn("additional", out)  # overflow pointer present
+        self.assertIn("registry_events.json", out)
 
 
 if __name__ == "__main__":

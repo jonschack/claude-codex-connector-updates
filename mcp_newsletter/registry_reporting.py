@@ -7,7 +7,7 @@ from .classifier import reportable
 from .registries.base import RegistryServerRecord
 
 DOUBLE_COUNT_NOTE = (
-    "- Note: a server counted here may also be counted in both the vendor tier above; the "
+    "- Note: a server may also appear in the vendor-tier coverage above; the "
     "two tiers are counted independently."
 )
 
@@ -50,9 +50,10 @@ def render_registry_section(
         for e in table_events[:row_cap]:
             lines.append(
                 "| {et} | `{id}` | {conf} | {src} | {sm} |".format(
-                    et=e["event_type"], id=e["identity"], conf=e["confidence"],
+                    et=e.get("event_type", ""), id=e.get("identity", ""),
+                    conf=e.get("confidence", ""),
                     src=", ".join(e.get("sources", [])),
-                    sm=e["summary"].replace("|", "\\|"),
+                    sm=str(e.get("summary", "")).replace("|", "\\|"),
                 )
             )
         if len(table_events) > row_cap:
