@@ -28,6 +28,6 @@ def collect_cline(ctx: CollectContext) -> List[ServerRecord]:
         servers.append(ServerRecord(
             provider=PROVIDER, server_id=slugify(name), native_surface="connector",
             name=name, description=item.get("description", ""),
-            source_urls=[item.get("githubUrl", "") or item.get("repo", ""), url],
+            source_urls=[u for u in (item.get("githubUrl", "") or item.get("repo", ""), url) if u],
         ))
     return servers

@@ -42,4 +42,6 @@ def collect_openai(ctx: CollectContext) -> List[ServerRecord]:
             name=name, description=text[:500], capabilities=_capabilities(text),
             source_urls=[url],
         ))
+    if markup and not servers:
+        ctx.add_issue(PROVIDER, url, "no records parsed; DOM may have changed")
     return servers

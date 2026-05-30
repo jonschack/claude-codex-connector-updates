@@ -20,14 +20,15 @@ def collect_vscode(ctx: CollectContext) -> List[ServerRecord]:
         ctx.add_issue(PROVIDER, url, "invalid gallery JSON")
         return []
     servers = []
-    for item in (data.get("servers") or data if isinstance(data, list) else data.get("servers", [])):
+    items = data if isinstance(data, list) else (data.get("servers") or [])
+    for item in items:
         name = item.get("name") or item.get("displayName") or ""
         if not name:
             continue
         servers.append(ServerRecord(
             provider=PROVIDER, server_id=slugify(name), native_surface="connector",
             name=name, description=item.get("description", ""),
-            source_urls=[item.get("repository", ""), url],
+            source_urls=[u for u in (item.get("repository", ""), url) if u],
             remote_url=item.get("url", ""),
         ))
     return servers
