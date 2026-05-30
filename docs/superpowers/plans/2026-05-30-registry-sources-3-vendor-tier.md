@@ -654,3 +654,24 @@ different regions (upsert loop vs. a new function + one inserted call) and do
 not conflict, but whichever plan executes second should re-run the full suite
 after merging to confirm.
 ```
+
+---
+
+## As-Built Amendments
+
+Reconciles the plan with what was implemented and reviewed. Final state: **123 tests, all green.**
+
+**Task 1 — `upsert_tool` also gated by `provider_seeded` (beyond the plan).** The plan reasoned only `upsert_server` needed gating. In practice a brand-new provider's first run would still emit `new_write_tool` events (incomplete silent baseline), so `upsert_tool` gained the same `provider_seeded: bool = True` gate and `run_update` passes `provider_seeded=server.provider in seeded` to it. Test `test_first_run_suppresses_both_server_and_tool_events` proves a new provider's first run emits zero events. Consequently `tests/test_update.py::test_update_is_idempotent_for_same_day` was changed to assert the two runs' event counts are EQUAL (count-agnostic) rather than a magic number, since its fresh-DB `codex` provider is now correctly seeded-silent (0 events).
+
+**Vendor `remote_url` is descriptive-only in v1 (corrects an overclaim).** The plan's §5 / Task 3e claimed vendor servers carrying `remote_url` (e.g. cloudflare) feed `mcp_discovery`. That is NOT true: `discover_remote_tools` is invoked only inside the `codex` and `gemini` collectors, not generically over vendor `ServerRecord`s. For v1, vendor `remote_url` is retained as descriptive metadata only; vendor-side live discovery is a deferred follow-up (wiring it inline would also make the offline collector tests hit the network, since fixture URLs resolve). The registry tier already provides the live-discovery path. Vendor-tier write-capability therefore comes from catalog capability/description text (the existing classifier), which is the same basis as the incumbent claude/grok collectors.
+
+**Collector robustness fixes (review-driven).**
+- `vscode.py`: handles a TOP-LEVEL JSON list (the plan's sample ternary crashed on it) — `items = data if isinstance(data, list) else (data.get("servers") or [])`.
+- `cloudflare.py`: the name regex was hardened so flattened-page prose is not captured into the connector name.
+- `openai.py`/`cursor.py`/`cloudflare.py`: emit a `CrawlIssue` when the fetch succeeds but zero records parse (silent-parser-break detection, mirroring `claude.py`).
+- `cursor.py`: rewritten to parse per-card title + per-card description (was naming servers from repo slugs with a shared whole-page description), deduped and sorted.
+- `cline.py`/`vscode.py`: empty strings filtered out of `source_urls`.
+
+**Naming.** `continue_.py` correctly sets `provider="continue"` (module name has the trailing underscore only because `continue` is a Python keyword).
+
+**Accepted residual — `# VERIFY` parsers.** All six vendor catalog URLs/shapes are assumption-based and tested against SYNTHETIC fixtures. Per plan §3, capturing a real response per source (then replacing the URL + fixture and removing the `# VERIFY` comment) is deferred to deployment. The new silent-parser-break issues make a wrong/empty catalog visible on the first real run rather than failing silently.
