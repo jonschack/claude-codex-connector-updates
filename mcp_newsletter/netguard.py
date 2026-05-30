@@ -70,7 +70,7 @@ MAX_RESPONSE_BYTES = 5 * 1024 * 1024
 
 def max_response_bytes() -> int:
     raw = os.environ.get("MCP_NEWSLETTER_MAX_RESPONSE_BYTES")
-    if raw and raw.isdigit():
+    if raw and raw.isdigit() and int(raw) > 0:  # ignore 0/empty -> would cap every fetch to nothing
         return int(raw)
     return MAX_RESPONSE_BYTES
 

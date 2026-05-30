@@ -140,5 +140,17 @@ class ShouldRetryTests(unittest.TestCase):
         self.assertEqual(delay, 0.5)
 
 
+class MaxResponseBytesTests(unittest.TestCase):
+    def test_zero_env_value_falls_back_to_default(self):
+        from mcp_newsletter.netguard import MAX_RESPONSE_BYTES, max_response_bytes
+        with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_MAX_RESPONSE_BYTES": "0"}):
+            self.assertEqual(max_response_bytes(), MAX_RESPONSE_BYTES)
+
+    def test_positive_env_value_is_used(self):
+        from mcp_newsletter.netguard import max_response_bytes
+        with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_MAX_RESPONSE_BYTES": "1234"}):
+            self.assertEqual(max_response_bytes(), 1234)
+
+
 if __name__ == "__main__":
     unittest.main()
