@@ -1,7 +1,10 @@
 import unittest
+from unittest import mock
 
+from mcp_newsletter import registry_discovery
+from mcp_newsletter.models import ToolRecord
 from mcp_newsletter.registries.base import RegistryServerRecord
-from mcp_newsletter.registry_discovery import select_discovery_candidates
+from mcp_newsletter.registry_discovery import run_discovery, select_discovery_candidates
 
 
 def _rec(identity, remote=True):
@@ -45,6 +48,41 @@ class SelectTests(unittest.TestCase):
         b = select_discovery_candidates(recs, cap=3, last_discovered={},
                                         cadence_days=3, run_date="2026-05-30")
         self.assertEqual([r.identity for r in a], [r.identity for r in b])
+
+    def test_multiple_never_discovered_sorted_by_identity(self):
+        recs = [_rec("y"), _rec("x")]
+        sel = select_discovery_candidates(recs, cap=10, last_discovered={},
+                                          cadence_days=3, run_date="2026-05-30")
+        self.assertEqual([r.identity for r in sel], ["x", "y"])
+
+
+class RunDiscoveryTests(unittest.TestCase):
+    def test_records_dates_and_tool_confidence(self):
+        rec = _rec("a")
+        tool = ToolRecord(provider="registry", server_id="a", name="create_issue",
+                          native_surface="registry", description="Create an issue")
+        with mock.patch.object(registry_discovery, "discover_remote_tools",
+                               return_value=([tool], {"ok": True, "tool_count": 1})):
+            out = run_discovery([rec], run_date="2026-05-30", workers=2)
+        self.assertEqual(out, {"a": "2026-05-30"})
+        self.assertIn("tools", rec.confidence_by_source)
+        self.assertEqual(rec.confidence_by_source["tools"]["date"], "2026-05-30")
+
+    def test_swallows_per_endpoint_exceptions(self):
+        good = _rec("good")
+        bad = _rec("bad")
+
+        def fake(provider, server_id, native_surface, url, timeout=15):
+            if server_id == "bad":
+                raise RuntimeError("boom")
+            t = ToolRecord(provider="registry", server_id=server_id, name="create_x",
+                           native_surface="registry", description="Create")
+            return ([t], {"ok": True})
+
+        with mock.patch.object(registry_discovery, "discover_remote_tools", side_effect=fake):
+            out = run_discovery([good, bad], run_date="2026-05-30", workers=2)
+        self.assertIn("good", out)
+        self.assertNotIn("bad", out)  # excepted future is not recorded
 
 
 if __name__ == "__main__":
