@@ -20,8 +20,9 @@ def is_safe_url(url: str) -> Tuple[bool, str]:
     """Return (ok, reason). ok=False means do not connect to this URL.
 
     Blocks non-http(s) schemes and any host that resolves to a loopback,
-    private, link-local, reserved, multicast, or unspecified address. Hosts
-    listed in MCP_NEWSLETTER_SSRF_ALLOW bypass the address check.
+    private, link-local, reserved, multicast, unspecified, or CGNAT
+    (100.64.0.0/10) address. Hosts listed in MCP_NEWSLETTER_SSRF_ALLOW bypass
+    the address check.
 
     Note: this validates DNS at check time; the caller re-resolves when
     connecting, so a DNS-rebinding adversary is a known residual risk

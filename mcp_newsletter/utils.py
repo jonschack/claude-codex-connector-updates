@@ -159,7 +159,11 @@ def fetch_text(url: str, timeout: int = 20) -> Tuple[Optional[str], Dict[str, An
                 continue
             body = exc.read(4000).decode("utf-8", "replace") if exc.fp else ""
             return body, {"url": url, "status": exc.code, "content_type": "", "error": str(exc)}
-        except (URLError, TimeoutError, OSError, ValueError) as exc:
+        except ValueError as exc:
+            # size-cap breach from read_capped is deterministic; retrying just
+            # re-downloads the same oversized body, so fail fast.
+            return None, {"url": url, "status": None, "content_type": "", "error": str(exc)}
+        except (URLError, TimeoutError, OSError) as exc:
             retry, delay = should_retry(_FETCH_RETRY, attempt, None, None)
             if retry:
                 _sleep(delay)

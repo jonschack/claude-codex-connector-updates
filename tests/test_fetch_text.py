@@ -68,6 +68,20 @@ class FetchTextRetryTests(unittest.TestCase):
             utils.fetch_text("https://8.8.8.8/x")
         self.assertEqual(len(attempts), 1)
 
+    def test_oversized_body_fails_fast_without_retry(self):
+        attempts = []
+        def big_urlopen(req, timeout=20):
+            attempts.append(1)
+            return _resp(b"x" * 10_000)
+        with mock.patch.dict("os.environ", {"MCP_NEWSLETTER_MAX_RESPONSE_BYTES": "100"}), \
+             mock.patch.object(utils, "urlopen", side_effect=big_urlopen), \
+             mock.patch.object(utils, "_sleep") as sleeper:
+            text, meta = utils.fetch_text("https://8.8.8.8/x")
+        self.assertIsNone(text)
+        self.assertIn("exceeded", meta["error"])
+        self.assertEqual(len(attempts), 1)   # no re-fetch of the oversized body
+        sleeper.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()

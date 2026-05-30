@@ -771,3 +771,57 @@ git commit -m "docs: document network-safety env vars"
 **Type/name consistency:** `is_safe_url`, `read_capped`, `max_response_bytes`, `RetryPolicy`, `should_retry`, `_sleep`, `_parse_retry_after` are defined before use and referenced with identical names across Tasks 1–5. `discover_remote_tools`'s return contract `(List[ToolRecord], dict)` is unchanged.
 
 **Out-of-scope-but-noted for later plans:** per-host throttle (Plan 2), the SSRF DNS-rebinding residual (design §5, deferred), backoff jitter (later).
+
+---
+
+## As-Built Amendments
+
+This section reconciles the plan with what was actually implemented. The
+divergences below were introduced by the code-review cycle (all improvements)
+and a final imperfection sweep; the plan is amended here so plan and code agree.
+Final state: **42 tests, all green.**
+
+**`is_safe_url` (Task 1) — added two safety items beyond the original code:**
+1. **CGNAT block.** After the six `ip.is_*` checks, the condition also blocks
+   `ip.version == 4 and ip in ipaddress.ip_network("100.64.0.0/10")`. Reason:
+   this machine runs **Python 3.9**, where `ipaddress.is_private` does *not*
+   cover RFC 6598 (100.64.0.0/10); without this, a host resolving into that
+   range would pass. Test: `test_cgnat_range_is_blocked`.
+2. **Empty-DNS guard.** `if not infos: return False, "dns resolution returned
+   no addresses"` before the loop, so an empty `getaddrinfo` result cannot fall
+   through to `True`.
+   The docstring also gained a CGNAT mention and the DNS-rebinding residual note.
+
+**`read_capped` (Task 2) — chunked accumulation loop, not a single read.**
+A real `http.client.HTTPResponse.read(n)` can return fewer than `n` bytes per
+call, so the single-`read` version could silently truncate. As-built reads in a
+`while total <= limit` loop accumulating chunks, then raises past the limit.
+Test: `test_reassembles_multiple_chunks`.
+
+**`max_response_bytes` (Task 2) — ignores non-positive values.** The guard is
+`raw.isdigit() and int(raw) > 0`; a `0`/empty env value falls back to the 5 MiB
+default rather than capping every fetch to nothing. Tests:
+`MaxResponseBytesTests`.
+
+**`fetch_text` (Task 5) — `ValueError` is NOT retried.** The size-cap breach is
+deterministic, so retrying just re-downloads the oversized body. As-built splits
+the handler: `except ValueError` returns immediately; `except (URLError,
+TimeoutError, OSError)` still retries with backoff. Test:
+`test_oversized_body_fails_fast_without_retry`.
+
+**Test file location (Task 5).** The `fetch_text` retry tests live in their own
+file **`tests/test_netguard.py`'s sibling `tests/test_fetch_text.py`**, not
+appended to `tests/test_netguard.py` as the task text said — cleaner separation
+(network-fetch tests vs. pure-helper tests). `should_retry`'s misnamed
+`test_exponential_backoff_capped_at_max_delay` was renamed to
+`test_no_retry_when_attempt_exceeds_max` and a genuine cap test
+(`test_delay_capped_at_max_delay`) plus an IPv4-mapped-IPv6 block test were
+added.
+
+**Commit cadence (accepted, zero-impact).** Tasks 1–3 were authored in one pass:
+the functional netguard commit is `f4db328`; the two follow-on commits
+(`0be2774`, `cc06187`) carry the prescribed messages but are empty. The final
+tree is identical to what the per-commit plan would produce. Interactive rebase
+is unavailable in this environment and rewriting history for empty commits is
+not worth the risk, so this process deviation is consciously accepted rather
+than rewritten.
