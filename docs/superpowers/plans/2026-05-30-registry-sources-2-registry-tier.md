@@ -1794,7 +1794,12 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
     new_source_count = sum(1 for e in events if e["event_type"] == "new_source")
     section = render_registry_section(run_date, new_state, events, enabled_sources(), dict(per_source), new_source_count)
     write_text(root / "data" / "current" / "registry_section.md", section)
-    ctx.finalize_manifest()
+    # distinct manifest label so this does NOT clobber run_update's _run/manifest.json
+    ctx.save_raw_json("_run", "registry-manifest", {
+        "run_date": run_date,
+        "issues": [i.to_dict() for i in ctx.issues],
+        "source_ok": collection.source_ok,
+    })
     return {"event_count": len(events), "indexed": len(new_state), "section": section}
 ```
 
