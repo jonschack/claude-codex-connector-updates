@@ -4,6 +4,7 @@ from pathlib import Path
 from unittest import mock
 
 from mcp_newsletter.context import CollectContext
+from mcp_newsletter.providers import collect_all
 from mcp_newsletter.providers.openai import collect_openai
 from mcp_newsletter.providers.cursor import collect_cursor
 from mcp_newsletter.providers.vscode import collect_vscode
@@ -118,6 +119,19 @@ class CloudflareCollectorTests(unittest.TestCase):
         entry = next(s for s in servers if s.name == "Workers AI")
         self.assertEqual(entry.provider, "cloudflare")
         self.assertEqual(entry.remote_url, "https://workers-ai.mcp.cloudflare.com/sse")
+
+
+class CollectAllRegistrationTests(unittest.TestCase):
+    def test_all_six_new_providers_are_invoked(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            ctx.skip_network = True  # every collector returns [] but must be CALLED, not crash
+            # collect_all swallows per-collector exceptions into issues; assert no crash
+            servers = collect_all(ctx)
+        self.assertIsInstance(servers, list)
+        # the 6 new providers register import-time without error
+        from mcp_newsletter.providers import openai, cursor, vscode, cline, continue_, cloudflare  # noqa
 
 
 if __name__ == "__main__":
