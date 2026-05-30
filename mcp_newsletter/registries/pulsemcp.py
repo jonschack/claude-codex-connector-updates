@@ -1,9 +1,11 @@
 from __future__ import annotations
 import json, os
 from typing import List
+from urllib.parse import urlparse
 from ..context import CollectContext
 from ..utils import fetch_text
 from .base import RawRegistryEntry
+from . import throttle
 
 PROVIDER = "pulsemcp"
 BASE = "https://api.pulsemcp.com/v0beta/servers"  # VERIFY field names against live API
@@ -15,11 +17,12 @@ def collect_pulsemcp(ctx: CollectContext) -> List[RawRegistryEntry]:
     entries, offset = [], 0
     while len(entries) < max_servers and not ctx.skip_network:
         url = f"{base}?count_per_page=100&offset={offset}"
+        throttle(urlparse(url).hostname or "")
         text, meta = fetch_text(url)
-        ctx.save_raw_text(PROVIDER, f"page-{offset}", text or "", ext="json")
         if not text:
             ctx.add_issue(PROVIDER, url, str(meta.get("error")))
             break
+        ctx.save_raw_text(PROVIDER, f"page-{offset}", text, ext="json")
         try:
             data = json.loads(text)
         except json.JSONDecodeError:

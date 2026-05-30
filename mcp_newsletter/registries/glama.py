@@ -1,9 +1,11 @@
 from __future__ import annotations
 import json, os
 from typing import List
+from urllib.parse import urlparse
 from ..context import CollectContext
 from ..utils import fetch_text
 from .base import RawRegistryEntry
+from . import throttle
 
 PROVIDER = "glama"
 BASE = "https://glama.ai/api/mcp/v1/servers"  # VERIFY field names against live API
@@ -18,11 +20,12 @@ def collect_glama(ctx: CollectContext) -> List[RawRegistryEntry]:
     seen_cursors: set = set()
     while len(entries) < max_servers and not ctx.skip_network:
         url = base + (f"?after={cursor}" if cursor else "")
+        throttle(urlparse(url).hostname or "")
         text, meta = fetch_text(url)
-        ctx.save_raw_text(PROVIDER, f"page-{page}", text or "", ext="json")
         if not text:
             ctx.add_issue(PROVIDER, url, str(meta.get("error")))
             break
+        ctx.save_raw_text(PROVIDER, f"page-{page}", text, ext="json")
         try:
             data = json.loads(text)
         except json.JSONDecodeError:

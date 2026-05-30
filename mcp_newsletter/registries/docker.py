@@ -1,9 +1,11 @@
 from __future__ import annotations
 import json, os, re
 from typing import List
+from urllib.parse import urlparse
 from ..context import CollectContext
 from ..utils import fetch_text
 from .base import RawRegistryEntry
+from . import throttle
 
 PROVIDER = "docker"
 CONTENTS_API = "https://api.github.com/repos/docker/mcp-registry/contents/servers"
@@ -20,11 +22,12 @@ def collect_docker(ctx: CollectContext) -> List[RawRegistryEntry]:
     if ctx.skip_network:
         ctx.add_issue(PROVIDER, listing_url, "network skipped")
         return []
+    throttle(urlparse(listing_url).hostname or "")
     text, meta = fetch_text(listing_url)
-    ctx.save_raw_text(PROVIDER, "listing", text or "", ext="json")
     if not text:
         ctx.add_issue(PROVIDER, listing_url, str(meta.get("error")))
         return []
+    ctx.save_raw_text(PROVIDER, "listing", text, ext="json")
     try:
         listing = json.loads(text)
     except json.JSONDecodeError:
@@ -38,6 +41,7 @@ def collect_docker(ctx: CollectContext) -> List[RawRegistryEntry]:
         if not name:
             continue
         yurl = RAW.format(name=name)
+        throttle(urlparse(yurl).hostname or "")
         ybody, ymeta = fetch_text(yurl)
         if not ybody:
             ctx.add_issue(PROVIDER, yurl, str(ymeta.get("error") or ymeta.get("status")))

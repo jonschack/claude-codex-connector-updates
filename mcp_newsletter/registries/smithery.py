@@ -1,12 +1,14 @@
 from __future__ import annotations
 import json, os
 from typing import List
+from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from ..context import CollectContext
 from ..utils import USER_AGENT
 from ..netguard import max_response_bytes, read_capped
 from .base import RawRegistryEntry
+from . import throttle
 
 PROVIDER = "smithery"
 BASE = "https://registry.smithery.ai/servers"  # VERIFY field names against live API
@@ -46,11 +48,12 @@ def collect_smithery(ctx: CollectContext) -> List[RawRegistryEntry]:
     page = 1
     while len(entries) < max_servers and not ctx.skip_network:
         url = f"{base}?page={page}&pageSize=100"
+        throttle(urlparse(url).hostname or "")
         text, meta = _fetch_with_auth(url, key)
-        ctx.save_raw_text(PROVIDER, f"page-{page}", text or "", ext="json")
         if not text:
             ctx.add_issue(PROVIDER, url, str(meta.get("error")))
             break
+        ctx.save_raw_text(PROVIDER, f"page-{page}", text, ext="json")
         try:
             data = json.loads(text)
         except json.JSONDecodeError:

@@ -4,10 +4,12 @@ from __future__ import annotations
 import json
 import os
 from typing import List
+from urllib.parse import urlparse
 
 from ..context import CollectContext
 from ..utils import fetch_text
 from .base import RawRegistryEntry
+from . import throttle
 
 PROVIDER = "official"
 BASE_URL = "https://registry.modelcontextprotocol.io/v0.1/servers"
@@ -24,11 +26,12 @@ def collect_official(ctx: CollectContext) -> List[RawRegistryEntry]:
         if ctx.skip_network:
             ctx.add_issue(PROVIDER, url, "network skipped")
             break
+        throttle(urlparse(url).hostname or "")
         text, meta = fetch_text(url)
-        ctx.save_raw_text(PROVIDER, f"page-{page}", text or "", ext="json")
         if not text:
             ctx.add_issue(PROVIDER, url, str(meta.get("error") or meta.get("status")))
             break
+        ctx.save_raw_text(PROVIDER, f"page-{page}", text, ext="json")
         try:
             data = json.loads(text)
         except json.JSONDecodeError:
