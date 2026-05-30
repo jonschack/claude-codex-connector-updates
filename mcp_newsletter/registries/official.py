@@ -37,26 +37,31 @@ def collect_official(ctx: CollectContext) -> List[RawRegistryEntry]:
         except json.JSONDecodeError:
             ctx.add_issue(PROVIDER, url, "invalid JSON page")
             break
-        for server in data.get("servers", []):
-            if server.get("status") == "deleted":
+        for entry in data.get("servers", []):
+            # Real API wraps each record: {"server": {...}, "_meta": {...}}.
+            server = entry.get("server") or entry
+            entry_meta = entry.get("_meta") or {}
+            official_meta = entry_meta.get("io.modelcontextprotocol.registry/official") or {}
+            if official_meta.get("status") == "deleted":
                 continue
+            name = server.get("name", "")
             repo = (server.get("repository") or {})
             remotes = server.get("remotes") or []
             entries.append(RawRegistryEntry(
                 source=PROVIDER,
-                source_id=server.get("name", ""),
-                official_name=server.get("name", ""),
-                name=server.get("name", "").split("/")[-1] or server.get("name", ""),
+                source_id=name,
+                official_name=name,
+                name=server.get("title") or name.split("/")[-1] or name,
                 description=server.get("description", ""),
                 repo_url=repo.get("url", ""),
                 subpath=repo.get("subfolder", "") or "",
                 remote_url=(remotes[0].get("url", "") if remotes else ""),
                 tags=list((server.get("_meta") or {}).get("tags", [])),
-                last_updated=server.get("updated_at", ""),
+                last_updated=official_meta.get("updatedAt", ""),
                 source_url=base,
-                raw=server,
+                raw=entry,
             ))
-        cursor = (data.get("metadata") or {}).get("next_cursor")
+        cursor = (data.get("metadata") or {}).get("nextCursor")
         page += 1
         if not cursor:
             break
