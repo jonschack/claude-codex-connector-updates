@@ -35,7 +35,7 @@
 
 **Local-only (gitignored):** `data/snapshots/<date>/registries/*` raw page bundles.
 
-**Env config:** `MCP_NEWSLETTER_REGISTRIES` (allowlist; default all), `MCP_NEWSLETTER_<SOURCE>_URL`/`_KEY`/`_MAX`, `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP` (150), `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS` (3), `MCP_NEWSLETTER_REGISTRY_DELIST_RUNS` (3), `MCP_NEWSLETTER_REGISTRY_HOST_THROTTLE` (0.2s).
+**Env config:** `MCP_NEWSLETTER_REGISTRIES` (allowlist; default all), `MCP_NEWSLETTER_<SOURCE>_URL`/`_KEY`/`_MAX`, `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP` (150), `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS` (3), `MCP_NEWSLETTER_REGISTRY_DELIST_RUNS` (3), `MCP_NEWSLETTER_REGISTRY_HOST_THROTTLE` (0.2s), `MCP_NEWSLETTER_REGISTRY_TIME_BUDGET_SEC` (1800).
 
 ---
 
@@ -877,6 +877,18 @@ class DiffTests(unittest.TestCase):
         )
         self.assertNotIn("delisted", [e["event_type"] for e in events])
 
+    def test_new_source_when_server_appears_in_additional_registry(self):
+        meta = self._meta()
+        prior = {"a": _rec("a", sources=("official",))}
+        current = {"a": _rec("a", sources=("official", "glama"))}
+        events, *_ = diff_and_events(
+            prior=prior, current=current, run_date="2026-05-30",
+            source_ok={"official": True, "glama": True}, meta=meta, delist_runs=3,
+        )
+        new_source = [e for e in events if e["event_type"] == "new_source"]
+        self.assertEqual(len(new_source), 1)
+        self.assertIn("glama", new_source[0]["summary"])
+
 
 if __name__ == "__main__":
     unittest.main()
@@ -1008,6 +1020,15 @@ def diff_and_events(
             if _regressed_like_for_like(prev, rec):
                 events.append(_event(run_date, "write_status_regressed", rec,
                                      f"Server lost write capability: {rec.name}"))
+        # new_source — an existing write-capable server now appears in a registry
+        # it was not seen in before (low-noise; reported as a count, not a row)
+        if reportable(rec.write_confidence):
+            prev_sources = {s.get("source") for s in prev.sources}
+            cur_sources = {s.get("source") for s in rec.sources}
+            added = sorted(cur_sources - prev_sources)
+            if added:
+                events.append(_event(run_date, "new_source", rec,
+                                     f"{rec.name} newly listed in: {', '.join(added)}"))
 
     # --- liveness / delisting ---
     new_state = dict(current)
@@ -1204,8 +1225,15 @@ def collect_all_registries(ctx: CollectContext) -> RegistryCollection:
         "glama": collect_glama,
         "mcpso": collect_mcpso,
     }
+    budget = float(os.environ.get("MCP_NEWSLETTER_REGISTRY_TIME_BUDGET_SEC", "1800"))
+    started = time.monotonic()
     collection = RegistryCollection()
     for name in enabled_sources():
+        if time.monotonic() - started > budget:
+            ctx.add_issue(name, "time-budget",
+                          f"skipped: run exceeded {budget:.0f}s time budget", severity="warning")
+            collection.source_ok[name] = False  # not run -> freezes liveness (no false delist)
+            continue
         collector = registry[name]
         try:
             entries = collector(ctx)
@@ -1821,7 +1849,8 @@ git commit -m "feat(registries): orchestrate registry update and wire into run_u
 - Thread-pool workers fetch-only; results applied on main thread (§5) → Task 5 `run_discovery` returns data, mutation happens after join. ✓
 - Tag-normalizer + per-evidence-source confidence + TTL semantics (§6) → Tasks 4 & 6 (`_regressed_like_for_like`, carry-forward of `tools` evidence in Task 10). ✓
 - Sorted JSONL committed state; no registry binary (§7) → Task 6 `write_state`. ✓
-- Events new/changed/regressed/delisted + new_source count; deterministic ordering (§7) → Task 6 (`events.sort`). ✓
+- Events new/changed/regressed/delisted + new_source; deterministic ordering (§7) → Task 6 (`new_source` emission + `events.sort`); reporting renders new_source as a count. ✓
+- Soft per-run time budget bounding wall-clock (§3) → Task 7 `collect_all_registries` deadline check; budget-skipped sources freeze liveness (no false delist). ✓
 - Cold-start silent seeding (§7) → Task 6 + Task 10 test. ✓
 - Source-down-aware liveness (§7) → Task 6 `successful_sources` gate. ✓
 - Parser-break floor (§7) → **GAP: not yet a task.** Added as Task 11 below.
