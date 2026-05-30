@@ -1,0 +1,24 @@
+{
+  "servers": [
+    {
+      "name": "io.github.acme/slack",
+      "description": "Send and read Slack messages",
+      "repository": {"url": "https://github.com/acme/slack", "subfolder": ""},
+      "remotes": [{"type": "streamable-http", "url": "https://mcp.acme.com/slack"}],
+      "status": "active",
+      "_meta": {"tags": ["messaging"]}
+    },
+    {
+      "name": "io.github.acme/readonly",
+      "description": "Search the docs",
+      "repository": {"url": "https://github.com/acme/readonly"},
+      "status": "active"
+    },
+    {
+      "name": "io.github.acme/gone",
+      "description": "old",
+      "status": "deleted"
+    }
+  ],
+  "metadata": {"next_cursor": null}
+}
