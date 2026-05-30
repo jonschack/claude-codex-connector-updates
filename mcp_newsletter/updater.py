@@ -15,7 +15,7 @@ from .registry_discovery import select_discovery_candidates, run_discovery
 from .registry_state import RegistryMeta, diff_and_events, load_state, write_state
 from .registry_reporting import render_registry_section
 from .reporting import render_daily_report, render_readme
-from .state import all_current, connect, events_for_date, upsert_server, upsert_tool
+from .state import all_current, connect, events_for_date, seeded_providers, upsert_server, upsert_tool
 from .utils import ensure_dir, today_iso, write_json, write_text
 from .models import ServerRecord
 
@@ -49,8 +49,9 @@ def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = 
     db_path = root / "data" / "state.sqlite"
     conn = connect(db_path)
     try:
+        seeded = seeded_providers(conn, run_date)
         for server in servers:
-            upsert_server(conn, run_date, server)
+            upsert_server(conn, run_date, server, provider_seeded=server.provider in seeded)
             for tool in server.tools:
                 upsert_tool(conn, run_date, tool)
         conn.commit()

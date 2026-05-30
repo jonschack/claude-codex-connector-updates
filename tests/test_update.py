@@ -35,8 +35,8 @@ class UpdateTests(unittest.TestCase):
             with mock.patch("mcp_newsletter.updater.collect_all", fake_collect_all):
                 first = run_update(root, run_date="2026-05-11", skip_network=True)
                 second = run_update(root, run_date="2026-05-11", skip_network=True)
-            self.assertEqual(first["status"]["event_count"], 2)
-            self.assertEqual(second["status"]["event_count"], 2)
+            self.assertEqual(first["status"]["event_count"], 1)
+            self.assertEqual(second["status"]["event_count"], 1)
             self.assertTrue((root / "reports" / "2026-05-11.md").exists())
             self.assertTrue((root / "data" / "current" / "servers.json").exists())
 
