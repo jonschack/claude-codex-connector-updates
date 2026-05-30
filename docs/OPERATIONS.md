@@ -72,3 +72,20 @@ python3 -m mcp_newsletter email --date 2026-05-15
 - `data/current/` contains normalized latest JSON.
 - `data/state.sqlite` stores first-seen/last-seen state and diff history.
 - `reports/YYYY-MM-DD.md` is the human-readable daily report.
+
+## Network Safety & Tuning
+
+Shared HTTP/discovery hardening (applies to all collectors):
+
+- `MCP_NEWSLETTER_MAX_RESPONSE_BYTES` — max bytes read from any single
+  response (default 5242880 = 5 MiB). Oversized responses are rejected as an
+  error rather than buffered.
+- `MCP_NEWSLETTER_SSRF_ALLOW` — comma-separated hostnames/IPs allowed to
+  bypass the private/loopback/link-local block (e.g. a self-hosted test MCP
+  server). Empty by default; only set for trusted local endpoints.
+
+Live MCP tool discovery refuses any URL whose host resolves to a loopback,
+private, link-local, reserved, multicast, unspecified, or CGNAT
+(100.64.0.0/10) address, and refuses non-http(s) schemes. `fetch_text` retries
+transient failures (HTTP 429/5xx and transport errors) up to 3 times with
+exponential backoff, honoring a numeric `Retry-After` header.
