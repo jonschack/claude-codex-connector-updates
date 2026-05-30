@@ -5,4 +5,5 @@ __pycache__/
 .DS_Store
 .venv/
 tmp/
+data/snapshots/*/registries/
 
