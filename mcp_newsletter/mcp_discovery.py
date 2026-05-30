@@ -6,6 +6,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from .models import ToolRecord
+from .netguard import is_safe_url, max_response_bytes, read_capped
 
 
 MCP_PROTOCOL_VERSION = "2025-06-18"
@@ -35,14 +36,15 @@ def _post_json(url: str, payload: Dict[str, Any], session_id: str = "", timeout:
         headers["Mcp-Session-Id"] = session_id
     req = Request(url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
     with urlopen(req, timeout=timeout) as resp:
-        body = resp.read()
+        body = read_capped(resp, max_response_bytes())
         next_session = resp.headers.get("mcp-session-id") or resp.headers.get("Mcp-Session-Id") or session_id
         return _parse_json_or_sse(body), next_session
 
 
 def discover_remote_tools(provider: str, server_id: str, native_surface: str, url: str, timeout: int = 15) -> Tuple[List[ToolRecord], Dict[str, Any]]:
-    if not url.startswith(("https://", "http://")):
-        return [], {"ok": False, "error": "remote discovery requires http(s) url"}
+    safe, reason = is_safe_url(url)
+    if not safe:
+        return [], {"ok": False, "error": reason}
 
     try:
         init_payload = {
