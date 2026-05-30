@@ -165,12 +165,12 @@ def upsert_server(conn: sqlite3.Connection, run_date: str, server: ServerRecord,
     )
 
 
-def upsert_tool(conn: sqlite3.Connection, run_date: str, tool: ToolRecord) -> None:
+def upsert_tool(conn: sqlite3.Connection, run_date: str, tool: ToolRecord, provider_seeded: bool = True) -> None:
     raw = tool.to_dict()
     current_hash = stable_hash(raw)
     previous = _fetch_one(conn, "tools", (tool.provider, tool.server_id, tool.name))
     if previous is None:
-        if reportable(tool.write_confidence):
+        if reportable(tool.write_confidence) and provider_seeded:
             _insert_event(
                 conn,
                 run_date,

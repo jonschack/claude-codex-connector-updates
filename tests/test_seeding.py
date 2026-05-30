@@ -3,8 +3,8 @@ import unittest
 from pathlib import Path
 
 from mcp_newsletter.classifier import classify_all
-from mcp_newsletter.models import ServerRecord
-from mcp_newsletter.state import connect, events_for_date, seeded_providers, upsert_server
+from mcp_newsletter.models import ServerRecord, ToolRecord
+from mcp_newsletter.state import connect, events_for_date, seeded_providers, upsert_server, upsert_tool
 
 
 def _writeable(provider, server_id, name):
@@ -50,6 +50,21 @@ class SeedingTests(unittest.TestCase):
             events = events_for_date(conn, "2026-05-31")
             self.assertEqual([e["event_type"] for e in events], ["new_write_server"])
             self.assertEqual(events[0]["server_id"], "linear")
+
+    def test_first_run_suppresses_both_server_and_tool_events(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            conn = connect(Path(tmp) / "state.sqlite")
+            s = _writeable("cursor", "slack", "Slack")
+            tool = ToolRecord(provider="cursor", server_id="slack", native_surface="connector",
+                              name="create_message", description="Create a message")
+            s.tools = [tool]
+            classify_all([s])
+            seeded = seeded_providers(conn, "2026-05-30")
+            upsert_server(conn, "2026-05-30", s, provider_seeded="cursor" in seeded)
+            for t in s.tools:
+                upsert_tool(conn, "2026-05-30", t, provider_seeded="cursor" in seeded)
+            conn.commit()
+            self.assertEqual(events_for_date(conn, "2026-05-30"), [])
 
     def test_existing_provider_with_prior_rows_is_seeded(self):
         with tempfile.TemporaryDirectory() as tmp:

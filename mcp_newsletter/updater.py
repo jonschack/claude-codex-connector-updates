@@ -53,7 +53,7 @@ def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = 
         for server in servers:
             upsert_server(conn, run_date, server, provider_seeded=server.provider in seeded)
             for tool in server.tools:
-                upsert_tool(conn, run_date, tool)
+                upsert_tool(conn, run_date, tool, provider_seeded=server.provider in seeded)
         conn.commit()
         events = events_for_date(conn, run_date)
         current_servers = all_current(conn, "servers")
