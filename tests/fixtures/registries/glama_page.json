@@ -1,0 +1,30 @@
+{
+  "servers": [
+    {
+      "id": "acme-slack",
+      "slug": "acme-slack",
+      "name": "Slack MCP",
+      "description": "Send and manage Slack messages",
+      "repository": {
+        "url": "https://github.com/acme/slack-mcp"
+      },
+      "attributes": {
+        "tags": ["messaging", "productivity"]
+      }
+    },
+    {
+      "id": "acme-github",
+      "slug": "acme-github",
+      "name": "GitHub MCP",
+      "description": "Interact with GitHub repositories",
+      "repository": {
+        "url": "https://github.com/acme/github-mcp"
+      },
+      "tags": ["developer", "code"]
+    }
+  ],
+  "pageInfo": {
+    "endCursor": null,
+    "hasNextPage": false
+  }
+}

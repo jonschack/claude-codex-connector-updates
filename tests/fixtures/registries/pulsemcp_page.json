@@ -1,0 +1,19 @@
+{
+  "servers": [
+    {
+      "name": "slack-mcp",
+      "short_description": "Send and manage Slack messages",
+      "source_code_url": "https://github.com/acme/slack-mcp",
+      "remote_url": "https://mcp.acme.com/slack",
+      "categories": ["messaging", "productivity"]
+    },
+    {
+      "name": "weather-mcp",
+      "short_description": "Get weather forecasts",
+      "source_code_url": "https://github.com/community/weather-mcp",
+      "remote_url": "",
+      "categories": ["data", "search"]
+    }
+  ],
+  "next": null
+}
