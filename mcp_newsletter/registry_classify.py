@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import List
 
-from .classifier import RANK, classify_catalog
+from .classifier import RANK, WRITE_RE, classify_catalog
 from .registries.base import RegistryServerRecord
 
 # Tags/categories that imply the server can take action.
@@ -35,6 +35,11 @@ def classify_registry_record(rec: RegistryServerRecord, run_date: str) -> None:
     caps = sorted(set(rec.capabilities) | set(tags_to_capabilities(rec.tags)))
     rec.capabilities = caps
     catalog_conf, evidence = classify_catalog(caps, rec.description)
+    if catalog_conf in ("unknown", "low") and WRITE_RE.search(rec.description or ""):
+        catalog_conf = "medium"
+        evidence = list(evidence) + [{"kind": "registry_description",
+                                      "value": "write verb in description",
+                                      "confidence": "medium"}]
     rec.confidence_by_source["catalog"] = {"confidence": catalog_conf, "date": run_date}
     rec.evidence = evidence
 

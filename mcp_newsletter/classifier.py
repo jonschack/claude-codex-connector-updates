@@ -82,10 +82,6 @@ def classify_catalog(capabilities: List[str], description: str = "") -> Tuple[st
     if re.search(r"\b(manage|take action|take actions|modify|mutate)\b", lowered_description):
         evidence.append(_evidence("catalog_description", "action-oriented description", "medium"))
         return "medium", evidence
-    write_match = WRITE_RE.search(lowered_description)
-    if write_match:
-        evidence.append(_evidence("catalog_description", write_match.group(0).lower(), "medium"))
-        return "medium", evidence
     if "read" in joined_caps:
         evidence.append(_evidence("catalog_capability", capabilities, "low"))
         return "low", evidence
