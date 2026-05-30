@@ -1,0 +1,6 @@
+name: slack
+description: "Slack MCP Server"
+longLived: "Send and receive Slack messages via MCP"
+source: https://github.com/docker/mcp-slack
+category: messaging, productivity
+version: "1.0.0"
