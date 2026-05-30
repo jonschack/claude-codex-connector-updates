@@ -98,7 +98,8 @@ def collect_all_registries(ctx: CollectContext) -> RegistryCollection:
     if summary_path.exists():
         try:
             prior_summary = json.loads(summary_path.read_text())
-            history = prior_summary.get("per_source", {})
+            per_source = prior_summary.get("per_source", {})
+            history = per_source if isinstance(per_source, dict) else {}
             first_run = False
         except Exception:
             pass
