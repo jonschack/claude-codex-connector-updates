@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-from .classifier import RANK, reportable
+from .classifier import reportable
 from .registries.base import RegistryServerRecord
 from .utils import ensure_dir
 
@@ -55,7 +55,7 @@ class RegistryMeta:
         }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def _event(run_date, event_type, rec, summary, prev=None):
+def _event(run_date, event_type, rec, summary):
     return {
         "run_date": run_date,
         "event_type": event_type,
@@ -120,7 +120,10 @@ def diff_and_events(
         if reportable(rec.write_confidence):
             prev_sources = {s.get("source") for s in prev.sources}
             cur_sources = {s.get("source") for s in rec.sources}
-            added = sorted(cur_sources - prev_sources)
+            added = sorted(
+                s for s in (cur_sources - prev_sources)
+                if meta.seeded_sources.get(s, run_date) < run_date
+            )
             if added:
                 events.append(_event(run_date, "new_source", rec,
                                      f"{rec.name} newly listed in: {', '.join(added)}"))
@@ -142,6 +145,7 @@ def diff_and_events(
                 events.append(_event(run_date, "delisted", prev,
                                      f"Write-capable server delisted: {prev.name}"))
             meta.liveness.pop(identity, None)
+            meta.last_discovered.pop(identity, None)
             # dropped from new_state (truly gone)
         else:
             meta.liveness[identity] = misses

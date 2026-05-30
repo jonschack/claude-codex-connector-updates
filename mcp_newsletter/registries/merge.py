@@ -17,19 +17,16 @@ def _normalize_repo(repo_url: str) -> str:
     url = re.sub(r"\.git$", "", url, flags=re.I)
     # drop /tree/<ref>/... or /blob/... suffixes
     url = re.sub(r"/(tree|blob)/.*$", "", url)
-    parts = url.split("/")
-    if parts:
-        parts[0] = parts[0].lower()  # host only
-    return "/".join(p for p in parts if p).lower()
+    return "/".join(p for p in url.split("/") if p).lower()
 
 
 def identity(entry: RawRegistryEntry) -> str:
     if entry.official_name:
-        return entry.official_name
+        return entry.official_name.lower()
     repo = _normalize_repo(entry.repo_url)
     if repo:
         if entry.subpath:
-            return f"repo:{repo}#{entry.subpath.strip('/')}"
+            return f"repo:{repo}#{entry.subpath.strip('/').lower()}"
         return f"repo:{repo}"
     return f"{entry.source}:{slugify(entry.name or entry.source_id)}"
 
@@ -38,10 +35,10 @@ def _alias_keys(entry: RawRegistryEntry) -> List[str]:
     """High-specificity alias keys only — never remote_url."""
     keys = []
     if entry.official_name:
-        keys.append(entry.official_name)
+        keys.append(entry.official_name.lower())
     repo = _normalize_repo(entry.repo_url)
     if repo:
-        keys.append(f"repo:{repo}#{entry.subpath.strip('/')}" if entry.subpath else f"repo:{repo}")
+        keys.append(f"repo:{repo}#{entry.subpath.strip('/').lower()}" if entry.subpath else f"repo:{repo}")
     return keys
 
 

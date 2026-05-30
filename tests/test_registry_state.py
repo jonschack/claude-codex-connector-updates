@@ -104,7 +104,7 @@ class DiffTests(unittest.TestCase):
         self.assertNotIn("delisted", [e["event_type"] for e in events])
 
     def test_new_source_when_server_appears_in_additional_registry(self):
-        meta = self._meta()
+        meta = self._meta(seeded={"official": "2026-05-01", "glama": "2026-05-01"})
         prior = {"a": _rec("a", sources=("official",))}
         current = {"a": _rec("a", sources=("official", "glama"))}
         events, *_ = diff_and_events(
@@ -114,6 +114,41 @@ class DiffTests(unittest.TestCase):
         new_source = [e for e in events if e["event_type"] == "new_source"]
         self.assertEqual(len(new_source), 1)
         self.assertIn("glama", new_source[0]["summary"])
+
+
+    def test_new_server_does_not_also_emit_new_source(self):
+        meta = self._meta()
+        cur = _rec("a", sources=("official", "glama"))
+        events, *_ = diff_and_events(prior={}, current={"a": cur}, run_date="2026-05-30",
+                                     source_ok={"official": True, "glama": True}, meta=meta, delist_runs=3)
+        types = [e["event_type"] for e in events]
+        self.assertIn("new_write_server", types)
+        self.assertNotIn("new_source", types)
+
+    def test_liveness_resets_when_missed_server_reappears(self):
+        meta = self._meta(liveness={"a": 1})
+        events, new_state, new_meta = diff_and_events(
+            prior={"a": _rec("a")}, current={"a": _rec("a")}, run_date="2026-05-30",
+            source_ok={"official": True}, meta=meta, delist_runs=3)
+        self.assertNotIn("a", new_meta.liveness)
+
+    def test_delisted_removed_from_state_and_liveness(self):
+        meta = self._meta(liveness={"a": 2})
+        events, new_state, new_meta = diff_and_events(
+            prior={"a": _rec("a")}, current={}, run_date="2026-05-30",
+            source_ok={"official": True}, meta=meta, delist_runs=3)
+        self.assertIn("delisted", [e["event_type"] for e in events])
+        self.assertNotIn("a", new_state)
+        self.assertNotIn("a", new_meta.liveness)
+
+    def test_source_down_server_carried_forward_with_frozen_liveness(self):
+        meta = self._meta(liveness={})
+        events, new_state, new_meta = diff_and_events(
+            prior={"a": _rec("a", sources=("glama",))}, current={}, run_date="2026-05-30",
+            source_ok={"glama": False}, meta=meta, delist_runs=3)
+        self.assertIn("a", new_state)
+        self.assertNotIn("delisted", [e["event_type"] for e in events])
+        self.assertEqual(new_meta.liveness.get("a", 0), 0)
 
 
 if __name__ == "__main__":
