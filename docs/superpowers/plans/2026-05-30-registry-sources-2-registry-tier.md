@@ -1948,3 +1948,29 @@ git commit -m "feat(registries): parser-break floor and evidence manifest"
 ```
 
 **Post-fix coverage:** parser-break floor (§7) ✓; evidence manifest (§9) ✓. All design sections now map to a task.
+
+---
+
+## As-Built Amendments
+
+Reconciles the plan with what was implemented and reviewed. All divergences below are review-driven improvements or corrections of internal plan inconsistencies; the plan is amended here so it agrees with the code. Final state: **100 tests, all green.**
+
+**Task 4 — shared classifier kept unpolluted.** The plan's Task 4 test (`description="Send and post messages"` → medium) could not pass against the unmodified `classify_catalog`. Resolved by a **registry-local** write-verb scan in `classify_registry_record` (imports `WRITE_RE`; bumps `unknown`/`low` → `medium` when a write verb appears in the description, appending a `registry_description` evidence row). `classifier.classify_catalog` is **unchanged**, so vendor-tier classification semantics are unaffected.
+
+**Task 5 — added `run_discovery` tests.** Beyond the plan's `SelectTests`, added `RunDiscoveryTests` (records dates + tool confidence; swallows per-endpoint exceptions) and a second never-discovered identity-tiebreak case.
+
+**Task 6 — `new_source` is seeding-gated.** To prevent a burst when a brand-new registry first comes online, `new_source` only counts added sources seeded on a PRIOR run (`meta.seeded_sources.get(s, run_date) < run_date`). The new_source test seeds the second source on an earlier date accordingly. Also added four negative tests (new server does not also emit new_source; liveness resets on reappear; delisted removed from state+liveness; source-down server carried forward with frozen liveness). Cleanups: dropped the unused `RANK` import and the vestigial `prev` param on `_event`; `last_discovered` is pruned on delist.
+
+**Task 7/8 — per-host throttle wired (was a flagged to-do).** `throttle(urlparse(url).hostname)` is now called before every collector fetch (official, github_servers, docker incl. its per-server loop, pulsemcp, glama, smithery via `_fetch_with_auth`, mcpso). Snapshots are saved only for non-empty bodies (the `save_raw_text` call moved after the empty-body guard in the paginating collectors).
+
+**Task 8 — collector robustness + smithery auth.** `docker` uses `item.get("name")` + skip and emits an issue on per-server YAML fetch failure; `glama` breaks on a repeating/stable cursor and on an empty page; `smithery` uses a self-contained `_fetch_with_auth` helper (the plan's flagged auth-header decision) that routes through `netguard.read_capped`/`max_response_bytes` and breaks on an empty page, and returns `[]`+issue when `MCP_NEWSLETTER_SMITHERY_KEY` is unset. The four `skip_network` tests assert an issue was recorded. Identity normalization: `merge.identity`/`_alias_keys` now lowercase `official_name` and `subpath`, closing a mixed-case dedup hole.
+
+**Task 9 — reporting.** Event-field access uses `.get()` defensively; `DOUBLE_COUNT_NOTE` finalized to clean wording ("a server may also appear in the vendor-tier coverage above; the two tiers are counted independently"); the overflow test asserts the `registry_events.json` pointer.
+
+**Task 10 — cold-start corrected (the plan's test was wrong).** The plan's Task 10 test returned the SAME server on both runs and expected the second to emit — which is only achievable by wiping the baseline, defeating cold-start and flooding on the second-ever run. As-built: `run_registry_update` persists the seeded baseline returned by `diff_and_events`. The test now verifies (a) first run is silent but state IS persisted, (b) a genuinely new server on a later run emits exactly one `new_write_server`, (c) an unchanged server stays silent across runs (no flood).
+
+**Task 11 — floor compares raw-vs-raw.** `registry_summary.json` persists `per_source_raw` (raw collector counts) in addition to `per_source` (deduped, derived from `new_state` for consistency with `indexed`/`write_capable`); the parser-break floor reads `per_source_raw` as history so the >80%-drop check is like-for-like. A non-dict `per_source_raw` in a prior summary is guarded against.
+
+**Outputs / config (doc reconciliation).** The run also writes intermediate `data/current/registry_section.md` and a distinct `_run/registry-manifest` snapshot (so it does not clobber the vendor `_run/manifest.json`); raw registry snapshot bundles under `data/snapshots/*/registries/` are gitignored.
+
+**Accepted residual.** The `# VERIFY` parsers (pulsemcp/glama/smithery field names) are tested against **synthetic** fixtures; real-API field validation is the plan's stated §3 deferral, with the parser-break floor (`per_source_raw` history + `ABSOLUTE_FLOOR`) as the runtime backstop.
