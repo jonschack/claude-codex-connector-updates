@@ -1,0 +1,13 @@
+{
+  "blocks": [
+    {
+      "name": "Postgres MCP",
+      "title": "Postgres MCP",
+      "description": "Query and manage PostgreSQL databases via MCP."
+    },
+    {
+      "name": "Slack MCP",
+      "description": "Read and send Slack messages via MCP."
+    }
+  ]
+}
