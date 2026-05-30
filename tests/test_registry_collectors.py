@@ -89,6 +89,7 @@ class DockerCollectorTests(unittest.TestCase):
             from mcp_newsletter.registries.docker import collect_docker
             entries = collect_docker(ctx)
         self.assertEqual(entries, [])
+        self.assertTrue(any("skip" in i.message.lower() for i in ctx.issues))
 
 
 class PulsemcpCollectorTests(unittest.TestCase):
@@ -113,6 +114,7 @@ class PulsemcpCollectorTests(unittest.TestCase):
             from mcp_newsletter.registries.pulsemcp import collect_pulsemcp
             entries = collect_pulsemcp(ctx)
         self.assertEqual(entries, [])
+        self.assertTrue(any("skip" in i.message.lower() for i in ctx.issues))
 
 
 class GlamaCollectorTests(unittest.TestCase):
@@ -136,6 +138,7 @@ class GlamaCollectorTests(unittest.TestCase):
             from mcp_newsletter.registries.glama import collect_glama
             entries = collect_glama(ctx)
         self.assertEqual(entries, [])
+        self.assertTrue(any("skip" in i.message.lower() for i in ctx.issues))
 
 
 class SmitheryCollectorTests(unittest.TestCase):
@@ -175,6 +178,7 @@ class SmitheryCollectorTests(unittest.TestCase):
                 from mcp_newsletter.registries.smithery import collect_smithery
                 entries = collect_smithery(ctx)
         self.assertEqual(entries, [])
+        self.assertTrue(any("skip" in i.message.lower() for i in ctx.issues))
 
 
 class McpsoCollectorTests(unittest.TestCase):

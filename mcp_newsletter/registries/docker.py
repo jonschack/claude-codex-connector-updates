@@ -34,10 +34,13 @@ def collect_docker(ctx: CollectContext) -> List[RawRegistryEntry]:
     for item in listing:
         if item.get("type") != "dir":
             continue
-        name = item["name"]
+        name = item.get("name")
+        if not name:
+            continue
         yurl = RAW.format(name=name)
-        ybody, _ = fetch_text(yurl)
+        ybody, ymeta = fetch_text(yurl)
         if not ybody:
+            ctx.add_issue(PROVIDER, yurl, str(ymeta.get("error") or ymeta.get("status")))
             continue
         ctx.save_raw_text(PROVIDER, f"{name}-server", ybody, ext="yaml")
         entries.append(RawRegistryEntry(

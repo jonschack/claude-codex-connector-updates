@@ -15,6 +15,7 @@ def collect_glama(ctx: CollectContext) -> List[RawRegistryEntry]:
     entries: List[RawRegistryEntry] = []
     cursor = ""
     page = 0
+    seen_cursors: set = set()
     while len(entries) < max_servers and not ctx.skip_network:
         url = base + (f"?after={cursor}" if cursor else "")
         text, meta = fetch_text(url)
@@ -30,6 +31,7 @@ def collect_glama(ctx: CollectContext) -> List[RawRegistryEntry]:
         servers = data.get("servers", [])  # VERIFY field names against live API
         if not servers:
             break
+
         for s in servers:
             repo = (s.get("repository") or {})  # VERIFY field names against live API
             tags = list(s.get("attributes", {}).get("tags", []) or s.get("tags", []))
@@ -47,6 +49,9 @@ def collect_glama(ctx: CollectContext) -> List[RawRegistryEntry]:
         page += 1
         if not cursor:
             break
+        if cursor in seen_cursors:
+            break
+        seen_cursors.add(cursor)
     if ctx.skip_network:
         ctx.add_issue(PROVIDER, base, "network skipped")
     return entries

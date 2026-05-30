@@ -5,6 +5,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from ..context import CollectContext
 from ..utils import USER_AGENT
+from ..netguard import max_response_bytes, read_capped
 from .base import RawRegistryEntry
 
 PROVIDER = "smithery"
@@ -20,7 +21,7 @@ def _fetch_with_auth(url: str, key: str, timeout: int = 20):
     })
     try:
         with urlopen(req, timeout=timeout) as resp:
-            body = resp.read(4 * 1024 * 1024)
+            body = read_capped(resp, max_response_bytes())
             charset = resp.headers.get_content_charset() or "utf-8"
             return body.decode(charset, "replace"), {
                 "url": url,
