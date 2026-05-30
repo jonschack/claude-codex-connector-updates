@@ -1,0 +1,30 @@
+{
+  "issues": [
+    {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/OutlineDriven/outline-driven-development"
+    },
+    {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/Paulessus/odin-gemini-mcp-bridge"
+    },
+    {
+      "message": "HTTP Error 404: Not Found",
+      "provider": "grok",
+      "severity": "warning",
+      "source": "https://docs.x.ai/grok/connectors/catalog"
+    },
+    {
+      "message": "HTTP Error 403: Forbidden",
+      "provider": "grok",
+      "severity": "warning",
+      "source": "https://x.ai/news/grok-connectors"
+    }
+  ],
+  "run_date": "2026-05-30",
+  "snapshot_hash": "af9a5a3d040e348ebd8fc3d16b2c189d5af83774091b81d3a28c466ee9229bdf"
+}

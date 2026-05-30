@@ -1,0 +1,6 @@
+{
+  "name": "s-kit",
+  "description": "Agent workflow kit for brainstorming, dated specs, implementation waves, TDD, debugging, review, and delivery.",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md"
+}

@@ -1292,7 +1292,7 @@
         }
       },
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "build-ios-apps",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1354,7 +1354,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "build-macos-apps",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1404,7 +1404,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "build-web-apps",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1454,7 +1454,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "build-web-data-visualization",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1735,7 +1735,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "circleci",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1902,7 +1902,7 @@
         }
       },
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "cloudflare",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1953,7 +1953,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "cloudinary",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1998,7 +1998,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "coderabbit",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2191,6 +2191,56 @@
     "source_urls": [
       "https://github.com/openai/plugins",
       "https://www.conductor.com/"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [
+      "Auth-aware data access",
+      "Backend setup",
+      "Database schema",
+      "File storage",
+      "Mobile backends",
+      "Reactive queries",
+      "Realtime apps",
+      "Scaling guidance",
+      "Scheduled jobs",
+      "Server functions"
+    ],
+    "description": "Add a reactive, type-safe backend, database, server functions, and scaling guidance to JavaScript and TypeScript apps with Convex.",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "convex": {
+            "id": "asdk_app_6a0faef988b48191b843bac5cd170a9e"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Developer Tools",
+        "name": "convex",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/convex",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Convex",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "convex",
+    "source_urls": [
+      "https://chatgpt.com/apps/convex/asdk_app_6a0faef988b48191b843bac5cd170a9e",
+      "https://github.com/get-convex/convex-codex-plugin"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -2795,7 +2845,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "expo",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3053,7 +3103,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "game-studio",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3107,7 +3157,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "github",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3583,7 +3633,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "hostinger",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3689,7 +3739,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "hugging-face",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3977,7 +4027,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "marcopolo",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4477,7 +4527,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "neon-postgres",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4529,7 +4579,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "netlify",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5019,7 +5069,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "plugin-eval",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5190,7 +5240,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "quicknode",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5439,7 +5489,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "render",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5673,7 +5723,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "sendgrid",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5718,7 +5768,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "sentry",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6015,7 +6065,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "statsig",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6144,7 +6194,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "supabase",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6191,7 +6241,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "superpowers",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6367,7 +6417,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "temporal",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6412,7 +6462,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "test-android-apps",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6577,7 +6627,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "twilio-developer-kit",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6656,7 +6706,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "vantage",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6707,7 +6757,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "vercel",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6863,7 +6913,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Coding",
+        "category": "Developer Tools",
         "name": "yepcode",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7222,7 +7272,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.8.2"
+        "version": "1.9.5"
       }
     },
     "name": "aegis",
@@ -7293,38 +7343,11 @@
     "description": "",
     "evidence": [],
     "metadata": {
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "name": "agent-skills",
-              "version": "1.0.0"
-            }
-          },
-          "name": "agent-skills",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "agent-skills",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/Olshansk/agent-skills",
-            "https://raw.githubusercontent.com/Olshansk/agent-skills/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        }
-      ],
       "gallery_text_seen": true,
       "manifest": {
         "contextFileName": "GEMINI.md",
         "name": "agent-skills",
-        "version": "0.1.0"
+        "version": "1.0.0"
       }
     },
     "name": "agent-skills",
@@ -7334,9 +7357,7 @@
     "server_id": "agent-skills",
     "source_urls": [
       "https://geminicli.com/extensions/",
-      "https://github.com/MV011/agent-skills",
       "https://github.com/Olshansk/agent-skills",
-      "https://raw.githubusercontent.com/MV011/agent-skills/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Olshansk/agent-skills/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
@@ -7630,6 +7651,64 @@
       "https://geminicli.com/extensions/",
       "https://github.com/amoghbalaji02/24-880-workshop",
       "https://raw.githubusercontent.com/amoghbalaji02/24-880-workshop/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Access Agiflow tools directly from Gemini CLI.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Access Agiflow tools directly from Gemini CLI.",
+        "mcpServers": {
+          "agiflow-ai-plugin": {
+            "args": [
+              "mcp-remote@latest",
+              "${AGIFLOW_AI_PLUGIN_MCP_URL:-https://agiflow.io/api/v1/mcp}",
+              "--header",
+              "x-agiflow-mcp-consumer:plugin"
+            ],
+            "command": "npx"
+          }
+        },
+        "name": "agiflow-ai-plugin",
+        "settings": [
+          {
+            "description": "Agiflow MCP endpoint URL.",
+            "envVar": "AGIFLOW_AI_PLUGIN_MCP_URL",
+            "name": "Agiflow MCP URL"
+          }
+        ],
+        "version": "0.1.0"
+      },
+      "mcp_server": {
+        "args": [
+          "mcp-remote@latest",
+          "${AGIFLOW_AI_PLUGIN_MCP_URL:-https://agiflow.io/api/v1/mcp}",
+          "--header",
+          "x-agiflow-mcp-consumer:plugin"
+        ],
+        "command": "npx"
+      }
+    },
+    "name": "agiflow-ai-plugin: agiflow-ai-plugin",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "agiflow-ai-plugin-agiflow-ai-plugin",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/AgiFlow/ai-plugin",
+      "https://raw.githubusercontent.com/AgiFlow/ai-plugin/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -11475,7 +11554,7 @@
         "contextFileName": "GEMINI.md",
         "description": "\u901a\u7528\u5171\u8bc6\u5f0f\u7814\u53d1 skills \u5e93\uff1a\u504f\u7f6e\u72ec\u7acb\u7684\u591a\u89d2\u5ea6\u5171\u8bc6\u6784\u5efa\u5f15\u64ce",
         "name": "consensus-rnd",
-        "version": "1.0.0-beta.1"
+        "version": "1.0.0-beta.3"
       }
     },
     "name": "consensus-rnd",
@@ -12128,6 +12207,34 @@
     "description": "DevMode discipline pack: mode gating, token budget, TDD, debugging, and Dev-Flow coordination",
     "evidence": [],
     "metadata": {
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "DevMode discipline pack: mode gating, token budget, TDD, debugging, and Dev-Flow coordination",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "DevMode discipline pack: mode gating, token budget, TDD, debugging, and Dev-Flow coordination",
+              "name": "devmode",
+              "version": "0.1.0"
+            }
+          },
+          "name": "devmode",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "devmode",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/870DudeMcgee/dev-flow",
+            "https://raw.githubusercontent.com/870DudeMcgee/dev-flow/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        }
+      ],
       "gallery_text_seen": true,
       "manifest": {
         "contextFileName": "GEMINI.md",
@@ -12144,7 +12251,9 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/870DudeMcgee/DevMode",
-      "https://raw.githubusercontent.com/870DudeMcgee/DevMode/HEAD/gemini-extension.json"
+      "https://github.com/870DudeMcgee/dev-flow",
+      "https://raw.githubusercontent.com/870DudeMcgee/DevMode/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/870DudeMcgee/dev-flow/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -12298,13 +12407,13 @@
             ],
             "command": "npx",
             "env": {
-              "ALLOW_UNAUTHENTICATED_STDIO": "[REDACTED]",
               "AUTH_REQUIRED": "[REDACTED]",
               "CONNECTION_PROFILES": "${DOCUMENTDB_CONNECTION_PROFILES}",
               "ENABLE_MANAGEMENT_TOOLS": "false",
               "ENABLE_READ_TOOLS": "true",
               "ENABLE_WRITE_TOOLS": "false",
-              "TRANSPORT": "stdio"
+              "TRANSPORT": "stdio",
+              "TRUST_LOCAL_STDIO": "true"
             }
           }
         },
@@ -12318,13 +12427,13 @@
         ],
         "command": "npx",
         "env": {
-          "ALLOW_UNAUTHENTICATED_STDIO": "[REDACTED]",
           "AUTH_REQUIRED": "[REDACTED]",
           "CONNECTION_PROFILES": "${DOCUMENTDB_CONNECTION_PROFILES}",
           "ENABLE_MANAGEMENT_TOOLS": "false",
           "ENABLE_READ_TOOLS": "true",
           "ENABLE_WRITE_TOOLS": "false",
-          "TRANSPORT": "stdio"
+          "TRANSPORT": "stdio",
+          "TRUST_LOCAL_STDIO": "true"
         }
       }
     },
@@ -13895,47 +14004,6 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "Gemini CLI extension for Google Kubernetes Engine.",
-          "evidence": [],
-          "metadata": {
-            "discovery": {
-              "ok": false,
-              "reason": "local_or_unconfigured_mcp_discovery_deferred"
-            },
-            "excludeTools": null,
-            "includeTools": null,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Gemini CLI extension for Google Kubernetes Engine.",
-              "mcpServers": {
-                "gke": {
-                  "command": "${extensionPath}${/}gke-mcp"
-                }
-              },
-              "name": "gke-mcp",
-              "version": "0.13.0"
-            },
-            "mcp_server": {
-              "command": "${extensionPath}${/}gke-mcp"
-            }
-          },
-          "name": "gke-mcp: gke",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "gke-mcp-gke",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/GoogleCloudPlatform/gke-mcp",
-            "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
-          ],
-          "transport": "stdio",
-          "write_confidence": "unknown"
-        }
-      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -13947,7 +14015,7 @@
           }
         },
         "name": "gke-mcp",
-        "version": "0.11.1"
+        "version": "0.13.0"
       },
       "mcp_server": {
         "command": "${extensionPath}${/}gke-mcp"
@@ -13960,9 +14028,7 @@
     "server_id": "gke-mcp-gke",
     "source_urls": [
       "https://geminicli.com/extensions/",
-      "https://github.com/AravG7/gke-mcp",
       "https://github.com/GoogleCloudPlatform/gke-mcp",
-      "https://raw.githubusercontent.com/AravG7/gke-mcp/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
@@ -14246,7 +14312,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/HappyHackingSpace/skills",
-      "https://raw.githubusercontent.com/HappyHackingSpace/skills/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/HappyHackingSpace/skills/main/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -15874,7 +15940,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/Jesseovo/last30days-skill-cn",
-      "https://raw.githubusercontent.com/Jesseovo/last30days-skill-cn/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/Jesseovo/last30days-skill-cn/main/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -17331,7 +17397,7 @@
           }
         },
         "name": "mediawiki-mcp-server",
-        "version": "0.9.1"
+        "version": "0.10.0"
       },
       "mcp_server": {
         "args": [
@@ -21456,7 +21522,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/AcidicSoil/skill-porter",
-      "https://raw.githubusercontent.com/AcidicSoil/skill-porter/HEAD/gemini-extension.json"
+      "https://raw.githubusercontent.com/AcidicSoil/skill-porter/main/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -21895,32 +21961,6 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
-              "version": "5.0.7"
-            }
-          },
-          "name": "superpowers",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "superpowers",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/JustinDube21/superpowers",
-            "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-              "name": "superpowers",
               "version": "5.0.6"
             }
           },
@@ -21980,11 +22020,9 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/FuZhiyu/superRA",
-      "https://github.com/JustinDube21/superpowers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
       "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
     ],

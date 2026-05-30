@@ -1,19 +1,21 @@
-# MCP Write-Capability Report: 2026-05-29
+# MCP Write-Capability Report: 2026-05-30
 
 ## Write Alerts
 
 | Event | Provider | Server | Tool | Confidence | Summary |
 | --- | --- | --- | --- | --- | --- |
-| write_status_changed | codex | `mixpanel` |  | high | codex plugin became write-capable: Mixpanel |
-| new_write_server | codex | `mixpanel-headless` |  | high | New write-capable codex plugin: Mixpanel Headless |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_instance` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_instance |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `create_table` | high | Write-capable tool changed: gemini/bigtable-bigtable/create_table |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_table` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_table |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_logical_view` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_logical_view |
 
 ## Coverage
 
-- Normalized servers: 380
+- Normalized servers: 383
 - Write-capable servers: 68
 - claude: 24 servers, 8 write-capable
-- codex: 147 servers, 52 write-capable
-- gemini: 200 servers, 8 write-capable
+- codex: 148 servers, 52 write-capable
+- gemini: 202 servers, 8 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues

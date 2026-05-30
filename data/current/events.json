@@ -1,48 +1,113 @@
 [
   {
     "confidence": "high",
-    "current_hash": "73c7f939a66e26449c433e602cc7929ab64bb4be26359add2cba574ee6ff8927",
-    "event_type": "write_status_changed",
+    "current_hash": "764302ecacdec93a28d094cebfb88d4b67da819cd2be65756186972cb4eb9032",
+    "event_type": "tool_schema_changed",
     "evidence": [
       {
         "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Interactive",
-          "Read",
-          "Write"
-        ]
+        "kind": "mcp_annotation",
+        "value": "destructiveHint=true"
+      },
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "delete"
       }
     ],
-    "id": 79,
-    "previous_hash": "5a370e68163b3ef1a06e8489b87831b676bb71726f956046e6a6ac1a163178bb",
-    "provider": "codex",
-    "run_date": "2026-05-29",
-    "server_id": "mixpanel",
-    "summary": "codex plugin became write-capable: Mixpanel",
-    "tool_name": null
+    "id": 81,
+    "previous_hash": "efa23a58975d434b919f9e7c181a99751971c79f109455062a83d5cef6e6b5ee",
+    "provider": "gemini",
+    "run_date": "2026-05-30",
+    "server_id": "bigtable-bigtable",
+    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/delete_instance",
+    "tool_name": "delete_instance"
   },
   {
     "confidence": "high",
-    "current_hash": "9026e226b452506ee7778318df4a444191bc85778b1766b4adf2a05e66c31f9a",
-    "event_type": "new_write_server",
+    "current_hash": "4c18bf2c49901424f2f6c46eb3fb508b14e48da4af09cb3ac734f4eb2a27a93e",
+    "event_type": "tool_schema_changed",
+    "evidence": [
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "create"
+      }
+    ],
+    "id": 82,
+    "previous_hash": "40971e0e007b0c092ca30054538effc206a0180140a17c2b71e7574c08323d00",
+    "provider": "gemini",
+    "run_date": "2026-05-30",
+    "server_id": "bigtable-bigtable",
+    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/create_table",
+    "tool_name": "create_table"
+  },
+  {
+    "confidence": "high",
+    "current_hash": "0def02c1d63c5298099f057b65a48175a6009a9e432224dd6ef2478fbaf16fff",
+    "event_type": "tool_schema_changed",
     "evidence": [
       {
         "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Interactive",
-          "Read",
-          "Write"
-        ]
+        "kind": "mcp_annotation",
+        "value": "destructiveHint=true"
+      },
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "delete"
       }
     ],
-    "id": 80,
-    "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-05-29",
-    "server_id": "mixpanel-headless",
-    "summary": "New write-capable codex plugin: Mixpanel Headless",
-    "tool_name": null
+    "id": 83,
+    "previous_hash": "878a738d27fdd4790a4747addfa5e01ba278abf6e309329cd8b19bca6c103f02",
+    "provider": "gemini",
+    "run_date": "2026-05-30",
+    "server_id": "bigtable-bigtable",
+    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/delete_table",
+    "tool_name": "delete_table"
+  },
+  {
+    "confidence": "high",
+    "current_hash": "7d61f72dfe62aa71ab6eeb85e2e0688ab24e8ba03d8dd8bd74940b80ea866eba",
+    "event_type": "tool_schema_changed",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "mcp_annotation",
+        "value": "destructiveHint=true"
+      },
+      {
+        "confidence": "medium",
+        "kind": "mcp_annotation",
+        "value": "readOnlyHint=false"
+      },
+      {
+        "confidence": "high",
+        "kind": "tool_text",
+        "value": "set"
+      }
+    ],
+    "id": 84,
+    "previous_hash": "ff627051c324f3a2c58c5e3492f83dbc36f436cb198a1bfaa9aafc7e78f96245",
+    "provider": "gemini",
+    "run_date": "2026-05-30",
+    "server_id": "bigtable-bigtable",
+    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/delete_logical_view",
+    "tool_name": "delete_logical_view"
   }
 ]

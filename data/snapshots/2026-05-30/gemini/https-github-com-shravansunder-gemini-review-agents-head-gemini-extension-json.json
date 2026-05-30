@@ -1,0 +1,5 @@
+{
+  "name": "gemini-review",
+  "version": "0.1.0",
+  "description": "Code review with sub-agent delegation — P0-P3 severity, confidence scoring, progressive disclosure"
+}
