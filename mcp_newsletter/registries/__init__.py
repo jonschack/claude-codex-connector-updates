@@ -98,8 +98,8 @@ def collect_all_registries(ctx: CollectContext) -> RegistryCollection:
     if summary_path.exists():
         try:
             prior_summary = json.loads(summary_path.read_text())
-            per_source = prior_summary.get("per_source", {})
-            history = per_source if isinstance(per_source, dict) else {}
+            per_source_raw = prior_summary.get("per_source_raw", {})
+            history = per_source_raw if isinstance(per_source_raw, dict) else {}
             first_run = False
         except Exception:
             pass
@@ -112,4 +112,5 @@ def collect_all_registries(ctx: CollectContext) -> RegistryCollection:
                           f"demoted: count={counts.get(name, 0)} collapsed vs history={history.get(name, 0)}",
                           severity="error")
 
+    collection.counts = counts
     return collection

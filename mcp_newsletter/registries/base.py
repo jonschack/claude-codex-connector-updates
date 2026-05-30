@@ -79,6 +79,7 @@ class RegistryCollection:
     entries: List[RawRegistryEntry] = field(default_factory=list)
     # source name -> succeeded this run (False freezes liveness for that source)
     source_ok: Dict[str, bool] = field(default_factory=dict)
+    counts: Dict[str, int] = field(default_factory=dict)
 
 
 # A collector takes the CollectContext and returns its raw entries.

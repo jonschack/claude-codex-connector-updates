@@ -122,7 +122,7 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
     write_state(state_path, list(new_state.values()))
     meta.dump(meta_path)
     write_json(root / "data" / "current" / "registry_events.json", events)
-    per_source = Counter(s for rec in current.values() for s in {x.get("source") for x in rec.sources})
+    per_source = Counter(s for rec in new_state.values() for s in {x.get("source") for x in rec.sources})
     summary = {
         "run_date": run_date,
         "indexed": len(new_state),
@@ -131,6 +131,7 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
         "enabled_sources": enabled_sources(),
         "source_ok": collection.source_ok,
         "per_source": dict(per_source),
+        "per_source_raw": dict(collection.counts),
         "issues": [i.to_dict() for i in ctx.issues],
     }
     write_json(root / "data" / "current" / "registry_summary.json", summary)
