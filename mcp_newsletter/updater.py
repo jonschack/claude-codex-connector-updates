@@ -135,6 +135,15 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
     }
     write_json(root / "data" / "current" / "registry_summary.json", summary)
 
+    manifest_lines = [f"# Registry evidence — {run_date}", ""]
+    for e in events:
+        manifest_lines.append(f"## {e['event_type']} — {e['identity']} ({e['confidence']})")
+        manifest_lines.append(e["summary"])
+        for ev in e.get("evidence", []):
+            manifest_lines.append(f"- {ev.get('kind')}: {ev.get('value')} [{ev.get('confidence')}]")
+        manifest_lines.append("")
+    write_text(root / "data" / "current" / "registry_evidence.md", "\n".join(manifest_lines) + "\n")
+
     new_source_count = sum(1 for e in events if e["event_type"] == "new_source")
     section = render_registry_section(run_date, new_state, events, enabled_sources(), dict(per_source), new_source_count)
     write_text(root / "data" / "current" / "registry_section.md", section)

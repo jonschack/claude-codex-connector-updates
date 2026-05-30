@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest import mock
 
 from mcp_newsletter.context import CollectContext
+from mcp_newsletter.registries import apply_source_floor
 from mcp_newsletter.registries.official import collect_official
 
 FIX = Path(__file__).parent / "fixtures" / "registries"
@@ -202,6 +203,25 @@ class McpsoCollectorTests(unittest.TestCase):
             entries = collect_mcpso(ctx)
         self.assertEqual(entries, [])
         self.assertTrue(any("skipped" in i.message for i in ctx.issues))
+
+
+class FloorTests(unittest.TestCase):
+    def test_known_large_source_returning_zero_is_marked_failed(self):
+        ok = {"official": True}
+        counts = {"official": 0}
+        apply_source_floor(ok, counts, history={"official": 1400}, first_run=False)
+        self.assertFalse(ok["official"])  # frozen: parser likely broke
+
+    def test_legitimately_small_source_not_demoted(self):
+        ok = {"docker": True}
+        counts = {"docker": 180}
+        apply_source_floor(ok, counts, history={"docker": 200}, first_run=False)
+        self.assertTrue(ok["docker"])
+
+    def test_first_run_uses_absolute_minimum(self):
+        ok = {"official": True}
+        apply_source_floor(ok, {"official": 0}, history={}, first_run=True)
+        self.assertFalse(ok["official"])  # below built-in absolute floor
 
 
 if __name__ == "__main__":
