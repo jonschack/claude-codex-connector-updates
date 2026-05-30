@@ -116,13 +116,7 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
         classify_registry_record(rec, run_date)
 
     delist_runs = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DELIST_RUNS", "3"))
-    was_cold_start = not meta.seeded_sources  # remember before diff updates meta
     events, new_state, meta = diff_and_events(prior, current, run_date, collection.source_ok, meta, delist_runs)
-
-    # On cold-start seeding runs, write empty state so next run sees records as new.
-    # The meta (with seeded_sources) is still persisted so the next run is past baseline.
-    if was_cold_start:
-        new_state = {}
 
     # persist (state + meta written together; report derived from them)
     write_state(state_path, list(new_state.values()))
