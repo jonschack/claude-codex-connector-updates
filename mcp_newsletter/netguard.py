@@ -8,6 +8,9 @@ from typing import Optional, Tuple
 from urllib.parse import urlparse
 
 
+_CGNAT = ipaddress.ip_network("100.64.0.0/10")
+
+
 def _allowlist() -> set:
     raw = os.environ.get("MCP_NEWSLETTER_SSRF_ALLOW", "")
     return {item.strip() for item in raw.split(",") if item.strip()}
@@ -19,6 +22,10 @@ def is_safe_url(url: str) -> Tuple[bool, str]:
     Blocks non-http(s) schemes and any host that resolves to a loopback,
     private, link-local, reserved, multicast, or unspecified address. Hosts
     listed in MCP_NEWSLETTER_SSRF_ALLOW bypass the address check.
+
+    Note: this validates DNS at check time; the caller re-resolves when
+    connecting, so a DNS-rebinding adversary is a known residual risk
+    (IP-pinning deferred to a later phase).
     """
     parsed = urlparse(url)
     if parsed.scheme not in ("http", "https"):
@@ -37,6 +44,9 @@ def is_safe_url(url: str) -> Tuple[bool, str]:
     except socket.gaierror as exc:
         return False, f"dns resolution failed: {exc}"
 
+    if not infos:
+        return False, "dns resolution returned no addresses"
+
     for info in infos:
         addr = info[4][0]
         if addr in allow:
@@ -49,6 +59,7 @@ def is_safe_url(url: str) -> Tuple[bool, str]:
             or ip.is_reserved
             or ip.is_multicast
             or ip.is_unspecified
+            or (ip.version == 4 and ip in _CGNAT)
         ):
             return False, f"blocked address: {ip}"
     return True, ""
@@ -67,13 +78,21 @@ def max_response_bytes() -> int:
 def read_capped(resp, limit: int = MAX_RESPONSE_BYTES) -> bytes:
     """Read at most `limit` bytes; raise ValueError if the body is larger.
 
-    `resp` is any object with a .read(n) method (an http.client.HTTPResponse
-    or a BytesIO in tests).
+    Reads in a loop because resp.read(n) (e.g. http.client.HTTPResponse) may
+    return fewer than n bytes per call. `resp` is any object with a .read(n)
+    method (an HTTPResponse, or a BytesIO in tests).
     """
-    data = resp.read(limit + 1)
-    if len(data) > limit:
+    chunks = []
+    total = 0
+    while total <= limit:
+        chunk = resp.read(limit + 1 - total)
+        if not chunk:
+            break
+        chunks.append(chunk)
+        total += len(chunk)
+    if total > limit:
         raise ValueError(f"response exceeded {limit} bytes")
-    return data
+    return b"".join(chunks)
 
 
 @dataclass

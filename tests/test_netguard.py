@@ -51,6 +51,14 @@ class IsSafeUrlTests(unittest.TestCase):
         ok, _ = is_safe_url("http://localhost:3000/mcp")
         self.assertFalse(ok)
 
+    def test_cgnat_range_is_blocked(self):
+        ok, _ = is_safe_url("http://100.64.0.1/mcp")
+        self.assertFalse(ok)
+
+    def test_ipv4_mapped_ipv6_loopback_is_blocked(self):
+        ok, _ = is_safe_url("http://[::ffff:7f00:1]/mcp")  # ::ffff:127.0.0.1
+        self.assertFalse(ok)
+
 
 from mcp_newsletter.netguard import read_capped, MAX_RESPONSE_BYTES
 
@@ -68,6 +76,15 @@ class ReadCappedTests(unittest.TestCase):
     def test_reads_body_exactly_at_limit(self):
         body = read_capped(io.BytesIO(b"x" * 10), limit=10)
         self.assertEqual(len(body), 10)
+
+    def test_reassembles_multiple_chunks(self):
+        class Chunked:
+            def __init__(self, parts):
+                self._parts = list(parts)
+            def read(self, n=-1):
+                return self._parts.pop(0) if self._parts else b""
+        body = read_capped(Chunked([b"ab", b"cd", b"ef"]), limit=100)
+        self.assertEqual(body, b"abcdef")
 
     def test_default_limit_is_five_mib(self):
         self.assertEqual(MAX_RESPONSE_BYTES, 5 * 1024 * 1024)
@@ -102,9 +119,16 @@ class ShouldRetryTests(unittest.TestCase):
         self.assertTrue(retry)
         self.assertEqual(delay, 5.0)
 
-    def test_exponential_backoff_capped_at_max_delay(self):
+    def test_no_retry_when_attempt_exceeds_max(self):
         retry, delay = should_retry(self.policy, attempt=10, status=503, retry_after=None)
         self.assertFalse(retry)
+
+    def test_delay_capped_at_max_delay(self):
+        policy = RetryPolicy(max_retries=5, base_delay=1.0, max_delay=4.0)
+        # attempt=4 -> uncapped 1.0*2**4 = 16.0, must be capped to 4.0
+        retry, delay = should_retry(policy, attempt=4, status=503, retry_after=None)
+        self.assertTrue(retry)
+        self.assertEqual(delay, 4.0)
 
     def test_backoff_grows_then_caps(self):
         _, delay = should_retry(self.policy, attempt=2, status=503, retry_after=None)
