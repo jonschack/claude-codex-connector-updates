@@ -1,0 +1,42 @@
+{
+  "issues": [
+    {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/OutlineDriven/outline-driven-development"
+    },
+    {
+      "message": "Manifest not found or invalid after probing common paths",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://github.com/Paulessus/odin-gemini-mcp-bridge"
+    },
+    {
+      "message": "<urlopen error [Errno 54] Connection reset by peer>",
+      "provider": "claude",
+      "severity": "warning",
+      "source": "https://claude.com/connectors/aiera"
+    },
+    {
+      "message": "[Errno 54] Connection reset by peer",
+      "provider": "claude",
+      "severity": "warning",
+      "source": "https://claude.com/connectors/aurora"
+    },
+    {
+      "message": "HTTP Error 404: Not Found",
+      "provider": "grok",
+      "severity": "warning",
+      "source": "https://docs.x.ai/grok/connectors/catalog"
+    },
+    {
+      "message": "HTTP Error 403: Forbidden",
+      "provider": "grok",
+      "severity": "warning",
+      "source": "https://x.ai/news/grok-connectors"
+    }
+  ],
+  "run_date": "2026-05-31",
+  "snapshot_hash": "62707efe93dfdadfe04fc1cd4e703d659ad7d91f48fec2bf7b9bcc6ebb963d87"
+}

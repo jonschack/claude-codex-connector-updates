@@ -14,6 +14,18 @@
       "source": "https://github.com/Paulessus/odin-gemini-mcp-bridge"
     },
     {
+      "message": "<urlopen error [Errno 54] Connection reset by peer>",
+      "provider": "claude",
+      "severity": "warning",
+      "source": "https://claude.com/connectors/aiera"
+    },
+    {
+      "message": "[Errno 54] Connection reset by peer",
+      "provider": "claude",
+      "severity": "warning",
+      "source": "https://claude.com/connectors/aurora"
+    },
+    {
       "message": "HTTP Error 404: Not Found",
       "provider": "grok",
       "severity": "warning",
@@ -26,7 +38,7 @@
       "source": "https://x.ai/news/grok-connectors"
     }
   ],
-  "run_date": "2026-05-30",
-  "server_count": 383,
+  "run_date": "2026-05-31",
+  "server_count": 379,
   "tool_count": 13
 }

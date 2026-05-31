@@ -1,7 +1,7 @@
 [
   {
     "confidence": "high",
-    "current_hash": "764302ecacdec93a28d094cebfb88d4b67da819cd2be65756186972cb4eb9032",
+    "current_hash": "efa23a58975d434b919f9e7c181a99751971c79f109455062a83d5cef6e6b5ee",
     "event_type": "tool_schema_changed",
     "evidence": [
       {
@@ -20,17 +20,17 @@
         "value": "delete"
       }
     ],
-    "id": 81,
-    "previous_hash": "efa23a58975d434b919f9e7c181a99751971c79f109455062a83d5cef6e6b5ee",
+    "id": 85,
+    "previous_hash": "764302ecacdec93a28d094cebfb88d4b67da819cd2be65756186972cb4eb9032",
     "provider": "gemini",
-    "run_date": "2026-05-30",
+    "run_date": "2026-05-31",
     "server_id": "bigtable-bigtable",
     "summary": "Write-capable tool changed: gemini/bigtable-bigtable/delete_instance",
     "tool_name": "delete_instance"
   },
   {
     "confidence": "high",
-    "current_hash": "4c18bf2c49901424f2f6c46eb3fb508b14e48da4af09cb3ac734f4eb2a27a93e",
+    "current_hash": "40971e0e007b0c092ca30054538effc206a0180140a17c2b71e7574c08323d00",
     "event_type": "tool_schema_changed",
     "evidence": [
       {
@@ -44,17 +44,17 @@
         "value": "create"
       }
     ],
-    "id": 82,
-    "previous_hash": "40971e0e007b0c092ca30054538effc206a0180140a17c2b71e7574c08323d00",
+    "id": 86,
+    "previous_hash": "4c18bf2c49901424f2f6c46eb3fb508b14e48da4af09cb3ac734f4eb2a27a93e",
     "provider": "gemini",
-    "run_date": "2026-05-30",
+    "run_date": "2026-05-31",
     "server_id": "bigtable-bigtable",
     "summary": "Write-capable tool changed: gemini/bigtable-bigtable/create_table",
     "tool_name": "create_table"
   },
   {
     "confidence": "high",
-    "current_hash": "0def02c1d63c5298099f057b65a48175a6009a9e432224dd6ef2478fbaf16fff",
+    "current_hash": "878a738d27fdd4790a4747addfa5e01ba278abf6e309329cd8b19bca6c103f02",
     "event_type": "tool_schema_changed",
     "evidence": [
       {
@@ -73,17 +73,17 @@
         "value": "delete"
       }
     ],
-    "id": 83,
-    "previous_hash": "878a738d27fdd4790a4747addfa5e01ba278abf6e309329cd8b19bca6c103f02",
+    "id": 87,
+    "previous_hash": "0def02c1d63c5298099f057b65a48175a6009a9e432224dd6ef2478fbaf16fff",
     "provider": "gemini",
-    "run_date": "2026-05-30",
+    "run_date": "2026-05-31",
     "server_id": "bigtable-bigtable",
     "summary": "Write-capable tool changed: gemini/bigtable-bigtable/delete_table",
     "tool_name": "delete_table"
   },
   {
     "confidence": "high",
-    "current_hash": "7d61f72dfe62aa71ab6eeb85e2e0688ab24e8ba03d8dd8bd74940b80ea866eba",
+    "current_hash": "ff627051c324f3a2c58c5e3492f83dbc36f436cb198a1bfaa9aafc7e78f96245",
     "event_type": "tool_schema_changed",
     "evidence": [
       {
@@ -102,10 +102,10 @@
         "value": "set"
       }
     ],
-    "id": 84,
-    "previous_hash": "ff627051c324f3a2c58c5e3492f83dbc36f436cb198a1bfaa9aafc7e78f96245",
+    "id": 88,
+    "previous_hash": "7d61f72dfe62aa71ab6eeb85e2e0688ab24e8ba03d8dd8bd74940b80ea866eba",
     "provider": "gemini",
-    "run_date": "2026-05-30",
+    "run_date": "2026-05-31",
     "server_id": "bigtable-bigtable",
     "summary": "Write-capable tool changed: gemini/bigtable-bigtable/delete_logical_view",
     "tool_name": "delete_logical_view"

@@ -1,0 +1,6 @@
+{
+  "content_type": "",
+  "error": "<urlopen error [Errno 54] Connection reset by peer>",
+  "status": null,
+  "url": "https://claude.com/connectors/aiera"
+}

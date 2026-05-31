@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "The Network Solutions Domain Search Assistant makes finding an available domain fast, simple, and conversat...",
+  "homepage": "https://www.networksolutions.com/",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Searching for specific domain"
+    ],
+    "developerName": "Network Solutions",
+    "displayName": "Network Solutions",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "The Network Solutions Domain Search Assistant makes finding an available domain fast, simple, and conversational. Instead of searching one name at a time, users can describe their idea in plain language and instantly check domain availability across relevant extensions. The assistant helps refine names, suggest alternatives, and quickly identify options that are ready to register.\n\nBuilt to remove friction and frustration from domain discovery, this chat-powered experience keeps users moving forward when names are taken and surfaces smarter, brand-ready options in real time. Whether you\u2019re launching a business, starting a personal project, or exploring new ideas, Network Solutions helps you go from concept to available domain with confidence.",
+    "privacyPolicyURL": "https://www.newfold.com/privacy-center",
+    "screenshots": [],
+    "shortDescription": "The Network Solutions Domain Search Assistant makes finding an available domain fast, simple, and conversat...",
+    "termsOfServiceURL": "https://legal.newfold.com/TermsOfUse.pdf",
+    "websiteURL": "https://www.networksolutions.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "network-solutions",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

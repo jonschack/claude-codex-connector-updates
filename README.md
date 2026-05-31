@@ -1,4 +1,4 @@
-# MCP Write-Capability Report: 2026-05-30
+# MCP Write-Capability Report: 2026-05-31
 
 ## Write Alerts
 
@@ -11,20 +11,23 @@
 
 ## Coverage
 
-- Normalized servers: 383
+- Normalized servers: 379
 - Write-capable servers: 68
-- claude: 24 servers, 8 write-capable
+- claude: 22 servers, 8 write-capable
 - codex: 148 servers, 52 write-capable
-- gemini: 202 servers, 8 write-capable
+- gemini: 200 servers, 8 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues
 
+- claude: 2 issue(s)
 - gemini: 2 issue(s)
 - grok: 2 issue(s)
 
 - `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
 - `gemini` `warning` `https://github.com/Paulessus/odin-gemini-mcp-bridge`: Manifest not found or invalid after probing common paths
+- `claude` `warning` `https://claude.com/connectors/aiera`: <urlopen error [Errno 54] Connection reset by peer>
+- `claude` `warning` `https://claude.com/connectors/aurora`: [Errno 54] Connection reset by peer
 - `grok` `warning` `https://docs.x.ai/grok/connectors/catalog`: HTTP Error 404: Not Found
 - `grok` `warning` `https://x.ai/news/grok-connectors`: HTTP Error 403: Forbidden
 
