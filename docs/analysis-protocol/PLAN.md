@@ -107,7 +107,7 @@ incompleteness is external-bound and explicitly quantified in the report.
 
 **Quantified external-bound incompleteness (reported, not hidden):**
 - Coverage % per source + overall (vs rough `KNOWN_TOTALS`); only sources that succeeded count.
-- PulseMCP (~16k) key-gated; absent sources reflected in the coverage denominator. Smithery is PUBLIC (~5800 servers) and is now collected without a key.
+- PulseMCP (~16k) key-gated (confirmed 401); absent sources reflected in the coverage denominator. Smithery is PUBLIC and collected without a key, but the unauthenticated endpoint is capped (~250 unique of a stated 5800; full set needs a key). mcp.so is collected via Next.js RSC-payload extraction (~47/page).
 - Validation precision/recall apply ONLY to the remote-URL subset that answered `tools/list`, with
   a small-sample CI caveat; population `verified_tools`/`annotation` are 0 unless collection runs
   population-wide discovery (explained in the report).
@@ -198,21 +198,26 @@ synthetic fixture.
 - **Tests:** `McpsoCollectorTests` (5 tests) — parses ≥2 servers, tool fold, i18n exclusion,
   skip_network, empty-markup parser-break issue.
 
-### smithery — verified — PUBLIC registry.smithery.ai/servers (no key); ~5800 servers, flat {servers,pagination} shape
+### smithery — verified — PUBLIC registry.smithery.ai/servers (no key); flat {servers,pagination} shape. Unauthenticated paging is CAPPED.
 
 - **URL:** `https://registry.smithery.ai/servers`
 - **Status:** HTTP 200, public — no API key required.
 - **Observation:** `GET /servers?page=1&pageSize=100` returns a flat JSON body:
-  `{"servers":[{id,qualifiedName,namespace,slug,displayName,description,iconUrl,verified,useCount,remote,isDeployed,createdAt,homepage,bySmithery,owner,score},...], "pagination":{"currentPage":1,"pageSize":100,"totalPages":58,"totalCount":5800}}`.
+  `{"servers":[{id,qualifiedName,namespace,slug,displayName,description,iconUrl,verified,useCount,remote,isDeployed,createdAt,homepage,bySmithery,owner,score},...], "pagination":{"currentPage":1,"pageSize":100,"totalPages":5,"totalCount":5800}}`.
+  **The unauthenticated endpoint caps paging at `totalPages` 5 (page 6+ returns empty) and repeats
+  rows across pages**, so it yields ~500 raw → **~250 UNIQUE** servers without a key, even though
+  `totalCount` advertises 5800. The full catalog requires `MCP_NEWSLETTER_SMITHERY_KEY`.
   There is NO repo URL and NO remote endpoint URL in the list (only `remote: true` boolean).
-  `qualifiedName` is the stable id; pagination uses `currentPage`/`totalPages`.
+  `qualifiedName` is the stable unique id; pagination uses `currentPage`/`totalPages`.
 - **Parser change:** Rewrote `collect_smithery` — removed key-gate, removed `_fetch_with_auth`,
   introduced `_fetch` (optional Bearer if key present), maps flat shape to `RawRegistryEntry`
-  (`repo_url=""`, `remote_url=""`, `source_url=homepage`), pagination stops at `totalPages`,
-  `raw={useCount,verified,remote}` stashed for later use.
-- **Outcome:** ~5800 servers collected from the public endpoint. `MCP_NEWSLETTER_SMITHERY_KEY` is
-  optional — if set it is sent as `Authorization: Bearer` for any extra access, but the public
-  endpoint works without it.
+  (`source_id=qualifiedName`, `repo_url=""`, `remote_url=""`, `source_url=homepage`), pagination
+  stops at `totalPages`, `raw={useCount,verified,remote}` stashed for later use. (Cross-source
+  identity now keys on the unique `source_id`, so distinct servers sharing a display name no longer
+  merge.)
+- **Outcome:** ~250 unique servers collected from the public endpoint without a key (the API's
+  duplicate-rows + 5-page cap; merge dedups them correctly). Set `MCP_NEWSLETTER_SMITHERY_KEY` to
+  reach the full ~5800.
 
 ### Glama detail endpoint — deferred (tools[] always empty)
 

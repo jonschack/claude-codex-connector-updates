@@ -92,7 +92,7 @@ The Smithery collector fetches from the **public** endpoint — no API key requi
 https://registry.smithery.ai/servers?page=N&pageSize=100
 ```
 
-Response shape: `{"servers":[...], "pagination":{"currentPage":N,"totalPages":M,...}}`. ~5800 servers across ~58 pages.
+Response shape: `{"servers":[...], "pagination":{"currentPage":N,"totalPages":M,...}}`. NOTE: the **unauthenticated** endpoint reports `totalCount` ~5800 but caps paging at `totalPages` 5 and repeats rows across pages, so it yields **~250 unique** servers without a key; the full ~5800 catalog requires `MCP_NEWSLETTER_SMITHERY_KEY`.
 
 - `MCP_NEWSLETTER_SMITHERY_URL` — override base URL (default `https://registry.smithery.ai/servers`)
 - `MCP_NEWSLETTER_SMITHERY_MAX` — max entries to collect (default 20000)

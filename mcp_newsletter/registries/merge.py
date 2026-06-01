@@ -28,7 +28,9 @@ def identity(entry: RawRegistryEntry) -> str:
         if entry.subpath:
             return f"repo:{repo}#{entry.subpath.strip('/').lower()}"
         return f"repo:{repo}"
-    return f"{entry.source}:{slugify(entry.name or entry.source_id)}"
+    # Prefer source_id (the registry's UNIQUE key, e.g. Smithery qualifiedName,
+    # mcp.so uuid) over the display name, which collides across distinct servers.
+    return f"{entry.source}:{slugify(entry.source_id or entry.name)}"
 
 
 def _alias_keys(entry: RawRegistryEntry) -> List[str]:

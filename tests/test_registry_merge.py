@@ -61,6 +61,13 @@ class IdentityTests(unittest.TestCase):
         e = RawRegistryEntry(source="mcpso", source_id="weather-thing", name="Weather Thing")
         self.assertEqual(identity(e), "mcpso:weather-thing")
 
+    def test_fallback_uses_unique_source_id_not_colliding_display_name(self):
+        # Two DISTINCT Smithery servers (unique qualifiedName) sharing a display
+        # name must NOT collapse to the same identity.
+        a = RawRegistryEntry(source="smithery", source_id="alice/dev-utils", name="Developer Utilities")
+        b = RawRegistryEntry(source="smithery", source_id="bob/dev-utils", name="Developer Utilities")
+        self.assertNotEqual(identity(a), identity(b))
+
 
 class MergeTests(unittest.TestCase):
     def test_same_server_across_sources_collapses_to_one(self):
