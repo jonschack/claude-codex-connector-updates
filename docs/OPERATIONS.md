@@ -84,6 +84,24 @@ Shared HTTP/discovery hardening (applies to all collectors):
   bypass the private/loopback/link-local block (e.g. a self-hosted test MCP
   server). Empty by default; only set for trusted local endpoints.
 
+## Smithery Registry
+
+The Smithery collector fetches from the **public** endpoint — no API key required:
+
+```
+https://registry.smithery.ai/servers?page=N&pageSize=100
+```
+
+Response shape: `{"servers":[...], "pagination":{"currentPage":N,"totalPages":M,...}}`. ~5800 servers across ~58 pages.
+
+- `MCP_NEWSLETTER_SMITHERY_URL` — override base URL (default `https://registry.smithery.ai/servers`)
+- `MCP_NEWSLETTER_SMITHERY_MAX` — max entries to collect (default 20000)
+- `MCP_NEWSLETTER_SMITHERY_KEY` — optional; if set, sent as `Authorization: Bearer <key>` for any extra access. The public endpoint works without it.
+
+### Fields available in the list
+
+Each server has: `id`, `qualifiedName` (stable id), `displayName`, `description`, `verified`, `useCount`, `remote` (boolean), `homepage`. There is **no repo URL** and **no remote endpoint URL** in the list response — only a `remote: true` boolean indicating the server supports remote deployment.
+
 ## PulseMCP Registry
 
 The PulseMCP collector fetches from the Generic Registry spec endpoint:

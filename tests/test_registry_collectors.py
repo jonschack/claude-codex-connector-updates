@@ -320,43 +320,63 @@ class GlamaCollectorTests(unittest.TestCase):
 
 
 class SmitheryCollectorTests(unittest.TestCase):
-    def test_no_key_returns_empty_with_info_issue(self):
-        """When MCP_NEWSLETTER_SMITHERY_KEY is absent, returns [] and adds an info issue."""
+    def test_no_key_still_parses_public_page(self):
+        """Public endpoint — no key required. Without a key, servers are still parsed."""
+        page = (FIX / "smithery_public.json").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
-            # Ensure key is not set
             env = {k: v for k, v in os.environ.items() if k != "MCP_NEWSLETTER_SMITHERY_KEY"}
             with mock.patch.dict(os.environ, env, clear=True):
-                from mcp_newsletter.registries.smithery import collect_smithery
-                entries = collect_smithery(ctx)
-        self.assertEqual(entries, [])
-        info_issues = [i for i in ctx.issues if i.severity == "info"]
-        self.assertTrue(len(info_issues) >= 1)
-        self.assertTrue(any("KEY" in i.message or "key" in i.message.lower() for i in info_issues))
-
-    def test_parses_servers_when_key_is_set(self):
-        page = (FIX / "smithery_page.json").read_text()
-        with tempfile.TemporaryDirectory() as tmp:
-            ctx = _ctx(tmp)
-            with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_SMITHERY_KEY": "test-key"}):
-                with mock.patch("mcp_newsletter.registries.smithery._fetch_with_auth",
+                with mock.patch("mcp_newsletter.registries.smithery._fetch",
                                 return_value=(page, _meta_ok())):
                     from mcp_newsletter.registries.smithery import collect_smithery
                     entries = collect_smithery(ctx)
-        self.assertEqual(len(entries), 2)
-        slack = next(e for e in entries if "slack" in e.source_id)
-        self.assertEqual(slack.repo_url, "https://github.com/acme/slack-mcp")
-        self.assertIn("messaging", slack.tags)
-        self.assertEqual(slack.source, "smithery")
+        self.assertGreaterEqual(len(entries), 2)
+        # source_id == qualifiedName
+        source_ids = {e.source_id for e in entries}
+        self.assertIn("gmail", source_ids)
+        # name mapped from displayName
+        gmail = next(e for e in entries if e.source_id == "gmail")
+        self.assertEqual(gmail.name, "Gmail MCP")
+        # description mapped
+        self.assertIn("Gmail", gmail.description)
+        # source = smithery
+        self.assertTrue(all(e.source == "smithery" for e in entries))
+        # no issues raised (public, no key needed)
+        self.assertEqual(ctx.issues, [])
+
+    def test_pagination_stops_at_total_pages(self):
+        """Single-page fixture (totalPages=1) triggers exactly one fetch."""
+        page = (FIX / "smithery_public.json").read_text()
+        mock_fetch = mock.Mock(return_value=(page, _meta_ok()))
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            env = {k: v for k, v in os.environ.items() if k != "MCP_NEWSLETTER_SMITHERY_KEY"}
+            with mock.patch.dict(os.environ, env, clear=True):
+                with mock.patch("mcp_newsletter.registries.smithery._fetch", mock_fetch):
+                    from mcp_newsletter.registries.smithery import collect_smithery
+                    entries = collect_smithery(ctx)
+        self.assertEqual(mock_fetch.call_count, 1)
+        self.assertGreaterEqual(len(entries), 2)
 
     def test_skip_network_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
             ctx = CollectContext(root=Path(tmp), run_date="2026-05-30", skip_network=True)
-            with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_SMITHERY_KEY": "test-key"}):
+            from mcp_newsletter.registries.smithery import collect_smithery
+            entries = collect_smithery(ctx)
+        self.assertEqual(entries, [])
+        self.assertTrue(any("skip" in i.message.lower() for i in ctx.issues))
+
+    def test_invalid_json_returns_empty_with_issue(self):
+        """Malformed JSON body → [] and an issue, no exception raised."""
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch("mcp_newsletter.registries.smithery._fetch",
+                            return_value=("not-json{{{", _meta_ok())):
                 from mcp_newsletter.registries.smithery import collect_smithery
                 entries = collect_smithery(ctx)
         self.assertEqual(entries, [])
-        self.assertTrue(any("skip" in i.message.lower() for i in ctx.issues))
+        self.assertTrue(any("json" in i.message.lower() or "JSON" in i.message for i in ctx.issues))
 
 
 class McpsoCollectorTests(unittest.TestCase):

@@ -107,7 +107,7 @@ incompleteness is external-bound and explicitly quantified in the report.
 
 **Quantified external-bound incompleteness (reported, not hidden):**
 - Coverage % per source + overall (vs rough `KNOWN_TOTALS`); only sources that succeeded count.
-- PulseMCP (~16k) and Smithery key-gated; absent sources reflected in the coverage denominator.
+- PulseMCP (~16k) key-gated; absent sources reflected in the coverage denominator. Smithery is PUBLIC (~5800 servers) and is now collected without a key.
 - Validation precision/recall apply ONLY to the remote-URL subset that answered `tools/list`, with
   a small-sample CI caveat; population `verified_tools`/`annotation` are 0 unless collection runs
   population-wide discovery (explained in the report).
@@ -198,13 +198,21 @@ synthetic fixture.
 - **Tests:** `McpsoCollectorTests` (5 tests) — parses ≥2 servers, tool fold, i18n exclusion,
   skip_network, empty-markup parser-break issue.
 
-### smithery — left graceful (API key required)
+### smithery — verified — PUBLIC registry.smithery.ai/servers (no key); ~5800 servers, flat {servers,pagination} shape
 
 - **URL:** `https://registry.smithery.ai/servers`
-- **Status:** Not probed (key-gated; `MCP_NEWSLETTER_SMITHERY_KEY` not available in this environment)
-- **Outcome:** Parser already correctly returns `[]` + an `info`-severity issue when the key is
-  absent. No change made. `# VERIFY` comments remain as a reminder that field names have not been
-  confirmed against a live response.
+- **Status:** HTTP 200, public — no API key required.
+- **Observation:** `GET /servers?page=1&pageSize=100` returns a flat JSON body:
+  `{"servers":[{id,qualifiedName,namespace,slug,displayName,description,iconUrl,verified,useCount,remote,isDeployed,createdAt,homepage,bySmithery,owner,score},...], "pagination":{"currentPage":1,"pageSize":100,"totalPages":58,"totalCount":5800}}`.
+  There is NO repo URL and NO remote endpoint URL in the list (only `remote: true` boolean).
+  `qualifiedName` is the stable id; pagination uses `currentPage`/`totalPages`.
+- **Parser change:** Rewrote `collect_smithery` — removed key-gate, removed `_fetch_with_auth`,
+  introduced `_fetch` (optional Bearer if key present), maps flat shape to `RawRegistryEntry`
+  (`repo_url=""`, `remote_url=""`, `source_url=homepage`), pagination stops at `totalPages`,
+  `raw={useCount,verified,remote}` stashed for later use.
+- **Outcome:** ~5800 servers collected from the public endpoint. `MCP_NEWSLETTER_SMITHERY_KEY` is
+  optional — if set it is sent as `Authorization: Bearer` for any extra access, but the public
+  endpoint works without it.
 
 ### Glama detail endpoint — deferred (tools[] always empty)
 
