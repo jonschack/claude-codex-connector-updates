@@ -12,9 +12,55 @@ CONTENTS_API = "https://api.github.com/repos/docker/mcp-registry/contents/server
 RAW = "https://raw.githubusercontent.com/docker/mcp-registry/main/servers/{name}/server.yaml"
 
 
-def _yaml_value(text: str, key: str) -> str:
-    m = re.search(rf"^{key}:\s*(.+)$", text, flags=re.M)
+def _yaml_scalar(text: str, key: str) -> str:
+    """Extract a scalar value for a top-level or single-indented key.
+    Matches lines like ``key: value`` (any indentation).
+    """
+    m = re.search(rf"^\s*{re.escape(key)}:\s*(.+)$", text, flags=re.M)
     return m.group(1).strip().strip('"\'') if m else ""
+
+
+def _yaml_nested(text: str, parent: str, child: str) -> str:
+    """Extract a scalar value from a nested YAML block (parent → child).
+    Handles the real docker/mcp-registry server.yaml shape, e.g.::
+
+        source:
+          project: https://...
+        about:
+          description: Some text
+    """
+    m = re.search(
+        rf"^{re.escape(parent)}:\s*\n(?:[ \t]+\S[^\n]*\n)*?[ \t]+{re.escape(child)}:\s*(.+)$",
+        text, flags=re.M,
+    )
+    return m.group(1).strip().strip('"\'') if m else ""
+
+
+def _yaml_list(text: str, parent: str, child: str) -> List[str]:
+    """Extract a list of scalar items under parent → child.
+    Handles the shape::
+
+        meta:
+          tags:
+            - item1
+            - item2
+    """
+    # Find the child key inside the parent block
+    m = re.search(
+        rf"^{re.escape(parent)}:\s*\n((?:[ \t]+[^\n]+\n)*)",
+        text, flags=re.M,
+    )
+    if not m:
+        return []
+    block = m.group(1)
+    list_m = re.search(rf"[ \t]+{re.escape(child)}:\s*\n((?:[ \t]+-[^\n]+\n?)*)", block)
+    if not list_m:
+        return []
+    return [
+        re.sub(r"^\s*-\s*", "", line).strip()
+        for line in list_m.group(1).splitlines()
+        if re.match(r"^\s*-", line)
+    ]
 
 
 def collect_docker(ctx: CollectContext) -> List[RawRegistryEntry]:
@@ -47,11 +93,25 @@ def collect_docker(ctx: CollectContext) -> List[RawRegistryEntry]:
             ctx.add_issue(PROVIDER, yurl, str(ymeta.get("error") or ymeta.get("status")))
             continue
         ctx.save_raw_text(PROVIDER, f"{name}-server", ybody, ext="yaml")
+        # Real field layout (docker/mcp-registry as of 2026-05):
+        #   about.description, about.title
+        #   source.project   (repo URL for local servers)
+        #   remote.url       (endpoint URL for remote servers)
+        #   meta.category    (scalar)
+        #   meta.tags        (YAML list)
+        description = _yaml_nested(ybody, "about", "description")
+        repo_url = _yaml_nested(ybody, "source", "project")
+        remote_url = _yaml_nested(ybody, "remote", "url")
+        category = _yaml_nested(ybody, "meta", "category")
+        tags = _yaml_list(ybody, "meta", "tags")
+        if category and category not in tags:
+            tags = [category] + tags
         entries.append(RawRegistryEntry(
             source=PROVIDER, source_id=name, name=name,
-            description=_yaml_value(ybody, "longLived") or _yaml_value(ybody, "description"),
-            repo_url=_yaml_value(ybody, "source") or _yaml_value(ybody, "repository"),
-            tags=[c.strip() for c in _yaml_value(ybody, "category").split(",") if c.strip()],
+            description=description,
+            repo_url=repo_url,
+            remote_url=remote_url,
+            tags=tags,
             source_url=yurl,
         ))
     return entries

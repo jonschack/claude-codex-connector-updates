@@ -64,6 +64,25 @@ class GithubServersCollectorTests(unittest.TestCase):
         # all entries should have source = github_servers
         self.assertTrue(all(e.source == "github_servers" for e in entries))
 
+    def test_parses_live_readme_fixture(self):
+        """Verifies parser against captured live README from modelcontextprotocol/servers (2026-05-31).
+        The README now links primarily to SDK repos and a few archived/community servers.
+        extract_github_repos correctly extracts all github.com links it can find.
+        """
+        readme = (FIX / "github_servers_live.md").read_text()
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch("mcp_newsletter.registries.github_servers.fetch_text",
+                            return_value=(readme, {"status": 200, "content_type": "text/plain", "error": ""})):
+                from mcp_newsletter.registries.github_servers import collect_github_servers
+                entries = collect_github_servers(ctx)
+        repo_urls = {e.repo_url for e in entries}
+        # SDK repos and community server links both extracted
+        self.assertIn("https://github.com/modelcontextprotocol/typescript-sdk", repo_urls)
+        self.assertIn("https://github.com/zencoderai/slack-mcp-server", repo_urls)
+        self.assertIn("https://github.com/brave/brave-search-mcp-server", repo_urls)
+        self.assertTrue(all(e.source == "github_servers" for e in entries))
+
     def test_skip_network_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
             ctx = CollectContext(root=Path(tmp), run_date="2026-05-30", skip_network=True)
@@ -75,6 +94,9 @@ class GithubServersCollectorTests(unittest.TestCase):
 
 class DockerCollectorTests(unittest.TestCase):
     def test_parses_server_yaml_and_extracts_fields(self):
+        """Fixture uses real docker/mcp-registry server.yaml shape (verified 2026-05-31).
+        Fields: about.description, source.project, remote.url, meta.category, meta.tags[].
+        """
         listing = (FIX / "docker_listing.json").read_text()
         slack_yaml = (FIX / "docker_slack_server.yaml").read_text()
         # github dir returns empty yaml (no match) — use side_effect for sequential calls
@@ -94,6 +116,46 @@ class DockerCollectorTests(unittest.TestCase):
         slack = next(e for e in entries if e.source_id == "slack")
         self.assertEqual(slack.repo_url, "https://github.com/docker/mcp-slack")
         self.assertIn("messaging", slack.tags)
+        self.assertIn("Send and receive Slack messages", slack.description)
+
+    def test_parses_live_fixture_shapes(self):
+        """Verifies parser against captured live fixtures from docker/mcp-registry (2026-05-31).
+        Covers: local server (source.project), remote server (remote.url), meta.tags list.
+        """
+        listing = (FIX / "docker_live_listing.json").read_text()
+        sqlite_yaml = (FIX / "docker_live_sqlite_server.yaml").read_text()
+        airtable_yaml = (FIX / "docker_live_airtable_server.yaml").read_text()
+        ais_yaml = (FIX / "docker_live_ais_fleet_server.yaml").read_text()
+        side_effects = [
+            (listing, _meta_ok()),
+            (sqlite_yaml, _meta_ok()),
+            (airtable_yaml, _meta_ok()),
+            (ais_yaml, _meta_ok()),
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch("mcp_newsletter.registries.docker.fetch_text",
+                            side_effect=side_effects):
+                from mcp_newsletter.registries.docker import collect_docker
+                entries = collect_docker(ctx)
+        source_ids = {e.source_id for e in entries}
+        self.assertIn("SQLite", source_ids)
+        self.assertIn("airtable-mcp-server", source_ids)
+        self.assertIn("ais-fleet", source_ids)
+
+        sqlite = next(e for e in entries if e.source_id == "SQLite")
+        self.assertEqual(sqlite.repo_url, "https://github.com/modelcontextprotocol/servers")
+        self.assertIn("database", sqlite.tags)
+        self.assertIn("Database interaction", sqlite.description)
+
+        airtable = next(e for e in entries if e.source_id == "airtable-mcp-server")
+        self.assertEqual(airtable.repo_url, "https://github.com/domdomegg/airtable-mcp-server")
+        self.assertIn("productivity", airtable.tags)
+
+        ais = next(e for e in entries if e.source_id == "ais-fleet")
+        self.assertEqual(ais.remote_url, "https://mcp.aisfleet.com/sse")
+        self.assertEqual(ais.repo_url, "")
+        self.assertIn("boating", ais.tags)
 
     def test_skip_network_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -230,6 +292,24 @@ class McpsoCollectorTests(unittest.TestCase):
         repo_urls = {e.repo_url for e in entries}
         self.assertIn("https://github.com/acme/slack-mcp", repo_urls)
         self.assertIn("https://github.com/community/weather-mcp", repo_urls)
+        self.assertTrue(all(e.source == "mcpso" for e in entries))
+
+    def test_parses_live_nextjs_fixture(self):
+        """Verifies parser against captured live Next.js RSC HTML from mcp.so/servers (2026-05-31).
+        mcp.so is a Next.js app; GitHub links are embedded in JS bundle strings rather than
+        proper HTML anchor hrefs. extract_github_repos finds them via regex across the full body.
+        """
+        html = (FIX / "mcpso_live.html").read_text()
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch("mcp_newsletter.registries.mcpso.fetch_text",
+                            return_value=(html, {"status": 200, "content_type": "text/html", "error": ""})):
+                from mcp_newsletter.registries.mcpso import collect_mcpso
+                entries = collect_mcpso(ctx)
+        repo_urls = {e.repo_url for e in entries}
+        self.assertIn("https://github.com/chatmcp/mcp-server-flomo", repo_urls)
+        self.assertIn("https://github.com/chatmcp/mcp-server-chatsum", repo_urls)
+        self.assertIn("https://github.com/zilliztech/mcp-server-milvus", repo_urls)
         self.assertTrue(all(e.source == "mcpso" for e in entries))
 
     def test_skip_network_returns_empty(self):
