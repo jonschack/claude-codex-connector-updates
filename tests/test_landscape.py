@@ -699,6 +699,36 @@ class TestDefaultTaxonomy(unittest.TestCase):
                 self.assertIsInstance(kw, str)
 
 
+class ResidualDupGenericNameTests(unittest.TestCase):
+    """Generic names must NOT over-cluster distinct servers (accuracy fix)."""
+
+    def test_generic_named_distinct_servers_not_clustered(self):
+        recs = [
+            _rec(identity="a:1", name="MCP Server", repo_url=""),
+            _rec(identity="b:2", name="mcp-server", repo_url=""),
+            _rec(identity="c:3", name="MCP server", repo_url=""),
+        ]
+        out = estimate_residual_dups(recs)
+        self.assertEqual(out["suspected_extra_records"], 0)
+        self.assertEqual(out["suspected_dup_clusters"], 0)
+
+    def test_distinctive_name_still_clusters(self):
+        recs = [
+            _rec(identity="a:1", name="Atomic CRM MCP", repo_url=""),
+            _rec(identity="b:2", name="atomic-crm-mcp", repo_url=""),
+        ]
+        out = estimate_residual_dups(recs)
+        self.assertEqual(out["suspected_extra_records"], 1)
+
+    def test_repo_still_clusters_regardless_of_generic_name(self):
+        recs = [
+            _rec(identity="a:1", name="MCP Server", repo_url="https://github.com/acme/x"),
+            _rec(identity="b:2", name="server", repo_url="https://github.com/acme/x.git"),
+        ]
+        out = estimate_residual_dups(recs)
+        self.assertEqual(out["suspected_extra_records"], 1)
+
+
 class WordBoundaryMatchingTests(unittest.TestCase):
     """Lock in the accuracy fix: short keywords must not match inside words."""
 

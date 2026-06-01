@@ -304,12 +304,31 @@ def _normalize_name(name: str) -> str:
     return re.sub(r"[^a-z0-9]", "", name.lower())
 
 
+# Generic names that many DISTINCT servers share — they must NOT be used to
+# cluster suspected duplicates (e.g. dozens of unrelated repos are all named
+# "mcp-server"). Repo-URL clustering remains the high-specificity signal.
+_GENERIC_NAMES = {
+    "mcp", "mcpserver", "mcpservers", "server", "servers", "mcpserverserver",
+    "app", "api", "tool", "tools", "bot", "agent", "service", "client",
+    "demo", "test", "example", "main", "index", "core", "sdk", "plugin",
+    "mcpserverpython", "mcpservertypescript",
+}
+
+
+def _is_distinctive_name(normalized_name: str) -> bool:
+    """A name is usable for dup-clustering only if it is specific enough:
+    at least 5 chars and not a common generic server name."""
+    return len(normalized_name) >= 5 and normalized_name not in _GENERIC_NAMES
+
+
 def estimate_residual_dups(records: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Detect records with different identities that are likely the same server.
 
     Matching criteria (applied with OR logic):
     - Normalised repo_url (lowercased, scheme stripped, .git stripped, trailing slash stripped)
-    - Normalised name (lowercased, non-alnum removed)
+    - Normalised name (lowercased, non-alnum removed) — ONLY when the name is
+      "distinctive" (>=5 chars and not a generic name like "mcp-server"), so
+      that many unrelated servers sharing a generic name are NOT over-clustered.
 
     A secondary-key collision between two distinct identities → suspected duplicates.
 
@@ -338,7 +357,7 @@ def estimate_residual_dups(records: List[Dict[str, Any]]) -> Dict[str, Any]:
 
         if repo:
             repo_map.setdefault(repo, set()).add(identity)
-        if name:
+        if name and _is_distinctive_name(name):
             name_map.setdefault(name, set()).add(identity)
 
     # Collect clusters of identities that share a secondary key
