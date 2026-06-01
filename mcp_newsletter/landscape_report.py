@@ -300,6 +300,11 @@ def build_report(
             "treat them as the heuristic's accuracy on the *remotely-verifiable* subset."
         )
         lines.append("")
+        lines.append(
+            f"Labeled-set size: {n_answered} servers — the CI widths above reflect this sample size; "
+            f"increase `--validate-sample` for tighter bounds."
+        )
+        lines.append("")
 
     # Residual dups
     rdups = metrics.get("residual_dups") or {}
@@ -308,6 +313,12 @@ def build_report(
     lines.append(f"- **Unique identities:** {rdups.get('unique_identities', 0)}")
     lines.append(f"- **Suspected duplicate clusters:** {rdups.get('suspected_dup_clusters', 0)}")
     lines.append(f"- **Suspected extra records:** {rdups.get('suspected_extra_records', 0)}")
+    _unique_identities = rdups.get("unique_identities", 0)
+    _suspected_extra = rdups.get("suspected_extra_records", 0)
+    lines.append(
+        f"Adjusted unique estimate: {_unique_identities - _suspected_extra} "
+        f"(after removing suspected duplicates)."
+    )
     lines.append("")
 
     # ---- Write-capable Counts BY EVIDENCE TIER ----
@@ -332,6 +343,15 @@ def build_report(
     )
     lines.append(f"| **Total write-capable** | **{wc.get('total', 0)}** | All tiers combined |")
     lines.append(f"| Not write-capable / none | {by_tier.get('none', 0)} | No write signal |")
+    lines.append("")
+    lines.append(
+        "Note: `verified_tools` / `annotation` counts reflect only servers that underwent "
+        "**live `tools/list` discovery during collection**. A snapshot collected without "
+        "population-wide discovery will show these as 0 even though many servers are "
+        "tool-verifiable — run collection with discovery enabled to raise counts from "
+        "*claimed* to *verified* at scale. The validation section below measures the "
+        "description heuristic against tool truth on a sample."
+    )
     lines.append("")
 
     # ---- Theme Distribution ----

@@ -615,6 +615,91 @@ class TestBuildReport(unittest.TestCase):
         md, _ = self.build_report(records, self._minimal_summary(), "2026-05-31")
         self.assertNotIn("remotely-verifiable", md)
 
+    # --- Refinement 1: tier-zero explanation note ---
+
+    def test_tier_zero_note_always_present(self):
+        """The tier-zero explanation note must appear even when verified/annotation counts are 0."""
+        records = self._small_records()
+        md, _ = self.build_report(records, self._minimal_summary(), "2026-05-31")
+        self.assertIn("raise counts from", md)
+
+    def test_tier_zero_note_present_when_all_tiers_zero(self):
+        """Note must appear even when all records are 'none' (all counts zero)."""
+        records = [_rec(identity="srv:none1"), _rec(identity="srv:none2")]
+        md, _ = self.build_report(records, self._minimal_summary(), "2026-05-31")
+        self.assertIn("raise counts from", md)
+
+    # --- Refinement 2: adjusted-unique estimate ---
+
+    def test_adjusted_unique_estimate_present(self):
+        """The adjusted unique estimate must appear in the Deduplication section."""
+        records = self._small_records()
+        md, _ = self.build_report(records, self._minimal_summary(), "2026-05-31")
+        self.assertIn("Adjusted unique estimate:", md)
+        self.assertIn("after removing suspected duplicates", md)
+
+    def test_adjusted_unique_estimate_math(self):
+        """Adjusted unique estimate = unique_identities - suspected_extra_records."""
+        # Build records with known identities and one that would produce a suspected dup.
+        # We need residual_dups to have non-zero suspected_extra_records.
+        # Use a record set where the dedup logic yields a known residual dup.
+        # Import summarize/coverage to inspect the residual_dups metric directly.
+        from mcp_newsletter.landscape_report import build_report
+        from mcp_newsletter.landscape import coverage
+
+        # Create 5 records where one identity group has 2 records (a suspected dup cluster).
+        records = [
+            _rec(identity="srv:a", repo_url="https://github.com/owner/repo"),
+            _rec(identity="srv:a", repo_url="https://github.com/owner/repo"),  # dup of above
+            _rec(identity="srv:b"),
+            _rec(identity="srv:c"),
+            _rec(identity="srv:d"),
+        ]
+        md, metrics = build_report(records, self._minimal_summary(), "2026-05-31")
+        rdups = metrics.get("residual_dups") or {}
+        unique_identities = rdups.get("unique_identities", 0)
+        suspected_extra = rdups.get("suspected_extra_records", 0)
+        expected = unique_identities - suspected_extra
+        # The exact text of the adjusted figure must appear in the markdown
+        self.assertIn(f"Adjusted unique estimate: {expected}", md)
+
+    # --- Refinement 3: small-sample CI caveat ---
+
+    def test_small_sample_caveat_present_when_validation_provided(self):
+        """Labeled-set size sentence must appear in the report when validation is given."""
+        records = self._small_records()
+        fake_validation = {
+            "n": 10, "tp": 4, "fp": 1, "fn": 2, "tn": 3,
+            "precision": 0.80, "recall": 0.67, "f1": 0.73, "accuracy": 0.70,
+            "precision_ci": (0.45, 0.97), "recall_ci": (0.29, 0.93),
+            "sample_n": 10, "answered": 7, "unevaluable": 3,
+        }
+        md, _ = self.build_report(
+            records, self._minimal_summary(), "2026-05-31", validation=fake_validation
+        )
+        self.assertIn("Labeled-set size: 7 servers", md)
+        self.assertIn("--validate-sample", md)
+
+    def test_small_sample_caveat_answered_zero_does_not_crash(self):
+        """When answered=0, the caveat must still render without error."""
+        records = self._small_records()
+        fake_validation = {
+            "n": 5, "tp": 0, "fp": 0, "fn": 0, "tn": 0,
+            "precision": 0.0, "recall": 0.0, "f1": 0.0, "accuracy": 0.0,
+            "precision_ci": (0.0, 0.0), "recall_ci": (0.0, 0.0),
+            "sample_n": 5, "answered": 0, "unevaluable": 5,
+        }
+        md, _ = self.build_report(
+            records, self._minimal_summary(), "2026-05-31", validation=fake_validation
+        )
+        self.assertIn("Labeled-set size: 0 servers", md)
+
+    def test_small_sample_caveat_absent_when_no_validation(self):
+        """The labeled-set size sentence must NOT appear when validation is None."""
+        records = self._small_records()
+        md, _ = self.build_report(records, self._minimal_summary(), "2026-05-31")
+        self.assertNotIn("Labeled-set size:", md)
+
 
 # ---------------------------------------------------------------------------
 # I11 — CLI landscape subcommand tests (offline, --skip-network)
