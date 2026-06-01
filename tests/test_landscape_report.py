@@ -967,8 +967,10 @@ class HistoryTests(unittest.TestCase):
                              "per_source": {}, "per_source_raw": {}, "issues": []},
                              snapshot_date="2026-05-31", prior_metrics=prior, top_n=5)
         # NOTE: build_report computes its OWN metrics from records; to show the diff it compares
-        # the CURRENT computed metrics vs prior_metrics. With empty records current verified=0.
+        # the CURRENT computed metrics vs prior_metrics. With empty records current verified=0,
+        # so Δverified = 0 - 10 = -10. Lock the delta arithmetic, not just the header string.
         self.assertIn("Change since 2026-05-24", md)
+        self.assertIn("-10", md)  # verified-write-capable delta (0 current - 10 prior)
 
     def test_report_baseline_when_no_prior(self):
         md, _ = build_report(records=[], summary={"enabled_sources": [], "source_ok": {},
