@@ -1,11 +1,16 @@
 """
-Pure analysis functions for MCP landscape measurement (Loop 1 + Loop 2).
+Pure analysis functions for MCP landscape measurement (Loop 1 + Loop 2 + Loop 3).
 
-No network I/O, no datetime.now(), no time, no random. Any "today" is
-passed in as a string argument.
+No network I/O, no datetime.now(), no time. Any "today" is passed in as a
+string argument.
 
 The ONLY network-touching code is inside check_liveness(), and its opener
 argument is fully injectable so tests never hit the real network.
+
+I3 note: sample_records() uses a LOCAL seeded random.Random instance — the
+ONLY use of the ``random`` module in this file.  A seeded local Random is
+fully deterministic and reproducible; it does NOT share state with the global
+random module and cannot affect other code.
 
 Theme taxonomy note: DEFAULT_TAXONOMY uses plain English keyword matching
 against name + description + tags. This is a known limitation — non-English
@@ -16,6 +21,7 @@ regex, enabling future localisation without code changes.
 from __future__ import annotations
 
 import math
+import random
 import re
 import urllib.request
 from typing import Any, Callable, Dict, List, Optional, Tuple
@@ -31,6 +37,102 @@ _REPORTABLE = {"medium", "high"}
 
 def _is_reportable(confidence: str) -> bool:
     return confidence in _REPORTABLE
+
+
+# ---------------------------------------------------------------------------
+# I3 — sample_records (deterministic seeded sampler)
+# ---------------------------------------------------------------------------
+
+def sample_records(
+    records: List[Dict[str, Any]],
+    n: int,
+    seed: Any,
+    stratify_key: Optional[Callable[[Dict[str, Any]], str]] = None,
+) -> List[Dict[str, Any]]:
+    """Return a deterministic, seeded random sample of *records*.
+
+    Uses a LOCAL seeded ``random.Random`` instance — the ONLY use of the
+    ``random`` module in this file.  A seeded local Random is fully
+    deterministic and reproducible; it does NOT share state with the global
+    ``random`` module and cannot affect other code.
+
+    Parameters
+    ----------
+    records:
+        List of dicts shaped like RegistryServerRecord.to_dict().
+    n:
+        Desired sample size.  Clamped to ``len(records)`` if larger.
+    seed:
+        Any hashable value passed to ``random.Random(seed)``.  Same
+        ``(records, n, seed)`` → identical result on every call.
+    stratify_key:
+        Optional callable ``record -> str`` that assigns each record to a
+        bucket.  When provided, *n* is allocated proportionally across
+        buckets using largest-remainder (Hamilton) method, and sampling is
+        performed within each bucket using the same rng (buckets iterated in
+        sorted order for full determinism).  The result is the concatenation
+        of per-bucket samples sorted by ``record["identity"]``.
+        When ``None``, a simple uniform random sample of size
+        ``min(n, len(records))`` is returned.
+
+    Returns
+    -------
+    List of sampled record dicts (subset of *records*; never mutates input).
+    Same ``(records, n, seed)`` always returns an identical list.
+    """
+    rng = random.Random(seed)
+    effective_n = min(n, len(records))
+
+    if not records or effective_n == 0:
+        return []
+
+    if stratify_key is None:
+        # Uniform sample: shuffle a copy of indices then take first effective_n
+        indices = list(range(len(records)))
+        rng.shuffle(indices)
+        return [records[i] for i in indices[:effective_n]]
+
+    # ----- Stratified path -----
+    # Group records by bucket (preserve insertion order within each bucket)
+    buckets: Dict[str, List[Dict[str, Any]]] = {}
+    for rec in records:
+        bucket = stratify_key(rec)
+        buckets.setdefault(bucket, []).append(rec)
+
+    sorted_buckets = sorted(buckets.keys())
+    total = len(records)
+
+    # Compute proportional allocations using largest-remainder method
+    exact = {k: effective_n * len(buckets[k]) / total for k in sorted_buckets}
+    floors = {k: int(v) for k, v in exact.items()}
+    allocated = sum(floors.values())
+    remainder = effective_n - allocated
+
+    # Sort by fractional remainder descending, then bucket name for tie-breaking
+    fractions = sorted(
+        sorted_buckets,
+        key=lambda k: (-(exact[k] - floors[k]), k),
+    )
+    for k in fractions[:remainder]:
+        floors[k] += 1
+
+    sampled: List[Dict[str, Any]] = []
+    for bucket_name in sorted_buckets:
+        bucket_records = buckets[bucket_name]
+        alloc = floors[bucket_name]
+        if alloc <= 0:
+            continue
+        if alloc >= len(bucket_records):
+            sampled.extend(bucket_records)
+        else:
+            indices = list(range(len(bucket_records)))
+            rng.shuffle(indices)
+            for i in indices[:alloc]:
+                sampled.append(bucket_records[i])
+
+    # Sort by identity for determinism
+    sampled.sort(key=lambda r: r.get("identity") or "")
+    return sampled
 
 
 # ---------------------------------------------------------------------------

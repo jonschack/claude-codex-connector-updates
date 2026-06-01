@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -48,6 +49,39 @@ def main(argv: list[str] | None = None) -> int:
     email.add_argument("--root", default=".", type=_root)
     email.add_argument("--date", default=today_iso())
     email.add_argument("--to", default=None)
+
+    landscape = sub.add_parser(
+        "landscape",
+        help="generate evidence-tiered landscape report from current snapshot",
+    )
+    landscape.add_argument("--root", default=".", type=_root)
+    landscape.add_argument("--date", default=today_iso())
+    landscape.add_argument(
+        "--validate-sample",
+        dest="validate_sample",
+        type=int,
+        default=None,
+        metavar="N",
+        help="validate classifier on a seeded sample of N servers with remote URLs",
+    )
+    landscape.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="PRNG seed for sampling (default: 42)",
+    )
+    landscape.add_argument(
+        "--skip-network",
+        action="store_true",
+        help="skip real discovery; validation will not be run even if --validate-sample is set",
+    )
+    landscape.add_argument(
+        "--top-n",
+        dest="top_n",
+        type=int,
+        default=15,
+        help="number of top servers to list in ranked section (default: 15)",
+    )
 
     args = parser.parse_args(argv)
 
@@ -100,4 +134,60 @@ def main(argv: list[str] | None = None) -> int:
         except EmailConfigError as exc:
             print(f"Email failed: {exc}")
             return 1
+    if args.command == "landscape":
+        from .landscape_report import build_report, load_snapshot, run_validation
+
+        records, summary = load_snapshot(args.root)
+
+        validation = None
+        if args.validate_sample is not None and not args.skip_network:
+            from .mcp_discovery import discover_remote_tools
+            from .classifier import classify_tool
+
+            def _discover_fn(rec: dict) -> list:
+                url = rec.get("remote_url") or ""
+                if not url:
+                    return []
+                tools, result = discover_remote_tools(
+                    "registry", rec.get("identity", ""), "registry", url
+                )
+                classified = []
+                for tool in tools:
+                    wc, evidence = classify_tool(tool)
+                    classified.append({
+                        "name": tool.name,
+                        "write_confidence": wc,
+                        "evidence": evidence,
+                    })
+                return classified
+
+            validation = run_validation(
+                records,
+                sample_n=args.validate_sample,
+                seed=args.seed,
+                discover_fn=_discover_fn,
+                run_date=args.date,
+            )
+
+        markdown, metrics = build_report(
+            records,
+            summary,
+            snapshot_date=args.date,
+            validation=validation,
+            top_n=args.top_n,
+        )
+
+        output_dir = Path(args.root) / "data" / "current"
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        report_path = output_dir / "LANDSCAPE_REPORT.md"
+        metrics_path = output_dir / "landscape_metrics.json"
+
+        report_path.write_text(markdown, encoding="utf-8")
+        metrics_path.write_text(
+            json.dumps(metrics, indent=2, default=list),
+            encoding="utf-8",
+        )
+        print(str(report_path))
+        return 0
     return 2
