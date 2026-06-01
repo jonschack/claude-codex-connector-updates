@@ -9,7 +9,7 @@ from ..models import ServerRecord
 from ..utils import html_to_text, slugify
 
 PROVIDER = "openai"
-DIRECTORY_URL = "https://platform.openai.com/docs/connectors"  # VERIFY exact catalog URL at implementation
+DIRECTORY_URL = "https://platform.openai.com/docs/connectors"  # VERIFY: 404 as of 2026-06; "connectors" renamed to "apps" (2025-12-17); no public app/connector directory found
 
 
 def _capabilities(text: str) -> List[str]:

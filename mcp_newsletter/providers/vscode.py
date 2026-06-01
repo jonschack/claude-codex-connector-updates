@@ -6,7 +6,7 @@ from ..models import ServerRecord
 from ..utils import slugify
 
 PROVIDER = "vscode"
-URL = "https://raw.githubusercontent.com/microsoft/mcp/main/registry.json"  # VERIFY exact gallery URL
+URL = "https://raw.githubusercontent.com/microsoft/mcp/main/registry.json"  # VERIFY: 404 as of 2026-06; microsoft/mcp is a C# SDK repo, no registry.json exists; real source is VS Code Extension Marketplace POST API (tag-based, no simple JSON URL)
 
 
 def collect_vscode(ctx: CollectContext) -> List[ServerRecord]:

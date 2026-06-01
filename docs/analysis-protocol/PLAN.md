@@ -234,3 +234,82 @@ synthetic fixture.
   var (default `0` = OFF) is wired into `glama.py` as a no-op knob; when Glama begins populating
   per-server tool schemas the knob can be enabled without further code changes. Tests confirm both
   the cap=0 (no extra fetch) and cap>0 (detail fetch + fold) code paths.
+
+## Vendor source verification status (2026-06-01)
+
+Live probed all six `# VERIFY` vendor collectors. Two sources fixed; four left graceful.
+
+### cloudflare — VERIFIED AND FIXED
+
+- **Original URL:** `https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers/` → HTTP 404.
+- **Real URL:** `https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/index.md`
+  (confirmed via sitemap; the `.md` source serves `text/markdown` directly — no HTML scraping needed).
+- **Parser change:** Rewrote `collect_cloudflare` in `mcp_newsletter/providers/cloudflare.py`.
+  Old parser scraped HTML for `name | URL` pipe patterns; new parser fetches the markdown source and:
+  1. Extracts the main Cloudflare API server URL from the embedded JSON snippet (`"url": "https://mcp.cloudflare.com/mcp"`).
+  2. Parses product-specific table rows: `| [Name ↗](github-url) | Description | https://xxx.mcp.cloudflare.com/mcp |`.
+  Dedupes by slug; populates `remote_url` and `description` for every entry.
+- **Fixture captured:** `tests/fixtures/vendors/cloudflare_mcp_servers_live.md` (11 198 bytes).
+- **Servers found live:** 16 (1 main API server + 15 product-specific).
+- **`# VERIFY` removed.**
+- **Tests updated:** `CloudflareCollectorTests` — `test_parses_live_markdown`,
+  `test_remote_url_populated_for_all_servers`, `test_unparseable_markup_returns_empty_and_records_issue`.
+
+### cline — VERIFIED AND FIXED
+
+- **Original URL:** `https://raw.githubusercontent.com/cline/mcp-marketplace/main/marketplace.json` → HTTP 404.
+  The `cline/mcp-marketplace` repo exists but contains only a `README.md` — the `marketplace.json`
+  file was planned but never created in git.
+- **Real URL:** `https://api.cline.bot/v1/mcp/marketplace`
+  (discovered by reading `apps/vscode/src/config.ts` in the main `cline/cline` repo, which shows
+  `mcpBaseUrl = "https://api.cline.bot/v1/mcp"` and calls `${mcpBaseUrl}/marketplace`).
+- **Auth:** Requires `User-Agent: cline-vscode-extension`; standard browser UA returns 401.
+- **Shape:** Top-level JSON array (199 items as of 2026-06-01). Each item has `mcpId`, `name`,
+  `description`, `githubUrl`, `author`, `tags`, `category`, `githubStars`, `downloadCount`, etc.
+  (Old synthetic fixture used `{"items": [...]}` dict wrapper — both shapes are accepted by the collector.)
+- **`fetch_text` / `ctx.fetch` change:** Added optional `extra_headers` parameter to both
+  `fetch_text` in `mcp_newsletter/utils.py` and `CollectContext.fetch` in `mcp_newsletter/context.py`
+  so collectors can override the default `User-Agent` without duplicating fetch logic.
+- **`# VERIFY` removed.**
+- **Fixture captured:** `tests/fixtures/vendors/cline_marketplace_live.json` (3-item sample).
+- **Tests updated:** Added `test_parses_live_array_format` (uses live fixture) alongside the existing
+  `test_parses_legacy_dict_format` (old synthetic fixture retained for regression coverage).
+
+### openai — LEFT GRACEFUL — URL 404; feature renamed; no public connector directory
+
+- **Status probed:** `https://platform.openai.com/docs/connectors` → HTTP 404.
+- **Finding:** The "connectors" feature was renamed to "apps" as of 2026-12-17 per docs text on
+  `platform.openai.com/docs/mcp`: *"As of December 17, 2025, ChatGPT renamed connectors to apps."*
+  The `/api/docs/guides/tools-connectors-mcp` internal API endpoint returns HTTP 403.
+  No public JSON directory of ChatGPT connector/app listings found (`chatgpt.com/connectors` is 403).
+- **Outcome:** Collector returns `[]` without crashing (empty-body guard already in place).
+  `# VERIFY` retained; URL note updated to reflect the rename.
+
+### cursor — LEFT GRACEFUL — HTTP 429 persistent bot-block
+
+- **Status probed:** `https://cursor.directory/mcp` → HTTP 429 Too Many Requests (all attempted
+  User-Agents, with and without delays). The site aggressively rate-limits non-browser fetch.
+  No public JSON API found.
+- **Outcome:** Collector returns `[]` without crashing.
+  `# VERIFY` retained.
+
+### vscode — LEFT GRACEFUL — No JSON registry file; real source is the Extension Marketplace POST API
+
+- **Status probed:** `https://raw.githubusercontent.com/microsoft/mcp/main/registry.json` → HTTP 404.
+  The `microsoft/mcp` repo is a C#/.NET SDK repo; no `registry.json` exists at any path.
+- **Finding:** VS Code's MCP server gallery (`@mcp` search in the Extensions view) is backed by
+  the VS Code Extension Marketplace (`marketplace.visualstudio.com/_apis/public/gallery/extensionquery`)
+  via a POST request — not a simple GET JSON URL. The marketplace API is a general extension gallery
+  with tag-based filtering; there is no dedicated standalone MCP server registry JSON URL.
+- **Outcome:** Collector returns `[]` without crashing.
+  `# VERIFY` retained; URL note updated.
+
+### continue — LEFT GRACEFUL — SPA, no embedded data, no public JSON API
+
+- **Status probed:** `https://hub.continue.dev/api/blocks?type=mcpServer` → HTTP 308 redirect to
+  `https://continue.dev/api/blocks?type=mcpServer`, which returns HTML (Next.js SPA).
+  RSC stream (`text/x-component`) fetched via `RSC: 1` header — contains only layout/metadata
+  components, no block data (pure client-rendered from `api.continue.dev` with 401 auth).
+  `https://api.continue.dev/packages` → HTTP 401 Unauthorized.
+- **Outcome:** Collector returns `[]` without crashing. URL updated to the redirected domain.
+  `# VERIFY` retained.

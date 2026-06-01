@@ -6,7 +6,7 @@ from ..models import ServerRecord
 from ..utils import slugify
 
 PROVIDER = "continue"
-URL = "https://hub.continue.dev/api/blocks?type=mcpServer"  # VERIFY
+URL = "https://continue.dev/api/blocks?type=mcpServer"  # VERIFY: hub.continue.dev 308-redirects to continue.dev; page is a Next.js SPA with no embedded data; api.continue.dev/packages requires auth (401)
 
 
 def collect_continue(ctx: CollectContext) -> List[ServerRecord]:

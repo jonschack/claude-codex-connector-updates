@@ -6,7 +6,7 @@ from ..models import ServerRecord
 from ..utils import extract_github_repos, html_to_text, slugify
 
 PROVIDER = "cursor"
-URL = "https://cursor.directory/mcp"  # VERIFY
+URL = "https://cursor.directory/mcp"  # VERIFY: persistent HTTP 429 bot-block as of 2026-06; no public JSON API found
 
 
 def collect_cursor(ctx: CollectContext) -> List[ServerRecord]:
