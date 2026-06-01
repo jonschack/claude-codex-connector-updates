@@ -94,32 +94,51 @@ class DockerCollectorTests(unittest.TestCase):
 
 
 class PulsemcpCollectorTests(unittest.TestCase):
-    def test_parses_servers_and_extracts_fields(self):
+    def test_no_key_returns_empty_with_info_issue(self):
+        """When MCP_NEWSLETTER_PULSEMCP_KEY is absent, returns [] and adds an info issue."""
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            env = {k: v for k, v in os.environ.items() if k != "MCP_NEWSLETTER_PULSEMCP_KEY"}
+            with mock.patch.dict(os.environ, env, clear=True):
+                from mcp_newsletter.registries.pulsemcp import collect_pulsemcp
+                entries = collect_pulsemcp(ctx)
+        self.assertEqual(entries, [])
+        info_issues = [i for i in ctx.issues if i.severity == "info"]
+        self.assertTrue(len(info_issues) >= 1)
+        self.assertTrue(any("KEY" in i.message or "key" in i.message.lower() for i in info_issues))
+
+    def test_parses_wrapped_servers_skips_deleted(self):
+        """With a key set and the generic-registry-spec fixture, parses servers and skips deleted."""
         page = (FIX / "pulsemcp_page.json").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.registries.pulsemcp.fetch_text",
-                            return_value=(page, _meta_ok())):
-                from mcp_newsletter.registries.pulsemcp import collect_pulsemcp
-                entries = collect_pulsemcp(ctx)
+            with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_PULSEMCP_KEY": "test-key"}):
+                with mock.patch("mcp_newsletter.registries.pulsemcp._fetch_with_auth",
+                                return_value=(page, _meta_ok())):
+                    from mcp_newsletter.registries.pulsemcp import collect_pulsemcp
+                    entries = collect_pulsemcp(ctx)
+        # 3 servers in fixture, 1 deleted → 2 parsed
         self.assertEqual(len(entries), 2)
-        slack = next(e for e in entries if e.source_id == "slack-mcp")
+        slack = next(e for e in entries if "slack-mcp" in e.source_id)
         self.assertEqual(slack.repo_url, "https://github.com/acme/slack-mcp")
         self.assertEqual(slack.remote_url, "https://mcp.acme.com/slack")
         self.assertIn("messaging", slack.tags)
         self.assertEqual(slack.source, "pulsemcp")
+        # deleted server must not appear
+        self.assertFalse(any("gone" in e.source_id for e in entries))
 
     def test_skip_network_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
             ctx = CollectContext(root=Path(tmp), run_date="2026-05-30", skip_network=True)
-            from mcp_newsletter.registries.pulsemcp import collect_pulsemcp
-            entries = collect_pulsemcp(ctx)
+            with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_PULSEMCP_KEY": "test-key"}):
+                from mcp_newsletter.registries.pulsemcp import collect_pulsemcp
+                entries = collect_pulsemcp(ctx)
         self.assertEqual(entries, [])
         self.assertTrue(any("skip" in i.message.lower() for i in ctx.issues))
 
 
 class GlamaCollectorTests(unittest.TestCase):
-    def test_parses_servers_with_cursor_pagination(self):
+    def test_parses_servers_with_real_shape(self):
         page = (FIX / "glama_page.json").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
@@ -128,10 +147,16 @@ class GlamaCollectorTests(unittest.TestCase):
                 from mcp_newsletter.registries.glama import collect_glama
                 entries = collect_glama(ctx)
         self.assertEqual(len(entries), 2)
-        slack = next(e for e in entries if e.source_id == "acme-slack")
+        # source_id is "{namespace}/{slug}"
+        slack = next(e for e in entries if e.source_id == "acme/slack-mcp")
         self.assertEqual(slack.repo_url, "https://github.com/acme/slack-mcp")
-        self.assertIn("messaging", slack.tags)
+        # attributes flat list becomes tags
+        self.assertIn("hosting:cloud", slack.tags)
         self.assertEqual(slack.source, "glama")
+        # tool names folded into description
+        self.assertIn("create_message", slack.description)
+        # no remote_url set (url field is a listing page, not MCP endpoint)
+        self.assertEqual(slack.remote_url, "")
 
     def test_skip_network_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:

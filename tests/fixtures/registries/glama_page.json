@@ -1,30 +1,40 @@
 {
+  "pageInfo": {
+    "startCursor": "cursor-start",
+    "endCursor": "cursor-end",
+    "hasNextPage": false,
+    "hasPreviousPage": false
+  },
   "servers": [
     {
-      "id": "acme-slack",
-      "slug": "acme-slack",
+      "id": "d14hhus10t",
+      "slug": "slack-mcp",
+      "namespace": "acme",
       "name": "Slack MCP",
       "description": "Send and manage Slack messages",
       "repository": {
         "url": "https://github.com/acme/slack-mcp"
       },
-      "attributes": {
-        "tags": ["messaging", "productivity"]
-      }
+      "attributes": ["hosting:cloud", "category:messaging"],
+      "tools": [
+        {"name": "create_message", "description": "Create a new Slack message"},
+        {"name": "list_channels", "description": "List Slack channels"}
+      ],
+      "spdxLicense": {"name": "MIT License", "url": "https://spdx.org/licenses/MIT.html"},
+      "url": "https://glama.ai/mcp/servers/acme/slack-mcp"
     },
     {
-      "id": "acme-github",
-      "slug": "acme-github",
+      "id": "x9kkpq72ab",
+      "slug": "github-mcp",
+      "namespace": "acme",
       "name": "GitHub MCP",
       "description": "Interact with GitHub repositories",
       "repository": {
         "url": "https://github.com/acme/github-mcp"
       },
-      "tags": ["developer", "code"]
+      "attributes": ["hosting:self-hosted", "category:developer"],
+      "tools": [],
+      "url": "https://glama.ai/mcp/servers/acme/github-mcp"
     }
-  ],
-  "pageInfo": {
-    "endCursor": null,
-    "hasNextPage": false
-  }
+  ]
 }
