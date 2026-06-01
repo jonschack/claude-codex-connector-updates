@@ -9,9 +9,13 @@ import unittest
 from mcp_newsletter.landscape import (
     DEFAULT_TAXONOMY,
     assign_themes,
+    check_liveness,
     coverage,
     estimate_residual_dups,
+    evaluate_classifier,
     evidence_tier,
+    ground_record_with_tools,
+    mark_liveness,
     rank_servers,
     summarize,
     wilson_interval,
@@ -714,6 +718,528 @@ class WordBoundaryMatchingTests(unittest.TestCase):
     def test_multiword_and_punctuated_keywords_match(self):
         self.assertIn("code-execution", self._themes("a sandbox to run code safely"))
         self.assertIn("deploy/cloud/infra", self._themes("manage your ci/cd pipeline"))
+
+
+# ---------------------------------------------------------------------------
+# I5 — ground_record_with_tools
+# ---------------------------------------------------------------------------
+
+class TestGroundRecordWithTools(unittest.TestCase):
+    """Tests for ground_record_with_tools (I5).
+
+    All network is mock-free: classified_tools is a pure Python list passed
+    directly — no discovery I/O occurs in this function.
+    """
+
+    def _empty_record(self, **kwargs):
+        """Minimal record with no prior grounding."""
+        base = {
+            "identity": "srv:test",
+            "name": "Test",
+            "description": "",
+            "repo_url": "",
+            "remote_url": "",
+            "sources": [],
+            "capabilities": [],
+            "tags": [],
+            "write_confidence": "unknown",
+            "evidence": [],
+            "confidence_by_source": {},
+        }
+        base.update(kwargs)
+        return base
+
+    def _tool(self, name="tool_a", write_confidence="high", evidence=None):
+        return {
+            "name": name,
+            "write_confidence": write_confidence,
+            "evidence": evidence or [],
+        }
+
+    # --- verified_tools tier ---
+
+    def test_high_write_confidence_tool_yields_verified_tools_tier(self):
+        """After grounding with a high-confidence tool, evidence_tier == verified_tools."""
+        record = self._empty_record()
+        tools = [self._tool(name="write_file", write_confidence="high")]
+        ground_record_with_tools(record, tools, "2026-05-31")
+
+        self.assertEqual(
+            record["confidence_by_source"]["tools"]["confidence"], "high"
+        )
+        self.assertEqual(record["confidence_by_source"]["tools"]["date"], "2026-05-31")
+        self.assertEqual(evidence_tier(record), "verified_tools")
+
+    def test_medium_write_confidence_tool_yields_verified_tools_tier(self):
+        record = self._empty_record()
+        tools = [self._tool(write_confidence="medium")]
+        ground_record_with_tools(record, tools, "2026-05-31")
+        self.assertEqual(evidence_tier(record), "verified_tools")
+
+    def test_max_confidence_taken_across_multiple_tools(self):
+        """Max of low, high, medium → high stored."""
+        record = self._empty_record()
+        tools = [
+            self._tool("t1", "low"),
+            self._tool("t2", "high"),
+            self._tool("t3", "medium"),
+        ]
+        ground_record_with_tools(record, tools, "2026-05-31")
+        self.assertEqual(record["confidence_by_source"]["tools"]["confidence"], "high")
+
+    def test_all_unknown_confidence_stores_unknown(self):
+        record = self._empty_record()
+        tools = [self._tool("t1", "unknown"), self._tool("t2", "unknown")]
+        ground_record_with_tools(record, tools, "2026-05-31")
+        self.assertEqual(
+            record["confidence_by_source"]["tools"]["confidence"], "unknown"
+        )
+
+    # --- annotation tier via mcp_annotation evidence ---
+
+    def test_mcp_annotation_evidence_propagated_to_record(self):
+        """A tool carrying mcp_annotation evidence appends it to record evidence."""
+        ann_ev = {"kind": "mcp_annotation", "value": "destructiveHint=true", "confidence": "high"}
+        record = self._empty_record(write_confidence="low",
+                                    confidence_by_source={"catalog": {"confidence": "low", "date": "2026-05-01"}})
+        tools = [self._tool("t1", write_confidence="low", evidence=[ann_ev])]
+        ground_record_with_tools(record, tools, "2026-05-31")
+
+        # The annotation evidence is now in the record
+        self.assertIn(ann_ev, record["evidence"])
+
+    def test_mcp_annotation_enables_annotation_tier(self):
+        """evidence_tier returns 'annotation' after grounding with mcp_annotation evidence."""
+        ann_ev = {"kind": "mcp_annotation", "value": "readOnlyHint=false", "confidence": "medium"}
+        # Record has only low text confidence — not enough for verified_tools or claimed_description
+        record = self._empty_record()
+        tools = [self._tool("t1", write_confidence="low", evidence=[ann_ev])]
+        ground_record_with_tools(record, tools, "2026-05-31")
+        # tools entry will have confidence="low" (not reportable for verified_tools)
+        # but the mcp_annotation evidence is now present with medium confidence
+        # → evidence_tier should return annotation
+        self.assertEqual(evidence_tier(record), "annotation")
+
+    def test_non_mcp_annotation_evidence_not_propagated(self):
+        """Evidence with kind != mcp_annotation is NOT copied to the record."""
+        non_ann_ev = {"kind": "tool_text", "value": "create", "confidence": "high"}
+        record = self._empty_record()
+        tools = [self._tool("t1", write_confidence="low", evidence=[non_ann_ev])]
+        ground_record_with_tools(record, tools, "2026-05-31")
+        self.assertNotIn(non_ann_ev, record["evidence"])
+
+    def test_duplicate_annotation_evidence_not_added_twice(self):
+        """Identical annotation evidence items are deduped."""
+        ann_ev = {"kind": "mcp_annotation", "value": "destructiveHint=true", "confidence": "high"}
+        record = self._empty_record(evidence=[ann_ev])  # already present
+        tools = [self._tool("t1", write_confidence="high", evidence=[ann_ev])]
+        ground_record_with_tools(record, tools, "2026-05-31")
+        # Should still be exactly one copy
+        count = sum(1 for e in record["evidence"] if e == ann_ev)
+        self.assertEqual(count, 1)
+
+    def test_multiple_tools_mcp_annotations_all_propagated(self):
+        """mcp_annotation evidence from multiple tools are all collected."""
+        ev1 = {"kind": "mcp_annotation", "value": "destructiveHint=true", "confidence": "high"}
+        ev2 = {"kind": "mcp_annotation", "value": "readOnlyHint=false", "confidence": "medium"}
+        record = self._empty_record()
+        tools = [
+            self._tool("t1", "high", [ev1]),
+            self._tool("t2", "medium", [ev2]),
+        ]
+        ground_record_with_tools(record, tools, "2026-05-31")
+        self.assertIn(ev1, record["evidence"])
+        self.assertIn(ev2, record["evidence"])
+
+    # --- empty tools list — record unchanged ---
+
+    def test_empty_tools_does_nothing(self):
+        """Passing an empty tools list leaves the record completely unchanged."""
+        record = self._empty_record()
+        original_cbs = dict(record["confidence_by_source"])
+        original_evidence = list(record["evidence"])
+        ground_record_with_tools(record, [], "2026-05-31")
+        self.assertEqual(record["confidence_by_source"], original_cbs)
+        self.assertEqual(record["evidence"], original_evidence)
+
+    def test_empty_tools_does_not_set_tools_key(self):
+        record = self._empty_record()
+        ground_record_with_tools(record, [], "2026-05-31")
+        self.assertNotIn("tools", record["confidence_by_source"])
+
+    # --- run_date stored correctly ---
+
+    def test_run_date_stored_verbatim(self):
+        record = self._empty_record()
+        tools = [self._tool()]
+        ground_record_with_tools(record, tools, "2026-01-15")
+        self.assertEqual(record["confidence_by_source"]["tools"]["date"], "2026-01-15")
+
+    # --- confidence_by_source pre-existing ---
+
+    def test_existing_catalog_entry_preserved_when_tools_added(self):
+        """Ground does not remove existing confidence_by_source entries."""
+        record = self._empty_record(
+            confidence_by_source={"catalog": {"confidence": "medium", "date": "2026-05-01"}}
+        )
+        tools = [self._tool("t1", "high")]
+        ground_record_with_tools(record, tools, "2026-05-31")
+        self.assertIn("catalog", record["confidence_by_source"])
+        self.assertIn("tools", record["confidence_by_source"])
+
+
+# ---------------------------------------------------------------------------
+# I6 — evaluate_classifier
+# ---------------------------------------------------------------------------
+
+class TestEvaluateClassifier(unittest.TestCase):
+    """Tests for evaluate_classifier (I6).  Pure — no network, no randomness."""
+
+    def _label(self, predicted_write: bool, actual_write: bool) -> dict:
+        return {"predicted_write": predicted_write, "actual_write": actual_write}
+
+    def _build_labeled(self, tp=0, fp=0, fn=0, tn=0):
+        return (
+            [self._label(True, True)] * tp
+            + [self._label(True, False)] * fp
+            + [self._label(False, True)] * fn
+            + [self._label(False, False)] * tn
+        )
+
+    # --- known confusion matrix: tp=8, fp=2, fn=1, tn=9 ---
+
+    def test_known_confusion_matrix_counts(self):
+        labeled = self._build_labeled(tp=8, fp=2, fn=1, tn=9)
+        result = evaluate_classifier(labeled)
+        self.assertEqual(result["n"], 20)
+        self.assertEqual(result["tp"], 8)
+        self.assertEqual(result["fp"], 2)
+        self.assertEqual(result["fn"], 1)
+        self.assertEqual(result["tn"], 9)
+
+    def test_precision_known_case(self):
+        """precision = 8/(8+2) = 0.8"""
+        labeled = self._build_labeled(tp=8, fp=2, fn=1, tn=9)
+        result = evaluate_classifier(labeled)
+        self.assertAlmostEqual(result["precision"], 0.8, places=6)
+
+    def test_recall_known_case(self):
+        """recall = 8/(8+1) ≈ 0.8889"""
+        labeled = self._build_labeled(tp=8, fp=2, fn=1, tn=9)
+        result = evaluate_classifier(labeled)
+        self.assertAlmostEqual(result["recall"], 8 / 9, places=6)
+
+    def test_f1_known_case(self):
+        """f1 = 2*0.8*(8/9)/(0.8+8/9) ≈ 0.8421"""
+        labeled = self._build_labeled(tp=8, fp=2, fn=1, tn=9)
+        result = evaluate_classifier(labeled)
+        precision = 0.8
+        recall = 8 / 9
+        expected_f1 = 2 * precision * recall / (precision + recall)
+        self.assertAlmostEqual(result["f1"], expected_f1, places=6)
+
+    def test_accuracy_known_case(self):
+        """accuracy = (8+9)/20 = 0.85"""
+        labeled = self._build_labeled(tp=8, fp=2, fn=1, tn=9)
+        result = evaluate_classifier(labeled)
+        self.assertAlmostEqual(result["accuracy"], 17 / 20, places=6)
+
+    def test_precision_ci_brackets_point_estimate(self):
+        labeled = self._build_labeled(tp=8, fp=2, fn=1, tn=9)
+        result = evaluate_classifier(labeled)
+        lo, hi = result["precision_ci"]
+        self.assertLess(lo, result["precision"])
+        self.assertGreater(hi, result["precision"])
+        self.assertGreaterEqual(lo, 0.0)
+        self.assertLessEqual(hi, 1.0)
+
+    def test_recall_ci_brackets_point_estimate(self):
+        labeled = self._build_labeled(tp=8, fp=2, fn=1, tn=9)
+        result = evaluate_classifier(labeled)
+        lo, hi = result["recall_ci"]
+        self.assertLess(lo, result["recall"])
+        self.assertGreater(hi, result["recall"])
+        self.assertGreaterEqual(lo, 0.0)
+        self.assertLessEqual(hi, 1.0)
+
+    # --- zero-division guards ---
+
+    def test_empty_list_returns_zeros_no_exception(self):
+        result = evaluate_classifier([])
+        self.assertEqual(result["n"], 0)
+        self.assertEqual(result["tp"], 0)
+        self.assertEqual(result["precision"], 0.0)
+        self.assertEqual(result["recall"], 0.0)
+        self.assertEqual(result["f1"], 0.0)
+        self.assertEqual(result["accuracy"], 0.0)
+        self.assertEqual(result["precision_ci"], (0.0, 0.0))
+        self.assertEqual(result["recall_ci"], (0.0, 0.0))
+
+    def test_all_true_positives(self):
+        labeled = self._build_labeled(tp=5)
+        result = evaluate_classifier(labeled)
+        self.assertAlmostEqual(result["precision"], 1.0)
+        self.assertAlmostEqual(result["recall"], 1.0)
+        self.assertAlmostEqual(result["f1"], 1.0)
+
+    def test_all_true_negatives(self):
+        labeled = self._build_labeled(tn=5)
+        result = evaluate_classifier(labeled)
+        self.assertEqual(result["tp"], 0)
+        self.assertEqual(result["fp"], 0)
+        self.assertEqual(result["fn"], 0)
+        # precision and recall 0 when no positive predictions or actual positives
+        self.assertEqual(result["precision"], 0.0)
+        self.assertEqual(result["recall"], 0.0)
+        self.assertEqual(result["f1"], 0.0)
+        self.assertAlmostEqual(result["accuracy"], 1.0)
+
+    def test_no_positive_predictions_precision_zero(self):
+        """When no positive predictions are made, precision = 0."""
+        labeled = self._build_labeled(fn=3, tn=7)
+        result = evaluate_classifier(labeled)
+        self.assertEqual(result["precision"], 0.0)
+        self.assertEqual(result["fp"], 0)
+        self.assertEqual(result["tp"], 0)
+
+    def test_no_actual_positives_recall_zero(self):
+        """When no actual positives exist, recall = 0."""
+        labeled = self._build_labeled(fp=3, tn=7)
+        result = evaluate_classifier(labeled)
+        self.assertEqual(result["recall"], 0.0)
+
+    def test_result_keys_present(self):
+        result = evaluate_classifier([])
+        for key in ("n", "tp", "fp", "fn", "tn",
+                    "precision", "recall", "f1", "accuracy",
+                    "precision_ci", "recall_ci"):
+            self.assertIn(key, result)
+
+
+# ---------------------------------------------------------------------------
+# I10 — check_liveness / mark_liveness  (fully offline — injected opener/checker)
+# ---------------------------------------------------------------------------
+
+class TestCheckLiveness(unittest.TestCase):
+    """Tests for check_liveness (I10).
+
+    ALL tests inject a fake opener — no real network connection is ever made.
+    """
+
+    def _fake_opener(self, status: int, final_url: str = ""):
+        """Return a callable that simulates a network response."""
+        def opener(url, timeout):
+            return (status, final_url or url)
+        return opener
+
+    def _raising_opener(self, exc: Exception):
+        """Return a callable that raises the given exception."""
+        def opener(url, timeout):
+            raise exc
+        return opener
+
+    # --- happy-path (live) responses ---
+
+    def test_200_is_live(self):
+        result = check_liveness(
+            "https://example.com/mcp",
+            opener=self._fake_opener(200),
+        )
+        self.assertTrue(result["live"])
+        self.assertEqual(result["status"], 200)
+        self.assertEqual(result["url"], "https://example.com/mcp")
+        self.assertEqual(result["reason"], "")
+
+    def test_301_redirect_is_live(self):
+        result = check_liveness(
+            "https://example.com/old",
+            opener=self._fake_opener(301),
+        )
+        self.assertTrue(result["live"])
+        self.assertEqual(result["status"], 301)
+
+    def test_399_is_live(self):
+        result = check_liveness(
+            "https://example.com/edge",
+            opener=self._fake_opener(399),
+        )
+        self.assertTrue(result["live"])
+
+    # --- dead responses ---
+
+    def test_404_is_dead(self):
+        result = check_liveness(
+            "https://example.com/gone",
+            opener=self._fake_opener(404),
+        )
+        self.assertFalse(result["live"])
+        self.assertEqual(result["status"], 404)
+        self.assertIn("404", result["reason"])
+
+    def test_500_is_dead(self):
+        result = check_liveness(
+            "https://example.com/err",
+            opener=self._fake_opener(500),
+        )
+        self.assertFalse(result["live"])
+
+    # --- opener raises an exception ---
+
+    def test_exception_returns_live_false(self):
+        result = check_liveness(
+            "https://example.com/timeout",
+            opener=self._raising_opener(TimeoutError("connection timed out")),
+        )
+        self.assertFalse(result["live"])
+        self.assertIsNone(result["status"])
+        self.assertIn("timed out", result["reason"])
+
+    def test_connection_error_recorded_in_reason(self):
+        result = check_liveness(
+            "https://example.com/refused",
+            opener=self._raising_opener(ConnectionRefusedError("refused")),
+        )
+        self.assertFalse(result["live"])
+        self.assertIsNone(result["status"])
+        self.assertTrue(result["reason"])  # non-empty
+
+    # --- SSRF / unsafe-URL short-circuit (opener is NEVER called) ---
+
+    def test_loopback_url_blocked_without_opener_call(self):
+        """127.0.0.1 must be blocked by is_safe_url; opener must not be called."""
+        calls = []
+
+        def spy_opener(url, timeout):
+            calls.append(url)
+            return (200, url)
+
+        # is_safe_url resolves the hostname, but 127.0.0.1 is always loopback
+        result = check_liveness("http://127.0.0.1/", opener=spy_opener)
+        self.assertFalse(result["live"])
+        self.assertIsNone(result["status"])
+        # The opener must NOT have been invoked
+        self.assertEqual(calls, [], "opener should not be called for SSRF-blocked URL")
+
+    def test_private_ip_blocked(self):
+        result = check_liveness("http://192.168.1.1/api", opener=self._fake_opener(200))
+        self.assertFalse(result["live"])
+        self.assertIsNone(result["status"])
+
+    def test_non_http_scheme_blocked(self):
+        result = check_liveness("ftp://example.com/file", opener=self._fake_opener(200))
+        self.assertFalse(result["live"])
+        self.assertIsNone(result["status"])
+        self.assertIn("unsupported scheme", result["reason"])
+
+    def test_result_contains_required_keys(self):
+        result = check_liveness("https://example.com/", opener=self._fake_opener(200))
+        for key in ("url", "live", "status", "reason"):
+            self.assertIn(key, result)
+
+
+class TestMarkLiveness(unittest.TestCase):
+    """Tests for mark_liveness (I10).
+
+    ALL tests inject a fake checker — no real network connection is ever made.
+    """
+
+    def _rec_with_url(self, identity, remote_url):
+        return {
+            "identity": identity,
+            "remote_url": remote_url,
+            "name": identity,
+            "description": "",
+            "repo_url": "",
+            "sources": [],
+            "capabilities": [],
+            "tags": [],
+            "write_confidence": "unknown",
+            "evidence": [],
+            "confidence_by_source": {},
+        }
+
+    def _fake_checker(self, live: bool = True, status: int = 200):
+        """Return a checker callable that returns a fixed result."""
+        def checker(url):
+            return {"url": url, "live": live, "status": status, "reason": ""}
+        return checker
+
+    def test_checked_count_includes_records_with_url(self):
+        records = [
+            self._rec_with_url("srv:a", "https://example.com/a"),
+            self._rec_with_url("srv:b", "https://example.com/b"),
+        ]
+        summary = mark_liveness(records, checker=self._fake_checker(live=True))
+        self.assertEqual(summary["checked"], 2)
+        self.assertEqual(summary["skipped_no_url"], 0)
+
+    def test_skipped_count_for_records_without_url(self):
+        records = [
+            self._rec_with_url("srv:a", "https://example.com/a"),
+            self._rec_with_url("srv:b", ""),   # no URL
+        ]
+        summary = mark_liveness(records, checker=self._fake_checker(live=True))
+        self.assertEqual(summary["checked"], 1)
+        self.assertEqual(summary["skipped_no_url"], 1)
+
+    def test_live_and_dead_counts(self):
+        def mixed_checker(url):
+            live = "live" in url
+            return {"url": url, "live": live, "status": 200 if live else 404, "reason": ""}
+
+        records = [
+            self._rec_with_url("srv:live", "https://example.com/live"),
+            self._rec_with_url("srv:dead", "https://example.com/dead"),
+            self._rec_with_url("srv:also_live", "https://example.com/live2"),
+        ]
+        # Override with a URL-pattern checker
+        summary = mark_liveness(records, checker=mixed_checker)
+        self.assertEqual(summary["live"], 2)
+        self.assertEqual(summary["dead"], 1)
+        self.assertEqual(summary["checked"], 3)
+
+    def test_liveness_result_stored_on_record(self):
+        records = [self._rec_with_url("srv:x", "https://example.com/x")]
+        mark_liveness(records, checker=self._fake_checker(live=True, status=200))
+        self.assertIn("_liveness", records[0])
+        self.assertTrue(records[0]["_liveness"]["live"])
+        self.assertEqual(records[0]["_liveness"]["status"], 200)
+
+    def test_no_url_records_not_annotated(self):
+        """Records without a remote_url must not get a _liveness key."""
+        records = [self._rec_with_url("srv:y", "")]
+        mark_liveness(records, checker=self._fake_checker(live=True))
+        self.assertNotIn("_liveness", records[0])
+
+    def test_all_no_url_records(self):
+        records = [
+            self._rec_with_url("srv:a", ""),
+            self._rec_with_url("srv:b", None),
+        ]
+        summary = mark_liveness(records, checker=self._fake_checker())
+        self.assertEqual(summary["checked"], 0)
+        self.assertEqual(summary["skipped_no_url"], 2)
+        self.assertEqual(summary["live"], 0)
+        self.assertEqual(summary["dead"], 0)
+
+    def test_empty_records(self):
+        summary = mark_liveness([], checker=self._fake_checker())
+        self.assertEqual(summary["checked"], 0)
+        self.assertEqual(summary["skipped_no_url"], 0)
+        self.assertEqual(summary["live"], 0)
+        self.assertEqual(summary["dead"], 0)
+
+    def test_checker_called_with_remote_url(self):
+        """Verify the checker receives the record's remote_url value."""
+        received = []
+
+        def capturing_checker(url):
+            received.append(url)
+            return {"url": url, "live": True, "status": 200, "reason": ""}
+
+        records = [self._rec_with_url("srv:z", "https://example.com/target")]
+        mark_liveness(records, checker=capturing_checker)
+        self.assertEqual(received, ["https://example.com/target"])
 
 
 if __name__ == "__main__":

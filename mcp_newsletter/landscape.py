@@ -1,8 +1,11 @@
 """
-Pure analysis functions for MCP landscape measurement (Loop 1).
+Pure analysis functions for MCP landscape measurement (Loop 1 + Loop 2).
 
 No network I/O, no datetime.now(), no time, no random. Any "today" is
 passed in as a string argument.
+
+The ONLY network-touching code is inside check_liveness(), and its opener
+argument is fully injectable so tests never hit the real network.
 
 Theme taxonomy note: DEFAULT_TAXONOMY uses plain English keyword matching
 against name + description + tags. This is a known limitation — non-English
@@ -14,7 +17,8 @@ from __future__ import annotations
 
 import math
 import re
-from typing import Any, Dict, List, Optional, Tuple
+import urllib.request
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 # ---------------------------------------------------------------------------
 # Classifier helpers (mirror of classifier.py without importing it to keep
@@ -605,4 +609,273 @@ def summarize(
         "coverage": coverage_obj,
         "residual_dups": estimate_residual_dups(records),
         "validation": validation,
+    }
+
+
+# ---------------------------------------------------------------------------
+# I5 — ground_record_with_tools
+# ---------------------------------------------------------------------------
+
+def ground_record_with_tools(
+    record: Dict[str, Any],
+    classified_tools: List[Dict[str, Any]],
+    run_date: str,
+) -> None:
+    """Mutate *record* in-place to incorporate live tool-schema discovery results.
+
+    Bridges tool-schema grounding into the record so that ``evidence_tier``
+    can subsequently return ``"verified_tools"`` or ``"annotation"``.
+
+    Parameters
+    ----------
+    record:
+        A dict shaped like RegistryServerRecord.to_dict().  Mutated in-place.
+    classified_tools:
+        List of classified ToolRecord dicts, each shaped::
+
+            {
+              "name": str,
+              "write_confidence": str,          # unknown|low|medium|high
+              "evidence": [
+                {"kind": str, "value": str, "confidence": str},
+                ...
+              ],
+            }
+
+        Typically the output of ``classifier.classify_tool``.
+    run_date:
+        ISO date string (e.g. "2026-05-31").  Never computed internally.
+
+    Behaviour
+    ---------
+    - Computes the maximum ``write_confidence`` across all tools using the
+      ``unknown < low < medium < high`` rank defined in ``_RANK``.
+    - Sets ``record["confidence_by_source"]["tools"] = {"confidence": <max>,
+      "date": run_date}``.
+    - For each tool-evidence item with ``kind == "mcp_annotation"``, appends
+      it to ``record["evidence"]`` (deduplicating identical items by
+      ``(kind, value, confidence)`` triple).
+    - Does nothing when *classified_tools* is empty.
+    """
+    if not classified_tools:
+        return
+
+    # Compute max write_confidence across all tools
+    max_rank = 0
+    max_conf = "unknown"
+    for tool in classified_tools:
+        wc = tool.get("write_confidence", "unknown")
+        rank = _RANK.get(wc, 0)
+        if rank > max_rank:
+            max_rank = rank
+            max_conf = wc
+
+    # Ensure confidence_by_source exists
+    if "confidence_by_source" not in record or record["confidence_by_source"] is None:
+        record["confidence_by_source"] = {}
+    record["confidence_by_source"]["tools"] = {"confidence": max_conf, "date": run_date}
+
+    # Propagate mcp_annotation evidence items (deduplicated)
+    if "evidence" not in record or record["evidence"] is None:
+        record["evidence"] = []
+
+    existing_keys = {
+        (item.get("kind"), item.get("value"), item.get("confidence"))
+        for item in record["evidence"]
+    }
+    for tool in classified_tools:
+        for ev in (tool.get("evidence") or []):
+            if ev.get("kind") == "mcp_annotation":
+                key = (ev.get("kind"), ev.get("value"), ev.get("confidence"))
+                if key not in existing_keys:
+                    record["evidence"].append(ev)
+                    existing_keys.add(key)
+
+
+# ---------------------------------------------------------------------------
+# I6 — evaluate_classifier
+# ---------------------------------------------------------------------------
+
+def evaluate_classifier(labeled: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Compute precision / recall / F1 for the write-capability classifier.
+
+    Parameters
+    ----------
+    labeled:
+        List of ``{"predicted_write": bool, "actual_write": bool}`` dicts
+        representing ground-truth labels (truth derived from tool schemas).
+
+    Returns
+    -------
+    Dict with keys:
+
+    ``n``, ``tp``, ``fp``, ``fn``, ``tn``
+        Raw confusion-matrix counts.
+    ``precision``, ``recall``, ``f1``, ``accuracy``
+        Point-estimate metrics (floats in [0, 1]).  All default to 0.0 when
+        the relevant denominator is zero — no ZeroDivisionError is raised.
+    ``precision_ci``, ``recall_ci``
+        95 % Wilson score confidence intervals as ``(lo, hi)`` tuples,
+        computed via ``wilson_interval``.  Both components are ``(0.0, 0.0)``
+        when *n* == 0.
+    """
+    n = len(labeled)
+    tp = fp = fn = tn = 0
+
+    for item in labeled:
+        pred = bool(item.get("predicted_write"))
+        actual = bool(item.get("actual_write"))
+        if pred and actual:
+            tp += 1
+        elif pred and not actual:
+            fp += 1
+        elif not pred and actual:
+            fn += 1
+        else:
+            tn += 1
+
+    # Precision: tp / (tp + fp)
+    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+    # Recall: tp / (tp + fn)
+    recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+    # F1: harmonic mean of precision and recall
+    f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0.0
+    # Accuracy: (tp + tn) / n
+    accuracy = (tp + tn) / n if n > 0 else 0.0
+
+    # Wilson CIs — reuse existing Loop-1 function
+    precision_ci = wilson_interval(tp, tp + fp) if (tp + fp) > 0 else (0.0, 0.0)
+    recall_ci = wilson_interval(tp, tp + fn) if (tp + fn) > 0 else (0.0, 0.0)
+
+    return {
+        "n": n,
+        "tp": tp,
+        "fp": fp,
+        "fn": fn,
+        "tn": tn,
+        "precision": precision,
+        "recall": recall,
+        "f1": f1,
+        "accuracy": accuracy,
+        "precision_ci": precision_ci,
+        "recall_ci": recall_ci,
+    }
+
+
+# ---------------------------------------------------------------------------
+# I10 — check_liveness / mark_liveness
+# ---------------------------------------------------------------------------
+
+def _default_opener(url: str, timeout: int) -> Tuple[int, str]:
+    """Real network opener using urllib.  Discards the response body.
+
+    Returns ``(status_code, final_url)`` where *final_url* is the URL after
+    any redirects.
+
+    This function is the ONLY place in landscape.py that touches the network.
+    Tests always inject a fake opener so this code path is never exercised
+    during the test suite.
+    """
+    from mcp_newsletter import netguard  # local import to keep top-level pure
+
+    req = urllib.request.Request(url, method="GET")
+    # urllib follows redirects automatically for GET
+    with urllib.request.urlopen(req, timeout=timeout) as resp:  # type: ignore[arg-type]
+        final_url: str = resp.url or url
+        status: int = resp.status
+        # Discard body (capped read to avoid memory exhaustion)
+        netguard.read_capped(resp, limit=netguard.max_response_bytes())
+    return status, final_url
+
+
+def check_liveness(
+    url: str,
+    opener: Optional[Callable[[str, int], Tuple[int, str]]] = None,
+    timeout: int = 8,
+) -> Dict[str, Any]:
+    """Check whether *url* is reachable and returns a success status.
+
+    Parameters
+    ----------
+    url:
+        The URL to probe.
+    opener:
+        Callable ``(url: str, timeout: int) -> (status: int, final_url: str)``.
+        Defaults to ``_default_opener`` (real network).  **Tests must inject
+        a fake opener — the real network is never contacted in the test suite.**
+    timeout:
+        Seconds before the request is abandoned (passed to the opener).
+
+    Returns
+    -------
+    ``{"url": str, "live": bool, "status": int | None, "reason": str}``
+
+    - If *url* fails ``is_safe_url``, returns immediately with
+      ``live=False, status=None`` and the SSRF reason — no request is made.
+    - ``live`` is ``True`` iff ``200 <= status < 400``.
+    - On opener exception, returns ``live=False, status=None, reason=str(exc)``.
+    """
+    from mcp_newsletter.netguard import is_safe_url  # local import
+
+    safe, reason = is_safe_url(url)
+    if not safe:
+        return {"url": url, "live": False, "status": None, "reason": reason}
+
+    _opener = opener if opener is not None else _default_opener
+    try:
+        status, _final_url = _opener(url, timeout)
+    except Exception as exc:
+        return {"url": url, "live": False, "status": None, "reason": str(exc)}
+
+    live = 200 <= status < 400
+    return {
+        "url": url,
+        "live": live,
+        "status": status,
+        "reason": "" if live else f"HTTP {status}",
+    }
+
+
+def mark_liveness(
+    records: List[Dict[str, Any]],
+    checker: Optional[Callable[[str], Dict[str, Any]]] = None,
+) -> Dict[str, Any]:
+    """Run liveness checks for every record that has a non-empty ``remote_url``.
+
+    Results are stored under ``record["_liveness"]`` (mutates records in-place).
+
+    Parameters
+    ----------
+    records:
+        List of dicts shaped like RegistryServerRecord.to_dict().
+    checker:
+        Callable ``(url: str) -> liveness_dict``.  Defaults to
+        ``check_liveness`` (with its own default real-network opener).
+        **Tests inject a fake checker so no real network call is made.**
+
+    Returns
+    -------
+    ``{"checked": int, "live": int, "dead": int, "skipped_no_url": int}``
+    """
+    _checker = checker if checker is not None else check_liveness
+
+    checked = live_count = dead_count = skipped = 0
+    for record in records:
+        remote_url = record.get("remote_url") or ""
+        if not remote_url:
+            skipped += 1
+            continue
+        result = _checker(remote_url)
+        record["_liveness"] = result
+        checked += 1
+        if result.get("live"):
+            live_count += 1
+        else:
+            dead_count += 1
+
+    return {
+        "checked": checked,
+        "live": live_count,
+        "dead": dead_count,
+        "skipped_no_url": skipped,
     }
