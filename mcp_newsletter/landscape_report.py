@@ -30,6 +30,7 @@ from .landscape import (
     summarize,
     ground_record_with_tools,
 )
+from .landscape_ingest import normalize_vendor_record
 
 # ---------------------------------------------------------------------------
 # Known totals (rough public estimates; overridable via env var)
@@ -64,17 +65,31 @@ def _effective_known_totals() -> Dict[str, int]:
 # I/O helpers
 # ---------------------------------------------------------------------------
 
-def load_snapshot(root: "Path | str") -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+def load_snapshot(
+    root: "Path | str",
+    include_vendor: bool = False,
+    run_date: str = "",
+) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     """Read the current snapshot from *root*.
 
     Reads:
     - ``root/data/current/registry_state.jsonl`` — one JSON record per line
     - ``root/data/current/registry_summary.json`` — the registry summary dict
 
+    Optionally folds in the VENDOR tier from ``root/data/current/servers.json``
+    (a JSON list), normalizing each entry via ``normalize_vendor_record``.
+
     Parameters
     ----------
     root:
         Project root path (string or Path).
+    include_vendor:
+        If True, extend the returned records with vendor entries from
+        ``data/current/servers.json``.  If the file does not exist, no error
+        is raised.  Default is False (registry-only; existing behaviour).
+    run_date:
+        ISO date string passed to ``normalize_vendor_record``.  When empty,
+        falls back to ``summary["run_date"]`` if present.
 
     Returns
     -------
@@ -93,6 +108,15 @@ def load_snapshot(root: "Path | str") -> Tuple[List[Dict[str, Any]], Dict[str, A
 
     with open(summary_path, "r", encoding="utf-8") as fh:
         summary = json.load(fh)
+
+    if include_vendor:
+        servers_path = root / "data" / "current" / "servers.json"
+        if servers_path.exists():
+            effective_date = run_date or summary.get("run_date", "")
+            with open(servers_path, "r", encoding="utf-8") as fh:
+                vendor_list = json.load(fh)
+            for v in vendor_list:
+                records.append(normalize_vendor_record(v, effective_date))
 
     return records, summary
 

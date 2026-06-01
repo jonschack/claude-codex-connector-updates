@@ -14,6 +14,8 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+from mcp_newsletter.landscape_report import load_snapshot
+
 
 # ---------------------------------------------------------------------------
 # Helpers: build minimal record dicts
@@ -848,6 +850,49 @@ class TestLandscapeCLI(unittest.TestCase):
             # No traceback in the output
             self.assertNotIn("Traceback", output)
             self.assertNotIn("FileNotFoundError", output)
+
+
+# ---------------------------------------------------------------------------
+# UnifiedLoader — load_snapshot with include_vendor
+# ---------------------------------------------------------------------------
+
+class UnifiedLoaderTests(unittest.TestCase):
+    def _write_snapshot(self, tmp, with_vendor=True):
+        cur = Path(tmp) / "data" / "current"; cur.mkdir(parents=True)
+        (cur / "registry_state.jsonl").write_text(
+            json.dumps({"identity": "io.x/a", "name": "A", "description": "",
+                        "repo_url": "", "remote_url": "", "sources": [{"source": "official"}],
+                        "capabilities": [], "tags": [], "write_confidence": "unknown",
+                        "evidence": [], "confidence_by_source": {}}) + "\n")
+        (cur / "registry_summary.json").write_text(json.dumps(
+            {"run_date": "2026-05-31", "enabled_sources": ["official"], "source_ok": {"official": True},
+             "per_source": {"official": 1}, "per_source_raw": {"official": 1}, "issues": []}))
+        if with_vendor:
+            (cur / "servers.json").write_text(json.dumps([
+                {"provider": "claude", "server_id": "linear", "name": "Linear",
+                 "description": "create issues", "capabilities": ["Read & write"],
+                 "write_confidence": "high", "evidence": [], "remote_url": "",
+                 "source_urls": [], "native_surface": "connector", "transport": "mcp", "metadata": {}}]))
+
+    def test_includes_vendor_records_when_requested(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self._write_snapshot(tmp)
+            recs, summ = load_snapshot(Path(tmp), include_vendor=True)
+        idents = {r["identity"] for r in recs}
+        self.assertIn("io.x/a", idents)
+        self.assertIn("claude:linear", idents)
+
+    def test_excludes_vendor_by_default(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self._write_snapshot(tmp)
+            recs, _ = load_snapshot(Path(tmp))
+        self.assertEqual([r["identity"] for r in recs], ["io.x/a"])
+
+    def test_include_vendor_with_no_servers_json_is_safe(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self._write_snapshot(tmp, with_vendor=False)
+            recs, _ = load_snapshot(Path(tmp), include_vendor=True)
+        self.assertEqual([r["identity"] for r in recs], ["io.x/a"])
 
 
 if __name__ == "__main__":
