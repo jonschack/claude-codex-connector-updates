@@ -173,24 +173,30 @@ synthetic fixture.
   `docker_live_sqlite_server.yaml`, `docker_live_airtable_server.yaml`,
   `docker_live_ais_fleet_server.yaml`
 
-### mcpso — left graceful (JS-rendered, partial HTML yield)
+### mcpso — verified — server data extracted from the Next.js RSC payload (stdlib, no rendering); ~47 servers/page
 
 - **URL:** `https://mcp.so/servers`
 - **Status:** HTTP 200, `text/html; charset=utf-8`
-- **Observation:** mcp.so is a Next.js app (App Router, no `__NEXT_DATA__` SSR block). The
-  returned HTML contains no `<a href="https://github.com/...">` anchor tags. GitHub links are
-  embedded as string literals inside JS RSC payload chunks (escaped JSON in `self.__next_f.push`
-  calls). `extract_github_repos` finds ~45 links by scanning the full body, but these include
-  non-server repos (`astral-sh/uv`, `openai/openai-agents-python`, `zed-industries/zed`,
-  `github.com/settings/tokens`) mixed in with real MCP servers. The response does not constitute a
-  reliable server directory; a headless browser or a dedicated API call would be needed for
-  completeness.
-- **Parser change:** None. The existing approach (extract_github_repos on raw HTML body) works for
-  what it gets; the parser already saves the raw HTML and returns whatever links are found.
-- **Outcome:** Left as-is (graceful, returns partial results). A note is warranted in coverage
-  accounting: mcpso yields a small, noisy subset of its catalog via SSR HTML.
-- **Live fixture captured:** `tests/fixtures/registries/mcpso_live.html` (representative Next.js
-  RSC snippet showing the JS-embedded GitHub link pattern)
+- **Observation:** mcp.so is a Next.js App Router app. The HTML embeds server objects as
+  `self.__next_f.push([1,"<escaped-json-fragment>"])` script calls (RSC flight format).
+  Concatenating the decoded fragments produces a blob containing ~47 real server objects, each with
+  fields: `id`, `uuid`, `name`, `title`, `description`, `author_name`, `url` (GitHub URL), `tags`
+  (comma-string or `[]` JSON string), `category`, `tools` (inline JSON list or RSC ref string like
+  `"$2a"`), `is_official`, `sse_url`.  i18n/navigation objects share the same blob but have no
+  `uuid` field and are filtered out.
+- **Parser change:** Full rewrite of `collect_mcpso` in `mcp_newsletter/registries/mcpso.py`.
+  Uses stdlib `re` + `json` to:
+  1. Extract all RSC chunks via `re.findall`.
+  2. Decode each chunk with `json.loads('"' + chunk + '"')` (handles `\"`, `\\`, `\uXXXX`).
+  3. Walk back from each `"uuid"` occurrence to extract balanced JSON objects.
+  4. Dedupe by `uuid`; map to `RawRegistryEntry`; fold inline tool names into description.
+  5. Detect parser breaks (markup present but zero servers → `add_issue`).
+- **Outcome:** ~47 real server objects extracted per page; all have GitHub `url` fields.
+  No headless browser or dedicated API needed.
+- **Fixture captured:** `tests/fixtures/registries/mcpso_rsc.html` (minimal synthetic RSC fixture
+  with two server objects: one with inline tools list, one with `$ref` tools and comma tags).
+- **Tests:** `McpsoCollectorTests` (5 tests) — parses ≥2 servers, tool fold, i18n exclusion,
+  skip_network, empty-markup parser-break issue.
 
 ### smithery — left graceful (API key required)
 

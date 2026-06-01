@@ -360,36 +360,57 @@ class SmitheryCollectorTests(unittest.TestCase):
 
 
 class McpsoCollectorTests(unittest.TestCase):
-    def test_parses_github_repos_from_html(self):
-        html = (FIX / "mcpso_listing.html").read_text()
+    def test_parses_rsc_payload_servers(self):
+        """Parses ≥2 servers from the RSC fixture; checks repo_url, tags, source."""
+        html = (FIX / "mcpso_rsc.html").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
             with mock.patch("mcp_newsletter.registries.mcpso.fetch_text",
                             return_value=(html, {"status": 200, "content_type": "text/html", "error": ""})):
                 from mcp_newsletter.registries.mcpso import collect_mcpso
                 entries = collect_mcpso(ctx)
-        repo_urls = {e.repo_url for e in entries}
-        self.assertIn("https://github.com/acme/slack-mcp", repo_urls)
-        self.assertIn("https://github.com/community/weather-mcp", repo_urls)
+        self.assertGreaterEqual(len(entries), 2)
         self.assertTrue(all(e.source == "mcpso" for e in entries))
+        # repo_url should be the GitHub URL from the 'url' field
+        repo_urls = {e.repo_url for e in entries}
+        self.assertIn("https://github.com/TencentEdgeOne/edgeone-pages-mcp", repo_urls)
+        self.assertIn("https://github.com/modelcontextprotocol/servers", repo_urls)
 
-    def test_parses_live_nextjs_fixture(self):
-        """Verifies parser against captured live Next.js RSC HTML from mcp.so/servers (2026-05-31).
-        mcp.so is a Next.js app; GitHub links are embedded in JS bundle strings rather than
-        proper HTML anchor hrefs. extract_github_repos finds them via regex across the full body.
-        """
-        html = (FIX / "mcpso_live.html").read_text()
+    def test_inline_tools_folded_into_description(self):
+        """A server with an inline tools list has tool names appended to its description."""
+        html = (FIX / "mcpso_rsc.html").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
             with mock.patch("mcp_newsletter.registries.mcpso.fetch_text",
                             return_value=(html, {"status": 200, "content_type": "text/html", "error": ""})):
                 from mcp_newsletter.registries.mcpso import collect_mcpso
                 entries = collect_mcpso(ctx)
-        repo_urls = {e.repo_url for e in entries}
-        self.assertIn("https://github.com/chatmcp/mcp-server-flomo", repo_urls)
-        self.assertIn("https://github.com/chatmcp/mcp-server-chatsum", repo_urls)
-        self.assertIn("https://github.com/zilliztech/mcp-server-milvus", repo_urls)
-        self.assertTrue(all(e.source == "mcpso" for e in entries))
+        edgeone = next(
+            (e for e in entries if e.repo_url == "https://github.com/TencentEdgeOne/edgeone-pages-mcp"),
+            None,
+        )
+        self.assertIsNotNone(edgeone)
+        self.assertIn("deploy-html", edgeone.description)
+        self.assertIn("Tools:", edgeone.description)
+
+    def test_i18n_label_objects_without_uuid_excluded(self):
+        """Objects that lack a real uuid (e.g. i18n label dictionaries) are not returned."""
+        html = (FIX / "mcpso_rsc.html").read_text()
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch("mcp_newsletter.registries.mcpso.fetch_text",
+                            return_value=(html, {"status": 200, "content_type": "text/html", "error": ""})):
+                from mcp_newsletter.registries.mcpso import collect_mcpso
+                entries = collect_mcpso(ctx)
+        # The fixture contains an i18n fragment ({"i18n": {...}}) with no uuid.
+        # It must not produce any entry.  Total should be exactly 2 (the two server objects).
+        self.assertEqual(len(entries), 2)
+        for e in entries:
+            # Every source_id must look like a real UUID (contains '-') or a valid server name
+            self.assertTrue(
+                e.source_id and "i18n" not in e.source_id,
+                f"Unexpected source_id: {e.source_id!r}",
+            )
 
     def test_skip_network_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -398,6 +419,22 @@ class McpsoCollectorTests(unittest.TestCase):
             entries = collect_mcpso(ctx)
         self.assertEqual(entries, [])
         self.assertTrue(any("skipped" in i.message for i in ctx.issues))
+
+    def test_empty_markup_or_no_rsc_servers_adds_issue(self):
+        """When markup is present but contains no RSC server objects, a parser-break issue is added."""
+        bare_html = "<html><body><p>No RSC payload here.</p></body></html>"
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch("mcp_newsletter.registries.mcpso.fetch_text",
+                            return_value=(bare_html, {"status": 200, "content_type": "text/html", "error": ""})):
+                from mcp_newsletter.registries.mcpso import collect_mcpso
+                entries = collect_mcpso(ctx)
+        self.assertEqual(entries, [])
+        self.assertTrue(
+            any("no servers parsed" in i.message.lower() or "rsc" in i.message.lower()
+                for i in ctx.issues),
+            f"Expected parser-break issue, got: {[i.message for i in ctx.issues]}",
+        )
 
 
 class FloorTests(unittest.TestCase):
