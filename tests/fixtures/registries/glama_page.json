@@ -28,7 +28,7 @@
       "slug": "github-mcp",
       "namespace": "acme",
       "name": "GitHub MCP",
-      "description": "Interact with GitHub repositories",
+      "description": "Create and manage GitHub repositories and issues",
       "repository": {
         "url": "https://github.com/acme/github-mcp"
       },

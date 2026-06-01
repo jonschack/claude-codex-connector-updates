@@ -267,6 +267,57 @@ class GlamaCollectorTests(unittest.TestCase):
         self.assertEqual(entries, [])
         self.assertTrue(any("skip" in i.message.lower() for i in ctx.issues))
 
+    def test_detail_cap_zero_does_not_fetch_detail(self):
+        """Default cap=0: only the single list fetch occurs; no detail URL is called."""
+        page = (FIX / "glama_page.json").read_text()
+        mock_fetch = mock.Mock(return_value=(page, _meta_ok()))
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_GLAMA_DETAIL_CAP": "0"}):
+                with mock.patch("mcp_newsletter.registries.glama.fetch_text", mock_fetch):
+                    from mcp_newsletter.registries.glama import collect_glama
+                    entries = collect_glama(ctx)
+        # fetch_text called exactly once (the list page)
+        self.assertEqual(mock_fetch.call_count, 1)
+        self.assertEqual(len(entries), 2)
+
+    def test_detail_cap_nonzero_folds_tool_names_from_detail(self):
+        """cap=5: write-candidate entry with empty tools gets detail fetch; tool names folded in."""
+        page = (FIX / "glama_page.json").read_text()
+        detail = (FIX / "glama_detail.json").read_text()
+        # side_effect: first call = list page; subsequent calls = detail responses
+        side_effects = [
+            (page, _meta_ok()),    # list page
+            (detail, _meta_ok()),  # detail for acme/github-mcp (write-candidate, no tools yet)
+        ]
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_GLAMA_DETAIL_CAP": "5"}):
+                with mock.patch("mcp_newsletter.registries.glama.fetch_text",
+                                side_effect=side_effects):
+                    from mcp_newsletter.registries.glama import collect_glama
+                    entries = collect_glama(ctx)
+        github = next(e for e in entries if e.source_id == "acme/github-mcp")
+        # Tool names from the detail fixture should be folded into the description
+        self.assertIn("create_issue", github.description)
+        self.assertIn("Tools:", github.description)
+        # Slack entry (already has tools from list) should be unchanged
+        slack = next(e for e in entries if e.source_id == "acme/slack-mcp")
+        self.assertIn("create_message", slack.description)
+
+    def test_detail_cap_nonzero_skip_network_no_detail_fetch(self):
+        """cap=5 but skip_network=True: detail fetch is skipped entirely."""
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = CollectContext(root=Path(tmp), run_date="2026-05-30", skip_network=True)
+            mock_fetch = mock.Mock(return_value=("", {"error": "skipped"}))
+            with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_GLAMA_DETAIL_CAP": "5"}):
+                with mock.patch("mcp_newsletter.registries.glama.fetch_text", mock_fetch):
+                    from mcp_newsletter.registries.glama import collect_glama
+                    entries = collect_glama(ctx)
+        # skip_network exits before any fetch; detail fetch also never happens
+        self.assertEqual(entries, [])
+        mock_fetch.assert_not_called()
+
 
 class SmitheryCollectorTests(unittest.TestCase):
     def test_no_key_returns_empty_with_info_issue(self):

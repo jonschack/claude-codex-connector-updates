@@ -1,0 +1,19 @@
+{
+  "id": "x9kkpq72ab",
+  "slug": "github-mcp",
+  "namespace": "acme",
+  "name": "GitHub MCP",
+  "description": "Interact with GitHub repositories",
+  "repository": {
+    "url": "https://github.com/acme/github-mcp"
+  },
+  "attributes": ["hosting:self-hosted", "category:developer"],
+  "tools": [
+    {"name": "create_issue", "description": "Create a new GitHub issue"},
+    {"name": "create_pull_request", "description": "Open a pull request"},
+    {"name": "push_file", "description": "Push a file to a repository"},
+    {"name": "list_repos", "description": "List repositories for an owner"}
+  ],
+  "spdxLicense": {"name": "MIT License", "url": "https://spdx.org/licenses/MIT.html"},
+  "url": "https://glama.ai/mcp/servers/acme/github-mcp"
+}

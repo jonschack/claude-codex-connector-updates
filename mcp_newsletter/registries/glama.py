@@ -11,10 +11,23 @@ PROVIDER = "glama"
 BASE = "https://glama.ai/api/mcp/v1/servers"
 SOURCE_URL = "https://glama.ai/mcp/servers"
 
+# MCP_NEWSLETTER_GLAMA_DETAIL_CAP — opt-in per-server detail fetch.
+# Default 0 = OFF (no-op).  Set >0 to attempt fetching the per-server detail
+# endpoint (/api/mcp/v1/servers/{id}) for up to CAP write-candidate servers and
+# fold real tool names into their description.
+#
+# NOTE (2026-05-31): Live probing of 500+ servers shows that the detail endpoint
+# exists (HTTP 200) but returns tools[] = [] for every server, identical to the
+# list endpoint.  The knob is therefore present but no-op until Glama begins
+# populating per-server tool data.  See docs/analysis-protocol/PLAN.md,
+# "Source verification status — Glama detail endpoint".
+_DETAIL_URL = BASE + "/{server_id}"
+
 
 def collect_glama(ctx: CollectContext) -> List[RawRegistryEntry]:
     base = os.environ.get("MCP_NEWSLETTER_GLAMA_URL", BASE)
     max_servers = int(os.environ.get("MCP_NEWSLETTER_GLAMA_MAX", "25000"))
+    detail_cap = int(os.environ.get("MCP_NEWSLETTER_GLAMA_DETAIL_CAP", "0"))
     entries: List[RawRegistryEntry] = []
     cursor = ""
     page = 0
@@ -70,4 +83,42 @@ def collect_glama(ctx: CollectContext) -> List[RawRegistryEntry]:
         seen_cursors.add(new_cursor)
         cursor = new_cursor
         page += 1
+
+    # --- opt-in per-server detail fetch (MCP_NEWSLETTER_GLAMA_DETAIL_CAP > 0) ---
+    # For up to detail_cap write-candidate entries (those whose description already
+    # contains a write-implying keyword), fetch the per-server detail endpoint and
+    # fold any tool names found into the entry's description, matching the existing
+    # "  Tools: ..." format.  Guarded by skip_network; throttled per hostname.
+    if detail_cap > 0 and not ctx.skip_network:
+        _WRITE_KEYWORDS = (
+            "write", "creat", "updat", "delet", "modif", "send", "post",
+            "remov", "insert", "execut", "publish", "push",
+        )
+        candidates = [
+            e for e in entries
+            if any(kw in (e.description or "").lower() for kw in _WRITE_KEYWORDS)
+               and "Tools:" not in (e.description or "")
+        ][:detail_cap]
+        for entry in candidates:
+            # source_id is "{namespace}/{slug}" or just "{slug}"; the list endpoint
+            # server "id" field is not stored on RawRegistryEntry.  Re-derive the
+            # server id by fetching a minimal detail via namespace/slug path; if that
+            # 404s, skip silently.
+            detail_url = base.rstrip("/") + "/" + entry.source_id.replace(" ", "%20")
+            throttle(urlparse(detail_url).hostname or "")
+            d_text, d_meta = fetch_text(detail_url)
+            if not d_text:
+                continue
+            try:
+                d_data = json.loads(d_text)
+            except json.JSONDecodeError:
+                continue
+            tools = d_data.get("tools") or []
+            if tools:
+                tool_names = ", ".join(
+                    t.get("name", "") for t in tools[:20] if t.get("name")
+                )
+                if tool_names:
+                    entry.description = entry.description + "  Tools: " + tool_names
+
     return entries

@@ -199,3 +199,19 @@ synthetic fixture.
 - **Outcome:** Parser already correctly returns `[]` + an `info`-severity issue when the key is
   absent. No change made. `# VERIFY` comments remain as a reminder that field names have not been
   confirmed against a live response.
+
+### Glama detail endpoint — deferred (tools[] always empty)
+
+- **URL pattern:** `https://glama.ai/api/mcp/v1/servers/{id}` (by server `id` field)
+- **Status probed:** 2026-05-31 — HTTP 200, same JSON schema as the list endpoint
+  (`attributes`, `description`, `environmentVariablesJsonSchema`, `id`, `name`, `namespace`,
+  `repository`, `slug`, `spdxLicense`, `tools`, `url`).
+- **Observation:** Probed 500+ servers across 5 pages (list) plus 60 detail fetches (sampled and
+  targeted); `tools[]` is empty (`[]`) in **every** detail response, identical to the list endpoint.
+  The `namespace/slug` variant (`/servers/{namespace}/{slug}`) returns HTTP 404; only the `id`-based
+  URL returns 200. No sub-paths (`/tools`, `/details`) or GraphQL endpoint found.
+- **Outcome:** The per-server detail endpoint exists but does not currently expose richer tool data
+  than the list endpoint. **Detail-fetch is deferred.** The `MCP_NEWSLETTER_GLAMA_DETAIL_CAP` env
+  var (default `0` = OFF) is wired into `glama.py` as a no-op knob; when Glama begins populating
+  per-server tool schemas the knob can be enabled without further code changes. Tests confirm both
+  the cap=0 (no extra fetch) and cap>0 (detail fetch + fold) code paths.
