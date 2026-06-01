@@ -776,15 +776,15 @@ def _default_opener(url: str, timeout: int) -> Tuple[int, str]:
     Tests always inject a fake opener so this code path is never exercised
     during the test suite.
     """
-    from mcp_newsletter import netguard  # local import to keep top-level pure
-
     req = urllib.request.Request(url, method="GET")
-    # urllib follows redirects automatically for GET
+    # urllib follows redirects automatically for GET.
+    # Liveness depends ONLY on the status code — we deliberately do NOT read
+    # the body, so a genuinely-live endpoint with a large body is never
+    # misreported as dead, and there is no memory exposure (the response is
+    # closed by the context manager without reading).
     with urllib.request.urlopen(req, timeout=timeout) as resp:  # type: ignore[arg-type]
         final_url: str = resp.url or url
         status: int = resp.status
-        # Discard body (capped read to avoid memory exhaustion)
-        netguard.read_capped(resp, limit=netguard.max_response_bytes())
     return status, final_url
 
 
