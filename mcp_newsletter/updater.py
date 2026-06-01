@@ -109,8 +109,9 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
     if not skip_network:
         cap = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP", "150"))
         cadence = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS", "3"))
+        workers = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DISCOVERY_WORKERS", "8"))
         candidates = select_discovery_candidates(list(current.values()), cap, meta.last_discovered, cadence, run_date)
-        discovered = run_discovery(candidates, run_date)
+        discovered = run_discovery(candidates, run_date, workers=workers)
         meta.last_discovered.update(discovered)
 
     for rec in current.values():

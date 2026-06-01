@@ -112,3 +112,25 @@ private, link-local, reserved, multicast, unspecified, or CGNAT
 (100.64.0.0/10) address, and refuses non-http(s) schemes. `fetch_text` retries
 transient failures (HTTP 429/5xx and transport errors) up to 3 times with
 exponential backoff, honoring a numeric `Retry-After` header.
+
+## Population Discovery Cadence
+
+Daily runs keep `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP` modest (default 150)
+and rotate through the population via `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS`
+(default 3). This probes roughly 150 servers per day without overloading any
+single run.
+
+Periodically — e.g. weekly or after a large registry import — run a **deep
+run** to populate or refresh the `verified_tools` evidence tier across the
+full population:
+
+```bash
+MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP=1500 \
+MCP_NEWSLETTER_REGISTRY_DISCOVERY_WORKERS=16 \
+MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS=0 \
+python3 -m mcp_newsletter registry-update
+```
+
+- `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP` — max servers to probe per run (default 150; set high for a deep run, e.g. 1500)
+- `MCP_NEWSLETTER_REGISTRY_DISCOVERY_WORKERS` — thread-pool size for concurrent probing (default 8; safe to raise to 16–32 on a fast connection)
+- `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS` — minimum days between re-probing the same server (default 3; set to 0 to probe everything regardless of recency)
