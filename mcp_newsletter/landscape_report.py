@@ -164,6 +164,85 @@ def latest_prior(
     return best
 
 
+def read_history(root: "Path | str") -> List[Dict[str, Any]]:
+    """Return all history lines from the landscape history JSONL file.
+
+    Parameters
+    ----------
+    root:
+        Project root path.
+
+    Returns
+    -------
+    List of history entry dicts (may be empty if the file does not exist).
+    """
+    root = Path(root)
+    history_path = root / "data" / "current" / HISTORY_FILE
+
+    if not history_path.exists():
+        return []
+
+    entries: List[Dict[str, Any]] = []
+    with open(history_path, "r", encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                entries.append(json.loads(line))
+            except (json.JSONDecodeError, ValueError):
+                continue
+    return entries
+
+
+def validation_trend(history_lines: List[Dict[str, Any]]) -> Optional[str]:
+    """Return a one-line summary of classifier precision/recall trend across runs.
+
+    Filters *history_lines* to entries that have a non-null ``validation``
+    dict with numeric ``precision`` and ``recall`` fields, sorts them by
+    ``snapshot_date``, and returns a formatted trend string.  Returns
+    ``None`` when fewer than 2 valid points exist.
+
+    Parameters
+    ----------
+    history_lines:
+        List of history-line dicts as written by :func:`append_history`.
+
+    Returns
+    -------
+    A single-line string such as::
+
+        "Classifier precision over 3 validation runs: 0.80 → 0.85 → 1.00 (recall: 0.20 → 0.25 → 0.30)"
+
+    or ``None`` if there are fewer than 2 valid data points.
+    """
+    valid_points: List[Dict[str, Any]] = []
+    for entry in history_lines:
+        val = entry.get("validation")
+        if not val:
+            continue
+        try:
+            precision = float(val["precision"])
+            recall = float(val["recall"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        valid_points.append({
+            "snapshot_date": entry.get("snapshot_date", ""),
+            "precision": precision,
+            "recall": recall,
+        })
+
+    if len(valid_points) < 2:
+        return None
+
+    valid_points.sort(key=lambda p: p["snapshot_date"])
+
+    n = len(valid_points)
+    prec_str = " → ".join(f"{p['precision']:.2f}" for p in valid_points)
+    rec_str = " → ".join(f"{p['recall']:.2f}" for p in valid_points)
+    return f"Classifier precision over {n} validation runs: {prec_str} (recall: {rec_str})"
+
+
 def load_snapshot(
     root: "Path | str",
     include_vendor: bool = False,
@@ -325,6 +404,7 @@ def build_report(
     validation: Optional[Dict[str, Any]] = None,
     top_n: int = 15,
     prior_metrics: Optional[Dict[str, Any]] = None,
+    validation_history: Optional[List[Dict[str, Any]]] = None,
 ) -> Tuple[str, Dict[str, Any]]:
     """Build the landscape report.
 
@@ -345,6 +425,12 @@ def build_report(
         provided, a "Change Since Last Run" section is added showing Δ
         verified-write-capable and Δ coverage.  When ``None``, a baseline note
         is included instead.
+    validation_history:
+        Optional list of history-line dicts (from ``read_history``).  When
+        provided and at least 2 entries contain validation data, a trend line
+        is appended to the Classifier Validation section (or in a small
+        "Validation trend" subsection when no current validation is present).
+        Safe to pass ``None`` or an empty list.
 
     Returns
     -------
@@ -467,6 +553,18 @@ def build_report(
             f"increase `--validate-sample` for tighter bounds."
         )
         lines.append("")
+        trend_line = validation_trend(validation_history or [])
+        if trend_line:
+            lines.append(trend_line)
+            lines.append("")
+    else:
+        # No current validation — emit a small subsection if trend data exists
+        trend_line = validation_trend(validation_history or [])
+        if trend_line:
+            lines.append("### Validation Trend")
+            lines.append("")
+            lines.append(trend_line)
+            lines.append("")
 
     # Residual dups
     rdups = metrics.get("residual_dups") or {}
@@ -648,8 +746,9 @@ def generate_landscape(
         else None
     )
 
-    # Read prior BEFORE building (so a run never diffs against itself)
+    # Read prior and full history BEFORE building (so a run never diffs against itself)
     prior = latest_prior(root, run_date)
+    history = read_history(root)
 
     markdown, metrics = build_report(
         records,
@@ -658,6 +757,7 @@ def generate_landscape(
         validation=validation,
         top_n=top_n,
         prior_metrics=prior,
+        validation_history=history,
     )
 
     output_dir = root / "data" / "current"

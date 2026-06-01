@@ -134,3 +134,21 @@ python3 -m mcp_newsletter registry-update
 - `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP` — max servers to probe per run (default 150; set high for a deep run, e.g. 1500)
 - `MCP_NEWSLETTER_REGISTRY_DISCOVERY_WORKERS` — thread-pool size for concurrent probing (default 8; safe to raise to 16–32 on a fast connection)
 - `MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS` — minimum days between re-probing the same server (default 3; set to 0 to probe everything regardless of recency)
+
+## Weekly Classifier Validation
+
+Each landscape report optionally measures the description-only classifier's precision and recall against a seeded sample of remotely-verifiable servers. These per-run metrics are persisted in `data/current/landscape_history.jsonl` and surfaced as a trend line in every subsequent report.
+
+To accumulate meaningful trend data and tighten confidence intervals, run a **deep validation** at least once per week:
+
+```bash
+python3 -m mcp_newsletter landscape --root . --validate-sample 300 --seed <week-number>
+```
+
+Using the ISO week number as the seed (e.g. `--seed 22` for week 22) keeps results reproducible and comparable across machines. Accumulating validation points over multiple weeks:
+
+- Tightens the 95% confidence intervals on precision and recall (wider CIs with small labeled sets).
+- Reveals precision/recall **drift** over time — for example, if new server descriptions shift vocabulary and the heuristic degrades.
+- Provides evidence for or against re-tuning classifier thresholds.
+
+The trend line appears automatically in `LANDSCAPE_REPORT.md` once at least two runs with validation data exist in the history file.

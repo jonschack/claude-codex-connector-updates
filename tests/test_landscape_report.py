@@ -14,7 +14,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from mcp_newsletter.landscape_report import load_snapshot, append_history, latest_prior, build_report
+from mcp_newsletter.landscape_report import load_snapshot, append_history, latest_prior, build_report, validation_trend
 
 
 # ---------------------------------------------------------------------------
@@ -977,6 +977,39 @@ class HistoryTests(unittest.TestCase):
                              "per_source": {}, "per_source_raw": {}, "issues": []},
                              snapshot_date="2026-05-31", prior_metrics=None, top_n=5)
         self.assertIn("baseline", md.lower())
+
+
+# ---------------------------------------------------------------------------
+# ValidationTrendTests
+# ---------------------------------------------------------------------------
+
+class ValidationTrendTests(unittest.TestCase):
+    def _hist_line(self, date, precision, recall, answered):
+        return {"snapshot_date": date, "total_records": 100,
+                "write_capable": {"total": 0, "verified_tools": 0, "annotation": 0, "claimed_description": 0},
+                "coverage_pct": 20.0,
+                "validation": {"precision": precision, "recall": recall, "answered": answered}}
+
+    def test_trend_line_from_history(self):
+        hist = [self._hist_line("2026-05-17", 0.80, 0.20, 12),
+                self._hist_line("2026-05-24", 0.85, 0.25, 15),
+                self._hist_line("2026-05-31", 1.00, 0.30, 18)]
+        line = validation_trend(hist)
+        self.assertIn("precision", line.lower())
+        self.assertIn("0.80", line)   # earliest
+        self.assertIn("1.00", line)   # latest
+
+    def test_trend_none_when_fewer_than_two_points(self):
+        self.assertIsNone(validation_trend([self._hist_line("2026-05-31", 1.0, 0.3, 18)]))
+        self.assertIsNone(validation_trend([]))
+
+    def test_trend_ignores_entries_without_validation(self):
+        hist = [{"snapshot_date": "2026-05-17", "validation": None},
+                self._hist_line("2026-05-24", 0.85, 0.25, 15),
+                self._hist_line("2026-05-31", 1.00, 0.30, 18)]
+        line = validation_trend(hist)
+        self.assertIsNotNone(line)
+        self.assertIn("0.85", line)
 
 
 if __name__ == "__main__":
