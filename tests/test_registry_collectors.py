@@ -37,6 +37,17 @@ class OfficialCollectorTests(unittest.TestCase):
         self.assertEqual(slack.repo_url, "https://github.com/acme/slack")
         self.assertIn("messaging", slack.tags)
 
+    def test_keeps_only_islatest_version(self):
+        page = (FIX / "official_page1.json").read_text()
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch("mcp_newsletter.registries.official.fetch_text",
+                            return_value=(page, _meta_ok())):
+                entries = collect_official(ctx)
+        multi = [e for e in entries if e.official_name == "io.github.acme/multi"]
+        self.assertEqual(len(multi), 1)
+        self.assertEqual(multi[0].description, "new desc")
+
 
 class GithubServersCollectorTests(unittest.TestCase):
     def test_parses_github_repos_from_readme(self):

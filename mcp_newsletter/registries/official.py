@@ -18,10 +18,10 @@ BASE_URL = "https://registry.modelcontextprotocol.io/v0.1/servers"
 def collect_official(ctx: CollectContext) -> List[RawRegistryEntry]:
     base = os.environ.get("MCP_NEWSLETTER_OFFICIAL_URL", BASE_URL)
     max_servers = int(os.environ.get("MCP_NEWSLETTER_OFFICIAL_MAX", "20000"))
-    entries: List[RawRegistryEntry] = []
+    candidates: List[tuple] = []  # (is_latest, RawRegistryEntry)
     cursor = ""
     page = 0
-    while len(entries) < max_servers:
+    while len(candidates) < max_servers:
         url = base + (f"?cursor={cursor}" if cursor else "")
         if ctx.skip_network:
             ctx.add_issue(PROVIDER, url, "network skipped")
@@ -45,9 +45,10 @@ def collect_official(ctx: CollectContext) -> List[RawRegistryEntry]:
             if official_meta.get("status") == "deleted":
                 continue
             name = server.get("name", "")
+            is_latest = official_meta.get("isLatest")
             repo = (server.get("repository") or {})
             remotes = server.get("remotes") or []
-            entries.append(RawRegistryEntry(
+            candidates.append((is_latest, RawRegistryEntry(
                 source=PROVIDER,
                 source_id=name,
                 official_name=name,
@@ -60,9 +61,16 @@ def collect_official(ctx: CollectContext) -> List[RawRegistryEntry]:
                 last_updated=official_meta.get("updatedAt", ""),
                 source_url=base,
                 raw=entry,
-            ))
+            )))
         cursor = (data.get("metadata") or {}).get("nextCursor")
         page += 1
         if not cursor:
             break
+    # Keep only the isLatest version per server when any version is marked latest.
+    # For servers with no isLatest flag at all, keep all entries (preserve old behaviour).
+    names_with_latest = {e.official_name for is_latest, e in candidates if is_latest is True}
+    entries: List[RawRegistryEntry] = [
+        e for is_latest, e in candidates
+        if not (is_latest is False and e.official_name in names_with_latest)
+    ]
     return entries

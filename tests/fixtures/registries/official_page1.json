@@ -36,7 +36,39 @@
       "_meta": {
         "io.modelcontextprotocol.registry/official": {"status": "deleted"}
       }
+    },
+    {
+      "server": {
+        "name": "io.github.acme/multi",
+        "title": "Multi",
+        "description": "old desc",
+        "version": "1.0.0",
+        "repository": {"url": "https://github.com/acme/multi", "subfolder": ""},
+        "remotes": []
+      },
+      "_meta": {
+        "io.modelcontextprotocol.registry/official": {
+          "status": "active",
+          "isLatest": false
+        }
+      }
+    },
+    {
+      "server": {
+        "name": "io.github.acme/multi",
+        "title": "Multi",
+        "description": "new desc",
+        "version": "2.0.0",
+        "repository": {"url": "https://github.com/acme/multi", "subfolder": ""},
+        "remotes": []
+      },
+      "_meta": {
+        "io.modelcontextprotocol.registry/official": {
+          "status": "active",
+          "isLatest": true
+        }
+      }
     }
   ],
-  "metadata": {"nextCursor": null, "count": 3}
+  "metadata": {"nextCursor": null, "count": 5}
 }
