@@ -1,0 +1,30 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Search and reference your documents",
+  "homepage": "https://www.box.com/home",
+  "interface": {
+    "brandColor": "#0061D5",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find a Box file and summarize the key points"
+    ],
+    "developerName": "OpenAI",
+    "displayName": "Box",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Search and reference your documents in Box and work safely with Box content flows from Codex.",
+    "privacyPolicyURL": "https://www.box.com/legal/privacypolicy",
+    "screenshots": [],
+    "shortDescription": "Search and reference your documents",
+    "termsOfServiceURL": "https://www.box.com/legal/terms",
+    "websiteURL": "https://www.box.com/home"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "box",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "0.0.1"
+}

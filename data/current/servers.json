@@ -59,6 +59,35 @@
   },
   {
     "capabilities": [
+      "Read"
+    ],
+    "description": "Actively | Claude Meet Claude Products Claude Claude Code Claude Cowork Claude Security Features Claude for Chrome Claude for Slack Claude for Microsoft 365 Skills Models Opus Sonnet Haiku Platform Overview Developer docs Pricing Console login Solutions Use cases AI agents Coding Company size Startups Enterprise Departments Legal Security Industries Customer support Education Financial services Government Healthcare Life sciences Nonprofits Pricing Overview API Plans Pro Max Team Enterprise Resources Insights Blog Customer stories Anthropic news Learn Anthropic Academy Courses Tutorials Use cases Tools Connectors Plugins Connect Events Community Login Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Meet Claude Products Claude Claude Code ",
+    "evidence": [
+      {
+        "confidence": "low",
+        "kind": "catalog_capability",
+        "value": [
+          "Read"
+        ]
+      }
+    ],
+    "metadata": {
+      "catalog_text_hash_source": "detail_page"
+    },
+    "name": "Actively",
+    "native_surface": "connector",
+    "provider": "claude",
+    "remote_url": "",
+    "server_id": "actively",
+    "source_urls": [
+      "https://claude.com/connectors",
+      "https://claude.com/connectors/actively"
+    ],
+    "transport": "catalog",
+    "write_confidence": "low"
+  },
+  {
+    "capabilities": [
       "Interactive"
     ],
     "description": "AdisInsight | Claude Meet Claude Products Claude Claude Code Claude Cowork Claude Security Features Claude for Chrome Claude for Slack Claude for Microsoft 365 Skills Models Opus Sonnet Haiku Platform Overview Developer docs Pricing Console login Solutions Use cases AI agents Coding Company size Startups Enterprise Departments Legal Security Industries Customer support Education Financial services Government Healthcare Life sciences Nonprofits Pricing Overview API Plans Pro Max Team Enterprise Resources Insights Blog Customer stories Anthropic news Learn Anthropic Academy Courses Tutorials Use cases Tools Connectors Plugins Connect Events Community Login Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Meet Claude Products Claude Claude Co",
@@ -4309,8 +4338,24 @@
     "write_confidence": "unknown"
   },
   {
-    "capabilities": [],
-    "description": "Credit and risk intelligence",
+    "capabilities": [
+      "Company filings search and summarization",
+      "Credit opinions, outlooks, and rating drivers",
+      "Credit ratings and rating history",
+      "ESG credit considerations",
+      "Earnings-call transcript search",
+      "Entity resolution and firmographics",
+      "Financial statements, key indicators, and ratios",
+      "Managers, directors, and key officers",
+      "News monitoring",
+      "Ownership, beneficial owners, ultimate owners, and subsidiaries",
+      "Peer identification",
+      "Rating methodology and scorecard factors",
+      "Research document search",
+      "Sector outlook and country-risk context",
+      "Upgrade and downgrade trigger analysis"
+    ],
+    "description": "Credit ratings, entity intelligence, and research via Moody's GenAI-Ready Data.",
     "evidence": [],
     "metadata": {
       "app_manifest": {
@@ -4341,15 +4386,31 @@
     "remote_url": "",
     "server_id": "moody-s",
     "source_urls": [
-      "https://github.com/openai/plugins"
+      "https://github.com/openai/plugins",
+      "https://www.moodys.com",
+      "https://www.moodys.com/web/en/us/genai/model-context-protocol.html"
     ],
     "transport": "app",
     "write_confidence": "unknown"
   },
   {
-    "capabilities": [],
-    "description": "Investment and fund research",
-    "evidence": [],
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "description": "Morningstar fund research plugin for screening, summarizing, and comparing funds and ETFs using the Morningstar ChatGPT app.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
     "metadata": {
       "app_manifest": {
         "apps": {
@@ -4379,10 +4440,11 @@
     "remote_url": "",
     "server_id": "morningstar",
     "source_urls": [
-      "https://github.com/openai/plugins"
+      "https://github.com/Morningstar/morningstar-plugins",
+      "https://www.morningstar.com"
     ],
     "transport": "app",
-    "write_confidence": "unknown"
+    "write_confidence": "high"
   },
   {
     "capabilities": [],
@@ -7272,7 +7334,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.9.5"
+        "version": "1.9.7"
       }
     },
     "name": "aegis",
@@ -7284,6 +7346,46 @@
       "https://geminicli.com/extensions/",
       "https://github.com/GanyuanRan/Aegis",
       "https://raw.githubusercontent.com/GanyuanRan/Aegis/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "AEKO skills for Gemini CLI - AEO workflows (PDP optimization, content briefs, JSON-LD, brand kit, action center). Pair with the AEKO MCP connector for backend tool access.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "description": "AEKO skills for Gemini CLI - AEO workflows (PDP optimization, content briefs, JSON-LD, brand kit, action center). Pair with the AEKO MCP connector for backend tool access.",
+        "mcpServers": {
+          "aeko": {
+            "authProviderType": "[REDACTED]",
+            "httpUrl": "https://aeko-intelligence.com/mcp"
+          }
+        },
+        "name": "aeko-plugin",
+        "version": "0.13.0"
+      },
+      "mcp_server": {
+        "authProviderType": "[REDACTED]",
+        "httpUrl": "https://aeko-intelligence.com/mcp"
+      }
+    },
+    "name": "aeko-plugin: aeko",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "aeko-plugin-aeko",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/AEKO-Intelligence/aeko-plugin",
+      "https://raw.githubusercontent.com/AEKO-Intelligence/aeko-plugin/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -8334,7 +8436,7 @@
           }
         },
         "name": "astravue",
-        "version": "1.0.1"
+        "version": "1.0.2"
       },
       "mcp_server": {
         "url": "https://api.astravue.com/mcp"
@@ -8441,6 +8543,32 @@
       "https://geminicli.com/extensions/",
       "https://github.com/Artifex1/auditor-addon",
       "https://raw.githubusercontent.com/Artifex1/auditor-addon/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Official Gemini extension for Azure Cosmos DB (NoSQL). Provides best practice skills for data modeling, partition key design, query optimization, indexing, vector search, full-text search, global distribution, security, and more.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "description": "Official Gemini extension for Azure Cosmos DB (NoSQL). Provides best practice skills for data modeling, partition key design, query optimization, indexing, vector search, full-text search, global distribution, security, and more.",
+        "name": "azure-cosmosdb",
+        "skills": "./skills/",
+        "version": "1.0.0"
+      }
+    },
+    "name": "azure-cosmosdb",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "azure-cosmosdb",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/AzureCosmosDB/cosmosdb-agent-kit",
+      "https://raw.githubusercontent.com/AzureCosmosDB/cosmosdb-agent-kit/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -11590,6 +11718,32 @@
   },
   {
     "capabilities": [],
+    "description": "Orchestrator-driven coding workflow with graph-first codebase understanding.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "CLAUDE.md",
+        "description": "Orchestrator-driven coding workflow with graph-first codebase understanding.",
+        "name": "coder-workflow",
+        "version": "0.3.0"
+      }
+    },
+    "name": "coder-workflow",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "coder-workflow",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/MythEclipse/coder-workflow",
+      "https://raw.githubusercontent.com/MythEclipse/coder-workflow/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "",
     "evidence": [],
     "metadata": {
@@ -12595,6 +12749,32 @@
   },
   {
     "capabilities": [],
+    "description": "Causal inference plugin: plan, implement, and stress-test causal analyses in R and Python.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Causal inference plugin: plan, implement, and stress-test causal analyses in R and Python.",
+        "name": "everyday-causal-skills",
+        "version": "0.4.0"
+      }
+    },
+    "name": "everyday-causal-skills",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "everyday-causal-skills",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/RobsonTigre/everyday-causal-skills",
+      "https://raw.githubusercontent.com/RobsonTigre/everyday-causal-skills/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Complete collection of Gemini CLI configurations adapted from everything-gemini-code - agents, skills, hooks, and rules",
     "evidence": [],
     "metadata": {
@@ -12847,7 +13027,7 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/Fyvel/agent-skills",
-      "https://raw.githubusercontent.com/Fyvel/agent-skills/main/gemini-extension.json"
+      "https://raw.githubusercontent.com/Fyvel/agent-skills/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -14099,47 +14279,6 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "Gemini CLI extension for Google Kubernetes Engine.",
-          "evidence": [],
-          "metadata": {
-            "discovery": {
-              "ok": false,
-              "reason": "local_or_unconfigured_mcp_discovery_deferred"
-            },
-            "excludeTools": null,
-            "includeTools": null,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Gemini CLI extension for Google Kubernetes Engine.",
-              "mcpServers": {
-                "gke": {
-                  "command": "${extensionPath}${/}gke-mcp"
-                }
-              },
-              "name": "gke-mcp",
-              "version": "0.13.0"
-            },
-            "mcp_server": {
-              "command": "${extensionPath}${/}gke-mcp"
-            }
-          },
-          "name": "gke-mcp: gke",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "gke-mcp-gke",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/GoogleCloudPlatform/gke-mcp",
-            "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
-          ],
-          "transport": "stdio",
-          "write_confidence": "unknown"
-        }
-      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -14151,7 +14290,7 @@
           }
         },
         "name": "gke-mcp",
-        "version": "0.11.1"
+        "version": "0.13.0"
       },
       "mcp_server": {
         "command": "${extensionPath}${/}gke-mcp"
@@ -14164,9 +14303,7 @@
     "server_id": "gke-mcp-gke",
     "source_urls": [
       "https://geminicli.com/extensions/",
-      "https://github.com/AravG7/gke-mcp",
       "https://github.com/GoogleCloudPlatform/gke-mcp",
-      "https://raw.githubusercontent.com/AravG7/gke-mcp/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
@@ -16451,6 +16588,31 @@
   },
   {
     "capabilities": [],
+    "description": "Opinionated process layer: design-before-code, autonomous execution, verify-before-done.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "GEMINI.md",
+        "description": "Opinionated process layer: design-before-code, autonomous execution, verify-before-done.",
+        "name": "loom"
+      }
+    },
+    "name": "loom",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "loom",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Mountain-Dr3w/loom",
+      "https://raw.githubusercontent.com/Mountain-Dr3w/loom/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Multi-agent orchestration platform \u2014 Dynamic Agent Fabric with 36 composable traits, 4 archetypes, local Ollama agents with tool-calling, 3-tier safety pipeline, Nia + Context7 grounding, Graphiti memory, and 49 MCP tools",
     "evidence": [],
     "metadata": {
@@ -17135,8 +17297,8 @@
     "server_id": "master-artilect-reference-library",
     "source_urls": [
       "https://geminicli.com/extensions/",
-      "https://github.com/ToxicFartCloud/gemini-cli-artilect",
-      "https://raw.githubusercontent.com/ToxicFartCloud/gemini-cli-artilect/HEAD/gemini-extension.json"
+      "https://github.com/MichealDEmory/gemini-cli-artilect",
+      "https://raw.githubusercontent.com/MichealDEmory/gemini-cli-artilect/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"
@@ -18359,7 +18521,7 @@
         "contextFileName": "CLAUDE.md",
         "description": "AI application security \u2014 generate an AI Bill of Materials (AI-SBOM), run static analysis, behavioral validation, and adversarial red-team testing for AI agents and LLM-powered applications. Slash-command exposure is host-dependent and not claimed by this manifest.",
         "name": "nuguard",
-        "version": "0.5.9"
+        "version": "0.5.10"
       }
     },
     "name": "nuguard",
@@ -21107,13 +21269,13 @@
   },
   {
     "capabilities": [],
-    "description": "Agent workflow kit for brainstorming, dated specs, implementation waves, TDD, debugging, review, and delivery.",
+    "description": "Agent workflow kit for brainstorming, domain-doc grilling, dated specs, implementation waves, TDD, debugging, review, and delivery.",
     "evidence": [],
     "metadata": {
       "gallery_text_seen": true,
       "manifest": {
         "contextFileName": "GEMINI.md",
-        "description": "Agent workflow kit for brainstorming, dated specs, implementation waves, TDD, debugging, review, and delivery.",
+        "description": "Agent workflow kit for brainstorming, domain-doc grilling, dated specs, implementation waves, TDD, debugging, review, and delivery.",
         "name": "s-kit",
         "version": "1.0.0"
       }
@@ -22099,32 +22261,6 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
-              "version": "5.0.7"
-            }
-          },
-          "name": "superpowers",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "superpowers",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/JustinDube21/superpowers",
-            "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-              "name": "superpowers",
               "version": "5.0.6"
             }
           },
@@ -22184,11 +22320,9 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/FuZhiyu/superRA",
-      "https://github.com/JustinDube21/superpowers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
       "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
     ],

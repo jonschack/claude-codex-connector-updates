@@ -1,0 +1,48 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Credit ratings, entity intelligence, and research via Moody's GenAI-Ready Data.",
+  "homepage": "https://www.moodys.com/web/en/us/genai/model-context-protocol.html",
+  "interface": {
+    "brandColor": "#003366",
+    "capabilities": [
+      "Entity resolution and firmographics",
+      "Credit ratings and rating history",
+      "Credit opinions, outlooks, and rating drivers",
+      "Upgrade and downgrade trigger analysis",
+      "Rating methodology and scorecard factors",
+      "ESG credit considerations",
+      "Ownership, beneficial owners, ultimate owners, and subsidiaries",
+      "Financial statements, key indicators, and ratios",
+      "Company filings search and summarization",
+      "Research document search",
+      "Earnings-call transcript search",
+      "News monitoring",
+      "Peer identification",
+      "Sector outlook and country-risk context",
+      "Managers, directors, and key officers"
+    ],
+    "category": "Finance",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Summarize a company's Moody's profile and ownership.",
+      "Summarize a company's Moody's ratings and credit opinion.",
+      "Summarize a company's latest financials and filings in Moody's."
+    ],
+    "developerName": "Moody's",
+    "displayName": "Moody's",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Connect to Moody's GenAI-Ready Data through the enterprise MCP integration. Resolve covered entities, retrieve ratings and outlooks, analyze credit opinions, scorecards, upgrade/downgrade drivers, ESG considerations, ownership structures, subsidiaries, company profiles, financial statements, filings, earnings-call transcripts, news, peer sets, sector outlooks, and country-risk context, all within your workflow.",
+    "privacyPolicyURL": "https://www.moodys.com/web/en/us/legal/privacy-policy.html",
+    "screenshots": [],
+    "shortDescription": "Credit ratings, research, entity intelligence, ownership, financials, and filings.",
+    "termsOfServiceURL": "https://www.moodys.com/web/en/us/legal/terms-of-use.html",
+    "websiteURL": "https://www.moodys.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "moody-s",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "1.0.0"
+}

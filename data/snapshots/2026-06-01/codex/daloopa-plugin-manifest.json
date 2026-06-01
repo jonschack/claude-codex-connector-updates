@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Daloopa supplies high quality fundamental data sourced from SEC Filings, investor presentations and any pub...",
+  "homepage": "https://daloopa.com/",
+  "interface": {
+    "capabilities": [],
+    "category": "Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Can you give an overview for NVDA"
+    ],
+    "developerName": "Daloopa, Inc.",
+    "displayName": "Daloopa",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Daloopa supplies high quality fundamental data sourced from SEC Filings, investor presentations and any public financial documents, with hyperlinks to source document overlaying each data point. Provides a zero-hallucination foundation for any quantitative financial analysis in Codex.",
+    "privacyPolicyURL": "https://daloopa.com/privacy-policy-2",
+    "screenshots": [],
+    "shortDescription": "Daloopa supplies high quality fundamental data sourced from SEC Filings, investor presentations and any pub...",
+    "termsOfServiceURL": "https://daloopa.com/terms-of-use",
+    "websiteURL": "https://daloopa.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "daloopa",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}
