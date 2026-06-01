@@ -135,8 +135,14 @@ def _parse_retry_after(value: Optional[str]) -> Optional[float]:
         return None
 
 
-def fetch_text(url: str, timeout: int = 20) -> Tuple[Optional[str], Dict[str, Any]]:
+def fetch_text(
+    url: str,
+    timeout: int = 20,
+    extra_headers: Optional[Dict[str, str]] = None,
+) -> Tuple[Optional[str], Dict[str, Any]]:
     headers = {"User-Agent": USER_AGENT, "Accept": "text/html,application/json,*/*"}
+    if extra_headers:
+        headers.update(extra_headers)
     req = Request(url, headers=headers)
     attempt = 0
     while True:

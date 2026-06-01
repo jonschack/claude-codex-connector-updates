@@ -3,40 +3,79 @@ import os, re
 from typing import List
 from ..context import CollectContext
 from ..models import ServerRecord
-from ..utils import html_to_text, slugify
+from ..utils import slugify
 
 PROVIDER = "cloudflare"
-URL = "https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers/"  # VERIFY
+# Markdown source for Cloudflare's own MCP servers page (stable .md URL).
+# URL changed from /mcp-servers/ to /mcp-servers-for-cloudflare/ in 2026.
+URL = "https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/index.md"
+
+
+def _parse_markdown(text: str, source_url: str) -> List[ServerRecord]:
+    """Parse Cloudflare's MCP servers markdown page.
+
+    The page has two forms of server records:
+      1. The main Cloudflare API MCP server listed in a JSON snippet inside a code block.
+      2. A product-specific table: | [Name ↗](github-url) | Description | https://xxx.mcp.cloudflare.com/mcp |
+
+    We extract both forms.
+    """
+    servers: List[ServerRecord] = []
+    seen: set = set()
+
+    def _add(name: str, description: str, remote: str) -> None:
+        slug = slugify(name)
+        if slug in seen:
+            return
+        seen.add(slug)
+        servers.append(ServerRecord(
+            provider=PROVIDER,
+            server_id=slug,
+            native_surface="connector",
+            name=name,
+            description=description,
+            source_urls=[source_url],
+            remote_url=remote,
+            transport="remote",
+        ))
+
+    # --- Form 1: main Cloudflare API MCP server URL from JSON snippet ---
+    api_url_match = re.search(r'"url"\s*:\s*"(https://mcp\.cloudflare\.com/[^"]+)"', text)
+    if api_url_match:
+        _add("Cloudflare API", "Access the entire Cloudflare API over 2,500 endpoints", api_url_match.group(1))
+
+    # --- Form 2: product-specific table rows ---
+    # Each row: | [Name text ↗](github-url) | Description text | https://xxx.mcp.cloudflare.com/mcp |
+    for line in text.splitlines():
+        line = line.strip()
+        if not line.startswith("|") or "https://" not in line:
+            continue
+        parts = [p.strip() for p in line.split("|") if p.strip()]
+        if len(parts) < 3:
+            continue
+        # Extract name from markdown link [Name ↗](...)
+        name_match = re.search(r"\[([^\]]+?)\s*↗?\]", parts[0])
+        if not name_match:
+            continue
+        name = name_match.group(1).strip()
+        if not name:
+            continue
+        description = re.sub(r"\[.*?\]\(.*?\)", "", parts[1]).strip()
+        # URL is the last column — strip any trailing whitespace/pipe
+        remote = parts[2].strip().rstrip("|").strip()
+        if not re.match(r"https://", remote):
+            continue
+        _add(name, description, remote)
+
+    return servers
 
 
 def collect_cloudflare(ctx: CollectContext) -> List[ServerRecord]:
     url = os.environ.get("MCP_NEWSLETTER_CLOUDFLARE_URL", URL)
-    markup = ctx.fetch(PROVIDER, url, "remote-mcp-servers")
-    if not markup:
+    body = ctx.fetch(PROVIDER, url, "mcp-servers-for-cloudflare")
+    if not body:
         return []
-    servers = []
-    # html_to_text flattens to a single space-separated line (no newlines).
-    # Match a URL preceded by "|" and look back for a short identifier name
-    # (no sentence-ending punctuation, at most 5 space-separated words).
-    text = html_to_text(markup)
-    for m in re.finditer(
-        r"([A-Za-z0-9][A-Za-z0-9 ._-]{0,40}?)\s*\|\s*(https?://\S+)",
-        text,
-    ):
-        raw_name = m.group(1).strip()
-        remote = m.group(2).strip()
-        # Reject names that contain sentence-ending punctuation — they have leaked prose
-        if re.search(r"[.!?]", raw_name):
-            # Fall back: take only the last word-run after the last punctuation
-            clean = re.split(r"[.!?]\s*", raw_name)[-1].strip()
-            raw_name = clean
-        name = raw_name.strip()
-        if not name:
-            continue
-        servers.append(ServerRecord(
-            provider=PROVIDER, server_id=slugify(name), native_surface="connector",
-            name=name, source_urls=[url], remote_url=remote,
-        ))
-    if markup and not servers:
-        ctx.add_issue(PROVIDER, url, "no records parsed; DOM may have changed")
+    servers = _parse_markdown(body, url)
+    if body and not servers:
+        ctx.add_issue(PROVIDER, url, "no records parsed; page structure may have changed")
     return servers

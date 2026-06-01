@@ -124,7 +124,8 @@ class VSCodeCollectorTests(unittest.TestCase):
 
 
 class ClineCollectorTests(unittest.TestCase):
-    def test_parses_marketplace_json(self):
+    def test_parses_legacy_dict_format(self):
+        """Old synthetic fixture used {"items": [...]} dict wrapper."""
         body = (FIX / "cline_marketplace.json").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
@@ -135,6 +136,23 @@ class ClineCollectorTests(unittest.TestCase):
         entry = next(s for s in servers if s.name == "Brave Search")
         self.assertEqual(entry.provider, "cline")
 
+    def test_parses_live_array_format(self):
+        """Live API returns a top-level JSON array (captured 2026-06-01)."""
+        body = (FIX / "cline_marketplace_live.json").read_text()
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch("mcp_newsletter.providers.cline.CollectContext.fetch", return_value=body):
+                servers = collect_cline(ctx)
+        names = {s.name for s in servers}
+        self.assertIn("Postman API Tools", names)
+        entry = next(s for s in servers if s.name == "Postman API Tools")
+        self.assertEqual(entry.provider, "cline")
+        # github URL should be in source_urls
+        self.assertTrue(
+            any("github.com/postmanlabs" in u for u in entry.source_urls),
+            f"Expected github URL in source_urls: {entry.source_urls}",
+        )
+
     def test_invalid_json_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
@@ -143,7 +161,7 @@ class ClineCollectorTests(unittest.TestCase):
         self.assertEqual(servers, [])
 
     def test_empty_source_urls_filtered(self):
-        body = (FIX / "cline_marketplace.json").read_text()
+        body = (FIX / "cline_marketplace_live.json").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
             with mock.patch("mcp_newsletter.providers.cline.CollectContext.fetch", return_value=body):
@@ -173,37 +191,40 @@ class ContinueCollectorTests(unittest.TestCase):
 
 
 class CloudflareCollectorTests(unittest.TestCase):
-    def test_parses_remote_mcp_servers(self):
-        html = (FIX / "cloudflare_mcp_servers.html").read_text()
+    def test_parses_live_markdown(self):
+        """Collector now fetches the .md source (URL changed in 2026). Captured 2026-06-01."""
+        body = (FIX / "cloudflare_mcp_servers_live.md").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.cloudflare.CollectContext.fetch", return_value=html):
+            with mock.patch("mcp_newsletter.providers.cloudflare.CollectContext.fetch", return_value=body):
                 servers = collect_cloudflare(ctx)
         names = {s.name for s in servers}
-        self.assertIn("Workers AI", names)
-        entry = next(s for s in servers if s.name == "Workers AI")
+        # Main Cloudflare API server should be present
+        self.assertIn("Cloudflare API", names)
+        entry = next(s for s in servers if s.name == "Cloudflare API")
         self.assertEqual(entry.provider, "cloudflare")
-        self.assertEqual(entry.remote_url, "https://workers-ai.mcp.cloudflare.com/sse")
+        self.assertEqual(entry.remote_url, "https://mcp.cloudflare.com/mcp")
+        # Product-specific servers should be present
+        self.assertIn("Documentation server", names)
+        self.assertIn("Radar server", names)
+        doc = next(s for s in servers if s.name == "Documentation server")
+        self.assertEqual(doc.remote_url, "https://docs.mcp.cloudflare.com/mcp")
 
-    def test_prose_prefix_not_captured_in_name(self):
-        html = (FIX / "cloudflare_mcp_servers_prose.html").read_text()
+    def test_remote_url_populated_for_all_servers(self):
+        """Every parsed server must have a non-empty remote_url."""
+        body = (FIX / "cloudflare_mcp_servers_live.md").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.cloudflare.CollectContext.fetch", return_value=html):
+            with mock.patch("mcp_newsletter.providers.cloudflare.CollectContext.fetch", return_value=body):
                 servers = collect_cloudflare(ctx)
-        names = {s.name for s in servers}
-        self.assertIn("Workers AI", names)
-        # The long prose paragraph must NOT appear in any name
+        self.assertGreater(len(servers), 0)
         for s in servers:
-            self.assertNotIn("following", s.name.lower())
-            self.assertNotIn("available", s.name.lower())
-            self.assertNotIn("applications", s.name.lower())
+            self.assertTrue(s.remote_url, f"Empty remote_url for {s.name}")
 
     def test_unparseable_markup_returns_empty_and_records_issue(self):
-        html = (FIX / "cloudflare_mcp_servers_empty.html").read_text()
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.cloudflare.CollectContext.fetch", return_value=html):
+            with mock.patch("mcp_newsletter.providers.cloudflare.CollectContext.fetch", return_value="<!-- no data -->"):
                 servers = collect_cloudflare(ctx)
             self.assertEqual(servers, [])
             messages = [i.message for i in ctx.issues]
