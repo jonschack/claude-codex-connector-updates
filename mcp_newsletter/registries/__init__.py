@@ -4,10 +4,10 @@ from __future__ import annotations
 import json
 import os
 import time
-from typing import Callable, Dict, List
+from typing import Dict, List
 
 from ..context import CollectContext
-from .base import RawRegistryEntry, RegistryCollection
+from .base import RegistryCollection
 
 
 _LAST_HOST_HIT: Dict[str, float] = {}
