@@ -42,50 +42,54 @@ def _parse_tags(raw) -> List[str]:
     return []
 
 
-def _extract_servers_from_blob(blob: str) -> List[dict]:
-    """Extract unique server objects (have a real 'uuid' key) from the RSC blob."""
-    servers = {}
-    for m in re.finditer(r'"uuid"', blob):
-        idx = m.start()
-        # Walk back to find the opening { that contains this uuid key
-        search_start = max(0, idx - 8000)
-        region = blob[search_start:idx]
-        depth = 0
-        obj_open = None
-        for i in range(len(region) - 1, -1, -1):
-            c = region[i]
-            if c == "}":
-                depth += 1
-            elif c == "{":
-                if depth == 0:
-                    obj_open = search_start + i
-                    break
-                else:
-                    depth -= 1
-        if obj_open is None:
-            continue
-        # Scan forward to find the matching closing }
-        depth = 0
-        end_pos = None
-        scan_end = min(obj_open + 8000, len(blob))
-        for i, c in enumerate(blob[obj_open:scan_end]):
-            if c == "{":
-                depth += 1
-            elif c == "}":
-                depth -= 1
-                if depth == 0:
-                    end_pos = obj_open + i + 1
-                    break
-        if not end_pos:
-            continue
+def _collect_uuid_dicts(value, seen: set, objs: list) -> None:
+    """Recursively walk a decoded JSON value and collect dicts that have a 'uuid' key."""
+    if isinstance(value, dict):
+        uuid = value.get("uuid")
+        if uuid and isinstance(uuid, str) and uuid not in seen:
+            seen.add(uuid)
+            objs.append(value)
+        for v in value.values():
+            _collect_uuid_dicts(v, seen, objs)
+    elif isinstance(value, list):
+        for item in value:
+            _collect_uuid_dicts(item, seen, objs)
+
+
+def _extract_uuid_objects(blob: str) -> List[dict]:
+    """Extract unique server objects (have a real 'uuid' key) from the RSC blob.
+
+    Uses json.JSONDecoder.raw_decode to parse each top-level JSON object so
+    that ``}`` characters inside string values (e.g. ``"config is {}"`` in a
+    description) are never mis-counted as closing braces.  After each
+    top-level object is parsed, recursively collects uuid-bearing dicts from
+    within it (handling the ``{"projects": [...]}`` wrapper the mcp.so RSC
+    payload uses).  ``i`` jumps to the parsed object's end, so nested ``{``
+    characters are never double-visited.
+    """
+    dec = json.JSONDecoder()
+    objs: List[dict] = []
+    seen: set = set()
+    i = 0
+    n = len(blob)
+    while i < n:
+        b = blob.find("{", i)
+        if b < 0:
+            break
         try:
-            obj = json.loads(blob[obj_open:end_pos])
-        except (json.JSONDecodeError, ValueError):
+            top, consumed = dec.raw_decode(blob[b:])
+        except ValueError:
+            i = b + 1          # not a valid object start; advance one char
             continue
-        uuid = obj.get("uuid")
-        if uuid and isinstance(uuid, str) and uuid not in servers:
-            servers[uuid] = obj
-    return list(servers.values())
+        end = b + consumed
+        _collect_uuid_dicts(top, seen, objs)
+        i = end if end > b else b + 1   # jump past the parsed object
+    return objs
+
+
+def _extract_servers_from_blob(blob: str) -> List[dict]:
+    """Public shim kept for API compatibility; delegates to _extract_uuid_objects."""
+    return _extract_uuid_objects(blob)
 
 
 def collect_mcpso(ctx: CollectContext) -> List[RawRegistryEntry]:

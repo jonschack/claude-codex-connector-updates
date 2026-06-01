@@ -412,6 +412,26 @@ class McpsoCollectorTests(unittest.TestCase):
                 f"Unexpected source_id: {e.source_id!r}",
             )
 
+    def test_brace_in_description_not_dropped(self):
+        """A server whose description contains literal } characters must not be silently dropped.
+
+        The old brace-counting walk would mis-count the } inside \"Returns JSON like {} on success\"
+        and either overshoot the object boundary or produce a json.loads failure, causing the
+        server to vanish.  raw_decode respects quoted strings, so it must survive.
+        """
+        html = (FIX / "mcpso_brace_rsc.html").read_text()
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch("mcp_newsletter.registries.mcpso.fetch_text",
+                            return_value=(html, {"status": 200, "content_type": "text/html", "error": ""})):
+                from mcp_newsletter.registries.mcpso import collect_mcpso
+                entries = collect_mcpso(ctx)
+        self.assertEqual(len(entries), 1)
+        e = entries[0]
+        self.assertEqual(e.source_id, "brace-test-uuid-0000-0000-000000000001")
+        self.assertEqual(e.repo_url, "https://github.com/example/brace-server")
+        self.assertIn("{}", e.description)  # brace pair preserved verbatim in description
+
     def test_skip_network_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
             ctx = CollectContext(root=Path(tmp), run_date="2026-05-30", skip_network=True)
