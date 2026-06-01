@@ -322,10 +322,10 @@ DEFAULT_TAXONOMY: List[Tuple[str, List[str]]] = [
     (
         "data/database",
         [
-            "database", "db", "sql", "mysql", "postgres", "postgresql",
+            "database", "sql", "mysql", "postgres", "postgresql",
             "sqlite", "mongodb", "redis", "elasticsearch", "query",
             "queries", "data warehouse", "bigquery", "snowflake",
-            "dbt", "analytics", "bi", "etl", "data pipeline",
+            "dbt", "analytics", "etl", "data pipeline",
             "vector database", "vector db", "pinecone", "weaviate",
             "chroma", "qdrant",
         ],
@@ -334,8 +334,8 @@ DEFAULT_TAXONOMY: List[Tuple[str, List[str]]] = [
         "devtools/git",
         [
             "git", "github", "gitlab", "bitbucket", "code review",
-            "pull request", "pr", "issue tracker", "jira", "linear",
-            "linting", "lint", "test", "testing", "ci", "coverage",
+            "pull request", "issue tracker", "jira", "linear",
+            "linting", "lint", "test", "testing", "ci/cd", "coverage",
             "debugger", "debugging", "ide", "editor", "vscode",
             "refactor", "static analysis",
         ],
@@ -381,16 +381,39 @@ DEFAULT_TAXONOMY: List[Tuple[str, List[str]]] = [
 ]
 
 
+def _compile_taxonomy(
+    taxonomy: List[Tuple[str, List[str]]]
+) -> List[Tuple[str, "re.Pattern"]]:
+    """Compile each theme's keywords into one word-boundary alternation regex.
+
+    Word boundaries (``(?<!\\w) ... (?!\\w)``) prevent short keywords from
+    matching inside larger words (e.g. "db" must not match "adblocker",
+    "ci" must not match "precision", "pay" must not match "display").
+    Keywords may contain spaces/punctuation (e.g. "run code", "ci/cd",
+    "x.com"); they are escaped literally.
+    """
+    compiled: List[Tuple[str, "re.Pattern"]] = []
+    for theme_name, keywords in taxonomy:
+        alternation = "|".join(re.escape(k.lower()) for k in keywords)
+        compiled.append(
+            (theme_name, re.compile(r"(?<!\w)(?:" + alternation + r")(?!\w)"))
+        )
+    return compiled
+
+
+_DEFAULT_COMPILED = _compile_taxonomy(DEFAULT_TAXONOMY)
+
+
 def assign_themes(
     record: Dict[str, Any],
     taxonomy: List[Tuple[str, List[str]]] = DEFAULT_TAXONOMY,
 ) -> Dict[str, Any]:
     """Assign taxonomy themes to a record.
 
-    Matching is a case-insensitive substring search on the concatenated
-    text of name + description + tags. The first matching theme in
-    priority order becomes the primary theme. All matching themes are
-    listed in "all".
+    Matching is a case-insensitive, WORD-BOUNDARY search on the concatenated
+    text of name + description + tags (so short keywords don't match inside
+    larger words). The first matching theme in priority order becomes the
+    primary theme. All matching themes are listed in "all".
 
     Parameters
     ----------
@@ -403,22 +426,20 @@ def assign_themes(
     -------
     {"primary": str, "all": [str]}
         primary: first matching theme by priority order, or "other" if none.
-        all: all matching themes in priority order; may be empty (→ ["other"]).
+        all: all matching themes in priority order; an empty list when none match.
     """
     name: str = record.get("name") or ""
     description: str = record.get("description") or ""
     tags: List[str] = record.get("tags") or []
     haystack = (name + " " + description + " " + " ".join(tags)).lower()
 
-    matched: List[str] = []
-    for theme_name, keywords in taxonomy:
-        for kw in keywords:
-            if kw.lower() in haystack:
-                matched.append(theme_name)
-                break  # only need one keyword to match a theme
+    compiled = (
+        _DEFAULT_COMPILED if taxonomy is DEFAULT_TAXONOMY else _compile_taxonomy(taxonomy)
+    )
+    matched: List[str] = [theme for theme, rx in compiled if rx.search(haystack)]
 
     primary = matched[0] if matched else "other"
-    return {"primary": primary, "all": matched if matched else []}
+    return {"primary": primary, "all": matched}
 
 
 # ---------------------------------------------------------------------------

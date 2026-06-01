@@ -695,5 +695,26 @@ class TestDefaultTaxonomy(unittest.TestCase):
                 self.assertIsInstance(kw, str)
 
 
+class WordBoundaryMatchingTests(unittest.TestCase):
+    """Lock in the accuracy fix: short keywords must not match inside words."""
+
+    def _themes(self, text):
+        return assign_themes({"name": "", "description": text, "tags": []})["all"]
+
+    def test_no_substring_false_positives(self):
+        self.assertEqual(self._themes("A precision tool for adblocker tuning"), [])
+        self.assertEqual(self._themes("a legitimate business assistant"), [])
+        self.assertEqual(self._themes("control your display brightness"), [])
+
+    def test_real_standalone_keywords_still_match(self):
+        self.assertIn("devtools/git", self._themes("Manage GitHub pull requests"))
+        self.assertIn("data/database", self._themes("Run SQL against your database"))
+        self.assertIn("payments/finance/crypto", self._themes("Send a Stripe payment"))
+
+    def test_multiword_and_punctuated_keywords_match(self):
+        self.assertIn("code-execution", self._themes("a sandbox to run code safely"))
+        self.assertIn("deploy/cloud/infra", self._themes("manage your ci/cd pipeline"))
+
+
 if __name__ == "__main__":
     unittest.main()
