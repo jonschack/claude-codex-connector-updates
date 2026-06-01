@@ -14,7 +14,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from mcp_newsletter.landscape_report import load_snapshot
+from mcp_newsletter.landscape_report import load_snapshot, append_history, latest_prior, build_report
 
 
 # ---------------------------------------------------------------------------
@@ -935,6 +935,46 @@ class GenerateLandscapeTests(unittest.TestCase):
             self.assertTrue((cur / "landscape_metrics.json").exists())
             self.assertEqual(metrics["total_records"], 1)
             self.assertEqual(json.loads((cur / "landscape_metrics.json").read_text())["total_records"], 1)
+
+
+# ---------------------------------------------------------------------------
+# History — append_history / latest_prior / build_report with prior_metrics
+# ---------------------------------------------------------------------------
+
+class HistoryTests(unittest.TestCase):
+    def _metrics(self, date, verified, cov):
+        return {"snapshot_date": date, "total_records": 100,
+                "by_tier": {}, "write_capable": {"total": verified, "verified_tools": verified,
+                "annotation": 0, "claimed_description": 0},
+                "coverage": {"overall_coverage_pct": cov}, "themes_primary": {}, "themes_overlap": {},
+                "residual_dups": {"unique_identities": 100, "suspected_extra_records": 0,
+                                  "suspected_dup_clusters": 0, "examples": []}, "validation": None}
+
+    def test_append_then_latest_prior(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            (Path(tmp) / "data" / "current").mkdir(parents=True)
+            append_history(Path(tmp), self._metrics("2026-05-24", 10, 20.0))
+            append_history(Path(tmp), self._metrics("2026-05-31", 14, 26.0))
+            prior = latest_prior(Path(tmp), before_date="2026-05-31")
+            self.assertEqual(prior["snapshot_date"], "2026-05-24")  # most recent strictly before
+            self.assertIsNone(latest_prior(Path(tmp), before_date="2026-05-24"))  # nothing before first
+
+    def test_report_shows_change_since_prior(self):
+        cur = self._metrics("2026-05-31", 14, 26.0)
+        prior = self._metrics("2026-05-24", 10, 20.0)
+        # build_report takes records+summary+snapshot_date; pass prior via prior_metrics kwarg.
+        md, _ = build_report(records=[], summary={"enabled_sources": [], "source_ok": {},
+                             "per_source": {}, "per_source_raw": {}, "issues": []},
+                             snapshot_date="2026-05-31", prior_metrics=prior, top_n=5)
+        # NOTE: build_report computes its OWN metrics from records; to show the diff it compares
+        # the CURRENT computed metrics vs prior_metrics. With empty records current verified=0.
+        self.assertIn("Change since 2026-05-24", md)
+
+    def test_report_baseline_when_no_prior(self):
+        md, _ = build_report(records=[], summary={"enabled_sources": [], "source_ok": {},
+                             "per_source": {}, "per_source_raw": {}, "issues": []},
+                             snapshot_date="2026-05-31", prior_metrics=None, top_n=5)
+        self.assertIn("baseline", md.lower())
 
 
 if __name__ == "__main__":

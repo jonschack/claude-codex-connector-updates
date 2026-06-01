@@ -62,8 +62,107 @@ def _effective_known_totals() -> Dict[str, int]:
 
 
 # ---------------------------------------------------------------------------
+# History constants
+# ---------------------------------------------------------------------------
+
+HISTORY_FILE = "landscape_history.jsonl"
+
+
+# ---------------------------------------------------------------------------
 # I/O helpers
 # ---------------------------------------------------------------------------
+
+def append_history(root: "Path | str", metrics: Dict[str, Any]) -> None:
+    """Append a compact summary line to the landscape history JSONL file.
+
+    Writes one JSON object per line to ``root/data/current/landscape_history.jsonl``
+    capturing the fields needed for week-over-week diffing.  Creates the directory
+    if it does not already exist.
+
+    Parameters
+    ----------
+    root:
+        Project root path.
+    metrics:
+        Full metrics dict as returned by ``build_report``.  Only a subset of
+        fields is persisted.
+    """
+    root = Path(root)
+    history_path = root / "data" / "current" / HISTORY_FILE
+    history_path.parent.mkdir(parents=True, exist_ok=True)
+
+    wc = metrics.get("write_capable") or {}
+    cov = metrics.get("coverage") or {}
+    val = metrics.get("validation")
+    val_entry = None
+    if val:
+        val_entry = {
+            "precision": val.get("precision"),
+            "recall": val.get("recall"),
+            "answered": val.get("answered"),
+        }
+
+    entry = {
+        "snapshot_date": metrics.get("snapshot_date", ""),
+        "total_records": metrics.get("total_records", 0),
+        "write_capable": {
+            "total": wc.get("total", 0),
+            "verified_tools": wc.get("verified_tools", 0),
+            "annotation": wc.get("annotation", 0),
+            "claimed_description": wc.get("claimed_description", 0),
+        },
+        "coverage_pct": cov.get("overall_coverage_pct"),
+        "validation": val_entry,
+    }
+
+    with open(history_path, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(entry, separators=(",", ":")) + "\n")
+
+
+def latest_prior(
+    root: "Path | str",
+    before_date: str,
+) -> Optional[Dict[str, Any]]:
+    """Return the most recent history entry whose ``snapshot_date`` is strictly
+    before *before_date*, or ``None`` if no such entry exists or the file is absent.
+
+    ISO date string comparison is used (lexicographic, which is correct for
+    ``YYYY-MM-DD`` format).
+
+    Parameters
+    ----------
+    root:
+        Project root path.
+    before_date:
+        ISO date string.  Only entries with ``snapshot_date < before_date`` are
+        considered.
+
+    Returns
+    -------
+    The full history entry dict for the most recent qualifying entry, or ``None``.
+    """
+    root = Path(root)
+    history_path = root / "data" / "current" / HISTORY_FILE
+
+    if not history_path.exists():
+        return None
+
+    best: Optional[Dict[str, Any]] = None
+    with open(history_path, "r", encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                entry = json.loads(line)
+            except (json.JSONDecodeError, ValueError):
+                continue
+            date = entry.get("snapshot_date", "")
+            if date < before_date:
+                if best is None or date > best.get("snapshot_date", ""):
+                    best = entry
+    return best
+
 
 def load_snapshot(
     root: "Path | str",
@@ -225,6 +324,7 @@ def build_report(
     snapshot_date: str,
     validation: Optional[Dict[str, Any]] = None,
     top_n: int = 15,
+    prior_metrics: Optional[Dict[str, Any]] = None,
 ) -> Tuple[str, Dict[str, Any]]:
     """Build the landscape report.
 
@@ -240,6 +340,11 @@ def build_report(
         Optional validation metrics dict from ``run_validation``.
     top_n:
         Number of top servers to include in the ranked table.
+    prior_metrics:
+        Optional prior-run history entry dict (from ``latest_prior``).  When
+        provided, a "Change Since Last Run" section is added showing Δ
+        verified-write-capable and Δ coverage.  When ``None``, a baseline note
+        is included instead.
 
     Returns
     -------
@@ -262,6 +367,35 @@ def build_report(
     lines.append("")
     lines.append(f"**Snapshot date:** {snapshot_date}")
     lines.append(f"**Total records:** {metrics['total_records']}")
+    lines.append("")
+
+    # ---- Change Since Last Run ----
+    lines.append("## Change Since Last Run")
+    lines.append("")
+    if prior_metrics is None:
+        lines.append("First run — baseline; no prior snapshot to compare.")
+    else:
+        prior_date = prior_metrics.get("snapshot_date", "unknown")
+        # Current side: use the metrics we just computed
+        cur_wc = metrics.get("write_capable") or {}
+        cur_verified = cur_wc.get("verified_tools", 0)
+        cur_cov_pct = (metrics.get("coverage") or {}).get("overall_coverage_pct") or 0.0
+        # Prior side: prior_metrics may be a full metrics dict or a history-entry dict
+        prior_wc = prior_metrics.get("write_capable") or {}
+        prior_verified = prior_wc.get("verified_tools", 0)
+        # coverage_pct key used by history entries; fall back to full metrics shape
+        prior_cov_pct = prior_metrics.get("coverage_pct")
+        if prior_cov_pct is None:
+            prior_cov_pct = (prior_metrics.get("coverage") or {}).get("overall_coverage_pct") or 0.0
+        delta_verified = cur_verified - prior_verified
+        delta_cov = cur_cov_pct - prior_cov_pct
+        sign_v = "+" if delta_verified >= 0 else ""
+        sign_c = "+" if delta_cov >= 0 else ""
+        lines.append(
+            f"Change since {prior_date}: "
+            f"verified-write-capable {sign_v}{delta_verified}, "
+            f"coverage {sign_c}{delta_cov:.1f} pts"
+        )
     lines.append("")
 
     # ---- Methodology & Limitations ----
@@ -514,12 +648,16 @@ def generate_landscape(
         else None
     )
 
+    # Read prior BEFORE building (so a run never diffs against itself)
+    prior = latest_prior(root, run_date)
+
     markdown, metrics = build_report(
         records,
         summary,
         snapshot_date=run_date,
         validation=validation,
         top_n=top_n,
+        prior_metrics=prior,
     )
 
     output_dir = root / "data" / "current"
@@ -530,5 +668,8 @@ def generate_landscape(
         json.dumps(metrics, indent=2, sort_keys=True, default=list),
         encoding="utf-8",
     )
+
+    # Append history AFTER writing the report so a run never diffs against itself
+    append_history(root, metrics)
 
     return metrics
