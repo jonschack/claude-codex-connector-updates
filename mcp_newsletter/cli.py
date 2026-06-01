@@ -121,6 +121,15 @@ def main(argv: list[str] | None = None) -> int:
         tests = subprocess.run([sys.executable, "-m", "unittest"], cwd=str(args.root), text=True)
         if tests.returncode != 0:
             return tests.returncode
+        # Generate the landscape report BEFORE publishing so its outputs are
+        # committed in the same run (not one run late). Failure-isolated.
+        if args.landscape:
+            try:
+                from .landscape_report import generate_landscape
+                generate_landscape(args.root, run_date=args.date, include_vendor=True)
+                print(str(Path(args.root) / "data" / "current" / "LANDSCAPE_REPORT.md"))
+            except Exception as exc:  # must NOT fail the daily run
+                print(f"Landscape report skipped: {exc}")
         try:
             print(commit_and_push(args.root, run_date=args.date))
         except (RuntimeError, subprocess.CalledProcessError) as exc:
@@ -130,14 +139,6 @@ def main(argv: list[str] | None = None) -> int:
                 print(send_daily_report(args.root, run_date=args.date, to_addr=args.email_to))
             except EmailConfigError as exc:
                 print(f"Email skipped: {exc}")
-        if args.landscape:
-            try:
-                from .landscape_report import generate_landscape
-                generate_landscape(args.root, run_date=args.date, include_vendor=True)
-                report_path = Path(args.root) / "data" / "current" / "LANDSCAPE_REPORT.md"
-                print(str(report_path))
-            except Exception as exc:  # must NOT fail the daily run
-                print(f"Landscape report skipped: {exc}")
         return 0
     if args.command == "email":
         try:

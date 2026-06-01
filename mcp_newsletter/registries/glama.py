@@ -72,6 +72,7 @@ def collect_glama(ctx: CollectContext) -> List[RawRegistryEntry]:
                 repo_url=repo.get("url", "") if isinstance(repo, dict) else "",
                 tags=tags,
                 source_url=SOURCE_URL,
+                raw={"glama_id": s.get("id", "")},  # for the verified /servers/{id} detail URL
             ))
 
         page_info = data.get("pageInfo", {})
@@ -100,11 +101,12 @@ def collect_glama(ctx: CollectContext) -> List[RawRegistryEntry]:
                and "Tools:" not in (e.description or "")
         ][:detail_cap]
         for entry in candidates:
-            # source_id is "{namespace}/{slug}" or just "{slug}"; the list endpoint
-            # server "id" field is not stored on RawRegistryEntry.  Re-derive the
-            # server id by fetching a minimal detail via namespace/slug path; if that
-            # 404s, skip silently.
-            detail_url = base.rstrip("/") + "/" + entry.source_id.replace(" ", "%20")
+            # Use the verified detail URL form /servers/{id} (the live probe found
+            # the namespace/slug variant 404s; only the id-based URL returns 200).
+            glama_id = (entry.raw or {}).get("glama_id", "")
+            if not glama_id:
+                continue
+            detail_url = base.rstrip("/") + "/" + glama_id
             throttle(urlparse(detail_url).hostname or "")
             d_text, d_meta = fetch_text(detail_url)
             if not d_text:
