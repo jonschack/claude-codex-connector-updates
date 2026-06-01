@@ -69,3 +69,53 @@ are implemented with remaining external-bound incompleteness explicitly quantifi
 - Full 21k+ Glama / multi-registry pulls are time-bound; the protocol reports coverage % rather than
   pretending to exhaustiveness.
 - These limits are reported as coverage, not silently dropped.
+
+---
+
+## As-Built Amendments & Convergence
+
+**Status: CONVERGED** (final cross-protocol review, all loops complete, 304 tests green).
+
+Three loops were executed, each followed by an exhaustive review against this plan; findings were
+fixed inline. All controllable initiatives I1–I11 are implemented as tested code; remaining
+incompleteness is external-bound and explicitly quantified in the report.
+
+**Where each initiative lives:**
+- I1 `landscape.evidence_tier` · I2 `landscape.coverage` · I3 `landscape.sample_records` (seeded,
+  stratified) · I4 `landscape.estimate_residual_dups` · I5 `landscape.ground_record_with_tools` ·
+  I6 `landscape.evaluate_classifier` (+ `wilson_interval`) · I7 `landscape.DEFAULT_TAXONOMY` +
+  `assign_themes` · I8 `landscape.rank_servers` · I9 `landscape.summarize` + `wilson_interval` ·
+  I10 `landscape.check_liveness`/`mark_liveness` · I11 `landscape_report.py` + `landscape` CLI
+  subcommand (`python3 -m mcp_newsletter landscape --root <dir> [--validate-sample N --seed S] [--skip-network]`).
+
+**Accepted deviations (documented, not silently changed):**
+- **I8 ranking** uses `(tier, write_confidence, source_count, identity)`; "popularity" is not in the
+  snapshot, so source-count is the popularity proxy. Wording in I8 referenced popularity as a future
+  signal.
+- **`annotation` tier** rarely fires for registry records (their record-level evidence is catalog
+  text + a `tools` confidence; tool-level annotations surface only through live discovery via
+  `ground_record_with_tools`). The function supports it; it is populated when discovery runs.
+- **Validation `predicted_write` is catalog/description-only** (not the blended tier), so the
+  precision/recall genuinely measure the description heuristic vs tool-grounded truth.
+- **Residual-dup name clustering requires a *distinctive* name** (≥5 chars, not generic like
+  "mcp-server") so unrelated servers sharing a generic name are not over-clustered; repo-URL
+  clustering remains the high-specificity signal.
+- **Word-boundary theme matching** (not bare substring) to avoid false positives
+  (e.g. "ci"→"precision"); ambiguous 2-char keywords dropped.
+- **Liveness probe uses status only** (no body read) so a large-bodied live endpoint isn't misread.
+- **No separate `METHODOLOGY.md`** — this PLAN.md is the methodology doc (per I11 wording).
+
+**Quantified external-bound incompleteness (reported, not hidden):**
+- Coverage % per source + overall (vs rough `KNOWN_TOTALS`); only sources that succeeded count.
+- PulseMCP (~16k) and Smithery key-gated; absent sources reflected in the coverage denominator.
+- Validation precision/recall apply ONLY to the remote-URL subset that answered `tools/list`, with
+  a small-sample CI caveat; population `verified_tools`/`annotation` are 0 unless collection runs
+  population-wide discovery (explained in the report).
+- Adjusted-unique estimate reported alongside raw unique (residual-dup correction).
+
+**Headline finding from the live run (official+Glama snapshot, 26.6% coverage):** of 6,910 records,
+1,138 are write-capable **by description only (claimed/unverified)**; `verified_tools`=0 at
+population scale (discovery not run population-wide); on a validation sample the description
+heuristic showed **high precision, low recall** — i.e. it under-detects true (tool-verified)
+write-capability on the remotely-verifiable subset. The protocol now states all of this with
+coverage, evidence tiers, CIs, and dedup adjustment rather than a single blended number.
