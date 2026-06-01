@@ -137,7 +137,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "landscape":
         from .landscape_report import build_report, load_snapshot, run_validation
 
-        records, summary = load_snapshot(args.root)
+        try:
+            records, summary = load_snapshot(args.root)
+        except FileNotFoundError:
+            print(
+                f"No snapshot at {args.root}/data/current/ — "
+                "run `python3 -m mcp_newsletter update` first."
+            )
+            return 1
 
         validation = None
         if args.validate_sample is not None and not args.skip_network:

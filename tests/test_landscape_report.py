@@ -7,10 +7,12 @@ All tests are offline: no network, no datetime.now(), no global random state.
 from __future__ import annotations
 
 import json
+import os
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 # ---------------------------------------------------------------------------
@@ -58,6 +60,41 @@ def _claimed_rec(identity: str, write_confidence: str = "medium") -> dict:
         write_confidence=write_confidence,
         confidence_by_source={"catalog": {"confidence": write_confidence, "date": "2026-05-31"}},
     )
+
+
+# ---------------------------------------------------------------------------
+# Fix 1 — _effective_known_totals env-override tests
+# ---------------------------------------------------------------------------
+
+class TestEffectiveKnownTotals(unittest.TestCase):
+
+    def setUp(self):
+        from mcp_newsletter.landscape_report import _effective_known_totals, KNOWN_TOTALS
+        self._effective_known_totals = _effective_known_totals
+        self.KNOWN_TOTALS = KNOWN_TOTALS
+
+    def test_bad_json_env_returns_default(self):
+        """MCP_NEWSLETTER_KNOWN_TOTALS set to bad JSON must not raise; returns default."""
+        with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_KNOWN_TOTALS": "{bad json"}):
+            result = self._effective_known_totals()
+        self.assertEqual(result, dict(self.KNOWN_TOTALS))
+
+    def test_valid_json_override_merges(self):
+        """Valid JSON override merges/overrides the defaults."""
+        override = json.dumps({"glama": 99999, "new_source": 1234})
+        with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_KNOWN_TOTALS": override}):
+            result = self._effective_known_totals()
+        self.assertEqual(result["glama"], 99999)
+        self.assertEqual(result["new_source"], 1234)
+        # Keys not in override retain defaults
+        self.assertEqual(result["official"], self.KNOWN_TOTALS["official"])
+
+    def test_empty_env_returns_default(self):
+        """Absent env var returns default KNOWN_TOTALS unchanged."""
+        with mock.patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("MCP_NEWSLETTER_KNOWN_TOTALS", None)
+            result = self._effective_known_totals()
+        self.assertEqual(result, dict(self.KNOWN_TOTALS))
 
 
 # ---------------------------------------------------------------------------
@@ -374,6 +411,31 @@ class TestRunValidation(unittest.TestCase):
         self.run_validation(records, sample_n=1, seed=1, discover_fn=discover_fn, run_date="2026-05-31")
         self.assertEqual(records[0]["confidence_by_source"], original[0]["confidence_by_source"])
 
+    def test_predicted_write_is_catalog_only_not_contaminated_by_tools(self):
+        """A record with pre-existing tools evidence but catalog=unknown → predicted_write=False.
+
+        Proves the prediction uses only the catalog/description tier, not the
+        pre-existing verified_tools evidence that would inflate metrics.
+        """
+        # Record has a pre-existing tools entry (high confidence) but no catalog entry
+        rec = _rec(
+            identity="srv:tools-only",
+            remote_url="https://example.com/t",
+            write_confidence="high",
+            confidence_by_source={
+                "tools": {"confidence": "high", "date": "2026-05-31"},
+                # no "catalog" key → catalog confidence is unknown
+            },
+        )
+        # Return a write tool → actual_write=True
+        answers = {"srv:tools-only": [self._write_tool("high")]}
+        discover_fn = self._fake_discover_fn(answers)
+        result = self.run_validation([rec], sample_n=1, seed=1, discover_fn=discover_fn, run_date="2026-05-31")
+        self.assertEqual(result["answered"], 1)
+        # predicted_write must be False (catalog unknown), actual_write True → FN, not TP
+        self.assertEqual(result["fn"], 1)
+        self.assertEqual(result["tp"], 0)
+
 
 # ---------------------------------------------------------------------------
 # I11 — build_report tests
@@ -529,6 +591,30 @@ class TestBuildReport(unittest.TestCase):
         self.assertIn("Methodology", md)
         self.assertEqual(metrics["total_records"], 0)
 
+    def test_remote_scope_caveat_present_when_validation_provided(self):
+        """The report must include the remote-scope caveat whenever validation is present."""
+        records = self._small_records()
+        fake_validation = {
+            "n": 5, "tp": 3, "fp": 1, "fn": 1, "tn": 0,
+            "precision": 0.75, "recall": 0.75, "f1": 0.75, "accuracy": 0.6,
+            "precision_ci": (0.3, 0.95), "recall_ci": (0.3, 0.95),
+            "sample_n": 5, "answered": 4, "unevaluable": 1,
+        }
+        md, _ = self.build_report(
+            records, self._minimal_summary(), "2026-05-31", validation=fake_validation
+        )
+        self.assertIn("remotely-verifiable", md)
+        self.assertIn("tools/list", md)
+        # Also verify answered/unevaluable counts appear in the section
+        self.assertIn("4", md)   # answered
+        self.assertIn("1", md)   # unevaluable
+
+    def test_remote_scope_caveat_absent_when_no_validation(self):
+        """The remote-scope caveat must NOT appear when validation is None."""
+        records = self._small_records()
+        md, _ = self.build_report(records, self._minimal_summary(), "2026-05-31")
+        self.assertNotIn("remotely-verifiable", md)
+
 
 # ---------------------------------------------------------------------------
 # I11 — CLI landscape subcommand tests (offline, --skip-network)
@@ -659,6 +745,24 @@ class TestLandscapeCLI(unittest.TestCase):
             rank_rows = _re.findall(r"^\| (\d+) \|", content, _re.MULTILINE)
             self.assertIn("2", rank_rows)
             self.assertNotIn("3", rank_rows)
+
+    def test_cli_missing_snapshot_exits_nonzero_with_message(self):
+        """landscape on a tmpdir with no data/current/ must exit 1 and print a helpful message."""
+        import io
+        from mcp_newsletter.cli import main
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            # Do NOT call _make_fixture — there is no snapshot here
+            captured = io.StringIO()
+            with mock.patch("sys.stdout", captured):
+                ret = main(["landscape", "--root", str(root), "--skip-network"])
+            self.assertEqual(ret, 1)
+            output = captured.getvalue()
+            self.assertIn("data/current", output)
+            self.assertIn("update", output)
+            # No traceback in the output
+            self.assertNotIn("Traceback", output)
+            self.assertNotIn("FileNotFoundError", output)
 
 
 if __name__ == "__main__":

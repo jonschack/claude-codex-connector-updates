@@ -15,6 +15,7 @@ Values not present in the env-var override keep their defaults.
 
 from __future__ import annotations
 
+import copy
 import json
 import os
 from pathlib import Path
@@ -54,7 +55,7 @@ def _effective_known_totals() -> Dict[str, int]:
             overrides = json.loads(env_val)
             if isinstance(overrides, dict):
                 result.update({str(k): int(v) for k, v in overrides.items()})
-        except (json.JSONDecodeError, (TypeError, ValueError)):
+        except (json.JSONDecodeError, TypeError, ValueError):
             pass
     return result
 
@@ -146,10 +147,10 @@ def run_validation(
 
     for rec in sampled:
         # Capture description-only prediction BEFORE grounding:
-        # predicted_write = True if tier is "claimed_description" (catalog) OR
-        # if there is reportable catalog-based confidence already
-        tier_before = evidence_tier(rec)
-        predicted_write = tier_before in ("claimed_description", "annotation", "verified_tools")
+        # depends ONLY on the catalog/description tier — not on any pre-existing
+        # tool or annotation evidence, which would contaminate the metric.
+        catalog_conf = ((rec.get("confidence_by_source") or {}).get("catalog") or {}).get("confidence", "unknown")
+        predicted_write = catalog_conf in ("medium", "high")
 
         # Call discover_fn (injected)
         try:
@@ -162,7 +163,6 @@ def run_validation(
             continue
 
         # Ground a *copy* so the original records list is not mutated
-        import copy
         grounded = copy.deepcopy(rec)
         ground_record_with_tools(grounded, tools, run_date)
 
@@ -286,12 +286,19 @@ def build_report(
         lines.append(
             f"Description-only classifier evaluated on a seeded sample of "
             f"{sample_n} servers with remote URLs "
-            f"({n_answered} answered, {n_unevaluable} unevaluable / no tools returned):"
+            f"({n_answered} answered tools/list, {n_unevaluable} unevaluable / no tools returned):"
         )
         lines.append("")
         lines.append(f"- **Precision:** {prec:.3f} (95% CI: {prec_ci[0]:.3f}–{prec_ci[1]:.3f})")
         lines.append(f"- **Recall:** {rec_val:.3f} (95% CI: {rec_ci[0]:.3f}–{rec_ci[1]:.3f})")
         lines.append(f"- **F1:** {f1:.3f}")
+        lines.append("")
+        lines.append(
+            "> **Scope:** these precision/recall figures are measured ONLY on servers that expose "
+            "a remote URL and answered `tools/list`. They do NOT generalize to the "
+            "description-only or local (stdio) majority that has no reachable endpoint; "
+            "treat them as the heuristic's accuracy on the *remotely-verifiable* subset."
+        )
         lines.append("")
 
     # Residual dups
