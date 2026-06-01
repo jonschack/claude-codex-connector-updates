@@ -84,6 +84,29 @@ Shared HTTP/discovery hardening (applies to all collectors):
   bypass the private/loopback/link-local block (e.g. a self-hosted test MCP
   server). Empty by default; only set for trusted local endpoints.
 
+## PulseMCP Registry
+
+The PulseMCP collector fetches from the Generic Registry spec endpoint:
+
+```
+https://api.pulsemcp.com/v0.1/servers
+```
+
+### Obtaining a key
+
+Email **hello@pulsemcp.com** to request an API key. Once issued, set:
+
+- `MCP_NEWSLETTER_PULSEMCP_KEY` — required; the API key sent as `X-API-Key`
+- `MCP_NEWSLETTER_PULSEMCP_TENANT` — optional; sent as `X-Tenant-ID` if set
+
+### Behaviour without a key
+
+If `MCP_NEWSLETTER_PULSEMCP_KEY` is absent or empty, the collector gracefully skips: it returns `[]` and records a single `info`-severity issue (`"MCP_NEWSLETTER_PULSEMCP_KEY not set; skipping collector"`). The daily run is unaffected — no error is raised and no other collectors are blocked.
+
+### Response format
+
+Responses follow the Generic Registry spec: a top-level `"servers"` list of wrapped objects `{"server":{...},"_meta":{...}}` and a `"metadata"` object with a `"nextCursor"` field for pagination. Entries whose `_meta` contains any value with `{"status": "deleted"}` are silently skipped.
+
 Live MCP tool discovery refuses any URL whose host resolves to a loopback,
 private, link-local, reserved, multicast, unspecified, or CGNAT
 (100.64.0.0/10) address, and refuses non-http(s) schemes. `fetch_text` retries

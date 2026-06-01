@@ -200,6 +200,34 @@ class PulsemcpCollectorTests(unittest.TestCase):
         # deleted server must not appear
         self.assertFalse(any("gone" in e.source_id for e in entries))
 
+    def test_with_key_parses_inline_page(self):
+        """With key set and inline synthetic page, parses io.pm/sender and skips io.pm/gone (deleted)."""
+        PAGE = json.dumps({
+            "servers": [
+                {"server": {"name": "io.pm/sender", "description": "Send things",
+                            "repository": {"url": "https://github.com/pm/sender"},
+                            "remotes": [{"type": "streamable-http", "url": "https://mcp.pm/sender"}]},
+                 "_meta": {"com.pulsemcp.registry/official": {"status": "active"}}},
+                {"server": {"name": "io.pm/gone", "description": "x"},
+                 "_meta": {"com.pulsemcp.registry/official": {"status": "deleted"}}}
+            ],
+            "metadata": {"nextCursor": None}
+        })
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = _ctx(tmp)
+            with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_PULSEMCP_KEY": "test"}):
+                with mock.patch("mcp_newsletter.registries.pulsemcp._fetch_with_auth",
+                                return_value=(PAGE, {"status": 200, "content_type": "application/json", "error": ""})):
+                    from mcp_newsletter.registries.pulsemcp import collect_pulsemcp
+                    entries = collect_pulsemcp(ctx)
+        # io.pm/sender should be present; io.pm/gone must be skipped (status=deleted)
+        self.assertEqual(len(entries), 1)
+        sender = entries[0]
+        self.assertEqual(sender.official_name, "io.pm/sender")
+        self.assertEqual(sender.repo_url, "https://github.com/pm/sender")
+        self.assertEqual(sender.remote_url, "https://mcp.pm/sender")
+        self.assertFalse(any(e.official_name == "io.pm/gone" for e in entries))
+
     def test_skip_network_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
             ctx = CollectContext(root=Path(tmp), run_date="2026-05-30", skip_network=True)
