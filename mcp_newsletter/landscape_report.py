@@ -113,9 +113,13 @@ def load_snapshot(
         servers_path = root / "data" / "current" / "servers.json"
         if servers_path.exists():
             effective_date = run_date or summary.get("run_date", "")
-            with open(servers_path, "r", encoding="utf-8") as fh:
-                vendor_list = json.load(fh)
-            for v in vendor_list:
+            try:
+                with open(servers_path, "r", encoding="utf-8") as fh:
+                    vendor_list = json.load(fh)
+            except (json.JSONDecodeError, ValueError):
+                vendor_list = []  # best-effort enrichment: a corrupt vendor dump
+                                  # must not crash the landscape analysis
+            for v in (vendor_list or []):
                 records.append(normalize_vendor_record(v, effective_date))
 
     return records, summary

@@ -894,6 +894,20 @@ class UnifiedLoaderTests(unittest.TestCase):
             recs, _ = load_snapshot(Path(tmp), include_vendor=True)
         self.assertEqual([r["identity"] for r in recs], ["io.x/a"])
 
+    def test_malformed_servers_json_does_not_crash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self._write_snapshot(tmp, with_vendor=False)
+            (Path(tmp) / "data" / "current" / "servers.json").write_text("not json{")
+            recs, _ = load_snapshot(Path(tmp), include_vendor=True)
+        self.assertEqual([r["identity"] for r in recs], ["io.x/a"])  # registry intact, vendor skipped
+
+    def test_run_date_falls_back_to_summary(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self._write_snapshot(tmp)  # summary run_date = 2026-05-31, vendor 'high'
+            recs, _ = load_snapshot(Path(tmp), include_vendor=True)  # no explicit run_date
+        linear = next(r for r in recs if r["identity"] == "claude:linear")
+        self.assertEqual(linear["confidence_by_source"]["catalog"]["date"], "2026-05-31")
+
 
 if __name__ == "__main__":
     unittest.main()
