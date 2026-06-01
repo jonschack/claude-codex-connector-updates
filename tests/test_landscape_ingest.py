@@ -30,6 +30,31 @@ class NormalizeVendorTests(unittest.TestCase):
         self.assertEqual(out["repo_url"], "")
         self.assertEqual(out["confidence_by_source"], {})
 
+    def test_catalog_date_is_run_date(self):
+        v = {"provider": "claude", "server_id": "x", "name": "X", "description": "",
+             "capabilities": [], "write_confidence": "medium", "evidence": [],
+             "remote_url": "", "source_urls": [], "native_surface": "c", "transport": "c", "metadata": {}}
+        out = normalize_vendor_record(v, run_date="2026-06-01")
+        self.assertEqual(out["confidence_by_source"]["catalog"]["date"], "2026-06-01")
+
+    def test_low_confidence_is_not_reportable(self):
+        v = {"provider": "claude", "server_id": "x", "name": "X", "description": "",
+             "capabilities": [], "write_confidence": "low", "evidence": [],
+             "remote_url": "", "source_urls": [], "native_surface": "c", "transport": "c", "metadata": {}}
+        out = normalize_vendor_record(v, run_date="2026-05-31")
+        self.assertEqual(out["confidence_by_source"], {})
+
+    def test_does_not_mutate_input(self):
+        v = {"provider": "claude", "server_id": "x", "name": "X", "description": "",
+             "capabilities": ["a"], "write_confidence": "high",
+             "evidence": [{"kind": "k"}], "remote_url": "", "source_urls": [],
+             "native_surface": "c", "transport": "c", "metadata": {}}
+        out = normalize_vendor_record(v, run_date="2026-05-31")
+        out["capabilities"].append("b")
+        out["evidence"].append({"kind": "z"})
+        self.assertEqual(v["capabilities"], ["a"])           # input unchanged
+        self.assertEqual(v["evidence"], [{"kind": "k"}])
+
 
 if __name__ == "__main__":
     unittest.main()
