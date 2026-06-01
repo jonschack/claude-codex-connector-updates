@@ -66,6 +66,25 @@ def run_discovery(
             except Exception:  # one bad endpoint must not kill the batch
                 continue
 
+    def _ground(rec: RegistryServerRecord, tools: list, run_date: str) -> None:
+        """Classify tools and ground results onto rec (main-thread mutation)."""
+        for tool in tools:
+            tool.write_confidence, tool.evidence = classify_tool(tool)
+        confs = [t.write_confidence for t in tools]
+        rec.confidence_by_source["tools"] = {"confidence": max_confidence(confs), "date": run_date}
+        # Propagate mcp_annotation evidence items (deduplicated by kind/value/confidence)
+        existing_keys = {
+            (item.get("kind"), item.get("value"), item.get("confidence"))
+            for item in rec.evidence
+        }
+        for tool in tools:
+            for ev in tool.evidence:
+                if ev.get("kind") == "mcp_annotation":
+                    key = (ev.get("kind"), ev.get("value"), ev.get("confidence"))
+                    if key not in existing_keys:
+                        rec.evidence.append(ev)
+                        existing_keys.add(key)
+
     by_id = {rec.identity: rec for rec in candidates}
     discovered: Dict[str, str] = {}
     for identity, tools, result in results:
@@ -74,9 +93,5 @@ def run_discovery(
             continue
         discovered[identity] = run_date
         if result.get("ok") and tools:
-            confs = []
-            for tool in tools:
-                tool.write_confidence, tool.evidence = classify_tool(tool)
-                confs.append(tool.write_confidence)
-            rec.confidence_by_source["tools"] = {"confidence": max_confidence(confs), "date": run_date}
+            _ground(rec, tools, run_date)
     return discovered

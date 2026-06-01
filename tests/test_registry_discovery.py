@@ -68,6 +68,20 @@ class RunDiscoveryTests(unittest.TestCase):
         self.assertIn("tools", rec.confidence_by_source)
         self.assertEqual(rec.confidence_by_source["tools"]["date"], "2026-05-30")
 
+    def test_propagates_mcp_annotation_evidence_to_record(self):
+        rec = _rec("a")  # has remote_url; _rec helper already in this file
+        from mcp_newsletter.models import ToolRecord
+        # destructiveHint=True → classify_tool emits an mcp_annotation evidence item
+        tool = ToolRecord(provider="registry", server_id="a", name="delete_thing",
+                          native_surface="registry", description="Delete a thing",
+                          annotations={"destructiveHint": True})
+        with mock.patch.object(registry_discovery, "discover_remote_tools",
+                               return_value=([tool], {"ok": True})):
+            run_discovery([rec], run_date="2026-05-30", workers=2)
+        # tools confidence set AND annotation evidence propagated onto the record:
+        self.assertIn("tools", rec.confidence_by_source)
+        self.assertTrue(any(e.get("kind") == "mcp_annotation" for e in rec.evidence))
+
     def test_swallows_per_endpoint_exceptions(self):
         good = _rec("good")
         bad = _rec("bad")
