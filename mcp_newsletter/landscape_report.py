@@ -457,3 +457,78 @@ def build_report(
 
     markdown = "\n".join(lines)
     return markdown, metrics
+
+
+# ---------------------------------------------------------------------------
+# generate_landscape — reusable top-level helper
+# ---------------------------------------------------------------------------
+
+def generate_landscape(
+    root: "Path | str",
+    run_date: str,
+    include_vendor: bool = True,
+    validate_sample: int = 0,
+    seed: int = 0,
+    top_n: int = 15,
+    discover_fn=None,
+) -> Dict[str, Any]:
+    """Load the snapshot, build the landscape report + metrics, write both files,
+    and return the metrics dict.
+
+    Writes to ``root/data/current/``:
+
+    - ``LANDSCAPE_REPORT.md``
+    - ``landscape_metrics.json``
+
+    Validation only runs when ``validate_sample > 0`` **and** a ``discover_fn``
+    is provided (network); otherwise validation is ``None``.
+
+    Parameters
+    ----------
+    root:
+        Project root path.
+    run_date:
+        ISO date string for the snapshot.
+    include_vendor:
+        Whether to fold in the vendor tier from ``servers.json``.
+    validate_sample:
+        Sample size for classifier validation; 0 disables it.
+    seed:
+        PRNG seed for sampling.
+    top_n:
+        Number of top servers in the ranked table.
+    discover_fn:
+        ``(record: dict) -> list[tool_dict]`` injected for validation.
+        When ``None`` or ``validate_sample == 0``, validation is skipped.
+
+    Returns
+    -------
+    The metrics dict (same as the second element of ``build_report``).
+    """
+    root = Path(root)
+    records, summary = load_snapshot(root, include_vendor=include_vendor, run_date=run_date)
+
+    validation = (
+        run_validation(records, validate_sample, seed, discover_fn, run_date)
+        if (validate_sample > 0 and discover_fn)
+        else None
+    )
+
+    markdown, metrics = build_report(
+        records,
+        summary,
+        snapshot_date=run_date,
+        validation=validation,
+        top_n=top_n,
+    )
+
+    output_dir = root / "data" / "current"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    (output_dir / "LANDSCAPE_REPORT.md").write_text(markdown, encoding="utf-8")
+    (output_dir / "landscape_metrics.json").write_text(
+        json.dumps(metrics, indent=2, sort_keys=True, default=list),
+        encoding="utf-8",
+    )
+
+    return metrics

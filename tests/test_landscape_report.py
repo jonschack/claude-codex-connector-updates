@@ -909,5 +909,33 @@ class UnifiedLoaderTests(unittest.TestCase):
         self.assertEqual(linear["confidence_by_source"]["catalog"]["date"], "2026-05-31")
 
 
+# ---------------------------------------------------------------------------
+# generate_landscape — reusable helper
+# ---------------------------------------------------------------------------
+
+class GenerateLandscapeTests(unittest.TestCase):
+    def _snapshot(self, tmp):
+        cur = Path(tmp) / "data" / "current"; cur.mkdir(parents=True)
+        (cur / "registry_state.jsonl").write_text(
+            json.dumps({"identity": "io.x/a", "name": "A", "description": "send messages",
+                        "repo_url": "", "remote_url": "", "sources": [{"source": "official"}],
+                        "capabilities": [], "tags": [], "write_confidence": "medium",
+                        "evidence": [], "confidence_by_source": {"catalog": {"confidence": "medium", "date": "2026-05-31"}}}) + "\n")
+        (cur / "registry_summary.json").write_text(json.dumps(
+            {"run_date": "2026-05-31", "enabled_sources": ["official"], "source_ok": {"official": True},
+             "per_source": {"official": 1}, "per_source_raw": {"official": 1}, "issues": []}))
+
+    def test_generate_writes_report_and_metrics(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self._snapshot(tmp)
+            from mcp_newsletter.landscape_report import generate_landscape
+            metrics = generate_landscape(Path(tmp), run_date="2026-05-31")
+            cur = Path(tmp) / "data" / "current"
+            self.assertTrue((cur / "LANDSCAPE_REPORT.md").exists())
+            self.assertTrue((cur / "landscape_metrics.json").exists())
+            self.assertEqual(metrics["total_records"], 1)
+            self.assertEqual(json.loads((cur / "landscape_metrics.json").read_text())["total_records"], 1)
+
+
 if __name__ == "__main__":
     unittest.main()

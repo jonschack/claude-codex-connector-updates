@@ -44,6 +44,11 @@ def main(argv: list[str] | None = None) -> int:
     daily.add_argument("--max-details", type=int, default=200)
     daily.add_argument("--email-to", default=None, help="recipient address; defaults to MCP_NEWSLETTER_EMAIL_TO")
     daily.add_argument("--skip-email", action="store_true")
+    daily.add_argument(
+        "--landscape",
+        action="store_true",
+        help="generate landscape report after update/publish (network-light; no validation)",
+    )
 
     email = sub.add_parser("email", help="email the report for a given date")
     email.add_argument("--root", default=".", type=_root)
@@ -126,6 +131,14 @@ def main(argv: list[str] | None = None) -> int:
                 print(send_daily_report(args.root, run_date=args.date, to_addr=args.email_to))
             except EmailConfigError as exc:
                 print(f"Email skipped: {exc}")
+        if args.landscape:
+            try:
+                from .landscape_report import generate_landscape
+                generate_landscape(args.root, run_date=args.date, include_vendor=True)
+                report_path = Path(args.root) / "data" / "current" / "LANDSCAPE_REPORT.md"
+                print(str(report_path))
+            except Exception as exc:  # must NOT fail the daily run
+                print(f"Landscape report skipped: {exc}")
         return 0
     if args.command == "email":
         try:
@@ -135,18 +148,9 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Email failed: {exc}")
             return 1
     if args.command == "landscape":
-        from .landscape_report import build_report, load_snapshot, run_validation
+        from .landscape_report import generate_landscape
 
-        try:
-            records, summary = load_snapshot(args.root)
-        except FileNotFoundError:
-            print(
-                f"No snapshot at {args.root}/data/current/ — "
-                "run `python3 -m mcp_newsletter update` first."
-            )
-            return 1
-
-        validation = None
+        discover_fn = None
         if args.validate_sample is not None and not args.skip_network:
             from .mcp_discovery import discover_remote_tools
             from .classifier import classify_tool
@@ -155,7 +159,7 @@ def main(argv: list[str] | None = None) -> int:
                 url = rec.get("remote_url") or ""
                 if not url:
                     return []
-                tools, result = discover_remote_tools(
+                tools, _result = discover_remote_tools(
                     "registry", rec.get("identity", ""), "registry", url
                 )
                 classified = []
@@ -168,33 +172,28 @@ def main(argv: list[str] | None = None) -> int:
                     })
                 return classified
 
-            validation = run_validation(
-                records,
-                sample_n=args.validate_sample,
-                seed=args.seed,
-                discover_fn=_discover_fn,
+            discover_fn = _discover_fn
+
+        validate_sample = args.validate_sample if args.validate_sample is not None else 0
+
+        try:
+            generate_landscape(
+                args.root,
                 run_date=args.date,
+                include_vendor=True,
+                validate_sample=validate_sample,
+                seed=args.seed,
+                top_n=args.top_n,
+                discover_fn=discover_fn,
             )
+        except FileNotFoundError:
+            print(
+                f"No snapshot at {args.root}/data/current/ — "
+                "run `python3 -m mcp_newsletter update` first."
+            )
+            return 1
 
-        markdown, metrics = build_report(
-            records,
-            summary,
-            snapshot_date=args.date,
-            validation=validation,
-            top_n=args.top_n,
-        )
-
-        output_dir = Path(args.root) / "data" / "current"
-        output_dir.mkdir(parents=True, exist_ok=True)
-
-        report_path = output_dir / "LANDSCAPE_REPORT.md"
-        metrics_path = output_dir / "landscape_metrics.json"
-
-        report_path.write_text(markdown, encoding="utf-8")
-        metrics_path.write_text(
-            json.dumps(metrics, indent=2, default=list),
-            encoding="utf-8",
-        )
+        report_path = Path(args.root) / "data" / "current" / "LANDSCAPE_REPORT.md"
         print(str(report_path))
         return 0
     return 2
