@@ -250,7 +250,7 @@ Live probed all six `# VERIFY` vendor collectors. Two sources fixed; four left g
   2. Parses product-specific table rows: `| [Name ↗](github-url) | Description | https://xxx.mcp.cloudflare.com/mcp |`.
   Dedupes by slug; populates `remote_url` and `description` for every entry.
 - **Fixture captured:** `tests/fixtures/vendors/cloudflare_mcp_servers_live.md` (11 198 bytes).
-- **Servers found live:** 16 (1 main API server + 15 product-specific).
+- **Servers found live:** 17 (1 main API server + 16 product-specific; the Agents SDK entry uses `agents.cloudflare.com`).
 - **`# VERIFY` removed.**
 - **Tests updated:** `CloudflareCollectorTests` — `test_parses_live_markdown`,
   `test_remote_url_populated_for_all_servers`, `test_unparseable_markup_returns_empty_and_records_issue`.
