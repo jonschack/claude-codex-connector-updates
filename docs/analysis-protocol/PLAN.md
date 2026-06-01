@@ -119,3 +119,83 @@ population scale (discovery not run population-wide); on a validation sample the
 heuristic showed **high precision, low recall** — i.e. it under-detects true (tool-verified)
 write-capability on the remotely-verifiable subset. The protocol now states all of this with
 coverage, evidence tiers, CIs, and dedup adjustment rather than a single blended number.
+
+---
+
+## Source verification status (2026-05-31)
+
+Probed with `urllib.request` (UA `mcp-newsletter/0.1`, Accept json/html) from a live network
+connection. Results recorded below; parsers updated where the live shape differed from the
+synthetic fixture.
+
+### github_servers — verified and fixed
+
+- **URL:** `https://raw.githubusercontent.com/modelcontextprotocol/servers/main/README.md`
+- **Status:** HTTP 200, `text/plain; charset=utf-8`
+- **Observation:** The README no longer contains a large community server table. As of 2026-05-31
+  it links primarily to SDK repos (`modelcontextprotocol/typescript-sdk` etc.) plus a handful of
+  archived/community server references (`zencoderai/slack-mcp-server`,
+  `brave/brave-search-mcp-server`). `extract_github_repos` yields ~14 links total.
+- **Parser change:** None required — `extract_github_repos` still correctly extracts all
+  `github.com/owner/repo` links present. The reduced yield (~14 vs previously hundreds) is a
+  real change in the README's scope; the official registry is now the canonical listing.
+- **`# VERIFY` comment:** removed.
+- **Live fixture captured:** `tests/fixtures/registries/github_servers_live.md`
+
+### docker — verified and fixed
+
+- **URL:** `https://api.github.com/repos/docker/mcp-registry/contents/servers` (GitHub contents API)
+  + per-server `https://raw.githubusercontent.com/docker/mcp-registry/main/servers/{name}/server.yaml`
+- **Status:** HTTP 200 (unauthenticated, 329 server directories returned at time of probe)
+- **Observation:** The `server.yaml` schema is **completely different** from the synthetic fixture.
+  Real shape (as of 2026-05-31):
+  ```yaml
+  name: <str>
+  meta:
+    category: <scalar>
+    tags: [list]
+  about:
+    title: <str>
+    description: <str>
+  source:
+    project: <repo-url>   # local servers
+  remote:
+    url: <endpoint-url>   # remote servers
+  ```
+  The old parser read flat-scalar keys (`source:`, `description:`, `longLived:`, `category:`) that
+  no longer exist; it would have produced empty fields for all 329 servers.
+- **Parser change:** Rewrote `_yaml_value` → `_yaml_scalar` / `_yaml_nested` / `_yaml_list`
+  helpers that parse the nested YAML shape. `description` ← `about.description`,
+  `repo_url` ← `source.project`, `remote_url` ← `remote.url`, `tags` ← `meta.tags[]` prepended
+  with `meta.category`.
+- **`# VERIFY` comment:** N/A (was not present in docker.py; synthetic fixture was the gap).
+- **Live fixtures captured:** `tests/fixtures/registries/docker_live_listing.json`,
+  `docker_live_sqlite_server.yaml`, `docker_live_airtable_server.yaml`,
+  `docker_live_ais_fleet_server.yaml`
+
+### mcpso — left graceful (JS-rendered, partial HTML yield)
+
+- **URL:** `https://mcp.so/servers`
+- **Status:** HTTP 200, `text/html; charset=utf-8`
+- **Observation:** mcp.so is a Next.js app (App Router, no `__NEXT_DATA__` SSR block). The
+  returned HTML contains no `<a href="https://github.com/...">` anchor tags. GitHub links are
+  embedded as string literals inside JS RSC payload chunks (escaped JSON in `self.__next_f.push`
+  calls). `extract_github_repos` finds ~45 links by scanning the full body, but these include
+  non-server repos (`astral-sh/uv`, `openai/openai-agents-python`, `zed-industries/zed`,
+  `github.com/settings/tokens`) mixed in with real MCP servers. The response does not constitute a
+  reliable server directory; a headless browser or a dedicated API call would be needed for
+  completeness.
+- **Parser change:** None. The existing approach (extract_github_repos on raw HTML body) works for
+  what it gets; the parser already saves the raw HTML and returns whatever links are found.
+- **Outcome:** Left as-is (graceful, returns partial results). A note is warranted in coverage
+  accounting: mcpso yields a small, noisy subset of its catalog via SSR HTML.
+- **Live fixture captured:** `tests/fixtures/registries/mcpso_live.html` (representative Next.js
+  RSC snippet showing the JS-embedded GitHub link pattern)
+
+### smithery — left graceful (API key required)
+
+- **URL:** `https://registry.smithery.ai/servers`
+- **Status:** Not probed (key-gated; `MCP_NEWSLETTER_SMITHERY_KEY` not available in this environment)
+- **Outcome:** Parser already correctly returns `[]` + an `info`-severity issue when the key is
+  absent. No change made. `# VERIFY` comments remain as a reminder that field names have not been
+  confirmed against a live response.
