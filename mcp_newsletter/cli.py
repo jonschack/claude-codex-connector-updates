@@ -43,11 +43,49 @@ def main(argv: list[str] | None = None) -> int:
     daily.add_argument("--max-details", type=int, default=200)
     daily.add_argument("--email-to", default=None, help="recipient address; defaults to MCP_NEWSLETTER_EMAIL_TO")
     daily.add_argument("--skip-email", action="store_true")
+    daily.add_argument(
+        "--landscape",
+        action="store_true",
+        help="generate landscape report after update/publish (network-light; no validation)",
+    )
 
     email = sub.add_parser("email", help="email the report for a given date")
     email.add_argument("--root", default=".", type=_root)
     email.add_argument("--date", default=today_iso())
     email.add_argument("--to", default=None)
+
+    landscape = sub.add_parser(
+        "landscape",
+        help="generate evidence-tiered landscape report from current snapshot",
+    )
+    landscape.add_argument("--root", default=".", type=_root)
+    landscape.add_argument("--date", default=today_iso())
+    landscape.add_argument(
+        "--validate-sample",
+        dest="validate_sample",
+        type=int,
+        default=None,
+        metavar="N",
+        help="validate classifier on a seeded sample of N servers with remote URLs",
+    )
+    landscape.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="PRNG seed for sampling (default: 42)",
+    )
+    landscape.add_argument(
+        "--skip-network",
+        action="store_true",
+        help="skip real discovery; validation will not be run even if --validate-sample is set",
+    )
+    landscape.add_argument(
+        "--top-n",
+        dest="top_n",
+        type=int,
+        default=15,
+        help="number of top servers to list in ranked section (default: 15)",
+    )
 
     args = parser.parse_args(argv)
 
@@ -83,6 +121,15 @@ def main(argv: list[str] | None = None) -> int:
         tests = subprocess.run([sys.executable, "-m", "unittest"], cwd=str(args.root), text=True)
         if tests.returncode != 0:
             return tests.returncode
+        # Generate the landscape report BEFORE publishing so its outputs are
+        # committed in the same run (not one run late). Failure-isolated.
+        if args.landscape:
+            try:
+                from .landscape_report import generate_landscape
+                generate_landscape(args.root, run_date=args.date, include_vendor=True)
+                print(str(Path(args.root) / "data" / "current" / "LANDSCAPE_REPORT.md"))
+            except Exception as exc:  # must NOT fail the daily run
+                print(f"Landscape report skipped: {exc}")
         try:
             print(commit_and_push(args.root, run_date=args.date))
         except (RuntimeError, subprocess.CalledProcessError) as exc:
@@ -100,4 +147,53 @@ def main(argv: list[str] | None = None) -> int:
         except EmailConfigError as exc:
             print(f"Email failed: {exc}")
             return 1
+    if args.command == "landscape":
+        from .landscape_report import generate_landscape
+
+        discover_fn = None
+        if args.validate_sample is not None and not args.skip_network:
+            from .mcp_discovery import discover_remote_tools
+            from .classifier import classify_tool
+
+            def _discover_fn(rec: dict) -> list:
+                url = rec.get("remote_url") or ""
+                if not url:
+                    return []
+                tools, _result = discover_remote_tools(
+                    "registry", rec.get("identity", ""), "registry", url
+                )
+                classified = []
+                for tool in tools:
+                    wc, evidence = classify_tool(tool)
+                    classified.append({
+                        "name": tool.name,
+                        "write_confidence": wc,
+                        "evidence": evidence,
+                    })
+                return classified
+
+            discover_fn = _discover_fn
+
+        validate_sample = args.validate_sample if args.validate_sample is not None else 0
+
+        try:
+            generate_landscape(
+                args.root,
+                run_date=args.date,
+                include_vendor=True,
+                validate_sample=validate_sample,
+                seed=args.seed,
+                top_n=args.top_n,
+                discover_fn=discover_fn,
+            )
+        except FileNotFoundError:
+            print(
+                f"No snapshot at {args.root}/data/current/ — "
+                "run `python3 -m mcp_newsletter update` first."
+            )
+            return 1
+
+        report_path = Path(args.root) / "data" / "current" / "LANDSCAPE_REPORT.md"
+        print(str(report_path))
+        return 0
     return 2

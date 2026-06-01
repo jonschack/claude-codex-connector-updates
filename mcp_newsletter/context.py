@@ -30,11 +30,17 @@ class CollectContext:
         write_json(path, data)
         return path
 
-    def fetch(self, provider: str, url: str, label: Optional[str] = None) -> Optional[str]:
+    def fetch(
+        self,
+        provider: str,
+        url: str,
+        label: Optional[str] = None,
+        extra_headers: Optional[Dict[str, str]] = None,
+    ) -> Optional[str]:
         if self.skip_network:
             self.add_issue(provider, url, "network fetch skipped by configuration")
             return None
-        text, meta = fetch_text(url)
+        text, meta = fetch_text(url, extra_headers=extra_headers)
         save_label = label or url
         self.save_raw_json(provider, f"{save_label}-fetch-meta", meta)
         if text is not None:

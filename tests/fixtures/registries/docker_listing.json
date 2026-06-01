@@ -1,0 +1,5 @@
+[
+  {"type": "dir", "name": "slack"},
+  {"type": "dir", "name": "github"},
+  {"type": "file", "name": "README.md"}
+]

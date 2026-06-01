@@ -1,0 +1,58 @@
+{
+  "servers": [
+    {
+      "server": {
+        "name": "com.pulsemcp/slack-mcp",
+        "title": "Slack MCP",
+        "description": "Send and manage Slack messages",
+        "repository": {
+          "url": "https://github.com/acme/slack-mcp",
+          "subfolder": ""
+        },
+        "remotes": [{"type": "streamable-http", "url": "https://mcp.acme.com/slack"}],
+        "_meta": {"tags": ["messaging", "productivity"]}
+      },
+      "_meta": {
+        "com.pulsemcp/registry": {
+          "status": "active",
+          "updatedAt": "2026-05-01T00:00:00Z"
+        }
+      }
+    },
+    {
+      "server": {
+        "name": "com.pulsemcp/weather-mcp",
+        "title": "Weather MCP",
+        "description": "Get weather forecasts",
+        "repository": {
+          "url": "https://github.com/community/weather-mcp"
+        },
+        "remotes": [],
+        "_meta": {"tags": ["data", "search"]}
+      },
+      "_meta": {
+        "com.pulsemcp/registry": {
+          "status": "active"
+        }
+      }
+    },
+    {
+      "server": {
+        "name": "com.pulsemcp/gone-server",
+        "title": "Gone Server",
+        "description": "Deprecated server",
+        "repository": {"url": "https://github.com/acme/gone-server"},
+        "remotes": []
+      },
+      "_meta": {
+        "com.pulsemcp/registry": {
+          "status": "deleted"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "nextCursor": null,
+    "count": 3
+  }
+}

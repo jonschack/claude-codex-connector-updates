@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "name": "Brave Search",
+      "description": "Web search via Brave Search API.",
+      "githubUrl": "https://github.com/modelcontextprotocol/servers/tree/main/src/brave-search"
+    },
+    {
+      "name": "Puppeteer",
+      "description": "Browser automation via Puppeteer.",
+      "repo": "https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "rocket-chat-code-analyzer",
+  "version": "0.1.0",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "rocketChatLazyIndex": {
+      "command": "node",
+      "args": [
+        "${extensionPath}${/}dist${/}mcpLazyServer.js"
+      ],
+      "cwd": "${extensionPath}",
+      "env": {}
+    }
+  }
+}

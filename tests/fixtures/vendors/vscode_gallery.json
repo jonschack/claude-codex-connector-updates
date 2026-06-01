@@ -1,0 +1,18 @@
+{
+  "servers": [
+    {
+      "name": "GitHub Copilot MCP",
+      "displayName": "GitHub Copilot MCP",
+      "description": "Access GitHub data, repos, and issues via MCP.",
+      "repository": "https://github.com/github/copilot-mcp",
+      "url": ""
+    },
+    {
+      "name": "Azure MCP",
+      "displayName": "Azure MCP",
+      "description": "Manage Azure resources via MCP.",
+      "repository": "https://github.com/microsoft/azure-mcp",
+      "url": "https://azure-mcp.example.com/sse"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import sqlite3
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from .classifier import reportable
 from .models import ServerRecord, ToolRecord
@@ -91,12 +91,22 @@ def _insert_event(
     )
 
 
-def upsert_server(conn: sqlite3.Connection, run_date: str, server: ServerRecord) -> None:
+def seeded_providers(conn: sqlite3.Connection, run_date: str) -> set:
+    """Providers that already have at least one server row from a prior run
+    date. A provider NOT in this set is appearing for the first time and its
+    new-write events should be suppressed (silent baseline)."""
+    rows = conn.execute(
+        "SELECT DISTINCT provider FROM servers WHERE first_seen < ?", (run_date,)
+    ).fetchall()
+    return {row["provider"] for row in rows}
+
+
+def upsert_server(conn: sqlite3.Connection, run_date: str, server: ServerRecord, provider_seeded: bool = True) -> None:
     raw = server.to_dict(include_tools=False)
     current_hash = stable_hash(raw)
     previous = _fetch_one(conn, "servers", (server.provider, server.server_id))
     if previous is None:
-        if reportable(server.write_confidence):
+        if reportable(server.write_confidence) and provider_seeded:
             _insert_event(
                 conn,
                 run_date,
@@ -155,12 +165,12 @@ def upsert_server(conn: sqlite3.Connection, run_date: str, server: ServerRecord)
     )
 
 
-def upsert_tool(conn: sqlite3.Connection, run_date: str, tool: ToolRecord) -> None:
+def upsert_tool(conn: sqlite3.Connection, run_date: str, tool: ToolRecord, provider_seeded: bool = True) -> None:
     raw = tool.to_dict()
     current_hash = stable_hash(raw)
     previous = _fetch_one(conn, "tools", (tool.provider, tool.server_id, tool.name))
     if previous is None:
-        if reportable(tool.write_confidence):
+        if reportable(tool.write_confidence) and provider_seeded:
             _insert_event(
                 conn,
                 run_date,

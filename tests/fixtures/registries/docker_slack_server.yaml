@@ -1,0 +1,16 @@
+name: slack
+image: mcp/slack
+type: server
+meta:
+  category: messaging
+  tags:
+    - messaging
+    - productivity
+about:
+  title: Slack
+  description: Send and receive Slack messages via MCP tools.
+  icon: https://example.com/slack-icon.png
+source:
+  project: https://github.com/docker/mcp-slack
+  branch: main
+  commit: abc123

@@ -1,5 +1,5 @@
 {
-  "event_count": 2,
+  "event_count": 4,
   "issues": [
     {
       "message": "Manifest not found or invalid after probing common paths",
@@ -26,7 +26,7 @@
       "source": "https://x.ai/news/grok-connectors"
     }
   ],
-  "run_date": "2026-05-29",
-  "server_count": 380,
+  "run_date": "2026-05-30",
+  "server_count": 383,
   "tool_count": 13
 }

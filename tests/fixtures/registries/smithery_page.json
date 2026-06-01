@@ -1,0 +1,25 @@
+{
+  "servers": [
+    {
+      "qualifiedName": "acme/slack-mcp",
+      "displayName": "Slack MCP",
+      "description": "Send and manage Slack messages",
+      "repository": "https://github.com/acme/slack-mcp",
+      "deploymentUrl": "https://mcp.smithery.ai/acme/slack",
+      "tags": ["messaging", "productivity"]
+    },
+    {
+      "qualifiedName": "acme/github-mcp",
+      "displayName": "GitHub MCP",
+      "description": "Interact with GitHub",
+      "repository": "https://github.com/acme/github-mcp",
+      "deploymentUrl": "",
+      "tags": ["developer"]
+    }
+  ],
+  "pagination": {
+    "total": 2,
+    "page": 1,
+    "pageSize": 100
+  }
+}

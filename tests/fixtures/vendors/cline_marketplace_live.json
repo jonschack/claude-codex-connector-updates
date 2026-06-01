@@ -1,0 +1,20 @@
+[
+  {
+    "mcpId": "github.com/postmanlabs/postman-mcp-server",
+    "name": "Postman API Tools",
+    "description": "Enables AI assistants to manage Postman workspaces, collections, environments, and API testing through natural language interactions, with support for code generation and API automation workflows.",
+    "githubUrl": "https://github.com/postmanlabs/postman-mcp-server"
+  },
+  {
+    "mcpId": "github.com/launchdarkly/mcp-server",
+    "name": "LaunchDarkly",
+    "description": "Manage feature flags and AI configurations through LaunchDarkly's platform, enabling controlled rollouts, A/B testing, and feature targeting across environments.",
+    "githubUrl": "https://github.com/launchdarkly/mcp-server"
+  },
+  {
+    "mcpId": "github.com/Kapeli/dash-mcp-server",
+    "name": "Dash Documentation Browser",
+    "description": "Enables searching and accessing documentation from the Dash macOS documentation browser, with features for listing docsets, searching content, loading documentation pages, and managing full-text search.",
+    "githubUrl": "https://github.com/Kapeli/dash-mcp-server"
+  }
+]

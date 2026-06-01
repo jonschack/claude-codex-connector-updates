@@ -8,10 +8,13 @@ import json
 import os
 from pathlib import Path
 import re
+import time
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin
 from urllib.request import Request, urlopen
+
+from .netguard import RetryPolicy, max_response_bytes, read_capped, should_retry
 
 
 USER_AGENT = "mcp-newsletter/0.1 (+https://github.com/)"
@@ -116,24 +119,63 @@ def extract_github_repos(markup: str) -> List[str]:
     return sorted(repos)
 
 
-def fetch_text(url: str, timeout: int = 20) -> Tuple[Optional[str], Dict[str, Any]]:
-    headers = {"User-Agent": USER_AGENT, "Accept": "text/html,application/json,*/*"}
-    req = Request(url, headers=headers)
+def _sleep(seconds: float) -> None:
+    time.sleep(seconds)
+
+
+_FETCH_RETRY = RetryPolicy(max_retries=3, base_delay=0.5, max_delay=8.0)
+
+
+def _parse_retry_after(value: Optional[str]) -> Optional[float]:
+    if not value:
+        return None
     try:
-        with urlopen(req, timeout=timeout) as resp:
-            body = resp.read()
-            charset = resp.headers.get_content_charset() or "utf-8"
-            return body.decode(charset, "replace"), {
-                "url": url,
-                "status": getattr(resp, "status", None),
-                "content_type": resp.headers.get("content-type", ""),
-                "error": "",
-            }
-    except HTTPError as exc:
-        body = exc.read(4000).decode("utf-8", "replace") if exc.fp else ""
-        return body, {"url": url, "status": exc.code, "content_type": "", "error": str(exc)}
-    except (URLError, TimeoutError, OSError) as exc:
-        return None, {"url": url, "status": None, "content_type": "", "error": str(exc)}
+        return float(value)  # delta-seconds form; HTTP-date form is ignored
+    except (TypeError, ValueError):
+        return None
+
+
+def fetch_text(
+    url: str,
+    timeout: int = 20,
+    extra_headers: Optional[Dict[str, str]] = None,
+) -> Tuple[Optional[str], Dict[str, Any]]:
+    headers = {"User-Agent": USER_AGENT, "Accept": "text/html,application/json,*/*"}
+    if extra_headers:
+        headers.update(extra_headers)
+    req = Request(url, headers=headers)
+    attempt = 0
+    while True:
+        try:
+            with urlopen(req, timeout=timeout) as resp:
+                body = read_capped(resp, max_response_bytes())
+                charset = resp.headers.get_content_charset() or "utf-8"
+                return body.decode(charset, "replace"), {
+                    "url": url,
+                    "status": getattr(resp, "status", None),
+                    "content_type": resp.headers.get("content-type", ""),
+                    "error": "",
+                }
+        except HTTPError as exc:
+            retry_after = _parse_retry_after(exc.headers.get("Retry-After") if exc.headers else None)
+            retry, delay = should_retry(_FETCH_RETRY, attempt, exc.code, retry_after)
+            if retry:
+                _sleep(delay)
+                attempt += 1
+                continue
+            body = exc.read(4000).decode("utf-8", "replace") if exc.fp else ""
+            return body, {"url": url, "status": exc.code, "content_type": "", "error": str(exc)}
+        except ValueError as exc:
+            # size-cap breach from read_capped is deterministic; retrying just
+            # re-downloads the same oversized body, so fail fast.
+            return None, {"url": url, "status": None, "content_type": "", "error": str(exc)}
+        except (URLError, TimeoutError, OSError) as exc:
+            retry, delay = should_retry(_FETCH_RETRY, attempt, None, None)
+            if retry:
+                _sleep(delay)
+                attempt += 1
+                continue
+            return None, {"url": url, "status": None, "content_type": "", "error": str(exc)}
 
 
 def unique_dicts(items: Iterable[Dict[str, Any]], key: str) -> List[Dict[str, Any]]:

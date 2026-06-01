@@ -1,0 +1,46 @@
+{
+  "servers": [
+    {
+      "id": "gmail-id-001",
+      "qualifiedName": "gmail",
+      "namespace": "google",
+      "slug": "gmail",
+      "displayName": "Gmail MCP",
+      "description": "Read, write, and send Gmail messages. Supports creating drafts, searching threads, and managing labels.",
+      "iconUrl": "https://smithery.ai/icons/gmail.png",
+      "verified": true,
+      "useCount": 4200,
+      "remote": true,
+      "isDeployed": true,
+      "createdAt": "2025-11-01T00:00:00Z",
+      "homepage": "https://smithery.ai/servers/gmail",
+      "bySmithery": false,
+      "owner": "google",
+      "score": 0.95
+    },
+    {
+      "id": "readonly-id-002",
+      "qualifiedName": "acme/readonly-docs",
+      "namespace": "acme",
+      "slug": "readonly-docs",
+      "displayName": "Readonly Docs",
+      "description": "Read-only access to documentation.",
+      "iconUrl": "",
+      "verified": false,
+      "useCount": 87,
+      "remote": false,
+      "isDeployed": false,
+      "createdAt": "2026-01-15T00:00:00Z",
+      "homepage": "",
+      "bySmithery": false,
+      "owner": "acme",
+      "score": 0.40
+    }
+  ],
+  "pagination": {
+    "currentPage": 1,
+    "pageSize": 100,
+    "totalPages": 1,
+    "totalCount": 2
+  }
+}
