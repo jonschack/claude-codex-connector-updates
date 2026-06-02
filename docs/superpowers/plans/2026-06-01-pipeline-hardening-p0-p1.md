@@ -318,6 +318,12 @@ Still pending (each needs live recon and/or credentials):
 
 ---
 
+## Deferred follow-ons (from phase reviews — non-blocking)
+- **LLM-quality example prompts** (P2): wire `capability.summarize_tool(llm=…)` to an Anthropic client when `ANTHROPIC_API_KEY` is set (deterministic fallback ships now). Gated, cached, budget-capped.
+- **skip-network health cosmetic** (P0 review #7): `update --skip-network` reports `degraded: True`; harmless (daily never uses skip-network) — short-circuit vendor-health when `ctx.skip_network` if it ever feeds alerting.
+- **Committed post-pagination snapshot** (P0 review #8): an operational daily run on the Eastern-time box should commit a real ~338 claude snapshot + populated `health` block to validate floors against committed data.
+- **Cursor/grok enrichment**: per-plugin descriptions (cursor records are name+URL only); broaden the signals feed list once real feed URLs are confirmed live.
+
 ## Self-Review
 
 - **Spec coverage (P0/P1):** health floors (T1–2) ✓; alerting (T2–3) ✓; live contract tests + CI (T8) ✓; codex path (T4) ✓; JS rendering (T6) ✓; main-content extraction (T5, T7) ✓; full Claude directory + collector repair + registry holes → Phase 1b (explicitly deferred, needs live access) ✓.
