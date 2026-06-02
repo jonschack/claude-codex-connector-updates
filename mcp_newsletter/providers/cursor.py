@@ -28,7 +28,8 @@ def collect_cursor(ctx: CollectContext) -> List[ServerRecord]:
         ctx.add_issue(PROVIDER, SITE, "network fetch skipped by configuration")
         return []
     site = os.environ.get("MCP_NEWSLETTER_CURSOR_URL", SITE)
-    limit = int(os.environ.get("MCP_NEWSLETTER_CURSOR_MAX", "5000"))
+    raw_limit = os.environ.get("MCP_NEWSLETTER_CURSOR_MAX", "5000")
+    limit = int(raw_limit) if raw_limit.strip().isdigit() else 5000
     urls, meta = firecrawl_map(site, limit=limit)
     if not urls:
         ctx.add_issue(
@@ -38,20 +39,24 @@ def collect_cursor(ctx: CollectContext) -> List[ServerRecord]:
             severity="info" if "FIRECRAWL_API_KEY" in (meta.get("error") or "") else "warning",
         )
         return []
-    mcp_urls = set()
+    # Filter plugin URLs whose slug contains "mcp" (a substring heuristic — high
+    # recall for a coverage monitor; may include a few false positives like
+    # "compose-mcp"). Dedup by server_id so case/fragment variants collapse.
+    by_id = {}
     for raw in urls:
-        clean = raw.split("?", 1)[0].rstrip("/")
+        clean = raw.split("#", 1)[0].split("?", 1)[0].rstrip("/")
         if "/plugins/" not in clean:
             continue
-        if "mcp" in clean.rsplit("/", 1)[-1].lower():
-            mcp_urls.add(clean)
-    mcp_urls = sorted(mcp_urls)
+        slug = clean.rsplit("/", 1)[-1]
+        if "mcp" not in slug.lower():
+            continue
+        by_id.setdefault(slugify(slug), (slug, clean))
     servers: List[ServerRecord] = []
-    for url in mcp_urls:
-        slug = url.rsplit("/", 1)[-1]
+    for server_id in sorted(by_id):
+        slug, url = by_id[server_id]
         servers.append(ServerRecord(
             provider=PROVIDER,
-            server_id=slugify(slug),
+            server_id=server_id,
             native_surface="connector",
             name=_name_from_slug(slug),
             description="",

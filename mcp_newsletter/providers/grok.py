@@ -13,7 +13,7 @@ PROVIDER = "grok"
 # live, plain-HTTP, server-rendered markdown source is /grok/connectors.md, which
 # documents the BUILT-IN connectors. The larger third-party catalog lives only in
 # the auth-gated grok.com app with no public machine-readable source, so this
-# collector intentionally captures the documented built-ins (~7) only.
+# collector intentionally captures the documented built-ins (~8) only.
 DOC_URLS = [
     "https://docs.x.ai/grok/connectors.md",
 ]
