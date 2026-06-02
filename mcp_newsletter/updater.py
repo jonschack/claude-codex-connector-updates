@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 from .capability import build_capability_feed, enrich_servers
+from .capability_report import render_capability_highlights
 from .classifier import classify_all
 from .health import REGISTRY_FLOORS, VENDOR_FLOORS, floors_from_env, summarize_health
 from .novelty import notable_events
@@ -132,6 +133,10 @@ def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = 
     write_json(root / "data" / "current" / "capabilities.json", capability_feed)
     write_json(root / "data" / "current" / "notable.json", notable)
     write_json(root / "data" / "current" / "signals.json", signals)
+    write_text(
+        root / "data" / "current" / "CAPABILITY_HIGHLIGHTS.md",
+        render_capability_highlights(capability_feed, notable, signals, run_date),
+    )
     report = render_daily_report(run_date, servers, events, ctx.issues)
     write_text(root / "reports" / f"{run_date}.md", report)
     registry_result = run_registry_update(root, run_date=run_date, skip_network=skip_network)
