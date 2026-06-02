@@ -42,6 +42,15 @@ python3 -c "from mcp_newsletter.grok_research import build_query_matrix; print(c
 
 > **Cadence:** run this on a regular cadence (e.g. 2–3×/week). The dedup state (Step 4) means each run only surfaces what's **new** or **rising** — so over time you converge on "every remotely-viral post," and slow-burners get caught when they cross the floor.
 
+### Step 3b — Extra-Heavy Deep Sweep (max recall, "every new capability")
+When the user wants maximum coverage, run **10 Heavy requests with diverse lenses** instead of one. Each Heavy run samples X differently, so 10 angles (launches / biggest demos / official connectors / community repos / creative / finance / dev / productivity / seed-accounts / long-tail) catch far more; the dedup state removes overlap. Generate them:
+
+```bash
+python3 -c "from mcp_newsletter.grok_research import build_extra_heavy_prompts; import json; print(json.dumps(build_extra_heavy_prompts(since='YYYY-MM-DD'), indent=2))"
+```
+
+For EACH of the 10 prompts: **New Chat → Heavy mode → paste the prompt (one line) → send → wait for the agent team to finish (poll `get_page_text`; Heavy runs ~40s–2min each) → capture the fenced code block** to `data/snapshots/<date>/grok/heavy-<n>.txt`. ~15–25 min of driving total. Then run Step 4 **once over all 10 captures concatenated** — `parse_grok_findings` + `merge_into_state` dedupe across them automatically, so the radar ends with the union. Report `N NEW, M RISING` across the whole deep sweep.
+
 ## Step 4 — Parse + verify
 Run this (writes the artifacts). It parses every captured answer, verifies each candidate against the awesome-claude-connectors catalog + live URL resolution, and writes results:
 

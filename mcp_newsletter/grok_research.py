@@ -154,6 +154,40 @@ def build_query_matrix(min_faves: int = 10, since: str = "") -> List[str]:
     return queries
 
 
+# Ten diverse lenses for an "extra-heavy" deep sweep. Each Heavy run samples X
+# differently, so 10 distinct angles maximize recall of NEW MCP capabilities;
+# overlap is removed by the dedup state. (Perspective-diverse multi-modal sweep.)
+_EXTRA_HEAVY_LENSES: List[str] = [
+    "List MCP servers/connectors that LAUNCHED or were first announced recently.",
+    "List the MCP server/connector demos that got the biggest 'wait, it can do that?' reactions (most likes/reposts).",
+    "List NEW official Claude / Anthropic / ChatGPT connectors added recently.",
+    "List community/open-source MCP servers (GitHub) that trended or gained stars recently.",
+    "List MCP servers for CREATIVE work — image, video, audio, music, 3D, design.",
+    "List MCP servers for FINANCE, crypto, on-chain/DeFi, trading, or payments.",
+    "List MCP servers for DEVELOPERS — coding, devops, databases, browser automation, testing, docs.",
+    "List MCP connectors for PRODUCTIVITY/business — CRM, tasks, calendar, forms, docs, comms, SaaS.",
+    "Search the key MCP/AI accounts (Anthropic, modelcontextprotocol, @ahujasid, @alexalbert__, @_philschmid, @OpenAIDevs, @skirano) for MCP servers/connectors they posted about.",
+    "List any OTHER notable MCP servers/connectors — niche, surprising, or smaller — that broad searches miss.",
+]
+
+
+def build_extra_heavy_prompts(since: str = "", count: int = 10) -> List[str]:
+    """`count` distinct, ready-to-paste Grok HEAVY prompts (one per lens). Run all
+    in Heavy mode, capture each, then parse+merge all answers into the radar state
+    — overlap is deduped. Diverse lenses = max recall of new MCP capabilities."""
+    window = f"since {since}" if since else "in the last month"
+    fmt = (
+        "Return ONLY a fenced code block (triple backticks), one row per server/connector: "
+        "name | capability | why_viral | source_url | example_prompt. why_viral must include the "
+        "like/repost count; source_url must be a real GitHub repo or official page."
+    )
+    return [
+        f"{lens} Use your live X access; only include MCP servers/connectors with real X traction "
+        f"(at least 10 likes) {window}. {fmt}"
+        for lens in _EXTRA_HEAVY_LENSES[:count]
+    ]
+
+
 _ENGAGEMENT_RE = re.compile(r"(\d+(?:\.\d+)?)\s*([kK])?\s*\+?\s*(?:likes?|reposts?|views?)")
 
 

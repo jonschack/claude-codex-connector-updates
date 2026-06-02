@@ -2,6 +2,7 @@ import unittest
 
 from mcp_newsletter.grok_research import (
     GrokFinding,
+    build_extra_heavy_prompts,
     build_query_matrix,
     extract_engagement,
     finding_key,
@@ -150,6 +151,24 @@ class QueryMatrixTests(unittest.TestCase):
         self.assertTrue(any("model context protocol" in q.lower() for q in queries))
         self.assertTrue(any("from:" in q for q in queries))  # seed-account coverage
         self.assertGreaterEqual(len(queries), 8)             # genuinely a matrix
+
+
+class ExtraHeavyTests(unittest.TestCase):
+    def test_ten_diverse_prompts(self):
+        prompts = build_extra_heavy_prompts(since="2026-05-02")
+        self.assertEqual(len(prompts), 10)
+        self.assertEqual(len(set(prompts)), 10)  # all distinct
+        for p in prompts:
+            self.assertIn("since 2026-05-02", p)
+            self.assertIn("code block", p.lower())
+            self.assertIn("name | capability", p)
+            self.assertIn("10 likes", p)
+        joined = " ".join(prompts).lower()
+        for lens_kw in ["launched", "creative", "finance", "developer", "productivity", "official"]:
+            self.assertIn(lens_kw, joined)
+
+    def test_count_param(self):
+        self.assertEqual(len(build_extra_heavy_prompts(since="x", count=5)), 5)
 
 
 if __name__ == "__main__":
