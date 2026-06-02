@@ -8,6 +8,8 @@
 
 **Tech Stack:** Python 3, stdlib `unittest` + `unittest.mock`, `urllib` (existing `fetch_text`), optional Firecrawl API / Playwright (env-gated). Tests run with `python3 -m unittest`.
 
+**Status (2026-06-01):** Tasks 1–8 ✅ complete, committed on branch `feat/pipeline-hardening`, offline-verified (361 tests, 5 live skipped). **Phase 1b** (live collector repairs, public Codex collector, registry keys) is **blocked on live access** — `FIRECRAWL_API_KEY` for rendering, `MCP_NEWSLETTER_PULSEMCP_KEY`, and live DOM/endpoint recon — and is the next plan. P2/P3 follow P1b.
+
 ---
 
 ## File Structure

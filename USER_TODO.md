@@ -37,8 +37,9 @@ MCP_NEWSLETTER_EMAIL_TO=... MCP_NEWSLETTER_SMTP_USER=... MCP_NEWSLETTER_SMTP_PAS
   python3 -m mcp_newsletter email --date 2026-05-15
 ```
 
-## Fix hardcoded Codex plugin path
+## Fix hardcoded Codex plugin path — ✅ DONE (2026-06-01)
 
-`mcp_newsletter/providers/codex.py:17` defaults to `/Users/jon/.codex/.tmp/plugins`, which doesn't exist on this machine (user is `openclaw`). The collector emits a "marketplace not found" issue every run. Either:
-- Set `MCP_NEWSLETTER_CODEX_PLUGIN_ROOT` to your real plugin root in the launchd plist, or
-- Change the default in code to `~/.codex/plugins` (or wherever Codex actually stores plugins on this machine).
+`mcp_newsletter/providers/codex.py` now defaults to `~/.codex/plugins` (machine-independent),
+still overridable via `MCP_NEWSLETTER_CODEX_PLUGIN_ROOT`. Note: the *local-FS* codex collector is
+itself slated for replacement by a public ChatGPT-apps/Codex collector in Phase 1b — see
+`docs/superpowers/specs/2026-06-01-pipeline-hardening-and-reaim-design.md`.
