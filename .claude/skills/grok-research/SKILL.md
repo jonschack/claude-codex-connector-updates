@@ -27,8 +27,10 @@ Load the Claude-in-Chrome tools (ToolSearch `query: "computer-use"` → no; use 
 ## Step 3 — Run the query protocol (the "systematic initiative")
 For each query below: locate the prompt input (`find` / `read_page`), type the query (`form_input` or `computer`), submit (Enter), then **wait for the streamed answer to finish** (poll `get_page_text` ~2–3s apart until it stops growing, or wait ~15–25s), and capture the final answer text. Start a fresh chat (new query) for each to avoid context bleed. Append each captured answer to a single raw blob (save to `data/snapshots/<date>/grok/` for audit).
 
-**Always end each query with this format instruction** so parsing is robust:
-> "Return ONLY a table with columns: `name | capability | why_viral | source_url | example_prompt`. One MCP server/connector per row. `source_url` must be a real GitHub repo or official page. `example_prompt` is a natural 'Claude, …' the tool would answer."
+**Always end each query with this format instruction** so parsing is robust. Use a **fenced code block, NOT a markdown table** — `get_page_text` flattens HTML tables and strips the `|` delimiters (confirmed in live testing), but preserves code blocks verbatim:
+> "Return ONLY a fenced code block (triple backticks), one row per line, fields separated by ` | `, NOT a markdown table. Columns in order: `name | capability | why_viral | source_url | example_prompt`. One MCP server/connector per row. `source_url` must be a real GitHub repo or official page. `example_prompt` is a natural 'Claude, …' the tool would answer."
+
+> If a prior answer came back as a table (pipes lost on extraction), send one follow-up: *"Re-output the exact same data as a fenced code block, one row per line, fields separated by ' | ', no markdown table."*
 
 Query set (run all; tune dates to 'now'):
 1. *"What MCP servers or Claude/ChatGPT connectors have gone viral on X in the last 2 weeks?"*
