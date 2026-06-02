@@ -11,7 +11,7 @@ from typing import Dict, List, Optional
 # vendor-only health pass never falsely flags a registry source as "empty".
 # NOTE: raise `claude` once P1 rendered collection captures the full directory.
 VENDOR_FLOORS: Dict[str, int] = {
-    "claude": 20,
+    "claude": 300,  # full Webflow-pagination collection lands ~338 (was ~24 pre-pagination)
     "codex": 1,
     "gemini": 50,
     "cline": 50,

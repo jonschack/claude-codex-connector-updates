@@ -22,6 +22,44 @@ DETAIL = """
 
 
 class ClaudeProviderTests(unittest.TestCase):
+    def test_paginates_full_directory(self):
+        # Webflow CMS pagination: page 1 reveals the `_page` param; follow it
+        # until a page yields no new connectors.
+        page1 = (
+            '<html><body>'
+            '<a href="https://claude.com/connectors/acme">Acme</a>'
+            '<a href="https://claude.com/connectors/beta">Beta</a>'
+            '<a href="https://claude.com/connectors?abc123_page=2">Next</a>'
+            '<a href="https://claude.com/connectors?abc123_page=3">Last</a>'
+            '</body></html>'
+        )
+        page2 = (
+            '<html><body>'
+            '<a href="https://claude.com/connectors/gamma">Gamma</a>'
+            '<a href="https://claude.com/connectors/delta">Delta</a>'
+            '</body></html>'
+        )
+        page3 = '<html><body><p>no connectors here</p></body></html>'
+        detail = '<html><body><main><h1>X</h1><p>Does a useful thing.</p></main></body></html>'
+
+        with tempfile.TemporaryDirectory() as tmp:
+            ctx = CollectContext(root=Path(tmp), run_date="2026-06-01", skip_network=False)
+
+            def fake_fetch(provider, url, label=None, extra_headers=None):
+                if url.rstrip("/") == "https://claude.com/connectors":
+                    return page1
+                if "abc123_page=2" in url:
+                    return page2
+                if "abc123_page=3" in url:
+                    return page3
+                return detail
+
+            with mock.patch.object(ctx, "fetch", side_effect=fake_fetch):
+                servers = collect_claude(ctx)
+
+            ids = sorted(s.server_id for s in servers)
+            self.assertEqual(ids, ["acme", "beta", "delta", "gamma"])
+
     def test_description_is_clean_main_content(self):
         with tempfile.TemporaryDirectory() as tmp:
             ctx = CollectContext(root=Path(tmp), run_date="2026-06-01", skip_network=False)

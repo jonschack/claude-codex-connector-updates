@@ -14,6 +14,46 @@ from ..utils import env_bool, extract_links, extract_title, html_to_text, slugif
 PROVIDER = "claude"
 DIRECTORY_URL = "https://claude.com/connectors"
 
+# The directory is a Webflow CMS list paginated server-side via a hashed param
+# (e.g. ?cc61befa_page=2). Plain HTTP across those pages returns the FULL catalog
+# (~338), vs ~24 from page 1 alone — no JS rendering needed. The param hash can
+# change if the site is rebuilt, so we discover it from the page rather than hardcode.
+CONNECTOR_RE = re.compile(r"https://claude\.com/(?:[a-z]{2}/)?connectors/[a-z0-9-]+/?$")
+PAGE_PARAM_RE = re.compile(r"[?&]([a-z0-9]+_page)=\d+")
+SAFETY_MAX_PAGES = 60
+
+
+def _connector_links(markup: str, base_url: str) -> set:
+    return {
+        link.split("#", 1)[0].rstrip("/")
+        for link in extract_links(markup, base_url)
+        if CONNECTOR_RE.match(link)
+    }
+
+
+def _collect_detail_urls(ctx: CollectContext, directory_url: str, first_markup: str) -> List[str]:
+    """All connector detail URLs, following Webflow CMS pagination until a page
+    yields no new connectors (or a safety page cap is hit). Falls back to a render
+    backend only when no server-side pagination param is present."""
+    urls = _connector_links(first_markup, directory_url)
+    match = PAGE_PARAM_RE.search(first_markup)
+    if match:
+        param = match.group(1)
+        for page in range(2, SAFETY_MAX_PAGES + 1):
+            markup = ctx.fetch(PROVIDER, f"{directory_url}?{param}={page}", f"connectors-page-{page}")
+            if not markup:
+                break
+            new = _connector_links(markup, directory_url) - urls
+            if not new:
+                break
+            urls |= new
+        else:
+            ctx.add_issue(PROVIDER, directory_url, f"hit SAFETY_MAX_PAGES={SAFETY_MAX_PAGES}; pagination may be truncated")
+    else:
+        # No server-side pagination found — try a render backend if configured.
+        urls |= set(_maybe_rendered_links(ctx, directory_url, list(urls)))
+    return sorted(urls)
+
 
 def _maybe_rendered_links(ctx: CollectContext, directory_url: str, links: List[str]) -> List[str]:
     """Phase 1b hook: the directory is a client-rendered SPA, so a plain fetch
@@ -61,14 +101,7 @@ def collect_claude(ctx: CollectContext) -> List[ServerRecord]:
     if not directory:
         return []
 
-    links = _maybe_rendered_links(ctx, directory_url, extract_links(directory, directory_url))
-    detail_urls = sorted(
-        {
-            link.split("#", 1)[0].rstrip("/")
-            for link in links
-            if re.match(r"https://claude\.com/(?:[a-z]{2}/)?connectors/[a-z0-9-]+/?$", link)
-        }
-    )
+    detail_urls = _collect_detail_urls(ctx, directory_url, directory)
     if not detail_urls:
         ctx.add_issue(PROVIDER, directory_url, "No connector detail links found; using directory page as a single catalog record")
         text = extract_main_text(directory)
@@ -85,7 +118,9 @@ def collect_claude(ctx: CollectContext) -> List[ServerRecord]:
         ]
 
     servers: List[ServerRecord] = []
-    for url in detail_urls[: ctx.max_details]:
+    # Fetch all paginated detail pages (full catalog ~338). Safety-capped via env.
+    max_details = int(os.environ.get("MCP_NEWSLETTER_CLAUDE_MAX_DETAILS", "1000"))
+    for url in detail_urls[:max_details]:
         markup = ctx.fetch(PROVIDER, url, f"connector-{url.rsplit('/', 1)[-1]}")
         if not markup:
             continue
