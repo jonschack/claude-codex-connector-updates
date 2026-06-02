@@ -8,7 +8,7 @@
 
 **Tech Stack:** Python 3, stdlib `unittest` + `unittest.mock`, `urllib` (existing `fetch_text`), optional Firecrawl API / Playwright (env-gated). Tests run with `python3 -m unittest`.
 
-**Status (2026-06-01):** Tasks 1–8 ✅ complete, committed on branch `feat/pipeline-hardening`, offline-verified (361 tests, 5 live skipped). **Phase 1b** (live collector repairs, public Codex collector, registry keys) is **blocked on live access** — `FIRECRAWL_API_KEY` for rendering, `MCP_NEWSLETTER_PULSEMCP_KEY`, and live DOM/endpoint recon — and is the next plan. P2/P3 follow P1b.
+**Status (2026-06-01):** Tasks 1–8 ✅ + **Claude full-directory fix ✅** (24→338, live-verified) complete, committed on branch `feat/pipeline-hardening`, 362 offline tests green (5 live skipped). Remaining **Phase 1b** (repair `openai`/`cursor`/`vscode`/`continue` collectors, public Codex collector, registry keys) still needs live recon and/or `MCP_NEWSLETTER_PULSEMCP_KEY`. Firecrawl key is available (`FIRECRAWL_API_KEY`) for the genuinely-JS sources. P2/P3 follow P1b.
 
 ---
 
@@ -309,11 +309,12 @@ class FetchRenderedTests(unittest.TestCase):
 
 ## Phase 1b — REQUIRES LIVE ACCESS (not in this offline increment)
 
-Documented for the next plan; each needs live recon and/or credentials, so concrete parser code can't be authored blind:
-- **Repair collectors** `openai`, `cursor`, `vscode`, `continue_`: use `fetch_rendered`/web recon to find the *current* endpoint+shape, rewrite the parser, add a `tests/live` contract assertion + an offline fixture test.
+- ✅ **DONE — Full Claude directory (24→338):** implemented via **plain-HTTP Webflow pagination** (discover the hashed `_page` param, follow server-rendered pages), NOT rendering. Live-verified 338 connectors, 338/338 clean descriptions, **0 Firecrawl credits**. `claude` health floor raised to 300. Key learning: the flagship gap needed pagination, not JS rendering — `fetch_rendered`/Firecrawl is reserved for genuinely-JS sources below.
+
+Still pending (each needs live recon and/or credentials):
+- **Repair collectors** `openai`, `cursor`, `vscode`, `continue_`: find the *current* endpoint+shape (try plain pagination first, then `fetch_rendered` via Firecrawl — esp. `cursor` whose 429 a render backend bypasses), rewrite the parser, add a `tests/live` contract assertion + offline fixture test.
 - **Public Codex/ChatGPT-apps collector**: replace the local-FS codex reader with a public-surface collector.
 - **Registry keys**: obtain `MCP_NEWSLETTER_PULSEMCP_KEY` / `MCP_NEWSLETTER_SMITHERY_KEY`; fix gemini >5MB streaming.
-- **Raise `claude` health floor** to ~300 once rendered collection is verified to capture the full directory.
 
 ---
 
