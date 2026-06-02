@@ -11,11 +11,15 @@ from .context import CollectContext
 # changelog) — the narrative layer the catalog/registry tiers never had. A
 # generic Atom+RSS parser keeps it source-agnostic; feeds are env-overridable.
 
-# Best-effort default feeds; override via MCP_NEWSLETTER_SIGNAL_FEEDS
-# ("name=url,name=url"). Live URLs are validated by the live-contract suite.
+# Verified working feeds (June 2026); override via MCP_NEWSLETTER_SIGNAL_FEEDS
+# ("name=url,name=url"). Anthropic publishes no native feed, so a community
+# mirror tracks its /news page. Re-verify periodically via the live-contract suite.
 DEFAULT_FEEDS: Dict[str, str] = {
-    "mcp_blog": "https://blog.modelcontextprotocol.io/atom.xml",
-    "anthropic_news": "https://www.anthropic.com/rss.xml",
+    "mcp_blog": "https://blog.modelcontextprotocol.io/index.xml",
+    "openai_news": "https://openai.com/news/rss.xml",
+    "anthropic_news": "https://raw.githubusercontent.com/taobojlen/anthropic-rss-feed/main/anthropic_news_rss.xml",
+    "simonwillison": "https://simonwillison.net/atom/everything/",
+    "latent_space": "https://www.latent.space/feed",
 }
 
 
