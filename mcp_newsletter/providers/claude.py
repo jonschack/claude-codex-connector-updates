@@ -4,13 +4,30 @@ import os
 import re
 from typing import List
 
+from ..content_extract import extract_main_text
 from ..context import CollectContext
+from ..fetch_rendered import fetch_rendered
 from ..models import ServerRecord
-from ..utils import extract_links, extract_title, html_to_text, slugify
+from ..utils import env_bool, extract_links, extract_title, html_to_text, slugify
 
 
 PROVIDER = "claude"
 DIRECTORY_URL = "https://claude.com/connectors"
+
+
+def _maybe_rendered_links(ctx: CollectContext, directory_url: str, links: List[str]) -> List[str]:
+    """Phase 1b hook: the directory is a client-rendered SPA, so a plain fetch
+    sees only a fraction of connectors. When a render backend is configured
+    (MCP_NEWSLETTER_CLAUDE_RENDER=1 + MCP_NEWSLETTER_RENDER_BACKEND), merge any
+    extra detail links the rendered DOM exposes. No-op by default."""
+    if ctx.skip_network or not env_bool("MCP_NEWSLETTER_CLAUDE_RENDER"):
+        return links
+    rendered, meta = fetch_rendered(directory_url)
+    if rendered:
+        return sorted(set(links) | set(extract_links(rendered, directory_url)))
+    if meta.get("error"):
+        ctx.add_issue(PROVIDER, directory_url, f"rendered directory fetch: {meta['error']}")
+    return links
 
 
 def _capabilities_from_text(text: str) -> List[str]:
@@ -44,7 +61,7 @@ def collect_claude(ctx: CollectContext) -> List[ServerRecord]:
     if not directory:
         return []
 
-    links = extract_links(directory, directory_url)
+    links = _maybe_rendered_links(ctx, directory_url, extract_links(directory, directory_url))
     detail_urls = sorted(
         {
             link.split("#", 1)[0].rstrip("/")
@@ -54,7 +71,7 @@ def collect_claude(ctx: CollectContext) -> List[ServerRecord]:
     )
     if not detail_urls:
         ctx.add_issue(PROVIDER, directory_url, "No connector detail links found; using directory page as a single catalog record")
-        text = html_to_text(directory)
+        text = extract_main_text(directory)
         return [
             ServerRecord(
                 provider=PROVIDER,
@@ -72,7 +89,7 @@ def collect_claude(ctx: CollectContext) -> List[ServerRecord]:
         markup = ctx.fetch(PROVIDER, url, f"connector-{url.rsplit('/', 1)[-1]}")
         if not markup:
             continue
-        text = html_to_text(markup)
+        text = extract_main_text(markup)
         slug = slugify(url.rsplit("/", 1)[-1])
         title = extract_title(markup, fallback=slug).replace(" | Claude", "").strip()
         servers.append(
