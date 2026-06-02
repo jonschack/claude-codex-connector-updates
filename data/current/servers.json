@@ -748,6 +748,45 @@
   },
   {
     "capabilities": [],
+    "description": "Account intelligence and prospecting signals from Actively",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "actively": {
+            "id": "asdk_app_6a15fca0d57c8191a204ffdd12fbbef2"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "actively",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/actively",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Actively",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "actively",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.actively.ai"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Earnings calls, transcripts, financial events, and market commentary",
     "evidence": [],
     "metadata": {
@@ -835,6 +874,45 @@
     ],
     "transport": "app",
     "write_confidence": "high"
+  },
+  {
+    "capabilities": [],
+    "description": "Data catalog search, lineage, governance, and documentation from Alation",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "alation": {
+            "id": "asdk_app_6a0f9ab98bf4819197de479522d5367b"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "alation",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/alation",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Alation",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "alation",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.alation.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
   },
   {
     "capabilities": [],
@@ -1100,6 +1178,60 @@
     "write_confidence": "medium"
   },
   {
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "description": "Build and deploy Base44 full-stack apps with CLI project management and JavaScript/TypeScript SDK development skills",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "base44": {
+            "id": "asdk_app_6952514760dc8191ab148f77c5794d46"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Developer Tools",
+        "name": "base44",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/base44",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Base44",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "base44",
+    "source_urls": [
+      "https://base44.com",
+      "https://docs.base44.com",
+      "https://github.com/base44/skills"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
+  },
+  {
     "capabilities": [],
     "description": "Binance for Codex lets you access and explore Binance public, read-only market data using natural language.",
     "evidence": [],
@@ -1191,6 +1323,7 @@
       },
       "discovery": {},
       "marketplace": {
+        "category": "Productivity",
         "name": "box",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1701,6 +1834,45 @@
     "source_urls": [
       "https://github.com/openai/plugins",
       "https://www.channel99.com/"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Private capital portfolio monitoring, fund metrics, and company updates",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "chronograph": {
+            "id": "asdk_app_6a15c452ae04819187569784a47f7243"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Research",
+        "name": "chronograph",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/chronograph",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Chronograph",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "chronograph",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.chronograph.pe"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -2613,6 +2785,53 @@
     "write_confidence": "unknown"
   },
   {
+    "capabilities": [
+      "Company ownership and linkage trees",
+      "Company search by name or D-U-N-S number",
+      "Credit application decisioning",
+      "Detailed company credit-risk reports",
+      "Portfolio folder creation, movement, and organization",
+      "Portfolio search, filtering, aggregation, and sorting",
+      "Server-provided Finance Analytics skill discovery"
+    ],
+    "description": "Credit origination, portfolio management, company reports, and workflow tools from D&B Finance Analytics.",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "dnb-finance-analytics": {
+            "id": "asdk_app_6a19c12f33e48191bbf02b9d58c49421"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Research",
+        "name": "dnb-finance-analytics",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/dnb-finance-analytics",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "D&B Finance Analytics",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "dnb-finance-analytics",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.dnb.com/"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
     "capabilities": [],
     "description": "Docket AI makes your sales knowledge your instant superpower.",
     "evidence": [],
@@ -2943,6 +3162,45 @@
     "write_confidence": "unknown"
   },
   {
+    "capabilities": [],
+    "description": "AI image and media generation workflows using Fal models",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "fal": {
+            "id": "asdk_app_6a19d5012d308191a00a48780f7dcdcc"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Design",
+        "name": "fal",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/fal",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Fal",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "fal",
+    "source_urls": [
+      "https://fal.ai",
+      "https://github.com/openai/plugins"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
     "capabilities": [
       "Interactive",
       "Read",
@@ -3068,6 +3326,45 @@
     "server_id": "fireflies",
     "source_urls": [
       "https://fireflies.ai",
+      "https://github.com/openai/plugins"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Financial research, company fundamentals, filings, and market insights from Fiscal AI",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "fiscal-ai": {
+            "id": "asdk_app_69bd60b8ee4c81919b3167218ca26225"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Research",
+        "name": "fiscal-ai",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/fiscal-ai",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Fiscal AI",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "fiscal-ai",
+    "source_urls": [
+      "https://fiscal.ai",
       "https://github.com/openai/plugins"
     ],
     "transport": "app",
@@ -3339,6 +3636,7 @@
       },
       "discovery": {},
       "marketplace": {
+        "category": "Productivity",
         "name": "google-drive",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3476,6 +3774,45 @@
     "source_urls": [
       "https://github.com/openai/plugins",
       "https://happenstance.ai"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Document research, evidence-backed answers, and project analysis from Hebbia",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "hebbia": {
+            "id": "asdk_app_6a1ddc1ed8c48191920c125a768988de"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Research",
+        "name": "hebbia",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/hebbia",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Hebbia",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "hebbia",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.hebbia.ai"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -3843,6 +4180,45 @@
   },
   {
     "capabilities": [],
+    "description": "Customer conversations, contacts, tickets, and support workflows from Intercom",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "intercom": {
+            "id": "connector_9f3d361ec84b4c6588a7129a2d4e3cb3"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "intercom",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/intercom",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Intercom",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "intercom",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.intercom.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Screen record with context",
     "evidence": [],
     "metadata": {
@@ -4005,6 +4381,45 @@
   },
   {
     "capabilities": [],
+    "description": "Build and inspect Lovable app projects from connected workspace context",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "lovable": {
+            "id": "asdk_app_693a0a79ffe48191901173077edcf914"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Developer Tools",
+        "name": "lovable",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/lovable",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Lovable",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "lovable",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://lovable.dev"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Financial market data, company intelligence, and news",
     "evidence": [],
     "metadata": {
@@ -4119,6 +4534,57 @@
     ],
     "transport": "app",
     "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "description": "Query and explore your Metabase data",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "metabase": {
+            "id": "templated_apps_6a044bbd332881919b553bdfc2240952"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "metabase",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/metabase",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Metabase",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "metabase",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.metabase.com"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
   },
   {
     "capabilities": [],
@@ -4759,6 +5225,52 @@
     "write_confidence": "high"
   },
   {
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "description": "Skills for NVIDIAs ecosystem spans GPU acceleration, CUDA, AI agents, inference, robotics, Physical AI, Omniverse, and simulation. This plugin helps you understand the pieces, choose a path, validate your setup, and build practical NVIDIA-powered workflows.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {},
+      "discovery": {},
+      "marketplace": {
+        "category": "Developer Tools",
+        "name": "nvidia",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/nvidia",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "NVIDIA",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "nvidia",
+    "source_urls": [
+      "https://build.nvidia.com/skills/",
+      "https://github.com/NVIDIA/skills",
+      "https://www.nvidia.com/"
+    ],
+    "transport": "plugin",
+    "write_confidence": "high"
+  },
+  {
     "capabilities": [],
     "description": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex.",
     "evidence": [],
@@ -4825,7 +5337,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Engineering",
+        "category": "Developer Tools",
         "name": "openai-developers",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4996,6 +5508,45 @@
   },
   {
     "capabilities": [],
+    "description": "Sales engagement, prospects, sequences, and deal activity context",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "outreach": {
+            "id": "asdk_app_6a0783e216e48191957d34a5381e3b06"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "outreach",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/outreach",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Outreach",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "outreach",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.outreach.io"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Particl Market Research helps teams answer ecommerce research questions directly in Codex.",
     "evidence": [],
     "metadata": {
@@ -5029,6 +5580,45 @@
     "source_urls": [
       "https://github.com/openai/plugins",
       "https://www.particl.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Image editing, creative assets, and design workflows from Picsart",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "picsart": {
+            "id": "asdk_app_6a19e79863a0819187de23f77e12d7cd"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Design",
+        "name": "picsart",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/picsart",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Picsart",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "picsart",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://picsart.com"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -5199,6 +5789,60 @@
     "write_confidence": "unknown"
   },
   {
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "description": "Query product analytics and manage feature flags, experiments, and errors in PostHog.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "posthog": {
+            "id": "asdk_app_699caef2d680819188727b0ddbb349dd"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "posthog",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/posthog",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "PostHog",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "posthog",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://posthog.com",
+      "https://posthog.com/docs"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
+  },
+  {
     "capabilities": [],
     "description": "Access Pylon's customer support platform directly from Codex to search, manage, and resolve customer issues.",
     "evidence": [
@@ -5278,6 +5922,45 @@
     "source_urls": [
       "https://github.com/openai/plugins",
       "https://quartr.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "QuickBooks accounting, invoices, expenses, customers, and payment context",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "quickbooks": {
+            "id": "asdk_app_697aea3231288191b28a0061066e51bd"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "quickbooks",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/quickbooks",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "QuickBooks",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "quickbooks",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://quickbooks.intuit.com"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -5575,6 +6258,45 @@
     ],
     "transport": "plugin",
     "write_confidence": "high"
+  },
+  {
+    "capabilities": [],
+    "description": "Work with Replit projects, apps, deployments, and workspace context",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "replit": {
+            "id": "asdk_app_6934801c799081918131791660f02890"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Developer Tools",
+        "name": "replit",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/replit",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Replit",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "replit",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://replit.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
   },
   {
     "capabilities": [],
@@ -5944,6 +6666,45 @@
     ],
     "transport": "app",
     "write_confidence": "high"
+  },
+  {
+    "capabilities": [],
+    "description": "Search licensed stock images, videos, music, and creative assets",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "shutterstock": {
+            "id": "asdk_app_69b34589585c819183939cb03b6bd191"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Design",
+        "name": "shutterstock",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/shutterstock",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Shutterstock",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "shutterstock",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.shutterstock.com"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
   },
   {
     "capabilities": [],
@@ -6962,6 +7723,60 @@
     "write_confidence": "unknown"
   },
   {
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "description": "Build and deploy Wix apps and headless websites, and manage your Wix business. Includes CLI development skills, Wix Headless for any frontend framework, and Wix MCP server for eCommerce, CMS, dashboard extensions, and more.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "wix": {
+            "id": "asdk_app_6947eaa4edd081919561e4ee3a2e5dcc"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Developer Tools",
+        "name": "wix",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/wix",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Wix",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "wix",
+    "source_urls": [
+      "https://dev.wix.com/",
+      "https://dev.wix.com/docs/api-reference/articles/ai-tools/about-wix-skills",
+      "https://github.com/wix/skills"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
+  },
+  {
     "capabilities": [],
     "description": "YepCode lets you build custom AI tools using your own code with JSON Schema-defined inputs, executed in an...",
     "evidence": [],
@@ -6996,6 +7811,45 @@
     "source_urls": [
       "https://github.com/openai/plugins",
       "https://yepcode.io/"
+    ],
+    "transport": "app",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "CRM records, deals, contacts, and account context from Zoho",
+    "evidence": [],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "zoho": {
+            "id": "asdk_app_6a193ef5e804819197c25f88d92d6bf7"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "zoho",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/zoho",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Zoho",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "zoho",
+    "source_urls": [
+      "https://github.com/openai/plugins",
+      "https://www.zoho.com"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -7334,7 +8188,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "1.9.7"
+        "version": "2.0.1"
       }
     },
     "name": "aegis",
@@ -11777,7 +12631,7 @@
         "contextFileName": "GEMINI.md",
         "description": "\u901a\u7528\u5171\u8bc6\u5f0f\u7814\u53d1 skills \u5e93\uff1a\u504f\u7f6e\u72ec\u7acb\u7684\u591a\u89d2\u5ea6\u5171\u8bc6\u6784\u5efa\u5f15\u64ce",
         "name": "consensus-rnd",
-        "version": "1.0.0-beta.5"
+        "version": "1.0.0-beta.7"
       }
     },
     "name": "consensus-rnd",
@@ -14279,6 +15133,47 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "Gemini CLI extension for Google Kubernetes Engine.",
+          "evidence": [],
+          "metadata": {
+            "discovery": {
+              "ok": false,
+              "reason": "local_or_unconfigured_mcp_discovery_deferred"
+            },
+            "excludeTools": null,
+            "includeTools": null,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "Gemini CLI extension for Google Kubernetes Engine.",
+              "mcpServers": {
+                "gke": {
+                  "command": "${extensionPath}${/}gke-mcp"
+                }
+              },
+              "name": "gke-mcp",
+              "version": "0.13.0"
+            },
+            "mcp_server": {
+              "command": "${extensionPath}${/}gke-mcp"
+            }
+          },
+          "name": "gke-mcp: gke",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "gke-mcp-gke",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/GoogleCloudPlatform/gke-mcp",
+            "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
+          ],
+          "transport": "stdio",
+          "write_confidence": "unknown"
+        }
+      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -14290,7 +15185,7 @@
           }
         },
         "name": "gke-mcp",
-        "version": "0.13.0"
+        "version": "0.11.1"
       },
       "mcp_server": {
         "command": "${extensionPath}${/}gke-mcp"
@@ -14303,7 +15198,9 @@
     "server_id": "gke-mcp-gke",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/AravG7/gke-mcp",
       "https://github.com/GoogleCloudPlatform/gke-mcp",
+      "https://raw.githubusercontent.com/AravG7/gke-mcp/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
@@ -16141,70 +17038,64 @@
   },
   {
     "capabilities": [],
-    "description": "\u4e2d\u56fd\u5e73\u53f0\u6df1\u5ea6\u7814\u7a76\u5f15\u64ce\uff08v2.0\uff09\u2014 \u96c6\u6210 MediaCrawler / Playwright \u722c\u866b\u601d\u8def\uff0c\u964d\u4f4e API Key \u4f9d\u8d56\uff1b\u641c\u7d22\u5fae\u535a\u3001\u5c0f\u7ea2\u4e66\u3001B\u7ad9\u3001\u77e5\u4e4e\u3001\u6296\u97f3\u3001\u5fae\u4fe1\u516c\u4f17\u53f7\u3001\u767e\u5ea6\u641c\u7d22\u3001\u4eca\u65e5\u5934\u6761\u7b49 8 \u5927\u5e73\u53f0\u6700\u8fd1 30 \u5929\u7684\u70ed\u95e8\u5185\u5bb9\u3002",
+    "description": "Chinese-platform last-30-days research skill covering Weibo, Xiaohongshu, Bilibili, Zhihu, Douyin, WeChat, Baidu, and Toutiao. Includes compact Markdown, full Markdown, JSON, and Guizang-inspired Swiss/IKB HTML report output.",
     "evidence": [],
     "metadata": {
       "gallery_text_seen": true,
       "manifest": {
-        "description": "\u4e2d\u56fd\u5e73\u53f0\u6df1\u5ea6\u7814\u7a76\u5f15\u64ce\uff08v2.0\uff09\u2014 \u96c6\u6210 MediaCrawler / Playwright \u722c\u866b\u601d\u8def\uff0c\u964d\u4f4e API Key \u4f9d\u8d56\uff1b\u641c\u7d22\u5fae\u535a\u3001\u5c0f\u7ea2\u4e66\u3001B\u7ad9\u3001\u77e5\u4e4e\u3001\u6296\u97f3\u3001\u5fae\u4fe1\u516c\u4f17\u53f7\u3001\u767e\u5ea6\u641c\u7d22\u3001\u4eca\u65e5\u5934\u6761\u7b49 8 \u5927\u5e73\u53f0\u6700\u8fd1 30 \u5929\u7684\u70ed\u95e8\u5185\u5bb9\u3002",
+        "description": "Chinese-platform last-30-days research skill covering Weibo, Xiaohongshu, Bilibili, Zhihu, Douyin, WeChat, Baidu, and Toutiao. Includes compact Markdown, full Markdown, JSON, and Guizang-inspired Swiss/IKB HTML report output.",
         "name": "last30days-cn",
         "settings": [
           {
-            "description": "\u6269\u5c55\u5b89\u88c5\u76ee\u5f55\uff08Gemini CLI \u81ea\u52a8\u8bbe\u7f6e\uff09",
+            "description": "Gemini CLI extension install directory.",
             "envVar": "GEMINI_EXTENSION_DIR",
             "name": "Extension Directory",
             "sensitive": false
           },
           {
-            "description": "\u5fae\u535a\u5f00\u653e\u5e73\u53f0 Access Token\uff08\u53ef\u9009\uff09",
+            "description": "Optional Weibo API access token.",
             "envVar": "WEIBO_ACCESS_TOKEN",
-            "name": "\u5fae\u535a\u8bbf\u95ee\u4ee4\u724c",
+            "name": "Weibo Access Token",
             "sensitive": true
           },
           {
-            "description": "ScrapeCreators API Key\uff0c\u7528\u4e8e\u5c0f\u7ea2\u4e66\u641c\u7d22\uff08\u53ef\u9009\uff09",
+            "description": "Optional API key kept for compatibility with existing configuration.",
             "envVar": "SCRAPECREATORS_API_KEY",
             "name": "ScrapeCreators API Key",
             "sensitive": true
           },
           {
-            "description": "\u77e5\u4e4e\u767b\u5f55 Cookie\uff0c\u7528\u4e8e\u589e\u5f3a\u641c\u7d22\uff08\u53ef\u9009\uff09",
+            "description": "Optional Zhihu login cookie for higher-quality search.",
             "envVar": "ZHIHU_COOKIE",
-            "name": "\u77e5\u4e4e Cookie",
+            "name": "Zhihu Cookie",
             "sensitive": true
           },
           {
-            "description": "TikHub API Key\uff0c\u7528\u4e8e\u6296\u97f3\u641c\u7d22\uff08\u53ef\u9009\uff09",
+            "description": "Optional TikHub key for Douyin search.",
             "envVar": "TIKHUB_API_KEY",
             "name": "TikHub API Key",
             "sensitive": true
           },
           {
-            "description": "\u5fae\u4fe1\u516c\u4f17\u53f7\u641c\u7d22 API Key\uff08\u53ef\u9009\uff09",
+            "description": "Optional WeChat public-account search API key.",
             "envVar": "WECHAT_API_KEY",
-            "name": "\u5fae\u4fe1 API Key",
+            "name": "WeChat API Key",
             "sensitive": true
           },
           {
-            "description": "\u767e\u5ea6\u641c\u7d22 API Key\uff08\u53ef\u9009\uff09",
+            "description": "Optional Baidu search API key.",
             "envVar": "BAIDU_API_KEY",
-            "name": "\u767e\u5ea6 API Key",
+            "name": "Baidu API Key",
             "sensitive": true
           },
           {
-            "description": "\u767e\u5ea6\u641c\u7d22 Secret Key\uff0c\u4e0e API Key \u914d\u5bf9\u4f7f\u7528\uff08\u53ef\u9009\uff09",
+            "description": "Optional Baidu secret key paired with BAIDU_API_KEY.",
             "envVar": "BAIDU_SECRET_KEY",
-            "name": "\u767e\u5ea6 Secret Key",
-            "sensitive": true
-          },
-          {
-            "description": "\u4eca\u65e5\u5934\u6761 API Key\uff08\u53ef\u9009\uff09",
-            "envVar": "TOUTIAO_API_KEY",
-            "name": "\u5934\u6761 API Key",
+            "name": "Baidu Secret Key",
             "sensitive": true
           }
         ],
-        "version": "2.0.0"
+        "version": "3.0.0-cn"
       }
     },
     "name": "last30days-cn",
@@ -19814,7 +20705,7 @@
             "name": "PostHog MCP URL"
           }
         ],
-        "version": "1.0.23"
+        "version": "1.0.24"
       },
       "mcp_server": {
         "args": [
@@ -22781,6 +23672,48 @@
       "https://geminicli.com/extensions/",
       "https://github.com/Synaptic-Weave/total-recall-gemini",
       "https://raw.githubusercontent.com/Synaptic-Weave/total-recall-gemini/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Siemens TIA Portal engineering automation for Gemini. Provides routed skills for Python TIA Scripting and C# Openness API, TIA Portal MCP configuration, MCP write safety hooks, and bundled Siemens PLC language-server assets.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "author": "[REDACTED]",
+        "contextFileName": "GEMINI.md",
+        "description": "Siemens TIA Portal engineering automation for Gemini. Provides routed skills for Python TIA Scripting and C# Openness API, TIA Portal MCP configuration, MCP write safety hooks, and bundled Siemens PLC language-server assets.",
+        "keywords": "[REDACTED]",
+        "license": "MIT",
+        "mcpServers": {
+          "tia-portal": {
+            "command": "tia-mcp"
+          }
+        },
+        "name": "totally-integrated-claude",
+        "version": "4.2.0"
+      },
+      "mcp_server": {
+        "command": "tia-mcp"
+      }
+    },
+    "name": "totally-integrated-claude: tia-portal",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "totally-integrated-claude-tia-portal",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Czarnak/totally-integrated-claude",
+      "https://raw.githubusercontent.com/Czarnak/totally-integrated-claude/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
     "write_confidence": "unknown"

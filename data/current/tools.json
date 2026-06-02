@@ -761,18 +761,22 @@
           },
           "GoogleBigtableAdminV2TypeAggregateHyperLogLogPlusPlusUniqueCount": {
             "description": "Computes an approximate unique count over the input values. When using raw data as input, be careful to use a consistent encoding. Otherwise the same value encoded differently could count more than once, or two distinct values could count as identical. Input: Any, or omit for Raw State: TBD Special state conversions: `Int64` (the unique count estimate)",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeAggregateMax": {
             "description": "Computes the max of the input values. Allowed input: `Int64` State: same as input",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeAggregateMin": {
             "description": "Computes the min of the input values. Allowed input: `Int64` State: same as input",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeAggregateSum": {
             "description": "Computes the sum of the input values. Allowed input: `Int64` State: same as input",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeArray": {
@@ -797,6 +801,7 @@
           },
           "GoogleBigtableAdminV2TypeBoolEncoding": {
             "description": "Defines rules used to convert to or from lower level types.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeBytes": {
@@ -831,6 +836,7 @@
           },
           "GoogleBigtableAdminV2TypeDate": {
             "description": "Date Values of type `Date` are stored in `Value.date_value`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeEnum": {
@@ -849,14 +855,17 @@
           },
           "GoogleBigtableAdminV2TypeFloat32": {
             "description": "Float32 Values of type `Float32` are stored in `Value.float_value`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeFloat64": {
             "description": "Float64 Values of type `Float64` are stored in `Value.float_value`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeGeography": {
             "description": "A geography type, representing a point or region on Earth. The value is stored in `Value.bytes_value` as Well-Known Binary (WKB) bytes.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeInt32": {
@@ -885,10 +894,12 @@
           },
           "GoogleBigtableAdminV2TypeInt32EncodingBigEndianBytes": {
             "description": "Encodes the value as a 4-byte big-endian two's complement value. Sorted mode: non-negative values are supported. Distinct mode: all values are supported. Compatible with: - BigQuery `BINARY` encoding - HBase `Bytes.toBytes` - Java `ByteBuffer.putInt()` with `ByteOrder.BIG_ENDIAN`",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeInt32EncodingOrderedCodeBytes": {
             "description": "Encodes the value in a variable length binary format of up to 5 bytes. Values that are closer to zero use fewer bytes. Sorted mode: all values are supported. Distinct mode: all values are supported.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeInt64": {
@@ -928,6 +939,7 @@
           },
           "GoogleBigtableAdminV2TypeInt64EncodingOrderedCodeBytes": {
             "description": "Encodes the value in a variable length binary format of up to 10 bytes. Values that are closer to zero use fewer bytes. Sorted mode: all values are supported. Distinct mode: all values are supported.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeMap": {
@@ -995,6 +1007,7 @@
           },
           "GoogleBigtableAdminV2TypeStringEncodingUtf8Raw": {
             "description": "Deprecated: prefer the equivalent `Utf8Bytes`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeStruct": {
@@ -1045,10 +1058,12 @@
           },
           "GoogleBigtableAdminV2TypeStructEncodingOrderedCodeBytes": {
             "description": "Fields are encoded independently, then escaped and delimited by appling the following rules in order: - While the last remaining field is `ASC` or `UNSPECIFIED`, and encodes to the empty string \"\", remove it. - In each remaining field, replace all null bytes `0x00` with the fixed byte pair `{0x00, 0xFF}`. - If any remaining field encodes to the empty string \"\", replace it with the fixed byte pair `{0x00, 0x00}`. - Append the fixed byte pair `{0x00, 0x01}` to each remaining field, except for the last remaining field if it is `ASC`. - Bitwise negate all `DESC` fields. - Concatenate the results, or emit the fixed byte pair `{0x00, 0x00}` if there are no remaining fields to concatenate. Examples: ``` - STRUCT() -> \"\\00\\00\" - STRUCT(\"\") -> \"\\00\\00\" - STRUCT(\"\", \"\") -> \"\\00\\00\" - STRUCT(\"\", \"B\") -> \"\\00\\00\" + \"\\00\\01\" + \"B\" - STRUCT(\"A\", \"\") -> \"A\" - STRUCT(\"\", \"B\", \"\") -> \"\\00\\00\" + \"\\00\\01\" + \"B\" - STRUCT(\"A\", \"\", \"C\") -> \"A\" + \"\\00\\01\" + \"\\00\\00\" + \"\\00\\01\" + \"C\" ``` Examples for struct with `DESC` fields: ``` - STRUCT(\"\" DESC) -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\" DESC, \"\") -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\" DESC, \"\", \"\") -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\" DESC, \"A\") -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" + \"A\" - STRUCT(\"A\", \"\" DESC, \"\") -> \"A\" + \"\\00\\01\" + \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\", \"A\" DESC) -> \"\\x00\\x00\" + \"\\x00\\x01\" + \"\\xBE\" + \"\\xFF\\xFE\" ``` Since null bytes are always escaped, this encoding can cause size blowup for encodings like `Int64.BigEndianBytes` that are likely to produce many such bytes. Sorted mode: - Fields are encoded in sorted mode. - All values supported by the field encodings are allowed. - Fields with unset or `UNSPECIFIED` order are treated as `ASC`. - Element-wise order is preserved: `A < B` if `A[0] < B[0]`, or if `A[0] == B[0] && A[1] < B[1]`, etc. Strict prefixes sort first. Distinct mode: - Fields are encoded in distinct mode. - All values supported by the field encodings are allowed.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeStructEncodingSingleton": {
             "description": "Uses the encoding of `fields[0].type` as-is. Only valid if `fields.size == 1`. This encoding does not support `DESC` field ordering.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeStructField": {
@@ -1415,6 +1430,7 @@
       "name": "delete_instance",
       "outputSchema": {
         "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
+        "properties": {},
         "type": "object"
       }
     },
@@ -1497,6 +1513,7 @@
       "name": "delete_logical_view",
       "outputSchema": {
         "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
+        "properties": {},
         "type": "object"
       }
     },
@@ -1571,6 +1588,7 @@
       "name": "delete_table",
       "outputSchema": {
         "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
+        "properties": {},
         "type": "object"
       }
     },
@@ -2131,18 +2149,22 @@
           },
           "GoogleBigtableAdminV2TypeAggregateHyperLogLogPlusPlusUniqueCount": {
             "description": "Computes an approximate unique count over the input values. When using raw data as input, be careful to use a consistent encoding. Otherwise the same value encoded differently could count more than once, or two distinct values could count as identical. Input: Any, or omit for Raw State: TBD Special state conversions: `Int64` (the unique count estimate)",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeAggregateMax": {
             "description": "Computes the max of the input values. Allowed input: `Int64` State: same as input",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeAggregateMin": {
             "description": "Computes the min of the input values. Allowed input: `Int64` State: same as input",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeAggregateSum": {
             "description": "Computes the sum of the input values. Allowed input: `Int64` State: same as input",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeArray": {
@@ -2167,6 +2189,7 @@
           },
           "GoogleBigtableAdminV2TypeBoolEncoding": {
             "description": "Defines rules used to convert to or from lower level types.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeBytes": {
@@ -2201,6 +2224,7 @@
           },
           "GoogleBigtableAdminV2TypeDate": {
             "description": "Date Values of type `Date` are stored in `Value.date_value`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeEnum": {
@@ -2219,14 +2243,17 @@
           },
           "GoogleBigtableAdminV2TypeFloat32": {
             "description": "Float32 Values of type `Float32` are stored in `Value.float_value`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeFloat64": {
             "description": "Float64 Values of type `Float64` are stored in `Value.float_value`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeGeography": {
             "description": "A geography type, representing a point or region on Earth. The value is stored in `Value.bytes_value` as Well-Known Binary (WKB) bytes.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeInt32": {
@@ -2255,10 +2282,12 @@
           },
           "GoogleBigtableAdminV2TypeInt32EncodingBigEndianBytes": {
             "description": "Encodes the value as a 4-byte big-endian two's complement value. Sorted mode: non-negative values are supported. Distinct mode: all values are supported. Compatible with: - BigQuery `BINARY` encoding - HBase `Bytes.toBytes` - Java `ByteBuffer.putInt()` with `ByteOrder.BIG_ENDIAN`",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeInt32EncodingOrderedCodeBytes": {
             "description": "Encodes the value in a variable length binary format of up to 5 bytes. Values that are closer to zero use fewer bytes. Sorted mode: all values are supported. Distinct mode: all values are supported.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeInt64": {
@@ -2298,6 +2327,7 @@
           },
           "GoogleBigtableAdminV2TypeInt64EncodingOrderedCodeBytes": {
             "description": "Encodes the value in a variable length binary format of up to 10 bytes. Values that are closer to zero use fewer bytes. Sorted mode: all values are supported. Distinct mode: all values are supported.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeMap": {
@@ -2365,6 +2395,7 @@
           },
           "GoogleBigtableAdminV2TypeStringEncodingUtf8Raw": {
             "description": "Deprecated: prefer the equivalent `Utf8Bytes`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeStruct": {
@@ -2415,10 +2446,12 @@
           },
           "GoogleBigtableAdminV2TypeStructEncodingOrderedCodeBytes": {
             "description": "Fields are encoded independently, then escaped and delimited by appling the following rules in order: - While the last remaining field is `ASC` or `UNSPECIFIED`, and encodes to the empty string \"\", remove it. - In each remaining field, replace all null bytes `0x00` with the fixed byte pair `{0x00, 0xFF}`. - If any remaining field encodes to the empty string \"\", replace it with the fixed byte pair `{0x00, 0x00}`. - Append the fixed byte pair `{0x00, 0x01}` to each remaining field, except for the last remaining field if it is `ASC`. - Bitwise negate all `DESC` fields. - Concatenate the results, or emit the fixed byte pair `{0x00, 0x00}` if there are no remaining fields to concatenate. Examples: ``` - STRUCT() -> \"\\00\\00\" - STRUCT(\"\") -> \"\\00\\00\" - STRUCT(\"\", \"\") -> \"\\00\\00\" - STRUCT(\"\", \"B\") -> \"\\00\\00\" + \"\\00\\01\" + \"B\" - STRUCT(\"A\", \"\") -> \"A\" - STRUCT(\"\", \"B\", \"\") -> \"\\00\\00\" + \"\\00\\01\" + \"B\" - STRUCT(\"A\", \"\", \"C\") -> \"A\" + \"\\00\\01\" + \"\\00\\00\" + \"\\00\\01\" + \"C\" ``` Examples for struct with `DESC` fields: ``` - STRUCT(\"\" DESC) -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\" DESC, \"\") -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\" DESC, \"\", \"\") -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\" DESC, \"A\") -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" + \"A\" - STRUCT(\"A\", \"\" DESC, \"\") -> \"A\" + \"\\00\\01\" + \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\", \"A\" DESC) -> \"\\x00\\x00\" + \"\\x00\\x01\" + \"\\xBE\" + \"\\xFF\\xFE\" ``` Since null bytes are always escaped, this encoding can cause size blowup for encodings like `Int64.BigEndianBytes` that are likely to produce many such bytes. Sorted mode: - Fields are encoded in sorted mode. - All values supported by the field encodings are allowed. - Fields with unset or `UNSPECIFIED` order are treated as `ASC`. - Element-wise order is preserved: `A < B` if `A[0] < B[0]`, or if `A[0] == B[0] && A[1] < B[1]`, etc. Strict prefixes sort first. Distinct mode: - Fields are encoded in distinct mode. - All values supported by the field encodings are allowed.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeStructEncodingSingleton": {
             "description": "Uses the encoding of `fields[0].type` as-is. Only valid if `fields.size == 1`. This encoding does not support `DESC` field ordering.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeStructField": {
@@ -3363,18 +3396,22 @@
           },
           "GoogleBigtableAdminV2TypeAggregateHyperLogLogPlusPlusUniqueCount": {
             "description": "Computes an approximate unique count over the input values. When using raw data as input, be careful to use a consistent encoding. Otherwise the same value encoded differently could count more than once, or two distinct values could count as identical. Input: Any, or omit for Raw State: TBD Special state conversions: `Int64` (the unique count estimate)",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeAggregateMax": {
             "description": "Computes the max of the input values. Allowed input: `Int64` State: same as input",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeAggregateMin": {
             "description": "Computes the min of the input values. Allowed input: `Int64` State: same as input",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeAggregateSum": {
             "description": "Computes the sum of the input values. Allowed input: `Int64` State: same as input",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeArray": {
@@ -3399,6 +3436,7 @@
           },
           "GoogleBigtableAdminV2TypeBoolEncoding": {
             "description": "Defines rules used to convert to or from lower level types.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeBytes": {
@@ -3433,6 +3471,7 @@
           },
           "GoogleBigtableAdminV2TypeDate": {
             "description": "Date Values of type `Date` are stored in `Value.date_value`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeEnum": {
@@ -3451,14 +3490,17 @@
           },
           "GoogleBigtableAdminV2TypeFloat32": {
             "description": "Float32 Values of type `Float32` are stored in `Value.float_value`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeFloat64": {
             "description": "Float64 Values of type `Float64` are stored in `Value.float_value`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeGeography": {
             "description": "A geography type, representing a point or region on Earth. The value is stored in `Value.bytes_value` as Well-Known Binary (WKB) bytes.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeInt32": {
@@ -3487,10 +3529,12 @@
           },
           "GoogleBigtableAdminV2TypeInt32EncodingBigEndianBytes": {
             "description": "Encodes the value as a 4-byte big-endian two's complement value. Sorted mode: non-negative values are supported. Distinct mode: all values are supported. Compatible with: - BigQuery `BINARY` encoding - HBase `Bytes.toBytes` - Java `ByteBuffer.putInt()` with `ByteOrder.BIG_ENDIAN`",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeInt32EncodingOrderedCodeBytes": {
             "description": "Encodes the value in a variable length binary format of up to 5 bytes. Values that are closer to zero use fewer bytes. Sorted mode: all values are supported. Distinct mode: all values are supported.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeInt64": {
@@ -3530,6 +3574,7 @@
           },
           "GoogleBigtableAdminV2TypeInt64EncodingOrderedCodeBytes": {
             "description": "Encodes the value in a variable length binary format of up to 10 bytes. Values that are closer to zero use fewer bytes. Sorted mode: all values are supported. Distinct mode: all values are supported.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeMap": {
@@ -3597,6 +3642,7 @@
           },
           "GoogleBigtableAdminV2TypeStringEncodingUtf8Raw": {
             "description": "Deprecated: prefer the equivalent `Utf8Bytes`.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeStruct": {
@@ -3647,10 +3693,12 @@
           },
           "GoogleBigtableAdminV2TypeStructEncodingOrderedCodeBytes": {
             "description": "Fields are encoded independently, then escaped and delimited by appling the following rules in order: - While the last remaining field is `ASC` or `UNSPECIFIED`, and encodes to the empty string \"\", remove it. - In each remaining field, replace all null bytes `0x00` with the fixed byte pair `{0x00, 0xFF}`. - If any remaining field encodes to the empty string \"\", replace it with the fixed byte pair `{0x00, 0x00}`. - Append the fixed byte pair `{0x00, 0x01}` to each remaining field, except for the last remaining field if it is `ASC`. - Bitwise negate all `DESC` fields. - Concatenate the results, or emit the fixed byte pair `{0x00, 0x00}` if there are no remaining fields to concatenate. Examples: ``` - STRUCT() -> \"\\00\\00\" - STRUCT(\"\") -> \"\\00\\00\" - STRUCT(\"\", \"\") -> \"\\00\\00\" - STRUCT(\"\", \"B\") -> \"\\00\\00\" + \"\\00\\01\" + \"B\" - STRUCT(\"A\", \"\") -> \"A\" - STRUCT(\"\", \"B\", \"\") -> \"\\00\\00\" + \"\\00\\01\" + \"B\" - STRUCT(\"A\", \"\", \"C\") -> \"A\" + \"\\00\\01\" + \"\\00\\00\" + \"\\00\\01\" + \"C\" ``` Examples for struct with `DESC` fields: ``` - STRUCT(\"\" DESC) -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\" DESC, \"\") -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\" DESC, \"\", \"\") -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\" DESC, \"A\") -> \"\\xFF\\xFF\" + \"\\xFF\\xFE\" + \"A\" - STRUCT(\"A\", \"\" DESC, \"\") -> \"A\" + \"\\00\\01\" + \"\\xFF\\xFF\" + \"\\xFF\\xFE\" - STRUCT(\"\", \"A\" DESC) -> \"\\x00\\x00\" + \"\\x00\\x01\" + \"\\xBE\" + \"\\xFF\\xFE\" ``` Since null bytes are always escaped, this encoding can cause size blowup for encodings like `Int64.BigEndianBytes` that are likely to produce many such bytes. Sorted mode: - Fields are encoded in sorted mode. - All values supported by the field encodings are allowed. - Fields with unset or `UNSPECIFIED` order are treated as `ASC`. - Element-wise order is preserved: `A < B` if `A[0] < B[0]`, or if `A[0] == B[0] && A[1] < B[1]`, etc. Strict prefixes sort first. Distinct mode: - Fields are encoded in distinct mode. - All values supported by the field encodings are allowed.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeStructEncodingSingleton": {
             "description": "Uses the encoding of `fields[0].type` as-is. Only valid if `fields.size == 1`. This encoding does not support `DESC` field ordering.",
+            "properties": {},
             "type": "object"
           },
           "GoogleBigtableAdminV2TypeStructField": {

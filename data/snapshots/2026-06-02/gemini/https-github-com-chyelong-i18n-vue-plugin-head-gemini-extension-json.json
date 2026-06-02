@@ -1,0 +1,6 @@
+{
+  "name": "i18n-vue",
+  "description": "i18n automation for Vue, static HTML/JS, and WeChat Mini Program projects: init, replace, sync, workflow, and review agents.",
+  "version": "2.8.0",
+  "contextFileName": "GEMINI.md"
+}

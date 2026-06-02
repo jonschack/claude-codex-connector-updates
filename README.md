@@ -1,18 +1,26 @@
-# MCP Write-Capability Report: 2026-06-01
+# MCP Write-Capability Report: 2026-06-02
 
 ## Write Alerts
 
 | Event | Provider | Server | Tool | Confidence | Summary |
 | --- | --- | --- | --- | --- | --- |
-| write_status_changed | codex | `morningstar` |  | high | codex plugin became write-capable: Morningstar |
+| new_write_server | codex | `nvidia` |  | high | New write-capable codex plugin: NVIDIA |
+| new_write_server | codex | `posthog` |  | high | New write-capable codex plugin: PostHog |
+| new_write_server | codex | `metabase` |  | high | New write-capable codex plugin: Metabase |
+| new_write_server | codex | `wix` |  | high | New write-capable codex plugin: Wix |
+| new_write_server | codex | `base44` |  | high | New write-capable codex plugin: Base44 |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_instance` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_instance |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `create_table` | high | Write-capable tool changed: gemini/bigtable-bigtable/create_table |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_table` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_table |
+| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_logical_view` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_logical_view |
 
 ## Coverage
 
-- Normalized servers: 383
-- Write-capable servers: 69
+- Normalized servers: 425
+- Write-capable servers: 74
 - claude: 24 servers, 8 write-capable
-- codex: 148 servers, 53 write-capable
-- gemini: 202 servers, 8 write-capable
+- codex: 168 servers, 58 write-capable
+- gemini: 224 servers, 8 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues

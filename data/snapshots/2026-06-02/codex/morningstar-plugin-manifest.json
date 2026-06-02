@@ -1,0 +1,36 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Morningstar fund research plugin for screening, summarizing, and comparing funds and ETFs using the Morningstar ChatGPT app.",
+  "homepage": "https://www.morningstar.com",
+  "interface": {
+    "brandColor": "#E4572E",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Use fund-screener to find Gold-rated US large-cap ETFs.",
+      "Use fund-summarizer to analyze VFIAX.",
+      "Use fund-comparison to compare VFIAX, SWPPX, and FXAIX."
+    ],
+    "developerName": "Morningstar",
+    "displayName": "Morningstar",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Bundled Morningstar fund workflows for Codex: production screening with normalization, fund returns screening, single-fund deep summaries, and side-by-side comparison for 2 to 4 funds. The plugin links to the reviewed Morningstar ChatGPT app for authenticated data access and includes explicit data-availability disclosures.",
+    "privacyPolicyURL": "https://www.morningstar.com/company/privacy-center/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Screen, summarize, and compare funds with the Morningstar app.",
+    "termsOfServiceURL": "https://www.morningstar.com/company/terms-and-conditions",
+    "websiteURL": "https://www.morningstar.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "morningstar",
+  "repository": "https://github.com/Morningstar/morningstar-plugins",
+  "skills": "./skills/",
+  "version": "1.0.1"
+}

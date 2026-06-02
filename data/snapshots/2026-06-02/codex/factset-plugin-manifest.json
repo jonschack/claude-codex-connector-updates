@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Financial data, estimates, market analytics, and research context",
+  "homepage": "https://www.factset.com",
+  "interface": {
+    "brandColor": "#182850",
+    "capabilities": [],
+    "category": "Research",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Pull FactSet consensus estimates and recent price performance for a ticker.",
+      "Compare margins, revenue growth, and valuation multiples across this peer set in FactSet.",
+      "Find recent broker research headlines for a company in FactSet and summarize sentiment."
+    ],
+    "developerName": "FactSet",
+    "displayName": "FactSet",
+    "logo": "./assets/logo.png",
+    "longDescription": "Financial data, estimates, market analytics, and research context",
+    "screenshots": [],
+    "shortDescription": "Financial data, estimates, market analytics, and research context",
+    "websiteURL": "https://www.factset.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "factset",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

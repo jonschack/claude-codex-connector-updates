@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex.",
+  "homepage": "https://www.omni.co",
+  "interface": {
+    "brandColor": "#F686AC",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Show me last year's orders by status"
+    ],
+    "developerName": "Omni Analytics",
+    "displayName": "Omni Analytics",
+    "logo": "./assets/logo.png",
+    "longDescription": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex. Allow internal teams to ask data questions in their AI workflows without logging into Omni directly, while still enforcing row-level security and business definitions.",
+    "privacyPolicyURL": "https://omni.co/privacy",
+    "screenshots": [],
+    "shortDescription": "Query Omni using the same semantic model, permissions, and logic defined by your data team directly from Codex.",
+    "termsOfServiceURL": "https://omni.co/terms",
+    "websiteURL": "https://www.omni.co"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "omni-analytics",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

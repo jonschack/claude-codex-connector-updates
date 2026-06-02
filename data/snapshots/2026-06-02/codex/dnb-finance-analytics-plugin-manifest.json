@@ -1,0 +1,39 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Credit origination, portfolio management, company reports, and workflow tools from D&B Finance Analytics.",
+  "homepage": "https://www.dnb.com/",
+  "interface": {
+    "brandColor": "#004B8D",
+    "capabilities": [
+      "Portfolio search, filtering, aggregation, and sorting",
+      "Company search by name or D-U-N-S number",
+      "Detailed company credit-risk reports",
+      "Company ownership and linkage trees",
+      "Credit application decisioning",
+      "Portfolio folder creation, movement, and organization",
+      "Server-provided Finance Analytics skill discovery"
+    ],
+    "category": "Finance",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Show me all companies in my portfolio with a failure score above 80, sorted by outstanding balance.",
+      "Give me a full credit risk report for Acme Corp, including their payment history and risk scores.",
+      "Who are the parent and subsidiary companies of Global Logistics Inc? Show me the full ownership tree."
+    ],
+    "developerName": "Dun & Bradstreet",
+    "displayName": "D&B Finance Analytics",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Power commercial credit origination and portfolio management workflows with D&B Finance Analytics' embedded AI decisioning layer. Dun & Bradstreet connects the D&B Commercial Graph with proprietary customer data and credit policies to help evaluate applications, set credit limits, organize portfolio folders, and uncover portfolio risk and opportunity.",
+    "privacyPolicyURL": "https://www.dnb.com/about-us/data-transparency.html",
+    "screenshots": [],
+    "shortDescription": "Credit origination, portfolio risk, company reports, and folder workflows.",
+    "termsOfServiceURL": "https://view.highspot.com/viewer/1c5acd1db08e2cc64faff50703335a1d",
+    "websiteURL": "https://www.dnb.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "dnb-finance-analytics",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}
