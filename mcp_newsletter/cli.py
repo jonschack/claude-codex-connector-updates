@@ -5,7 +5,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-from .emailer import EmailConfigError, send_daily_report
+from .emailer import EmailConfigError, send_alert, send_daily_report
 from .gitops import bootstrap_github, check_prereqs, commit_and_push
 from .updater import run_update
 from .utils import today_iso
@@ -139,6 +139,15 @@ def main(argv: list[str] | None = None) -> int:
                 print(send_daily_report(args.root, run_date=args.date, to_addr=args.email_to))
             except EmailConfigError as exc:
                 print(f"Email skipped: {exc}")
+        # Distinct degraded-pipeline alert (same creds; no-op without them).
+        health = result["status"].get("health") or {}
+        if health.get("degraded"):
+            print(f"HEALTH: {health.get('alert')}")
+            if not args.skip_email:
+                try:
+                    print(send_alert(f"PIPELINE DEGRADED: {args.date}", str(health.get("alert") or "Pipeline degraded."), to_addr=args.email_to))
+                except EmailConfigError as exc:
+                    print(f"Alert skipped: {exc}")
         return 0
     if args.command == "email":
         try:
