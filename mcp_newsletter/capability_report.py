@@ -10,6 +10,17 @@ from typing import Dict, List
 _TIER_MARK = {"verified_tools": "✅", "annotation": "•", "claimed_description": "○", "none": "·"}
 
 
+def _oneline(value: object) -> str:
+    """Collapse whitespace/newlines so scraped free text can't break list items."""
+    return " ".join(str(value if value is not None else "").split())
+
+
+def _link(title: object, url: object) -> str:
+    safe_title = _oneline(title).replace("]", ")").replace("[", "(")
+    safe_url = _oneline(url)
+    return f"[{safe_title}]({safe_url})" if safe_url else safe_title
+
+
 def render_capability_highlights(
     feed: List[Dict[str, object]],
     notable: List[Dict[str, object]],
@@ -34,9 +45,10 @@ def render_capability_highlights(
     for entry in feed[:top_n]:
         mark = _TIER_MARK.get(str(entry.get("evidence_tier")), "·")
         lines.append(
-            f"- {mark} **{entry['server']}** (`{entry['tool']}`, {entry['provider']}) — {entry['summary']}"
+            f"- {mark} **{_oneline(entry['server'])}** "
+            f"(`{_oneline(entry['tool'])}`, {_oneline(entry['provider'])}) — {_oneline(entry['summary'])}"
         )
-        lines.append(f"  - Ask: {entry['example_prompt']}  _[{entry['evidence_tier']}]_")
+        lines.append(f"  - Ask: {_oneline(entry['example_prompt'])}  _[{entry['evidence_tier']}]_")
     if len(feed) > top_n:
         lines.append("")
         lines.append(f"_…and {len(feed) - top_n} more in `capabilities.json`._")
@@ -46,10 +58,10 @@ def render_capability_highlights(
         lines.append("_None._")
     for item in notable[:top_n]:
         if item.get("event_type") == "notable_source":
-            lines.append(f"- **{item['name']}**")
+            lines.append(f"- **{_oneline(item['name'])}**")
         else:
             lines.append(
-                f"- **{item['name']}** ({item['provider']}) — "
+                f"- **{_oneline(item['name'])}** ({_oneline(item['provider'])}) — "
                 f"significance {item.get('score')}, {item.get('tool_count', 0)} tools"
             )
 
@@ -57,9 +69,6 @@ def render_capability_highlights(
     if not signals:
         lines.append("_None ingested._")
     for sig in signals[:top_n]:
-        title = sig.get("title", "")
-        url = sig.get("url", "")
-        source = sig.get("source", "")
-        lines.append(f"- [{title}]({url}) — _{source}_" if url else f"- {title} — _{source}_")
+        lines.append(f"- {_link(sig.get('title', ''), sig.get('url', ''))} — _{_oneline(sig.get('source', ''))}_")
 
     return "\n".join(lines) + "\n"

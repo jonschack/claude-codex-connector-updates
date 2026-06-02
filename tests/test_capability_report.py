@@ -32,6 +32,21 @@ class CapabilityReportTests(unittest.TestCase):
         self.assertIn("Capability Highlights", md)
         self.assertIn("No tool-level capabilities", md)
 
+    def test_scraped_freetext_cannot_break_markdown(self):
+        feed = [{"provider": "p", "server": "Evil] (x)", "tool": "do`it",
+                 "summary": "line1\nline2\n  spaced", "example_prompt": '"Claude, do\nit"',
+                 "evidence_tier": "claimed_description", "write_confidence": "low", "source_urls": []}]
+        signals = [{"source": "s\nrc", "title": "Title with ] and (paren)", "url": "https://x"}]
+        md = render_capability_highlights(feed, [], signals, "2026-06-02")
+        # no scraped newline survives into a list item
+        for line in md.splitlines():
+            if line.startswith("- ") or line.startswith("  - "):
+                self.assertNotIn("\t", line)
+        self.assertNotIn("line1\nline2", md)
+        self.assertIn("line1 line2 spaced", md)
+        # link title brackets neutralized
+        self.assertIn("Title with ) and (paren)", md)
+
     def test_top_n_truncates_with_overflow_note(self):
         big = [dict(FEED[0], tool=f"t{i}", server=f"S{i}") for i in range(40)]
         md = render_capability_highlights(big, [], [], "2026-06-02", top_n=10)
