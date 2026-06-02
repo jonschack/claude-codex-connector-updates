@@ -20,6 +20,11 @@ class ToolRecord:
     raw: JsonDict = field(default_factory=dict)
     write_confidence: str = "unknown"
     evidence: List[JsonDict] = field(default_factory=list)
+    # Phase 2 capability layer: a plain "what it does" line and an example prompt
+    # ("what to ask"), with the evidence tier the summary rests on.
+    capability_summary: str = ""
+    example_prompt: str = ""
+    capability_tier: str = ""
 
     def to_dict(self) -> JsonDict:
         return {
@@ -34,6 +39,9 @@ class ToolRecord:
             "raw": self.raw,
             "write_confidence": self.write_confidence,
             "evidence": self.evidence,
+            "capability_summary": self.capability_summary,
+            "example_prompt": self.example_prompt,
+            "capability_tier": self.capability_tier,
         }
 
 

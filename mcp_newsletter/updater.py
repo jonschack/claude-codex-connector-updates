@@ -6,8 +6,11 @@ from collections import Counter
 from pathlib import Path
 from typing import Dict, List, Optional
 
+from .capability import build_capability_feed, enrich_servers
 from .classifier import classify_all
 from .health import REGISTRY_FLOORS, VENDOR_FLOORS, floors_from_env, summarize_health
+from .novelty import notable_events
+from .signals import collect_signals
 from .context import CollectContext
 from .providers import collect_all
 from .registries import collect_all_registries, enabled_sources
@@ -50,14 +53,35 @@ def _prior_count(root: Path, filename: str, key: str) -> Optional[int]:
         return None
 
 
+def _read_prior_servers(root: Path) -> Optional[List[dict]]:
+    """Prior servers.json as a list, or None if absent (first run / cold start)."""
+    path = root / "data" / "current" / "servers.json"
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data if isinstance(data, list) else None
+    except Exception:
+        return None
+
+
 def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = False, max_details: int = 200) -> Dict[str, object]:
     run_date = run_date or today_iso()
     ensure_dir(root / "data" / "current")
     ensure_dir(root / "reports")
     ctx = CollectContext(root=root, run_date=run_date, skip_network=skip_network, max_details=max_details)
     prior_total = _prior_count(root, "status.json", "server_count")
+    prior_servers = _read_prior_servers(root)
     servers = _dedupe_servers(collect_all(ctx))
     classify_all(servers)
+
+    # --- Phase 2 capability layer: enrich tools, build the "what to ask" feed,
+    # detect notable new capabilities, and ingest news/changelog signals ---
+    enrich_servers(servers)
+    capability_feed = build_capability_feed(servers)
+    notable = []
+    if prior_servers is not None:  # cold-start: seed silently on the very first run
+        seen_ids = {f"{r.get('provider')}/{r.get('server_id')}" for r in prior_servers}
+        notable = notable_events(servers, seen_ids)
+    signals = [s.to_dict() for s in collect_signals(ctx)]
 
     # --- pipeline health (P0): make empty/degraded sources loud, not silent ---
     vendor_counts = dict(Counter(s.provider for s in servers))
@@ -93,6 +117,9 @@ def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = 
         "server_count": len(servers),
         "tool_count": sum(len(server.tools) for server in servers),
         "event_count": len(events),
+        "capability_count": len(capability_feed),
+        "notable_count": len(notable),
+        "signal_count": len(signals),
         "health": health,
         "issues": [issue.to_dict() for issue in ctx.issues],
     }
@@ -100,6 +127,9 @@ def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = 
     write_json(root / "data" / "current" / "tools.json", current_tools)
     write_json(root / "data" / "current" / "events.json", events)
     write_json(root / "data" / "current" / "status.json", status)
+    write_json(root / "data" / "current" / "capabilities.json", capability_feed)
+    write_json(root / "data" / "current" / "notable.json", notable)
+    write_json(root / "data" / "current" / "signals.json", signals)
     report = render_daily_report(run_date, servers, events, ctx.issues)
     write_text(root / "reports" / f"{run_date}.md", report)
     registry_result = run_registry_update(root, run_date=run_date, skip_network=skip_network)
