@@ -22,7 +22,8 @@ _WRITE_VERBS = {
 
 def humanize_tool_name(name: str) -> str:
     base = name.split(".")[-1]
-    base = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", base)  # camelCase -> camel_Case
+    base = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", "_", base)        # camelCase -> camel_Case
+    base = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", "_", base)      # HTTPSConn -> HTTPS_Conn
     return re.sub(r"[_\-]+", " ", base).strip().lower()
 
 

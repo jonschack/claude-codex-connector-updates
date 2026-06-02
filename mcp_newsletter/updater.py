@@ -76,6 +76,8 @@ def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = 
     # --- Phase 2 capability layer: enrich tools, build the "what to ask" feed,
     # detect notable new capabilities, and ingest news/changelog signals ---
     enrich_servers(servers)
+    # capability_feed is built from THIS run's live collection (not the cumulative
+    # servers.json) — we teach only from sources confirmed live this run.
     capability_feed = build_capability_feed(servers)
     notable = []
     if prior_servers is not None:  # cold-start: seed silently on the very first run

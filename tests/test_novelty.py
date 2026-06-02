@@ -48,6 +48,15 @@ class NotableEventsTests(unittest.TestCase):
         self.assertEqual(events[0]["event_type"], "notable_capability")
         self.assertGreaterEqual(events[0]["score"], 0.5)
 
+    def test_flood_collapses_to_aggregate(self):
+        servers = [_server(f"s{i}", write="high", tools=6, schema=True) for i in range(30)]
+        events = notable_events(servers, seen_ids=set(), threshold=0.5, per_source_cap=25)
+        agg = [e for e in events if e["event_type"] == "notable_source"]
+        indiv = [e for e in events if e["event_type"] == "notable_capability"]
+        self.assertEqual(len(agg), 1)
+        self.assertEqual(agg[0]["count"], 30)
+        self.assertEqual(len(indiv), 25)  # capped per source
+
 
 if __name__ == "__main__":
     unittest.main()

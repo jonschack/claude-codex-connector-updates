@@ -26,8 +26,8 @@ class ToolRecord:
     example_prompt: str = ""
     capability_tier: str = ""
 
-    def to_dict(self) -> JsonDict:
-        return {
+    def to_dict(self, include_capability: bool = True) -> JsonDict:
+        data: JsonDict = {
             "provider": self.provider,
             "server_id": self.server_id,
             "name": self.name,
@@ -39,10 +39,15 @@ class ToolRecord:
             "raw": self.raw,
             "write_confidence": self.write_confidence,
             "evidence": self.evidence,
-            "capability_summary": self.capability_summary,
-            "example_prompt": self.example_prompt,
-            "capability_tier": self.capability_tier,
         }
+        # Derived/teaching fields are excluded from the change-detection hash basis
+        # (state.upsert_tool hashes with include_capability=False) so they never
+        # fire spurious tool_schema_changed events.
+        if include_capability:
+            data["capability_summary"] = self.capability_summary
+            data["example_prompt"] = self.example_prompt
+            data["capability_tier"] = self.capability_tier
+        return data
 
 
 @dataclass
