@@ -1,7 +1,7 @@
 # Design: Pipeline Hardening & Re-Aim (Capability-Discovery + Trustworthy Monitoring)
 
 - **Date:** 2026-06-01
-- **Status:** Draft — pending review & per-phase implementation plans
+- **Status:** Implemented P0–P3 on branch `feat/pipeline-hardening` (2026-06-02); each phase reviewed by a subagent reviewer and findings addressed. Live-dependent enrichment (LLM-quality example prompts via an Anthropic key, more signal feeds, per-plugin cursor descriptions) is the documented follow-on.
 - **Scope:** Make the research pipeline *fit for its dual objective*. Today it is a
   write-capability auditor; the objective also needs a capability-discovery /
   teaching engine. Repair and harden the ingestion floor first, then build a
