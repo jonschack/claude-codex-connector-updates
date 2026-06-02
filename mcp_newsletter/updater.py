@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import json
 import os
 from collections import Counter
 from pathlib import Path
 from typing import Dict, List, Optional
 
 from .classifier import classify_all
+from .health import REGISTRY_FLOORS, VENDOR_FLOORS, floors_from_env, summarize_health
 from .context import CollectContext
 from .providers import collect_all
 from .registries import collect_all_registries, enabled_sources
@@ -38,13 +40,38 @@ def _dedupe_servers(servers: List[ServerRecord]) -> List[ServerRecord]:
     return list(by_key.values())
 
 
+def _prior_count(root: Path, filename: str, key: str) -> Optional[int]:
+    path = root / "data" / "current" / filename
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        value = data.get(key)
+        return int(value) if value is not None else None
+    except Exception:
+        return None
+
+
 def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = False, max_details: int = 200) -> Dict[str, object]:
     run_date = run_date or today_iso()
     ensure_dir(root / "data" / "current")
     ensure_dir(root / "reports")
     ctx = CollectContext(root=root, run_date=run_date, skip_network=skip_network, max_details=max_details)
+    prior_total = _prior_count(root, "status.json", "server_count")
     servers = _dedupe_servers(collect_all(ctx))
     classify_all(servers)
+
+    # --- pipeline health (P0): make empty/degraded sources loud, not silent ---
+    vendor_counts = dict(Counter(s.provider for s in servers))
+    drop_pct = float(os.environ.get("MCP_NEWSLETTER_RUN_DROP_ALERT_PCT", "50"))
+    health = summarize_health(
+        vendor_counts,
+        floors_from_env(VENDOR_FLOORS),
+        total_now=len(servers),
+        total_prev=prior_total,
+        drop_pct=drop_pct,
+    )
+    for src in health["sources"]:
+        if src["status"] != "ok":
+            ctx.add_issue(src["source"], "health", src["message"], severity="error")
 
     db_path = root / "data" / "state.sqlite"
     conn = connect(db_path)
@@ -66,6 +93,7 @@ def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = 
         "server_count": len(servers),
         "tool_count": sum(len(server.tools) for server in servers),
         "event_count": len(events),
+        "health": health,
         "issues": [issue.to_dict() for issue in ctx.issues],
     }
     write_json(root / "data" / "current" / "servers.json", current_servers)
@@ -125,6 +153,21 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
     meta.dump(meta_path)
     write_json(root / "data" / "current" / "registry_events.json", events)
     per_source = Counter(s for rec in new_state.values() for s in {x.get("source") for x in rec.sources})
+
+    # --- registry-tier health (P0): flag a registry source that collected ~0 ---
+    reg_health = summarize_health(
+        dict(collection.counts),
+        floors_from_env(REGISTRY_FLOORS),
+        total_now=len(new_state),
+        total_prev=len(prior) or None,
+        drop_pct=float(os.environ.get("MCP_NEWSLETTER_RUN_DROP_ALERT_PCT", "50")),
+    )
+    for src in reg_health["sources"]:
+        # only escalate sources we actually attempted this run (enabled);
+        # a disabled source legitimately reports 0.
+        if src["status"] != "ok" and src["source"] in collection.counts:
+            ctx.add_issue(src["source"], "health", src["message"], severity="error")
+
     summary = {
         "run_date": run_date,
         "indexed": len(new_state),
@@ -134,6 +177,7 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
         "source_ok": collection.source_ok,
         "per_source": dict(per_source),
         "per_source_raw": dict(collection.counts),
+        "health": reg_health,
         "issues": [i.to_dict() for i in ctx.issues],
     }
     write_json(root / "data" / "current" / "registry_summary.json", summary)

@@ -7,20 +7,34 @@ from typing import Dict, List, Optional
 
 # Conservative per-source expected-minimum floors. A previously-healthy source
 # returning far below its floor (or zero) is treated as broken, not empty.
+# Vendor tier (per-provider) and registry tier are evaluated separately so a
+# vendor-only health pass never falsely flags a registry source as "empty".
 # NOTE: raise `claude` once P1 rendered collection captures the full directory.
-DEFAULT_FLOORS: Dict[str, int] = {
+VENDOR_FLOORS: Dict[str, int] = {
+    "claude": 20,
+    "codex": 1,
+    "gemini": 50,
+    "cline": 50,
+    "cloudflare": 5,
+    # currently-broken collectors keep a floor of 1 so they flag "empty" loudly
+    # until Phase 1b repairs them, without dragging the run red on a soft miss.
+    "grok": 1,
+    "openai": 1,
+    "cursor": 1,
+    "vscode": 1,
+    "continue": 1,
+}
+
+REGISTRY_FLOORS: Dict[str, int] = {
     "official": 100,
     "glama": 1000,
     "docker": 50,
     "smithery": 100,
     "mcpso": 10,
     "github_servers": 5,
-    "claude": 20,
-    "codex": 1,
-    "gemini": 50,
-    "cline": 50,
-    "cloudflare": 5,
 }
+
+DEFAULT_FLOORS: Dict[str, int] = {**VENDOR_FLOORS, **REGISTRY_FLOORS}
 
 
 def floors_from_env(defaults: Optional[Dict[str, int]] = None) -> Dict[str, int]:
