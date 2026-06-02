@@ -1,6 +1,6 @@
 ---
 name: grok-research
-description: Systematic research sweep for VIRAL MCP / connector capabilities by driving the Grok web UI (grok.com) via Claude-in-Chrome — Grok's live X/Twitter access surfaces what's blowing up that generic web search misses. Harvests Grok's answers, parses them into structured candidates, VERIFIES each against real sources before anything is trusted, and writes them into the pipeline (data/current/grok_research.jsonl) to feed CAPABILITY_HIGHLIGHTS and the meetup description. Operator-run / on-demand (Claude-in-Chrome is interactive — it cannot run in the unattended daily cron). Trigger when the user says /grok-research, "grok sweep", "what MCP went viral", or wants fresh viral capabilities for the meetup.
+description: Systematic research sweep for VIRAL MCP / connector capabilities by driving the Grok web UI (grok.com) via Claude-in-Chrome — Grok's live X/Twitter access surfaces what's blowing up that generic web search misses. Harvests Grok's answers, parses them into structured candidates, VERIFIES each against real sources before anything is trusted. Runs an exhaustive query matrix (term variants × a ≥10-like floor × time window) + a seed-account watchlist, and keeps persistent dedup state (data/current/grok_radar_state.jsonl, tracking first_seen + peak_engagement) so repeated sweeps converge on EVERY remotely-viral MCP post — surfacing only what's NEW or RISING — feeding CAPABILITY_HIGHLIGHTS and the meetup description. Operator-run / on-demand (Claude-in-Chrome is interactive — it cannot run in the unattended daily cron). Trigger when the user says /grok-research, "grok sweep", "what MCP went viral", or wants fresh viral capabilities for the meetup.
 ---
 
 # Grok Research — viral MCP capability sweep (Claude-in-Chrome → grok.com)
@@ -32,12 +32,15 @@ For each query below: locate the prompt input (`find` / `read_page`), type the q
 
 > If a prior answer came back as a table (pipes lost on extraction), send one follow-up: *"Re-output the exact same data as a fenced code block, one row per line, fields separated by ' | ', no markdown table."*
 
-Query set (run all; tune dates to 'now'):
-1. *"What MCP servers or Claude/ChatGPT connectors have gone viral on X in the last 2 weeks?"*
-2. *"What brand-new MCP servers launched this month that developers are excited about on X?"*
-3. *"What MCP server demos got the most jaw-dropped 'wait, it can do that?' reactions recently?"*
-4. *"Beyond Blender/Playwright/Context7, what surprising MCP servers are trending right now?"* (de-dupes the already-known)
-5. *(optional, per audience)* *"What MCP connectors for [finance / creative / ops] went viral recently?"*
+**Radar query matrix (the "every post" sweep).** Set Grok to **Heavy** mode (the "Fast" dropdown → **Heavy / Team of Experts** = best X recall). Generate the matrix and have Grok run **each search verbatim** (it executes X advanced-search operators like `min_faves:` and `since:`):
+
+```bash
+python3 -c "from mcp_newsletter.grok_research import build_query_matrix; print(chr(10).join(build_query_matrix(min_faves=10, since='YYYY-MM-DD')))"
+```
+
+~12 searches: term variants (`"MCP"`/`"model context protocol"`/`"MCP server"`/`"Claude connector"`/…) × `min_faves:10` (the ≥10 "remotely viral" floor) × the window, **plus `from:<seed account>`** sweeps (Anthropic, modelcontextprotocol, ahujasid, …). Feed them to Grok in batches with: *"Run each of these exact X searches and return EVERY matching MCP server/connector as code-block rows — `name | capability | why_viral | source_url | example_prompt` — and put the like/repost count in why_viral."* Forcing the exact searches is what makes recall exhaustive (a free-form prompt let Grok's own broad search return 0 posts in testing). Capture every answer to `data/snapshots/<date>/grok/`.
+
+> **Cadence:** run this on a regular cadence (e.g. 2–3×/week). The dedup state (Step 4) means each run only surfaces what's **new** or **rising** — so over time you converge on "every remotely-viral post," and slow-burners get caught when they cross the floor.
 
 ## Step 4 — Parse + verify
 Run this (writes the artifacts). It parses every captured answer, verifies each candidate against the awesome-claude-connectors catalog + live URL resolution, and writes results:
@@ -68,6 +71,15 @@ verify_candidates(findings, source_checker=default_source_checker, known_names=k
 
 out = Path("data/current"); out.mkdir(parents=True, exist_ok=True)
 (out/"grok_research.jsonl").write_text("\n".join(json.dumps(f.to_dict()) for f in findings)+"\n")
+
+# radar dedup state: each sweep only surfaces NEW + RISING (slow-burners crossing the floor)
+from mcp_newsletter.grok_research import load_radar_state, merge_into_state, write_radar_state
+statep = out/"grok_radar_state.jsonl"
+state = load_radar_state(statep)
+state, new, rising = merge_into_state(state, [f for f in findings if f.verdict != "rejected"], run_date="YYYY-MM-DD")
+write_radar_state(statep, state)
+print(f"radar: {len(new)} NEW, {len(rising)} RISING this sweep ({len(state)} total tracked)")
+
 verified = [f for f in findings if f.verdict=="verified"]
 claimed  = [f for f in findings if f.verdict=="claimed"]
 print(f"harvested={len(findings)} verified={len(verified)} claimed={len(claimed)} rejected={len(findings)-len(verified)-len(claimed)}")

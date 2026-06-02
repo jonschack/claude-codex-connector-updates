@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass, field
-from typing import Callable, Dict, List, Optional, Set
+from pathlib import Path
+from typing import Callable, Dict, List, Optional, Set, Tuple
 
 # Grok research layer (operator-run, driven via Claude-in-Chrome over grok.com).
 # Grok's live-X access surfaces what's VIRAL; this module turns its self-formatted
@@ -119,6 +121,113 @@ def verify_candidates(
             finding.verdict = "rejected"
             finding.verify_note = "no source"
     return findings
+
+
+# --- radar: query matrix, engagement, dedup state (the "every post" extension) ---
+
+# High-signal accounts whose timelines reliably carry viral MCP demos/launches.
+SEED_ACCOUNTS: List[str] = [
+    "AnthropicAI", "modelcontextprotocol", "ahujasid", "alexalbert__",
+    "_philschmid", "OpenAIDevs", "skirano",
+]
+
+# Term variants swept each run; combined with an engagement floor + time window
+# into a query matrix so recall doesn't depend on Grok picking good searches.
+_TERMS: List[str] = [
+    '("MCP" OR "model context protocol")',
+    '"MCP server"',
+    '"Claude connector"',
+    '"MCP connector"',
+    'MCP (Claude OR Cursor OR "Claude Code" OR Codex)',
+]
+
+
+def build_query_matrix(min_faves: int = 10, since: str = "") -> List[str]:
+    """Exhaustive X-search matrix: {term variants + seed accounts} × engagement
+    floor × time window. Grok is told to run each search verbatim, so coverage
+    doesn't hinge on its own query choices."""
+    flt = f"min_faves:{min_faves}"
+    win = f" since:{since}" if since else ""
+    queries = [f"{term} {flt}{win}" for term in _TERMS]
+    for account in SEED_ACCOUNTS:
+        queries.append(f'from:{account} (MCP OR connector OR "model context protocol"){win}')
+    return queries
+
+
+_ENGAGEMENT_RE = re.compile(r"(\d+(?:\.\d+)?)\s*([kK])?\s*\+?\s*(?:likes?|reposts?|views?)")
+
+
+def extract_engagement(text: str) -> int:
+    """Best engagement count from a why_viral blurb (e.g. '1.8k+ likes' -> 1800).
+    Only counts numbers attached to likes/reposts/views, so '17k tickers' is
+    ignored."""
+    best = 0
+    for num, k in _ENGAGEMENT_RE.findall(text or ""):
+        value = float(num) * (1000 if k else 1)
+        best = max(best, int(value))
+    return best
+
+
+def finding_key(finding: GrokFinding) -> str:
+    """Stable dedup key: normalized source URL, else slugified name."""
+    url = (finding.source_url or "").strip().lower()
+    if url:
+        return re.sub(r"^https?://", "", url).rstrip("/")
+    from .utils import slugify
+    return "name:" + slugify(finding.name)
+
+
+def merge_into_state(
+    state: Dict[str, dict],
+    findings: List[GrokFinding],
+    run_date: str,
+) -> Tuple[Dict[str, dict], List[GrokFinding], List[GrokFinding]]:
+    """Merge a sweep's findings into persistent radar state. Returns
+    (state, new, rising): `new` = first-ever sightings; `rising` = already-seen
+    posts whose engagement crossed its prior peak (slow-burners going viral).
+    first_seen is preserved; peak_engagement is high-water-marked."""
+    new: List[GrokFinding] = []
+    rising: List[GrokFinding] = []
+    for finding in findings:
+        key = finding_key(finding)
+        engagement = extract_engagement(finding.why_viral)
+        if key not in state:
+            record = finding.to_dict()
+            record.update({"key": key, "first_seen": run_date, "last_seen": run_date,
+                           "peak_engagement": engagement})
+            state[key] = record
+            new.append(finding)
+        else:
+            record = state[key]
+            record["last_seen"] = run_date
+            if engagement > int(record.get("peak_engagement", 0)):
+                record["peak_engagement"] = engagement
+                rising.append(finding)
+    return state, new, rising
+
+
+def load_radar_state(path) -> Dict[str, dict]:
+    p = Path(path)
+    state: Dict[str, dict] = {}
+    if not p.exists():
+        return state
+    for line in p.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        key = record.get("key") or record.get("source_url") or record.get("name")
+        if key:
+            state[key] = record
+    return state
+
+
+def write_radar_state(path, state: Dict[str, dict]) -> None:
+    rows = sorted(state.values(), key=lambda r: (-int(r.get("peak_engagement", 0)), str(r.get("key"))))
+    Path(path).write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
 
 
 # --- thin live helpers for the /grok-research skill (not unit-tested) ---

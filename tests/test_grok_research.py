@@ -2,6 +2,10 @@ import unittest
 
 from mcp_newsletter.grok_research import (
     GrokFinding,
+    build_query_matrix,
+    extract_engagement,
+    finding_key,
+    merge_into_state,
     parse_grok_findings,
     verify_candidates,
 )
@@ -87,6 +91,65 @@ class VerifyTests(unittest.TestCase):
         verify_candidates(findings, source_checker=boom, known_names=set())
         # network failure must not crash; falls back to claimed (has a source)
         self.assertEqual(findings[0].verdict, "claimed")
+
+
+class EngagementTests(unittest.TestCase):
+    def test_parses_k_ranges_and_plain(self):
+        self.assertEqual(extract_engagement("hit 1k-2.6k+ likes with insane"), 2600)
+        self.assertEqual(extract_engagement("2k+ like viral posts"), 2000)
+        self.assertEqual(extract_engagement("crypto posts (249+ likes)"), 249)
+        self.assertEqual(extract_engagement("1982 likes, 180 reposts"), 1982)
+
+    def test_ignores_non_engagement_numbers(self):
+        # "17k+ tickers" must NOT be read as engagement; only the likes count
+        self.assertEqual(extract_engagement("17k+ tickers, 1.8k+ likes"), 1800)
+
+    def test_no_number_is_zero(self):
+        self.assertEqual(extract_engagement("went viral on X"), 0)
+
+
+class StateMergeTests(unittest.TestCase):
+    def _f(self, name, url, why=""):
+        return GrokFinding(name=name, source_url=url, why_viral=why)
+
+    def test_first_seen_then_dedup_then_rising(self):
+        state = {}
+        f1 = self._f("TradingView MCP", "https://github.com/tradesdontlie/tradingview-mcp", "800+ likes")
+        state, new, rising = merge_into_state(state, [f1], run_date="2026-06-01")
+        self.assertEqual(len(new), 1)
+        self.assertEqual(len(rising), 0)
+        self.assertEqual(len(state), 1)
+
+        # same post again, no engagement growth -> not new, not rising
+        state, new, rising = merge_into_state(state, [self._f("TradingView MCP", "https://github.com/tradesdontlie/tradingview-mcp", "800+ likes")], run_date="2026-06-02")
+        self.assertEqual(len(new), 0)
+        self.assertEqual(len(rising), 0)
+        self.assertEqual(len(state), 1)
+
+        # same post, engagement grew -> rising, first_seen preserved
+        state, new, rising = merge_into_state(state, [self._f("TradingView MCP", "https://github.com/tradesdontlie/tradingview-mcp", "2k+ likes")], run_date="2026-06-03")
+        self.assertEqual(len(new), 0)
+        self.assertEqual(len(rising), 1)
+        rec = next(iter(state.values()))
+        self.assertEqual(rec["first_seen"], "2026-06-01")
+        self.assertEqual(rec["peak_engagement"], 2000)
+
+    def test_dedup_by_url_ignores_name_variation(self):
+        state = {}
+        state, new, _ = merge_into_state(state, [self._f("TradingView MCP", "https://github.com/tradesdontlie/tradingview-mcp")], "2026-06-01")
+        state, new2, _ = merge_into_state(state, [self._f("tradingview-mcp", "https://github.com/tradesdontlie/tradingview-mcp/")], "2026-06-02")
+        self.assertEqual(len(new2), 0)  # same URL (trailing slash normalized) -> dedup
+
+
+class QueryMatrixTests(unittest.TestCase):
+    def test_matrix_applies_floor_window_and_seeds(self):
+        queries = build_query_matrix(min_faves=10, since="2026-05-05")
+        joined = "\n".join(queries)
+        self.assertIn("min_faves:10", joined)
+        self.assertIn("since:2026-05-05", joined)
+        self.assertTrue(any("model context protocol" in q.lower() for q in queries))
+        self.assertTrue(any("from:" in q for q in queries))  # seed-account coverage
+        self.assertGreaterEqual(len(queries), 8)             # genuinely a matrix
 
 
 if __name__ == "__main__":
