@@ -15,7 +15,7 @@ from typing import Dict, List, Optional
 # vscode) are excluded — their live-contract tests + own info issues cover them,
 # so a missing FIRECRAWL_API_KEY or a deliberate retirement doesn't flood errors.
 VENDOR_FLOORS: Dict[str, int] = {
-    "claude": 300,  # full Webflow-pagination collection lands ~338 (was ~24 pre-pagination)
+    "claude": 200,  # full pagination lands ~338; floor tolerates transient per-page fetch misses while still catching a collapse to page-1 (~24)
     "gemini": 50,
     "cline": 50,
     "cloudflare": 5,

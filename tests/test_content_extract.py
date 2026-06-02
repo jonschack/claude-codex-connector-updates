@@ -41,6 +41,12 @@ class ContentExtractTests(unittest.TestCase):
     def test_empty_markup_is_empty(self):
         self.assertEqual(extract_main_text(""), "")
 
+    def test_empty_main_falls_back_to_body_content(self):
+        # an empty <main> must not lose content that lives elsewhere in the body
+        markup = '<html><body><main></main><div class="desc">The real description lives here.</div></body></html>'
+        text = extract_main_text(markup)
+        self.assertIn("The real description lives here", text)
+
 
 if __name__ == "__main__":
     unittest.main()

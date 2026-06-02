@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from typing import List
 
 from .utils import html_to_text
 
@@ -17,26 +18,31 @@ def _strip_blocks(markup: str, tags) -> str:
     return markup
 
 
-def _region(markup: str) -> str:
-    """Pick the main-content region: <main>, else <article>, else <body>."""
+def _candidate_regions(markup: str) -> List[str]:
+    """Candidate main-content regions, most-specific first: <main>, <article>,
+    then <body> (or the whole doc)."""
+    regions: List[str] = []
     for tag in ("main", "article"):
         match = re.search(rf"<{tag}\b[^>]*>(.*?)</{tag}>", markup, flags=re.I | re.S)
         if match:
-            return match.group(1)
-    match = re.search(r"<body\b[^>]*>(.*?)</body>", markup, flags=re.I | re.S)
-    return match.group(1) if match else markup
+            regions.append(match.group(1))
+    body = re.search(r"<body\b[^>]*>(.*?)</body>", markup, flags=re.I | re.S)
+    regions.append(body.group(1) if body else markup)
+    return regions
 
 
 def extract_main_text(markup: str) -> str:
     """Return clean main-content text, dropping nav/header/footer/script chrome.
 
     Replaces whole-page `html_to_text`, which flattened navigation and footer
-    boilerplate into connector descriptions.
+    boilerplate into connector descriptions. Falls through candidate regions so
+    an empty <main> doesn't lose content that lives elsewhere in the body.
     """
     if not markup or not markup.strip():
         return ""
     cleaned = _strip_blocks(markup, _CHROME_TAGS)
-    region = _region(cleaned)
-    # belt-and-suspenders: drop any chrome nested inside the selected region
-    region = _strip_blocks(region, _CHROME_TAGS)
-    return html_to_text(region)
+    for region in _candidate_regions(cleaned):
+        text = html_to_text(_strip_blocks(region, _CHROME_TAGS))
+        if text.strip():
+            return text
+    return html_to_text(cleaned)

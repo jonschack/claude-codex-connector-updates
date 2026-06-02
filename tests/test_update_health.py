@@ -27,7 +27,7 @@ class UpdateHealthTests(unittest.TestCase):
                 run_update(root, run_date="2026-06-01", skip_network=True)
             status = json.loads((root / "data/current/status.json").read_text())
             self.assertIn("health", status)
-            self.assertTrue(status["health"]["degraded"])  # 1 claude < floor 20
+            self.assertTrue(status["health"]["degraded"])  # 1 claude < floor
             self.assertIsNotNone(status["health"]["alert"])
 
     def test_empty_source_escalated_to_issue(self):

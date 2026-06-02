@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import re
+import time
 from typing import List
 
 from ..content_extract import extract_main_text
@@ -42,6 +43,9 @@ def _collect_detail_urls(ctx: CollectContext, directory_url: str, first_markup: 
         for page in range(2, SAFETY_MAX_PAGES + 1):
             markup = ctx.fetch(PROVIDER, f"{directory_url}?{param}={page}", f"connectors-page-{page}")
             if not markup:
+                # distinguish a transient fetch failure from a genuinely empty page
+                ctx.add_issue(PROVIDER, f"{directory_url}?{param}={page}",
+                              f"pagination fetch failed at page {page}; stopping (catalog may be truncated)")
                 break
             new = _connector_links(markup, directory_url) - urls
             if not new:
@@ -119,9 +123,14 @@ def collect_claude(ctx: CollectContext) -> List[ServerRecord]:
 
     servers: List[ServerRecord] = []
     # Fetch all paginated detail pages (full catalog ~338). Safety-capped via env.
+    # Optional inter-request delay for politeness (default 0; fetch_text already
+    # backs off on 429/Retry-After, so this is extra courtesy for large crawls).
     max_details = int(os.environ.get("MCP_NEWSLETTER_CLAUDE_MAX_DETAILS", "1000"))
+    delay_ms = int(os.environ.get("MCP_NEWSLETTER_CLAUDE_DETAIL_DELAY_MS", "0") or "0")
     for url in detail_urls[:max_details]:
         markup = ctx.fetch(PROVIDER, url, f"connector-{url.rsplit('/', 1)[-1]}")
+        if delay_ms > 0:
+            time.sleep(delay_ms / 1000.0)
         if not markup:
             continue
         text = extract_main_text(markup)
