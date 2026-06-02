@@ -14,7 +14,8 @@ PROVIDER = "codex"
 
 
 def _plugin_root() -> Path:
-    return Path(os.environ.get("MCP_NEWSLETTER_CODEX_PLUGIN_ROOT", "/Users/jon/.codex/.tmp/plugins"))
+    default = str(Path.home() / ".codex" / "plugins")
+    return Path(os.environ.get("MCP_NEWSLETTER_CODEX_PLUGIN_ROOT", default)).expanduser()
 
 
 def _read_local_json(ctx: CollectContext, label: str, path: Path) -> Dict[str, Any]:
