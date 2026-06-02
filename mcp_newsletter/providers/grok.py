@@ -9,21 +9,23 @@ from ..utils import html_to_text, slugify
 
 
 PROVIDER = "grok"
+# The catalog page (/connectors/catalog) and news page are dead (404/403). The
+# live, plain-HTTP, server-rendered markdown source is /grok/connectors.md, which
+# documents the BUILT-IN connectors. The larger third-party catalog lives only in
+# the auth-gated grok.com app with no public machine-readable source, so this
+# collector intentionally captures the documented built-ins (~7) only.
 DOC_URLS = [
-    "https://docs.x.ai/grok/connectors",
-    "https://docs.x.ai/grok/connectors/catalog",
-    "https://x.ai/news/grok-connectors",
+    "https://docs.x.ai/grok/connectors.md",
 ]
 
 KNOWN_CONNECTORS = {
     "gmail-google-calendar": ["Gmail", "Google Calendar"],
     "google-drive": ["Google Drive"],
     "onedrive": ["OneDrive"],
-    "outlook-mail-calendar": ["Outlook", "Outlook Mail", "Outlook Calendar"],
+    "outlook": ["Outlook Mail", "Outlook Calendar", "Outlook"],
+    "microsoft-teams": ["Microsoft Teams", "Teams"],
     "sharepoint": ["SharePoint"],
-    "notion": ["Notion"],
-    "github": ["GitHub"],
-    "linear": ["Linear"],
+    "salesforce": ["Salesforce"],
     "custom-mcp": ["Custom MCP", "MCP server"],
 }
 

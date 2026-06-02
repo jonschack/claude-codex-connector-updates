@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 from typing import Any, Dict, List
@@ -7,10 +8,13 @@ from typing import Any, Dict, List
 from ..context import CollectContext
 from ..mcp_discovery import discover_remote_tools
 from ..models import ServerRecord, ToolRecord
-from ..utils import read_json, redact_secrets
+from ..utils import read_json, redact_secrets, slugify
 
 
 PROVIDER = "codex"
+# Public community registry of Codex plugins (Codex has no official public web
+# marketplace; the in-app `codex /plugins` directory has no API). Clean raw JSON.
+PUBLIC_REGISTRY_URL = "https://raw.githubusercontent.com/hashgraph-online/awesome-codex-plugins/main/plugins.json"
 
 
 def _plugin_root() -> Path:
@@ -25,7 +29,7 @@ def _read_local_json(ctx: CollectContext, label: str, path: Path) -> Dict[str, A
     return data or {}
 
 
-def collect_codex(ctx: CollectContext) -> List[ServerRecord]:
+def _collect_local(ctx: CollectContext) -> List[ServerRecord]:
     root = _plugin_root()
     marketplace_path = root / ".agents" / "plugins" / "marketplace.json"
     if not marketplace_path.exists():
@@ -100,5 +104,43 @@ def collect_codex(ctx: CollectContext) -> List[ServerRecord]:
                 },
             )
         )
+    return servers
+
+
+def _collect_public_registry(ctx: CollectContext) -> List[ServerRecord]:
+    url = os.environ.get("MCP_NEWSLETTER_CODEX_REGISTRY_URL", PUBLIC_REGISTRY_URL)
+    body = ctx.fetch(PROVIDER, url, "public-registry")
+    if not body:
+        return []
+    try:
+        data = json.loads(body)
+    except json.JSONDecodeError:
+        ctx.add_issue(PROVIDER, url, "invalid public registry JSON")
+        return []
+    servers: List[ServerRecord] = []
+    for item in data.get("plugins") or []:
+        name = item.get("name") or ""
+        if not name:
+            continue
+        repo = item.get("url") or ""
+        servers.append(
+            ServerRecord(
+                provider=PROVIDER,
+                server_id=slugify(name),
+                native_surface="plugin",
+                name=name,
+                description=item.get("description", ""),
+                source_urls=[u for u in (repo, url) if u],
+                transport="catalog",
+                metadata={"category": item.get("category", ""), "registry": "awesome-codex-plugins"},
+            )
+        )
+    return servers
+
+
+def collect_codex(ctx: CollectContext) -> List[ServerRecord]:
+    # Local in-app plugins (machine-specific) + the public community registry.
+    servers = _collect_local(ctx)
+    servers.extend(_collect_public_registry(ctx))
     return servers
 

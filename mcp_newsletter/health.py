@@ -10,19 +10,15 @@ from typing import Dict, List, Optional
 # Vendor tier (per-provider) and registry tier are evaluated separately so a
 # vendor-only health pass never falsely flags a registry source as "empty".
 # NOTE: raise `claude` once P1 rendered collection captures the full directory.
+# Floors apply only to sources expected to ALWAYS return data via plain HTTP.
+# Render/key-dependent sources (cursor) and retired ones (continue/grok/openai/
+# vscode) are excluded — their live-contract tests + own info issues cover them,
+# so a missing FIRECRAWL_API_KEY or a deliberate retirement doesn't flood errors.
 VENDOR_FLOORS: Dict[str, int] = {
     "claude": 300,  # full Webflow-pagination collection lands ~338 (was ~24 pre-pagination)
-    "codex": 1,
     "gemini": 50,
     "cline": 50,
     "cloudflare": 5,
-    # currently-broken collectors keep a floor of 1 so they flag "empty" loudly
-    # until Phase 1b repairs them, without dragging the run red on a soft miss.
-    "grok": 1,
-    "openai": 1,
-    "cursor": 1,
-    "vscode": 1,
-    "continue": 1,
 }
 
 REGISTRY_FLOORS: Dict[str, int] = {

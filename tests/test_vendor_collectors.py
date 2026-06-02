@@ -20,107 +20,32 @@ def _ctx(tmp):
 
 
 class OpenAICollectorTests(unittest.TestCase):
-    def test_parses_connectors_and_capabilities(self):
-        html = (FIX / "openai_directory.html").read_text()
+    def test_retired_returns_empty_with_info_issue(self):
+        # openai connectors directory retired (folded into JS-gated ChatGPT apps)
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.openai.CollectContext.fetch", return_value=html):
-                servers = collect_openai(ctx)
-        names = {s.name for s in servers}
-        self.assertIn("Gmail", names)
-        gmail = next(s for s in servers if s.name == "Gmail")
-        self.assertEqual(gmail.provider, "openai")
-        self.assertTrue(any("write" in c.lower() for c in gmail.capabilities))
-
-    def test_unparseable_markup_returns_empty_and_records_issue(self):
-        html = (FIX / "openai_directory_empty.html").read_text()
-        with tempfile.TemporaryDirectory() as tmp:
-            ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.openai.CollectContext.fetch", return_value=html):
-                servers = collect_openai(ctx)
-            self.assertEqual(servers, [])
-            messages = [i.message for i in ctx.issues]
-            self.assertTrue(any("no records parsed" in m for m in messages))
+            servers = collect_openai(ctx)
+        self.assertEqual(servers, [])
+        self.assertTrue(any(i.severity == "info" and "retired" in i.message for i in ctx.issues))
 
 
 class CursorCollectorTests(unittest.TestCase):
-    def test_parses_per_card_names_and_descriptions(self):
-        html = (FIX / "cursor_mcp.html").read_text()
+    # Full Firecrawl /map behavior is covered in tests/test_cursor_provider.py.
+    def test_skip_network_returns_empty(self):
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.cursor.CollectContext.fetch", return_value=html):
-                servers = collect_cursor(ctx)
-        self.assertEqual(len(servers), 2)
-        names = {s.name for s in servers}
-        self.assertIn("mcp-filesystem", names)
-        self.assertIn("mcp-server-github", names)
-        # Each card has its own description (not shared)
-        fs = next(s for s in servers if s.name == "mcp-filesystem")
-        gh = next(s for s in servers if s.name == "mcp-server-github")
-        self.assertIn("filesystem", fs.description.lower())
-        self.assertIn("github", gh.description.lower())
-        self.assertNotEqual(fs.description, gh.description)
-
-    def test_deterministic_ordering(self):
-        html = (FIX / "cursor_mcp.html").read_text()
-        with tempfile.TemporaryDirectory() as tmp:
-            ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.cursor.CollectContext.fetch", return_value=html):
-                servers1 = collect_cursor(ctx)
-            with mock.patch("mcp_newsletter.providers.cursor.CollectContext.fetch", return_value=html):
-                servers2 = collect_cursor(ctx)
-        self.assertEqual([s.name for s in servers1], [s.name for s in servers2])
-
-    def test_unparseable_markup_returns_empty_and_records_issue(self):
-        html = (FIX / "cursor_mcp_empty.html").read_text()
-        with tempfile.TemporaryDirectory() as tmp:
-            ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.cursor.CollectContext.fetch", return_value=html):
-                servers = collect_cursor(ctx)
-            self.assertEqual(servers, [])
-            messages = [i.message for i in ctx.issues]
-            self.assertTrue(any("no records parsed" in m for m in messages))
+            ctx.skip_network = True
+            self.assertEqual(collect_cursor(ctx), [])
 
 
 class VSCodeCollectorTests(unittest.TestCase):
-    def test_parses_gallery_json(self):
-        body = (FIX / "vscode_gallery.json").read_text()
+    def test_retired_returns_empty_with_info_issue(self):
+        # vscode gallery is a subset of the official registry (already in registry tier)
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.vscode.CollectContext.fetch", return_value=body):
-                servers = collect_vscode(ctx)
-        names = {s.name for s in servers}
-        self.assertIn("GitHub Copilot MCP", names)
-        entry = next(s for s in servers if s.name == "GitHub Copilot MCP")
-        self.assertEqual(entry.provider, "vscode")
-
-    def test_parses_top_level_json_list(self):
-        body = (FIX / "vscode_list.json").read_text()
-        with tempfile.TemporaryDirectory() as tmp:
-            ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.vscode.CollectContext.fetch", return_value=body):
-                servers = collect_vscode(ctx)
-        names = {s.name for s in servers}
-        self.assertIn("GitHub Copilot MCP", names)
-        self.assertIn("Azure MCP", names)
-        self.assertEqual(len(servers), 2)
-
-    def test_invalid_json_returns_empty(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.vscode.CollectContext.fetch", return_value="not json"):
-                servers = collect_vscode(ctx)
+            servers = collect_vscode(ctx)
         self.assertEqual(servers, [])
-
-    def test_empty_source_urls_filtered(self):
-        # An item with no repository should not have an empty string in source_urls
-        body = (FIX / "vscode_list.json").read_text()
-        with tempfile.TemporaryDirectory() as tmp:
-            ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.vscode.CollectContext.fetch", return_value=body):
-                servers = collect_vscode(ctx)
-        for s in servers:
-            self.assertTrue(all(u for u in s.source_urls), f"Empty URL in source_urls for {s.name}")
+        self.assertTrue(any(i.severity == "info" and "retired" in i.message for i in ctx.issues))
 
 
 class ClineCollectorTests(unittest.TestCase):
@@ -171,23 +96,13 @@ class ClineCollectorTests(unittest.TestCase):
 
 
 class ContinueCollectorTests(unittest.TestCase):
-    def test_parses_blocks_json(self):
-        body = (FIX / "continue_blocks.json").read_text()
+    def test_retired_returns_empty_with_info_issue(self):
+        # continue bulk MCP list removed (explore auth-gated, search capped)
         with tempfile.TemporaryDirectory() as tmp:
             ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.continue_.CollectContext.fetch", return_value=body):
-                servers = collect_continue(ctx)
-        names = {s.name for s in servers}
-        self.assertIn("Postgres MCP", names)
-        entry = next(s for s in servers if s.name == "Postgres MCP")
-        self.assertEqual(entry.provider, "continue")
-
-    def test_invalid_json_returns_empty(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            ctx = _ctx(tmp)
-            with mock.patch("mcp_newsletter.providers.continue_.CollectContext.fetch", return_value="!!!"):
-                servers = collect_continue(ctx)
+            servers = collect_continue(ctx)
         self.assertEqual(servers, [])
+        self.assertTrue(any(i.severity == "info" and "retired" in i.message for i in ctx.issues))
 
 
 class CloudflareCollectorTests(unittest.TestCase):

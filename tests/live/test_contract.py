@@ -47,8 +47,23 @@ class VendorContractTests(unittest.TestCase):
         from mcp_newsletter.providers.gemini import collect_gemini
         self._assert_floor("gemini", len(collect_gemini(self._ctx())))
 
-    # Phase 1b: add test_openai / test_cursor / test_vscode / test_continue /
-    # test_codex once those collectors are repaired against their live sources.
+    def test_grok_builtins(self):
+        from mcp_newsletter.providers.grok import collect_grok
+        n = len(collect_grok(self._ctx()))
+        self.assertGreaterEqual(n, 5, f"grok collected {n} built-ins — docs.x.ai/grok/connectors.md may have changed")
+
+    def test_codex_public_registry(self):
+        from mcp_newsletter.providers.codex import collect_codex
+        n = len(collect_codex(self._ctx()))
+        self.assertGreaterEqual(n, 40, f"codex collected {n} — awesome-codex-plugins plugins.json may have moved")
+
+    @unittest.skipUnless(os.environ.get("FIRECRAWL_API_KEY"), "needs FIRECRAWL_API_KEY")
+    def test_cursor_via_firecrawl_map(self):
+        from mcp_newsletter.providers.cursor import collect_cursor
+        n = len(collect_cursor(self._ctx()))
+        self.assertGreaterEqual(n, 500, f"cursor collected {n} MCP plugins — Firecrawl /map or cursor.directory may have changed")
+
+    # Retired (return [] by design): openai, continue, vscode.
 
 
 @unittest.skipUnless(LIVE, "live contract tests; set MCP_NEWSLETTER_LIVE_TESTS=1 to run")

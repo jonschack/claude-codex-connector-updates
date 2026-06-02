@@ -9,6 +9,7 @@ from .utils import USER_AGENT
 
 
 FIRECRAWL_URL = "https://api.firecrawl.dev/v1/scrape"
+FIRECRAWL_MAP_URL = "https://api.firecrawl.dev/v1/map"
 
 Meta = Dict[str, Any]
 Backend = Callable[..., Tuple[Optional[str], Meta]]
@@ -66,6 +67,38 @@ _BACKENDS: Dict[str, Backend] = {
     "firecrawl": _firecrawl_backend,
     "playwright": _playwright_backend,
 }
+
+
+def _firecrawl_map_request(url: str, key: str, limit: int) -> Dict[str, Any]:
+    from urllib.request import Request, urlopen
+
+    payload = json.dumps({"url": url, "limit": limit}).encode("utf-8")
+    headers = {
+        "Authorization": f"Bearer {key}",
+        "Content-Type": "application/json",
+        "User-Agent": USER_AGENT,
+    }
+    req = Request(FIRECRAWL_MAP_URL, data=payload, headers=headers, method="POST")
+    with urlopen(req, timeout=120) as resp:
+        body = read_capped(resp, max_response_bytes())
+        return json.loads(body.decode("utf-8", "replace"))
+
+
+def firecrawl_map(url: str, *, limit: int = 5000, _post: Optional[Callable[[str, int], Dict[str, Any]]] = None) -> Tuple[list, Meta]:
+    """Enumerate all URLs of a site via Firecrawl /map (cheap, bypasses JS
+    challenges). Returns (urls, meta). `_post` injects the request for tests.
+    Returns ([], meta) with an error if no key or the request fails."""
+    key = os.environ.get("FIRECRAWL_API_KEY")
+    if _post is None and not key:
+        return [], _meta(url, error="FIRECRAWL_API_KEY not set")
+    poster = _post or (lambda u, l: _firecrawl_map_request(u, key, l))
+    try:
+        data = poster(url, limit)
+    except Exception as exc:  # network/credential failure -> captured
+        return [], _meta(url, error=f"{type(exc).__name__}: {exc}")
+    links = data.get("links") or data.get("data") or []
+    urls = [(item.get("url") if isinstance(item, dict) else item) for item in links]
+    return [u for u in urls if u], _meta(url, status=200)
 
 
 def fetch_rendered(

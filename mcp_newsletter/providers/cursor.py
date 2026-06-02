@@ -1,49 +1,61 @@
 from __future__ import annotations
-import os, re
+
+import os
 from typing import List
+
 from ..context import CollectContext
+from ..fetch_rendered import firecrawl_map
 from ..models import ServerRecord
-from ..utils import extract_github_repos, html_to_text, slugify
+from ..utils import slugify
 
 PROVIDER = "cursor"
-URL = "https://cursor.directory/mcp"  # VERIFY: persistent HTTP 429 bot-block as of 2026-06; no public JSON API found
+# cursor.directory rebuilt on the "Open Plugins" model and sits behind Vercel
+# Attack Challenge Mode (the old /mcp 429). Plain HTTP (incl. sitemap.xml) is
+# challenge-gated; Firecrawl /map bypasses it and cheaply enumerates all plugin
+# URLs (~2,284 with "mcp" in the slug). Requires FIRECRAWL_API_KEY; without it
+# the collector skips gracefully (info issue), like the keyed registry sources.
+SITE = "https://cursor.directory"
+
+
+def _name_from_slug(slug: str) -> str:
+    parts = slug.split("-")
+    cleaned = [p for p in parts if p.lower() != "mcp"] or parts
+    return " ".join(cleaned).title()
 
 
 def collect_cursor(ctx: CollectContext) -> List[ServerRecord]:
-    url = os.environ.get("MCP_NEWSLETTER_CURSOR_URL", URL)
-    markup = ctx.fetch(PROVIDER, url, "mcp-directory")
-    if not markup:
+    if ctx.skip_network:
+        ctx.add_issue(PROVIDER, SITE, "network fetch skipped by configuration")
         return []
-    servers = []
-    seen_slugs: set = set()
-    # Parse per-card: each card is a block containing a heading + description + optional repo link
-    for card_match in re.finditer(
-        r'<div[^>]*class="[^"]*mcp-card[^"]*"[^>]*>(.*?)</div\s*>',
-        markup,
-        flags=re.I | re.S,
-    ):
-        block = card_match.group(1)
-        # Extract card title from h2 or h3
-        title_match = re.search(r"<h[23][^>]*>(.*?)</h[23]>", block, flags=re.I | re.S)
-        name = html_to_text(title_match.group(1)).strip() if title_match else ""
-        if not name:
+    site = os.environ.get("MCP_NEWSLETTER_CURSOR_URL", SITE)
+    limit = int(os.environ.get("MCP_NEWSLETTER_CURSOR_MAX", "5000"))
+    urls, meta = firecrawl_map(site, limit=limit)
+    if not urls:
+        ctx.add_issue(
+            PROVIDER, site,
+            f"cursor enumeration unavailable: {meta.get('error') or 'no urls'} "
+            "(directory is JS/challenge-gated; needs FIRECRAWL_API_KEY)",
+            severity="info" if "FIRECRAWL_API_KEY" in (meta.get("error") or "") else "warning",
+        )
+        return []
+    mcp_urls = set()
+    for raw in urls:
+        clean = raw.split("?", 1)[0].rstrip("/")
+        if "/plugins/" not in clean:
             continue
-        slug = slugify(name)
-        if slug in seen_slugs:
-            continue
-        seen_slugs.add(slug)
-        # Extract card-local description (paragraph text)
-        desc_match = re.search(r"<p[^>]*>(.*?)</p>", block, flags=re.I | re.S)
-        description = html_to_text(desc_match.group(1)).strip() if desc_match else ""
-        # Extract repo links local to this card
-        repos = extract_github_repos(block)
-        source = repos[:1] + [url] if repos else [url]
+        if "mcp" in clean.rsplit("/", 1)[-1].lower():
+            mcp_urls.add(clean)
+    mcp_urls = sorted(mcp_urls)
+    servers: List[ServerRecord] = []
+    for url in mcp_urls:
+        slug = url.rsplit("/", 1)[-1]
         servers.append(ServerRecord(
-            provider=PROVIDER, server_id=slug, native_surface="connector",
-            name=name, description=description, source_urls=source,
+            provider=PROVIDER,
+            server_id=slugify(slug),
+            native_surface="connector",
+            name=_name_from_slug(slug),
+            description="",
+            source_urls=[url],
+            transport="catalog",
         ))
-    # Sort deterministically by name
-    servers.sort(key=lambda s: s.name)
-    if markup and not servers:
-        ctx.add_issue(PROVIDER, url, "no records parsed; DOM may have changed")
     return servers

@@ -1,32 +1,22 @@
 from __future__ import annotations
-import json, os
+
 from typing import List
+
 from ..context import CollectContext
 from ..models import ServerRecord
-from ..utils import slugify
 
 PROVIDER = "continue"
-URL = "https://continue.dev/api/blocks?type=mcpServer"  # VERIFY: hub.continue.dev 308-redirects to continue.dev; page is a Next.js SPA with no embedded data; api.continue.dev/packages requires auth (401)
+# RETIRED (2026-06): the public bulk MCP-blocks list is gone — hub.continue.dev
+# redirects to www, /explore is auth-gated, and the search API is capped at 5
+# type-blind results. Per-block getFromSlug works but there is no public way to
+# ENUMERATE the catalog. These community blocks are covered by the registry tier.
 
 
 def collect_continue(ctx: CollectContext) -> List[ServerRecord]:
-    url = os.environ.get("MCP_NEWSLETTER_CONTINUE_URL", URL)
-    body = ctx.fetch(PROVIDER, url, "blocks")
-    if not body:
-        return []
-    try:
-        data = json.loads(body)
-    except json.JSONDecodeError:
-        ctx.add_issue(PROVIDER, url, "invalid blocks JSON")
-        return []
-    items = data.get("blocks") if isinstance(data, dict) else data
-    servers = []
-    for item in items or []:
-        name = item.get("name") or item.get("title") or ""
-        if not name:
-            continue
-        servers.append(ServerRecord(
-            provider=PROVIDER, server_id=slugify(name), native_surface="connector",
-            name=name, description=item.get("description", ""), source_urls=[url],
-        ))
-    return servers
+    ctx.add_issue(
+        PROVIDER,
+        "https://hub.continue.dev",
+        "retired: no public bulk MCP-server list since the 2026 hub restructure (explore auth-gated, search capped at 5)",
+        severity="info",
+    )
+    return []
