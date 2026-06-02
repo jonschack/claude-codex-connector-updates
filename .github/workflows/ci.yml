@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 13 * * *"   # daily: live-contract + offline smoke
+  workflow_dispatch:
+
+jobs:
+  unit:
+    # Offline unit suite — fast, deterministic, blocks PRs.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run offline unit tests
+        run: python -m unittest -v
+
+  live-contract:
+    # Freshness guard against scraper drift. Non-blocking: surfaces breakage
+    # without failing PRs. Runs on schedule / manual dispatch only.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      MCP_NEWSLETTER_LIVE_TESTS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run live source contract tests
+        run: python -m unittest tests.live.test_contract -v
