@@ -34,6 +34,7 @@ class RegistryMeta:
     seeded_sources: Dict[str, str] = field(default_factory=dict)   # source -> first seeded date
     liveness: Dict[str, int] = field(default_factory=dict)         # identity -> consecutive misses
     last_discovered: Dict[str, str] = field(default_factory=dict)  # identity -> date
+    last_manifest_parsed: Dict[str, str] = field(default_factory=dict)  # identity -> date
 
     @classmethod
     def load(cls, path: Path) -> "RegistryMeta":
@@ -44,6 +45,7 @@ class RegistryMeta:
             seeded_sources=data.get("seeded_sources", {}),
             liveness=data.get("liveness", {}),
             last_discovered=data.get("last_discovered", {}),
+            last_manifest_parsed=data.get("last_manifest_parsed", {}),
         )
 
     def dump(self, path: Path) -> None:
@@ -52,6 +54,7 @@ class RegistryMeta:
             "seeded_sources": self.seeded_sources,
             "liveness": self.liveness,
             "last_discovered": self.last_discovered,
+            "last_manifest_parsed": self.last_manifest_parsed,
         }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
@@ -146,6 +149,7 @@ def diff_and_events(
                                      f"Write-capable server delisted: {prev.name}"))
             meta.liveness.pop(identity, None)
             meta.last_discovered.pop(identity, None)
+            meta.last_manifest_parsed.pop(identity, None)
             # dropped from new_state (truly gone)
         else:
             meta.liveness[identity] = misses

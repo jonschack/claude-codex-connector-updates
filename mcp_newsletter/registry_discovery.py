@@ -24,7 +24,7 @@ REVERIFY_FRACTION = 0.15
 _HEADLINE_TIERS = {"verified_tools", "annotation"}
 
 
-def _days_between(a: str, b: str) -> int:
+def days_between(a: str, b: str) -> int:
     try:
         return abs((dt.date.fromisoformat(a) - dt.date.fromisoformat(b)).days)
     except ValueError:
@@ -35,7 +35,7 @@ def _has_authority(rec: RegistryServerRecord) -> bool:
     return any(s.get("source") in AUTHORITY_SOURCES for s in rec.sources)
 
 
-def _is_claimed_write(rec: RegistryServerRecord) -> bool:
+def is_claimed_write(rec: RegistryServerRecord) -> bool:
     return RANK.get(rec.write_confidence, 0) >= RANK["medium"]
 
 
@@ -45,7 +45,7 @@ def _needs_reverify(rec: RegistryServerRecord, run_date: str) -> bool:
         return False
     info = rec.confidence_by_source.get("tools") or {}
     last = info.get("date", "")
-    return bool(last) and _days_between(last, run_date) >= DISCOVERY_DECAY_DAYS
+    return bool(last) and days_between(last, run_date) >= DISCOVERY_DECAY_DAYS
 
 
 def select_discovery_candidates(
@@ -66,6 +66,9 @@ def select_discovery_candidates(
         keyword prior to prove (and correct) its leakiness
       - re-verification (~15%): headline tools past `DISCOVERY_DECAY_DAYS`
     Rotation: never-probed first, then oldest `last_discovered`, then identity.
+    Reserves use `int(cap * frac)`, so caps below ~5 (exploration) / ~7 (reverify)
+    floor the respective guarantee to 0 — fine at the production cap (150), but a
+    cost lever set very low disables them.
     """
     new_ids: Set[str] = set(new_identities or ())
     if cap <= 0:
@@ -76,14 +79,14 @@ def select_discovery_candidates(
         if not rec.remote_url:
             continue
         seen = last_discovered.get(rec.identity)
-        if seen and _days_between(seen, run_date) < cadence_days:
+        if seen and days_between(seen, run_date) < cadence_days:
             continue  # discovered recently; let it rotate later
         eligible.append(rec)
 
     def priority_key(rec: RegistryServerRecord):
         new = 0 if rec.identity in new_ids else 1
         authority = 0 if _has_authority(rec) else 1
-        claimed = 0 if _is_claimed_write(rec) else 1
+        claimed = 0 if is_claimed_write(rec) else 1
         never = 0 if rec.identity not in last_discovered else 1
         last = last_discovered.get(rec.identity, "")
         return (new, authority, claimed, never, last, rec.identity)

@@ -81,11 +81,12 @@ _KIND_TO_TIER = {
 
 
 def evidence_tier(evidence: Iterable[Dict[str, Any]]) -> str:
-    """Strongest evidence tier present in `evidence` (an unknown kind is treated
-    as `claimed_description`, never silently dropped to `none`)."""
+    """Strongest evidence tier present in `evidence`. Fail-closed: an unknown
+    `kind` contributes `none` (it must be added to `_KIND_TO_TIER` to count), so a
+    typo'd or future kind can never silently grant a record a write tier."""
     best = "none"
     for item in evidence or []:
-        tier = _KIND_TO_TIER.get(item.get("kind"), "claimed_description")
+        tier = _KIND_TO_TIER.get(item.get("kind"), "none")
         if EVIDENCE_TIER_RANK[tier] > EVIDENCE_TIER_RANK[best]:
             best = tier
     return best

@@ -54,6 +54,8 @@ def render_registry_section(
                 c=cls, v=b.get("verified_tools", 0), a=b.get("annotation", 0),
                 d=b.get("declared_manifest", 0), cl=b.get("claimed_description", 0),
                 t=b.get("total", 0)))
+        lines.append("- Note: a server may match several action classes; columns "
+                     "are not mutually exclusive.")
         lines.append("")
 
     table_events = [e for e in events if e["event_type"] != "new_source"]

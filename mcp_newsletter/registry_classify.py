@@ -8,9 +8,10 @@ from .registries.base import RegistryServerRecord
 
 # Evidence kinds produced by observing the *actual* server (live tool probe in
 # registry_discovery, or static manifest parse) — these are gathered by other
-# steps and must survive re-classification. Catalog kinds are regenerated here
-# each run, so only these observed kinds are carried across the merge.
-_OBSERVED_KINDS = {"tool_text", "tool_rollup", "mcp_annotation", "declared_manifest"}
+# steps and must survive re-classification AND carry across runs (the updater
+# seeds them from prior state). Catalog kinds are regenerated each run, so only
+# these observed kinds are carried across the merge.
+OBSERVED_EVIDENCE_KINDS = {"tool_text", "tool_rollup", "mcp_annotation", "declared_manifest"}
 
 
 def _evidence_key(item: dict) -> tuple:
@@ -57,7 +58,7 @@ def classify_registry_record(rec: RegistryServerRecord, run_date: str) -> None:
     # add this run's freshly-derived catalog evidence under a stable dedup key.
     # (Was `rec.evidence = evidence`, which clobbered annotation/tool evidence —
     # the P1-0 bug that left 0/31,664 records with annotation evidence.)
-    merged = [ev for ev in rec.evidence if ev.get("kind") in _OBSERVED_KINDS]
+    merged = [ev for ev in rec.evidence if ev.get("kind") in OBSERVED_EVIDENCE_KINDS]
     seen = {_evidence_key(ev) for ev in merged}
     for ev in evidence:
         key = _evidence_key(ev)

@@ -46,10 +46,11 @@ def record_action_classes(rec: RegistryServerRecord) -> List[str]:
     blob = " ".join([
         rec.description or "",
         " ".join(rec.tags or []),
-        # tool names are snake_case; split on `_` so `deploy_service` matches `deploy`
-        " ".join(f"{t.name.replace('_', ' ')} {t.description}" for t in rec.tools),
+        " ".join(f"{t.name} {t.description}" for t in rec.tools),
     ])
-    return action_classes_for(blob)
+    # tool names AND tags are often snake_case (deploy_service, data_write); split
+    # on `_` so they match the whole-word keyword regexes.
+    return action_classes_for(blob.replace("_", " "))
 
 
 def coverage_by_action_class(records: Dict[str, RegistryServerRecord]) -> Dict[str, Dict[str, int]]:

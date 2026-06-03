@@ -17,7 +17,8 @@ from .context import CollectContext
 from .providers import collect_all
 from .registries import collect_all_registries, enabled_sources
 from .registries.merge import merge_entries, build_alias_map
-from .registry_classify import classify_registry_record
+from .manifest import run_manifest_pass, select_manifest_candidates
+from .registry_classify import OBSERVED_EVIDENCE_KINDS, classify_registry_record
 from .registry_discovery import select_discovery_candidates, run_discovery
 from .registry_state import RegistryMeta, diff_and_events, load_state, write_state
 from .registry_reporting import render_registry_section
@@ -163,22 +164,45 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
     collection = collect_all_registries(ctx)
     records = merge_entries(collection.entries, aliases)
 
-    # carry prior tool-evidence forward so confidence doesn't drop on un-discovered servers
+    # Carry prior OBSERVED state forward onto the freshly-merged records (which
+    # start with empty evidence/tools). Discovery/manifest only touch a capped
+    # slice each run, so without this the verified/declared evidence and the
+    # bounded tools of every un-probed server would be dropped next run — and the
+    # P1-0 annotation-merge fix would silently revert. classify_registry_record
+    # union-merges these with this run's catalog evidence.
     current = {rec.identity: rec for rec in records}
     for identity, rec in current.items():
-        if identity in prior:
-            prior_tools = prior[identity].confidence_by_source.get("tools")
-            if prior_tools:
-                rec.confidence_by_source.setdefault("tools", prior_tools)
+        if identity not in prior:
+            continue
+        prev = prior[identity]
+        if not rec.evidence:
+            rec.evidence = [e for e in prev.evidence
+                            if e.get("kind") in OBSERVED_EVIDENCE_KINDS]
+        if not rec.tools:
+            rec.tools = list(prev.tools)
+        for src in ("tools", "manifest"):  # don't let confidence drop on un-reprobed servers
+            info = prev.confidence_by_source.get(src)
+            if info:
+                rec.confidence_by_source.setdefault(src, info)
 
     # live discovery (deterministic, capped, rotating)
     if not skip_network:
         cap = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP", "150"))
         cadence = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS", "3"))
         workers = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DISCOVERY_WORKERS", "8"))
+        # new_identities (priority bucket 1) is fed by the P4 incremental cursor;
+        # until P4 lands it stays empty (default).
         candidates = select_discovery_candidates(list(current.values()), cap, meta.last_discovered, cadence, run_date)
         discovered = run_discovery(candidates, run_date, workers=workers)
         meta.last_discovered.update(discovered)
+
+        # static manifest pass: lift stdio servers (no remote_url) we can't probe
+        m_cap = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_MANIFEST_CAP", "100"))
+        m_cadence = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_MANIFEST_CADENCE_DAYS", "7"))
+        m_candidates = select_manifest_candidates(
+            list(current.values()), m_cap, meta.last_manifest_parsed, m_cadence, run_date)
+        parsed = run_manifest_pass(ctx, m_candidates, run_date)
+        meta.last_manifest_parsed.update(parsed)
 
     for rec in current.values():
         classify_registry_record(rec, run_date)

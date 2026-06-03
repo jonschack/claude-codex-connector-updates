@@ -4,14 +4,15 @@ import json
 import re
 from typing import Dict, List, Optional, Tuple
 
-from .classifier import READ_RE, WRITE_RE, evidence_tier
+from .classifier import WRITE_RE, evidence_tier
+from .identity import github_owner_repo
 from .models import ToolRecord
 from .registries.base import RegistryServerRecord
 from .registry_discovery import (
     EXPLORATION_FRACTION,
     TOP_N_WRITE_TOOLS,
-    _days_between,
-    _is_claimed_write,
+    days_between,
+    is_claimed_write,
 )
 
 # Static `declared_manifest` tier: for stdio servers (the ~91% with no remote_url
@@ -23,7 +24,17 @@ from .registry_discovery import (
 # A tool name looks like an identifier: starts with a letter, ≥3 chars.
 _TOOL_NAME = r"[A-Za-z][A-Za-z0-9_]{2,}"
 _HEADING_RE = re.compile(r"^(#{1,6})\s+(.*)$")
-_TOOLS_HEADING_RE = re.compile(r"\btools\b", re.I)
+# A "Tools" heading must be a recognized tool-listing title — not any heading that
+# merely contains the word (e.g. "Troubleshooting Tools", "Recommended Tools").
+_TOOLS_HEADINGS = {
+    "tools", "available tools", "supported tools", "mcp tools", "the tools",
+    "tool reference", "provided tools", "exposed tools", "tools provided",
+}
+
+
+def _is_tools_heading(text: str) -> bool:
+    norm = re.sub(r"[^a-z ]+", "", text.lower()).strip()
+    return norm in _TOOLS_HEADINGS
 # bullet: `- \`name\` — desc`  /  `* **name**: desc`
 _BULLET_RE = re.compile(
     r"^\s*[-*]\s+[`*]*(" + _TOOL_NAME + r")[`*]*\s*[-—:]\s*(.+?)\s*$")
@@ -45,6 +56,26 @@ def parse_server_json_tools(text: str) -> List[Tuple[str, str]]:
     return out
 
 
+def parse_package_json_tools(text: str) -> List[Tuple[str, str]]:
+    """Tool (name, description) pairs declared in a package.json — either a
+    top-level `tools` array or an `mcp.tools` block (the conventions MCP npm
+    packages use to declare their surface statically)."""
+    try:
+        data = json.loads(text or "")
+    except (json.JSONDecodeError, TypeError):
+        return []
+    if not isinstance(data, dict):
+        return []
+    candidates = data.get("tools")
+    if not candidates and isinstance(data.get("mcp"), dict):
+        candidates = data["mcp"].get("tools")
+    out: List[Tuple[str, str]] = []
+    for tool in candidates or []:
+        if isinstance(tool, dict) and tool.get("name"):
+            out.append((str(tool["name"]), str(tool.get("description", ""))))
+    return out
+
+
 def parse_readme_tools(text: str) -> List[Tuple[str, str]]:
     """Tool (name, description) pairs from a README's "Tools" section (bullets or
     a markdown table). Conservative: only captured under a tools-ish heading, and
@@ -57,7 +88,7 @@ def parse_readme_tools(text: str) -> List[Tuple[str, str]]:
         heading = _HEADING_RE.match(line)
         if heading:
             level = len(heading.group(1))
-            if _TOOLS_HEADING_RE.search(heading.group(2)):
+            if _is_tools_heading(heading.group(2)):
                 in_section, section_level = True, level
                 continue
             if in_section and level <= section_level:
@@ -79,6 +110,7 @@ def declared_write_tools(texts: Dict[str, str]) -> List[ToolRecord]:
     by name, each carrying `declared_manifest` (medium-confidence) evidence."""
     pairs: List[Tuple[str, str]] = []
     pairs.extend(parse_server_json_tools(texts.get("server.json", "")))
+    pairs.extend(parse_package_json_tools(texts.get("package.json", "")))
     pairs.extend(parse_readme_tools(texts.get("README", "")))
 
     out: List[ToolRecord] = []
@@ -131,17 +163,12 @@ def classify_manifest_record(rec: RegistryServerRecord, texts: Dict[str, str],
 # --- candidate selection + fetch (bounded like discovery, stdio repos) ----------
 
 def raw_base(repo_url: str) -> Optional[str]:
-    """GitHub raw content base for a repo URL (case-preserved), else None."""
-    if not repo_url:
+    """GitHub raw content base for a repo URL (case-preserved), else None. Uses
+    the shared canonical normalizer so URL-collapse rules live in one place."""
+    owner_repo = github_owner_repo(repo_url)
+    if not owner_repo:
         return None
-    s = re.sub(r"^https?://", "", repo_url.strip(), flags=re.I)
-    s = re.sub(r"^www\.", "", s, flags=re.I)
-    s = re.sub(r"/(tree|blob)/.*$", "", s).rstrip("/")
-    s = re.sub(r"\.git$", "", s, flags=re.I)
-    parts = [p for p in s.split("/") if p]
-    if len(parts) < 3 or parts[0].lower() != "github.com":
-        return None
-    return f"https://raw.githubusercontent.com/{parts[1]}/{parts[2]}"
+    return f"https://raw.githubusercontent.com/{owner_repo[0]}/{owner_repo[1]}"
 
 
 def manifest_urls(repo_url: str) -> Dict[str, str]:
@@ -172,12 +199,12 @@ def select_manifest_candidates(
         if rec.remote_url or not raw_base(rec.repo_url):
             continue  # remote servers are discovery's job; need a GitHub repo to parse
         seen = last_parsed.get(rec.identity)
-        if seen and _days_between(seen, run_date) < cadence_days:
+        if seen and days_between(seen, run_date) < cadence_days:
             continue
         eligible.append(rec)
 
     def priority_key(rec: RegistryServerRecord):
-        claimed = 0 if _is_claimed_write(rec) else 1
+        claimed = 0 if is_claimed_write(rec) else 1
         never = 0 if rec.identity not in last_parsed else 1
         return (claimed, never, last_parsed.get(rec.identity, ""), rec.identity)
 

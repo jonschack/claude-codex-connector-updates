@@ -102,8 +102,9 @@ class EvidenceTierTests(unittest.TestCase):
               {"kind": "tool_text"}]
         self.assertEqual(evidence_tier(ev), "verified_tools")
 
-    def test_unknown_kind_treated_as_claimed(self):
-        self.assertEqual(evidence_tier([{"kind": "mystery"}]), "claimed_description")
+    def test_unknown_kind_fails_closed_to_none(self):
+        # an unmapped/typo'd kind must not silently grant a write tier
+        self.assertEqual(evidence_tier([{"kind": "mystery"}]), "none")
 
 
 if __name__ == "__main__":

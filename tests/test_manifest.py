@@ -6,6 +6,7 @@ from mcp_newsletter.manifest import (
     classify_manifest_record,
     declared_write_tools,
     manifest_urls,
+    parse_package_json_tools,
     parse_readme_tools,
     parse_server_json_tools,
     raw_base,
@@ -28,6 +29,20 @@ class ServerJsonParseTests(unittest.TestCase):
         self.assertEqual(parse_server_json_tools(json.dumps({"name": "x"})), [])
         self.assertEqual(parse_server_json_tools("not json"), [])
         self.assertEqual(parse_server_json_tools(""), [])
+
+
+class PackageJsonParseTests(unittest.TestCase):
+    def test_parses_top_level_tools(self):
+        text = json.dumps({"name": "x", "tools": [{"name": "create_x", "description": "Create"}]})
+        self.assertEqual(parse_package_json_tools(text), [("create_x", "Create")])
+
+    def test_parses_mcp_tools_block(self):
+        text = json.dumps({"mcp": {"tools": [{"name": "send_x", "description": "Send"}]}})
+        self.assertEqual(parse_package_json_tools(text), [("send_x", "Send")])
+
+    def test_garbage_is_empty(self):
+        self.assertEqual(parse_package_json_tools("nope"), [])
+        self.assertEqual(parse_package_json_tools(json.dumps({"name": "x"})), [])
 
 
 class ReadmeParseTests(unittest.TestCase):
@@ -60,6 +75,11 @@ Some intro prose mentioning send and create that must be ignored.
 
     def test_no_tools_section_returns_empty(self):
         self.assertEqual(parse_readme_tools("# Title\njust prose, `code`, no tools section"), [])
+
+    def test_incidental_tools_heading_not_captured(self):
+        # "Troubleshooting Tools" must NOT open a tool-listing section
+        md = "## Troubleshooting Tools\n- `reset_cache` — clears the cache\n"
+        self.assertEqual(parse_readme_tools(md), [])
 
 
 class DeclaredWriteToolsTests(unittest.TestCase):
