@@ -8,8 +8,10 @@ from typing import Dict, List, Optional, Set
 from .action_class import record_action_classes
 from .action_power import POWER_RANK, power_tier_for, record_power_tier
 from .classifier import EVIDENCE_TIER_RANK, evidence_tier
+from .grok_research import load_radar_state
 from .registries.base import RegistryServerRecord
 from .registry_discovery import days_between
+from .utils import write_json, write_text
 
 # Phase 2: push the write frontier. Every daily run renders an always-current
 # ranked board (WRITE_FRONTIER_NOW.md + write_frontier_current.json); a weekly
@@ -139,8 +141,9 @@ def _table(entries: List[FrontierEntry], cap: int) -> List[str]:
             "| --- | --- | --- | --- | --- | --- |"]
     for i, e in enumerate(entries[:cap], 1):
         prompt = e.example_prompt.replace("|", "\\|")
+        recency = (e.recency or "—")[:10]  # show the date, not a full ISO timestamp
         rows.append(f"| {i} | {e.name} | {e.evidence_tier} | {e.power_tier} | "
-                    f"{e.recency or '—'} | {prompt} |")
+                    f"{recency} | {prompt} |")
     if len(entries) > cap:
         rows.append(f"- … {len(entries) - cap} more; see `write_frontier_current.json`.")
     return rows
@@ -267,3 +270,66 @@ def render_teaching_artifact(entries: List[FrontierEntry], run_date: str) -> str
             lines.append(f"- {e.example_prompt}  _( {e.name}, {e.evidence_tier} )_")
         lines.append("")
     return "\n".join(lines) + "\n"
+
+
+# --- orchestrator (daily run: board + alerts + idempotent weekly digest) -------
+
+def run_frontier_report(root: Path, run_date: str,
+                        records: Dict[str, RegistryServerRecord], meta) -> dict:
+    """Render the daily board + JSON, select same-day alerts (diffed against the
+    PRIOR run's board), emit the weekly digest when due (idempotent on
+    meta.last_frontier_digest), and draft the meetup teaching artifact. Does NOT
+    send email — returns the alert entries + digest body for the caller to send.
+    Mutates meta.last_frontier_digest when the digest fires.
+    """
+    cur = root / "data" / "current"
+    grok_state = load_radar_state(cur / "grok_radar_state.jsonl")
+    entries = build_frontier(records, grok_state)
+
+    # alerts: identities newly on the board since the PRIOR run's current.json
+    current_path = cur / "write_frontier_current.json"
+    prior_ids: Set[str] = set()
+    if current_path.exists():
+        try:
+            prior = json.loads(current_path.read_text(encoding="utf-8"))
+            prior_ids = {e.get("identity") for e in prior.get("entries", [])}
+        except (json.JSONDecodeError, OSError):
+            prior_ids = set()
+    alerts = select_alerts(entries, prior_ids)
+
+    # write the always-current board + json (board reflects THIS run)
+    write_text(cur / "WRITE_FRONTIER_NOW.md", render_board(entries, run_date, grok_state))
+    new_board = board_json(entries, run_date)
+    write_json(current_path, new_board)
+
+    # idempotent weekly digest
+    digest_due = (not meta.last_frontier_digest
+                  or days_between(meta.last_frontier_digest, run_date) >= DIGEST_WINDOW_DAYS)
+    digest_body = ""
+    if digest_due:
+        baseline_path = cur / "write_frontier_last_digest.json"
+        baseline = []
+        if baseline_path.exists():
+            try:
+                baseline = json.loads(baseline_path.read_text(encoding="utf-8")).get("entries", [])
+            except (json.JSONDecodeError, OSError):
+                baseline = []
+        delta = weekly_delta(new_board["entries"], baseline)
+        digest_body = render_digest(delta, run_date)
+        write_text(cur / "WRITE_FRONTIER.md", digest_body)
+        write_json(baseline_path, new_board)      # next week diffs against this
+        meta.last_frontier_digest = run_date
+
+    # meetup teaching artifact draft (human-approved; never auto-published)
+    teaching_dir = root / "meetup-hormozi" / "assets"
+    if teaching_dir.exists():
+        write_text(teaching_dir / "08-write-frontier-teaching.md",
+                   render_teaching_artifact(entries, run_date))
+
+    return {
+        "alerts": alerts,
+        "digest_due": digest_due,
+        "digest_body": digest_body,
+        "radar_age_days": radar_age_days(grok_state, run_date),
+        "entry_count": len(entries),
+    }

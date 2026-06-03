@@ -143,5 +143,38 @@ class TeachingTests(unittest.TestCase):
         self.assertIn("send email", art.lower())
 
 
+class OrchestratorTests(unittest.TestCase):
+    def test_board_written_and_digest_idempotent(self):
+        import tempfile
+        from pathlib import Path
+        from mcp_newsletter.frontier_report import run_frontier_report
+        from mcp_newsletter.registry_state import RegistryMeta
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "data" / "current").mkdir(parents=True)
+            records = {"v": _rec("v", "tool_text", power_desc="charge a card")}
+            meta = RegistryMeta()
+
+            r1 = run_frontier_report(root, "2026-05-30", records, meta)
+            self.assertTrue((root / "data" / "current" / "WRITE_FRONTIER_NOW.md").exists())
+            self.assertTrue((root / "data" / "current" / "write_frontier_current.json").exists())
+            self.assertTrue(r1["digest_due"])                  # first run: no prior digest
+            self.assertEqual(meta.last_frontier_digest, "2026-05-30")
+            # v is new + high-power + verified -> alert
+            self.assertIn("v", {e.identity for e in r1["alerts"]})
+
+            # next day: digest NOT due again (within 7d), and v no longer "new"
+            r2 = run_frontier_report(root, "2026-05-31", records, meta)
+            self.assertFalse(r2["digest_due"])
+            self.assertEqual(meta.last_frontier_digest, "2026-05-30")
+            self.assertEqual(r2["alerts"], [])
+
+            # 8 days later: digest due again
+            r3 = run_frontier_report(root, "2026-06-07", records, meta)
+            self.assertTrue(r3["digest_due"])
+            self.assertEqual(meta.last_frontier_digest, "2026-06-07")
+
+
 if __name__ == "__main__":
     unittest.main()

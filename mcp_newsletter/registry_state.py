@@ -35,6 +35,7 @@ class RegistryMeta:
     liveness: Dict[str, int] = field(default_factory=dict)         # identity -> consecutive misses
     last_discovered: Dict[str, str] = field(default_factory=dict)  # identity -> date
     last_manifest_parsed: Dict[str, str] = field(default_factory=dict)  # identity -> date
+    last_frontier_digest: str = ""  # date the weekly frontier digest last emitted
 
     @classmethod
     def load(cls, path: Path) -> "RegistryMeta":
@@ -46,6 +47,7 @@ class RegistryMeta:
             liveness=data.get("liveness", {}),
             last_discovered=data.get("last_discovered", {}),
             last_manifest_parsed=data.get("last_manifest_parsed", {}),
+            last_frontier_digest=data.get("last_frontier_digest", ""),
         )
 
     def dump(self, path: Path) -> None:
@@ -55,6 +57,7 @@ class RegistryMeta:
             "liveness": self.liveness,
             "last_discovered": self.last_discovered,
             "last_manifest_parsed": self.last_manifest_parsed,
+            "last_frontier_digest": self.last_frontier_digest,
         }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 

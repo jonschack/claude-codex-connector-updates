@@ -17,6 +17,7 @@ from .context import CollectContext
 from .providers import collect_all
 from .registries import collect_all_registries, enabled_sources
 from .registries.merge import merge_entries, build_alias_map
+from .frontier_report import run_frontier_report
 from .manifest import run_manifest_pass, select_manifest_candidates
 from .registry_classify import OBSERVED_EVIDENCE_KINDS, classify_registry_record
 from .registry_discovery import select_discovery_candidates, run_discovery
@@ -150,6 +151,25 @@ def run_update(root: Path, run_date: Optional[str] = None, skip_network: bool = 
     return {"status": status, "events": events, "servers": servers}
 
 
+def _emit_frontier_email(ctx, root: Path, run_date: str, frontier: Dict[str, object]) -> None:
+    """Best-effort: email same-day standout alerts and the weekly digest IF SMTP
+    env is configured (the daily job's box). Never crashes the run; logs a
+    CrawlIssue on failure. Tests run without SMTP env, so this is a no-op there."""
+    if not os.environ.get("MCP_NEWSLETTER_SMTP_USER"):
+        return  # not the sending host
+    from .emailer import send_alert
+    alerts = frontier.get("alerts") or []
+    try:
+        if alerts:
+            body = "\n".join(f"- {e.name} ({e.evidence_tier}, {e.power_tier} power): "
+                             f"{e.example_prompt}" for e in alerts)
+            send_alert(f"Write Frontier — {len(alerts)} new high-power write tool(s) {run_date}", body)
+        if frontier.get("digest_due") and frontier.get("digest_body"):
+            send_alert(f"Write Frontier — Weekly Digest {run_date}", str(frontier["digest_body"]))
+    except Exception as exc:  # email must never break the pipeline
+        ctx.add_issue("frontier", "email", f"frontier email failed: {exc}", severity="warning")
+
+
 def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network: bool = False) -> Dict[str, object]:
     run_date = run_date or today_iso()
     ensure_dir(root / "data" / "current")
@@ -209,6 +229,16 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
 
     delist_runs = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DELIST_RUNS", "3"))
     events, new_state, meta = diff_and_events(prior, current, run_date, collection.source_ok, meta, delist_runs)
+
+    # Phase 2: always-current write-frontier board + same-day alerts + idempotent
+    # weekly digest (mutates meta.last_frontier_digest before it's dumped below).
+    frontier = run_frontier_report(root, run_date, new_state, meta)
+    age = frontier.get("radar_age_days")
+    if frontier.get("digest_due") and (age is None or age > 7):
+        ctx.add_issue("frontier", "grok_radar",
+                      f"Grok radar stale (age={age}) at weekly digest — run /grok-research",
+                      severity="warning")
+    _emit_frontier_email(ctx, root, run_date, frontier)
 
     # persist (state + meta written together; report derived from them)
     write_state(state_path, list(new_state.values()))
