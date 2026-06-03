@@ -120,7 +120,7 @@ class _FakeMeta:
     def __init__(self):
         self.official_cursor = ""
         self.first_seen = {}
-        self.github_stars = {}
+        self.github_snapshot = {}
 
 
 class AugmentCatchNewTests(unittest.TestCase):
@@ -144,7 +144,7 @@ class AugmentCatchNewTests(unittest.TestCase):
              "_meta": {"io.modelcontextprotocol.registry/official": {"status": "deleted"}}},
         ], "metadata": {"nextCursor": ""}})
 
-        ctx = _FakeCtx({"official-incremental": incremental})
+        ctx = _FakeCtx({"official-incremental-0": incremental})
         meta = _FakeMeta()
         with mock.patch.dict(os.environ, {"MCP_NEWSLETTER_OFFICIAL_INCREMENTAL": "1",
                                           "MCP_NEWSLETTER_PACKAGE_WATCH": "0"}):
@@ -173,7 +173,7 @@ class GithubMomentumWiringTests(unittest.TestCase):
         cand = RegistryServerRecord(identity="repo:github.com/acme/x", name="X",
                                     repo_url="https://github.com/acme/x")
         meta = _FakeMeta()
-        meta.github_stars = {"acme/x": 1000}  # prior snapshot
+        meta.github_snapshot = {"acme/x": {"stars": 1000, "latest_release": "v1"}}
         graphql = json.dumps({"data": {"r0": {
             "nameWithOwner": "acme/x", "stargazerCount": 1300,
             "releases": {"nodes": [{"tagName": "v2", "createdAt": "2026-06-01"}]}}}})
@@ -183,7 +183,26 @@ class GithubMomentumWiringTests(unittest.TestCase):
             out = catch_new.github_momentum_for_candidates([cand], meta)
         self.assertIn("repo:github.com/acme/x", out)
         self.assertGreater(out["repo:github.com/acme/x"], 0)   # +300 stars -> momentum
-        self.assertEqual(meta.github_stars["acme/x"], 1300)    # snapshot updated
+        self.assertEqual(meta.github_snapshot["acme/x"]["stars"], 1300)  # snapshot updated
+
+    def test_new_release_not_stuck_true_across_runs(self):
+        import os
+        from unittest import mock
+        from mcp_newsletter.ingest import catch_new
+        from mcp_newsletter.registries.base import RegistryServerRecord
+
+        cand = RegistryServerRecord(identity="repo:github.com/acme/x", name="X",
+                                    repo_url="https://github.com/acme/x")
+        meta = _FakeMeta()
+        # same release tag as the persisted snapshot, no star change -> no momentum
+        meta.github_snapshot = {"acme/x": {"stars": 1300, "latest_release": "v2"}}
+        graphql = json.dumps({"data": {"r0": {
+            "nameWithOwner": "acme/x", "stargazerCount": 1300,
+            "releases": {"nodes": [{"tagName": "v2", "createdAt": "2026-06-01"}]}}}})
+        with mock.patch.dict(os.environ, {"GITHUB_TOKEN": "t"}), \
+             mock.patch.object(catch_new, "_github_post", return_value=graphql):
+            out = catch_new.github_momentum_for_candidates([cand], meta)
+        self.assertEqual(out, {})  # release unchanged + no stars -> new_release False
 
     def test_no_token_is_noop(self):
         import os

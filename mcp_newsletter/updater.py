@@ -232,7 +232,12 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
         meta.last_discovered.update(discovered)
 
         # P4 momentum: candidate-only github star/release velocity (GITHUB_TOKEN-gated).
-        frontier_momentum = github_momentum_for_candidates(candidates, meta, skip_network=skip_network)
+        # Include newly-caught package/incremental servers (repo but no remote_url,
+        # so absent from discovery candidates) so a new package gets momentum too.
+        momentum_candidates = candidates + [
+            current[i] for i in new_ids if i in current and current[i].repo_url]
+        frontier_momentum = github_momentum_for_candidates(momentum_candidates, meta,
+                                                           skip_network=skip_network)
 
         # static manifest pass: lift stdio servers (no remote_url) we can't probe
         m_cap = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_MANIFEST_CAP", "100"))

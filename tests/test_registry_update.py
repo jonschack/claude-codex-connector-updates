@@ -89,6 +89,7 @@ class RegistryUpdateTests(unittest.TestCase):
                      "MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP": "2",
                      "MCP_NEWSLETTER_REGISTRY_DISCOVERY_WORKERS": "4",
                      "MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS": "0",
+                     "MCP_NEWSLETTER_OFFICIAL_INCREMENTAL": "0",  # no real catch-new network
                  }):
                 run_registry_update(root, run_date="2026-05-31", skip_network=False)
 
@@ -128,7 +129,8 @@ class CrossRunPersistenceTests(unittest.TestCase):
             with mock.patch("mcp_newsletter.updater.collect_all_registries", collect_remote), \
                  mock.patch("mcp_newsletter.updater.run_discovery", side_effect=attach), \
                  mock.patch("mcp_newsletter.updater.run_manifest_pass", return_value={}), \
-                 mock.patch.dict(os.environ, {"MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS": "0"}):
+                 mock.patch.dict(os.environ, {"MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS": "0",
+                                              "MCP_NEWSLETTER_OFFICIAL_INCREMENTAL": "0"}):
                 run_registry_update(root, run_date="2026-05-30", skip_network=False)
             # cycle 2: NO network — discovery/manifest don't run; evidence must persist
             with mock.patch("mcp_newsletter.updater.collect_all_registries", collect_remote):
@@ -156,7 +158,8 @@ class ManifestPassWiringTests(unittest.TestCase):
             with mock.patch("mcp_newsletter.updater.collect_all_registries", collect_one), \
                  mock.patch("mcp_newsletter.updater.run_manifest_pass", side_effect=fake_manifest), \
                  mock.patch("mcp_newsletter.updater.run_discovery", return_value={}), \
-                 mock.patch.dict(os.environ, {"MCP_NEWSLETTER_REGISTRY_MANIFEST_CADENCE_DAYS": "0"}):
+                 mock.patch.dict(os.environ, {"MCP_NEWSLETTER_REGISTRY_MANIFEST_CADENCE_DAYS": "0",
+                                              "MCP_NEWSLETTER_OFFICIAL_INCREMENTAL": "0"}):
                 run_registry_update(root, run_date="2026-05-30", skip_network=False)
         self.assertIn("io.x/sender", captured.get("ids", []))
 

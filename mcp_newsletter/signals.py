@@ -134,7 +134,11 @@ def _feeds_from_env() -> Optional[Dict[str, str]]:
 def collect_signals(ctx: CollectContext, feeds: Optional[Dict[str, str]] = None) -> List[SignalRecord]:
     if ctx.skip_network:
         return []
-    feeds = feeds or _feeds_from_env() or DEFAULT_FEEDS
+    env_feeds = _feeds_from_env()
+    # HN Algolia is appended only with the built-in default set; an explicit feeds
+    # arg or env override is treated as a self-contained replacement.
+    using_defaults = feeds is None and env_feeds is None
+    feeds = feeds or env_feeds or DEFAULT_FEEDS
     out: List[SignalRecord] = []
     for name, url in feeds.items():
         body = ctx.fetch("signals", url, f"feed-{name}")
@@ -145,9 +149,8 @@ def collect_signals(ctx: CollectContext, feeds: Optional[Dict[str, str]] = None)
             ctx.add_issue("signals", url, f"no entries parsed from feed '{name}'", severity="info")
         out.extend(records)
 
-    # HN Algolia (JSON, not RSS) — only on the default feed set (env override
-    # replaces the whole set and is assumed self-contained).
-    if feeds is DEFAULT_FEEDS:
+    # HN Algolia (JSON, not RSS) — only with the built-in default feed set.
+    if using_defaults:
         body = ctx.fetch("signals", HN_ALGOLIA_URL, "feed-hackernews")
         if body:
             out.extend(parse_hn_algolia(body))

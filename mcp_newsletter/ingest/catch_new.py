@@ -22,6 +22,8 @@ OFFICIAL_BASE = "https://registry.modelcontextprotocol.io/v0.1/servers"
 NPM_SEARCH_URL = "https://registry.npmjs.org/-/v1/search?text=keywords:mcp&sort=date&size=100"
 PYPI_RSS_URL = "https://pypi.org/rss/packages.xml"
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
+INCREMENTAL_PAGE_LIMIT = 100   # API caps limit at 100
+INCREMENTAL_MAX_PAGES = 20     # bound the catch-up; full pull backstops overflow
 
 
 def augment_catch_new(ctx, current: Dict[str, RegistryServerRecord], meta,
@@ -40,12 +42,28 @@ def augment_catch_new(ctx, current: Dict[str, RegistryServerRecord], meta,
     if os.environ.get("MCP_NEWSLETTER_OFFICIAL_INCREMENTAL", "1") != "0":
         base = os.environ.get("MCP_NEWSLETTER_OFFICIAL_URL", OFFICIAL_BASE)
         since = meta.official_cursor
-        url = base + (f"?updated_since={since}" if since else "")
-        body = ctx.fetch("catch_new", url, "official-incremental")
-        if body:
-            ents, _cursor, dels = parse_incremental(body)
+        # Page through the updated_since window (bounded) so changes beyond the
+        # first page aren't silently dropped; the periodic full pull backstops any
+        # overflow past INCREMENTAL_MAX_PAGES.
+        cursor = ""
+        fetched_any = False
+        for page in range(INCREMENTAL_MAX_PAGES):
+            params = [f"limit={INCREMENTAL_PAGE_LIMIT}"]
+            if since:
+                params.append(f"updated_since={since}")
+            if cursor:
+                params.append(f"cursor={cursor}")
+            url = base + "?" + "&".join(params)
+            body = ctx.fetch("catch_new", url, f"official-incremental-{page}")
+            if not body:
+                break
+            ents, cursor, dels = parse_incremental(body)
             extra.extend(ents)
             deleted.extend(dels)
+            fetched_any = True
+            if not cursor:
+                break
+        if fetched_any:
             meta.official_cursor = run_date  # advance high-watermark
 
     if os.environ.get("MCP_NEWSLETTER_PACKAGE_WATCH", "0") == "1":
@@ -66,7 +84,11 @@ def augment_catch_new(ctx, current: Dict[str, RegistryServerRecord], meta,
                 # the full pull picks it up next run.
                 meta.first_seen.setdefault(rec.identity, run_date)
 
-    for name in deleted:  # the only incremental delete
+    # Tombstones are the only incremental delete. A status=deleted record removes
+    # the server even if this run's full pull happened to still list it — an
+    # explicit deletion is authoritative over a stale full-pull listing. The key
+    # matches the merge identity (both use official_name.lower()).
+    for name in deleted:
         current.pop(canonical_key(official_name=name), None)
 
     return new_ids
@@ -114,12 +136,13 @@ def github_momentum_for_candidates(candidates: List[RegistryServerRecord],
     if not body:
         return {}
     snapshot = parse_graphql(body)
-    prev = {k: {"stars": v} for k, v in (meta.github_stars or {}).items()}
-    deltas = momentum(prev, snapshot)
+    # prev snapshot carries stars AND latest_release, so new_release is a real
+    # cross-run delta (not stuck true every run).
+    deltas = momentum(meta.github_snapshot or {}, snapshot)
 
     out: Dict[str, float] = {}
     for repo_key, info in snapshot.items():
-        meta.github_stars[repo_key] = info.get("stars", 0)
+        meta.github_snapshot[repo_key] = info
         identity = repo_to_identity.get(repo_key)
         if not identity:
             continue

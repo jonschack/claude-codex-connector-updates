@@ -37,8 +37,9 @@ def parse_npm_search(json_text: str) -> List[RawRegistryEntry]:
         description = pkg.get("description", "")
         if not _is_mcp(name, description, keywords):
             continue
-        repo = ((pkg.get("links") or {}).get("repository")
-                or (pkg.get("links") or {}).get("homepage") or "")
+        # Only the repository link becomes the canonical key — a homepage URL
+        # would mis-link the fusion identity, so it's deliberately not a fallback.
+        repo = (pkg.get("links") or {}).get("repository") or ""
         out.append(RawRegistryEntry(
             source="npm", source_id=name, name=name, description=description,
             repo_url=repo, tags=list(keywords), last_updated=pkg.get("date", ""),

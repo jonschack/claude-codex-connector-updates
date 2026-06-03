@@ -95,6 +95,21 @@ class RankingTests(unittest.TestCase):
         fresh = next(e for e in ranked if e.identity == "fresh")
         self.assertLess(backfilled.frontier_score, fresh.frontier_score)
 
+    def test_momentum_lifts_score_within_band(self):
+        # two identical headline tools; the one with github momentum ranks first,
+        # but momentum (attention) can't cross a tier/power band (P4 invariant).
+        records = {
+            "quiet": _rec("quiet", "tool_text", power_desc="charge a card", recency="2026-05-29"),
+            "trending": _rec("trending", "tool_text", power_desc="charge a card", recency="2026-05-29"),
+        }
+        entries = build_frontier(records, {}, "2026-05-30",
+                                 momentum={"trending": 1.0})
+        ranked = ranked_section(entries, "headline")
+        self.assertEqual(ranked[0].identity, "trending")
+        quiet = next(e for e in entries if e.identity == "quiet")
+        trending = next(e for e in entries if e.identity == "trending")
+        self.assertGreater(trending.frontier_score, quiet.frontier_score)
+
     def test_low_power_viral_never_enters_headline(self):
         # a 50k-like viral item stays in viral; a verified write stays headline
         grok = {"v": {"name": "Hype", "peak_engagement": 50000, "last_seen": "2026-05-30"}}
