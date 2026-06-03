@@ -171,6 +171,25 @@ class RunDiscoveryTests(unittest.TestCase):
         self.assertTrue(all(t.write_confidence in ("medium", "high") for t in rec.tools))
         self.assertNotIn("list_things", [t.name for t in rec.tools])
 
+    def test_persists_all_four_annotation_hints_on_captured_tool(self):
+        rec = _rec("a")
+        # a write tool carrying every MCP behavioral hint
+        tool = ToolRecord(provider="registry", server_id="a", name="deploy_service",
+                          native_surface="registry", description="Deploy a service",
+                          annotations={"destructiveHint": True, "readOnlyHint": False,
+                                       "idempotentHint": False, "openWorldHint": True})
+        with mock.patch.object(registry_discovery, "discover_remote_tools",
+                               return_value=([tool], {"ok": True})):
+            run_discovery([rec], run_date="2026-05-30", workers=2)
+        self.assertEqual(len(rec.tools), 1)
+        # hints survive a jsonl round-trip (so P3 power can read blast-radius)
+        back = RegistryServerRecord.from_jsonl(rec.to_jsonl())
+        ann = back.tools[0].annotations
+        self.assertEqual(ann["destructiveHint"], True)
+        self.assertEqual(ann["openWorldHint"], True)
+        self.assertEqual(ann["idempotentHint"], False)
+        self.assertEqual(ann["readOnlyHint"], False)
+
     def test_swallows_per_endpoint_exceptions(self):
         good = _rec("good")
         bad = _rec("bad")
