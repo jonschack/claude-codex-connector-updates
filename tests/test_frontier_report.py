@@ -158,6 +158,20 @@ class DeltaTests(unittest.TestCase):
         self.assertEqual([d["identity"] for d in delta["risen"]], ["v"])
 
 
+class DigestCapTests(unittest.TestCase):
+    def test_digest_blocks_are_flood_capped(self):
+        from mcp_newsletter.frontier_report import render_digest, DIGEST_BLOCK_CAP
+        # first-run flood: hundreds of "new" entries must not produce a huge email
+        new = [{"identity": str(i), "name": f"srv{i}", "evidence_tier": "claimed_description",
+                "power_tier": "high", "frontier_score": i} for i in range(500)]
+        out = render_digest({"new": new, "newly_verified": [], "risen": []}, "2026-06-02")
+        bullet_lines = [l for l in out.splitlines() if l.startswith("- **")]
+        self.assertEqual(len(bullet_lines), DIGEST_BLOCK_CAP)   # capped
+        self.assertIn("more", out)                              # overflow noted
+        self.assertIn("(500)", out)                             # true count still shown
+        self.assertIn("srv499", bullet_lines[0])                # highest-score first
+
+
 class AlertTests(unittest.TestCase):
     def test_new_high_power_headline_alerts(self):
         records = {

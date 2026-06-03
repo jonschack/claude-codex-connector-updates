@@ -278,15 +278,24 @@ def select_alerts(entries: List[FrontierEntry],
             if is_headline_high(e) and e.identity not in prior_headline_high]
 
 
-def render_digest(delta: dict, run_date: str) -> str:
+# Per-block cap on the weekly digest so it stays an email, not a 300KB dump — the
+# full-pull adds many servers/week (and the FIRST digest sees the whole backlog as
+# "new"). Highest frontier_score first; the rest collapse to a count.
+DIGEST_BLOCK_CAP = 40
+
+
+def render_digest(delta: dict, run_date: str, cap: int = DIGEST_BLOCK_CAP) -> str:
     def block(title, items):
+        items = sorted(items, key=lambda d: float(d.get("frontier_score", 0) or 0), reverse=True)
         out = [f"### {title} ({len(items)})", ""]
         if not items:
             out.append("_None._")
-        for d in items:
+        for d in items[:cap]:
             tail = f" — {d.get('why')}" if d.get("why") else ""
             out.append(f"- **{d.get('name')}** ({d.get('evidence_tier')}, "
                        f"{d.get('power_tier')} power){tail}")
+        if len(items) > cap:
+            out.append(f"- … and {len(items) - cap} more (see `write_frontier_current.json`).")
         out.append("")
         return out
 
