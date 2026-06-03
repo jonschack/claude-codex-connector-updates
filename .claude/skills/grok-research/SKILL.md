@@ -1,19 +1,19 @@
 ---
 name: grok-research
-description: Systematic research sweep for VIRAL MCP / connector capabilities by driving the Grok web UI (grok.com) via Claude-in-Chrome — Grok's live X/Twitter access surfaces what's blowing up that generic web search misses. Harvests Grok's answers, parses them into structured candidates, VERIFIES each against real sources before anything is trusted. Runs an exhaustive query matrix (term variants × a ≥10-like floor × time window) + a seed-account watchlist, and keeps persistent dedup state (data/current/grok_radar_state.jsonl, tracking first_seen + peak_engagement) so repeated sweeps converge on EVERY remotely-viral MCP post — surfacing only what's NEW or RISING — feeding CAPABILITY_HIGHLIGHTS and the meetup description. Operator-run / on-demand (Claude-in-Chrome is interactive — it cannot run in the unattended daily cron). Trigger when the user says /grok-research, "grok sweep", "what MCP went viral", or wants fresh viral capabilities for the meetup.
+description: Systematic research sweep for VIRAL MCP / connector capabilities by driving the Grok web UI (grok.com) via Claude-in-Chrome — Grok's live X/Twitter access surfaces what's blowing up that generic web search misses. Harvests Grok's answers, parses them into structured candidates ranked by ENGAGEMENT (likes/reposts are the trust signal — enough traction is taken as validation; no separate URL-resolution check). Runs an exhaustive query matrix (term variants × a ≥10-like floor × time window) + a seed-account watchlist, and keeps persistent dedup state (data/current/grok_radar_state.jsonl, tracking first_seen + peak_engagement) so repeated sweeps converge on EVERY remotely-viral MCP post — surfacing only what's NEW or RISING — feeding CAPABILITY_HIGHLIGHTS and the meetup description. Operator-run / on-demand (Claude-in-Chrome is interactive — it cannot run in the unattended daily cron). Trigger when the user says /grok-research, "grok sweep", "what MCP went viral", or wants fresh viral capabilities for the meetup.
 ---
 
 # Grok Research — viral MCP capability sweep (Claude-in-Chrome → grok.com)
 
-Drive the **logged-in Grok web UI** to find what MCP servers/connectors are going viral on X, then turn the answers into **verified** capability candidates for the pipeline. Grok is the source because grok.com is an auth-gated SPA with no public API (verified in recon) and Grok has live X access; Claude-in-Chrome uses the operator's existing session.
+Drive the **logged-in Grok web UI** to find what MCP servers/connectors are going viral on X, then turn the answers into **engagement-ranked** capability candidates for the pipeline. Grok is the source because grok.com is an auth-gated SPA with no public API (verified in recon) and Grok has live X access; Claude-in-Chrome uses the operator's existing session.
 
-> **Posture: candidates → verify first.** X-viral ≠ real, and Grok can hallucinate. Nothing reaches meetup content until it's tagged `verified` (or clearly labeled `claimed`). Never auto-publish anywhere.
+> **Posture: engagement is the trust signal.** A post with real traction (likes/reposts) is taken as validation — there is no URL-resolution check. Rank by engagement; keep the `source_url` so a human can still click through. Never auto-publish anywhere.
 
 ## Checklist (create a TodoWrite-style task per step, do in order)
 1. Connect a browser
 2. Open grok.com (handle login wall)
 3. Run the query protocol, harvesting each answer
-4. Parse + verify into candidates
+4. Parse + dedupe into the radar (ranked by engagement)
 5. Write artifacts + report; offer to refresh the meetup description
 
 ---
@@ -51,61 +51,45 @@ python3 -c "from mcp_newsletter.grok_research import build_extra_heavy_prompts; 
 
 For EACH of the 10 prompts: **New Chat → Heavy mode → paste the prompt (one line) → send → wait for the agent team to finish (poll `get_page_text`; Heavy runs ~40s–2min each) → capture the fenced code block** to `data/snapshots/<date>/grok/heavy-<n>.txt`. ~15–25 min of driving total. Then run Step 4 **once over all 10 captures concatenated** — `parse_grok_findings` + `merge_into_state` dedupe across them automatically, so the radar ends with the union. Report `N NEW, M RISING` across the whole deep sweep.
 
-## Step 4 — Parse + verify
-Run this (writes the artifacts). It parses every captured answer, verifies each candidate against the awesome-claude-connectors catalog + live URL resolution, and writes results:
+## Step 4 — Parse + dedupe into the radar (ranked by engagement)
+Run this (writes the artifacts). It parses every captured answer, merges into the persistent radar state, and ranks by engagement — no URL verification:
 
 ```bash
 python3 - <<'PY'
-import json, datetime
+import json
 from pathlib import Path
 from mcp_newsletter.grok_research import (
-    parse_grok_findings, verify_candidates, known_connector_names,
-    default_source_checker, to_signal_records)
+    parse_grok_findings, extract_engagement,
+    load_radar_state, merge_into_state, write_radar_state)
 
-raw = Path("data/snapshots").glob("*/grok/*answer*.txt")   # the captured answers
+raw = sorted(Path("data/snapshots").glob("*/grok/heavy-*.txt"))   # or */grok/*answer*.txt
 text = "\n".join(p.read_text() for p in raw)
 findings = parse_grok_findings(text, query="grok-research sweep")
-
-# verification corpus: connector names from the community awesome list (if present)
-import subprocess
-known = set()
-try:
-    md = subprocess.run(["gh","api","repos/rdmgator12/awesome-claude-connectors/contents/README.md",
-                         "--jq",".content"], capture_output=True, text=True).stdout
-    import base64; known = known_connector_names(base64.b64decode(md).decode("utf-8","replace"))
-except Exception as e:
-    print("known-names fetch skipped:", e)
-
-verify_candidates(findings, source_checker=default_source_checker, known_names=known)
 
 out = Path("data/current"); out.mkdir(parents=True, exist_ok=True)
 (out/"grok_research.jsonl").write_text("\n".join(json.dumps(f.to_dict()) for f in findings)+"\n")
 
-# radar dedup state: each sweep only surfaces NEW + RISING (slow-burners crossing the floor)
-from mcp_newsletter.grok_research import load_radar_state, merge_into_state, write_radar_state
+# radar dedup state: each sweep surfaces only NEW + RISING (slow-burners crossing the floor)
 statep = out/"grok_radar_state.jsonl"
 state = load_radar_state(statep)
-state, new, rising = merge_into_state(state, [f for f in findings if f.verdict != "rejected"], run_date="YYYY-MM-DD")
+state, new, rising = merge_into_state(state, findings, run_date="YYYY-MM-DD")
 write_radar_state(statep, state)
 print(f"radar: {len(new)} NEW, {len(rising)} RISING this sweep ({len(state)} total tracked)")
-
-verified = [f for f in findings if f.verdict=="verified"]
-claimed  = [f for f in findings if f.verdict=="claimed"]
-print(f"harvested={len(findings)} verified={len(verified)} claimed={len(claimed)} rejected={len(findings)-len(verified)-len(claimed)}")
-for f in sorted(verified, key=lambda x:x.name):
-    print(f"  ✅ {f.name} — {f.capability[:60]} [{f.source_url}]")
+print("--- top by engagement ---")
+for r in sorted(state.values(), key=lambda r: -int(r.get('peak_engagement', 0)))[:25]:
+    print(f"  {int(r.get('peak_engagement',0)):>5} | {r['name']} [{r.get('source_url','')}]")
 PY
 ```
 
-For higher confidence on a specific candidate, additionally `WebFetch` its `source_url` and confirm the capability is real before featuring it.
+(Engagement = trust here. If you ever want extra confidence on one entry, `WebFetch` its `source_url` — but it's not required.)
 
 ## Step 5 — Report + integrate
-- Summarize: N harvested, M verified, top viral (verified first).
-- The verified/claimed findings are in `data/current/grok_research.jsonl` (provenance `grok:<verdict>`). `to_signal_records()` converts them to SignalRecords if you want to merge into the signals/highlights feed.
-- **Offer** to fold the top *verified* viral items into `meetup-hormozi/assets/05-event-page.md` (the event description) — but only `verified`, and keep example prompts honest. Do not edit/publish without the operator's go-ahead.
+- Summarize: N harvested, NEW/RISING this sweep, top servers by engagement.
+- Findings are in `data/current/grok_research.jsonl`; the radar lives in `data/current/grok_radar_state.jsonl` (ranked by `peak_engagement`). `to_signal_records()` converts them to SignalRecords for the signals/highlights feed.
+- **Offer** to fold the top viral items into `meetup-hormozi/assets/05-event-page.md` (the event description), keeping example prompts honest. Do not edit/publish without the operator's go-ahead.
 
 ## Hard rules
 - Operator-run only; never claim this runs in the daily cron.
 - Never log in to Grok or bypass the browser-selection safety gate.
-- `verified` or clearly-labeled `claimed` only in content; drop `rejected`.
-- The browser drive has no headless test — validate by a real run; `grok_research.py` parse/verify are unit-tested offline.
+- Engagement is the trust/ranking signal; keep `source_url` as a click-through, not a gate.
+- The browser drive has no headless test — validate by a real run; `grok_research.py` parsing/engagement/dedup are unit-tested offline.

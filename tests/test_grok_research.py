@@ -8,7 +8,6 @@ from mcp_newsletter.grok_research import (
     finding_key,
     merge_into_state,
     parse_grok_findings,
-    verify_candidates,
 )
 
 # Grok is asked to return delimited rows:
@@ -49,49 +48,6 @@ class ParseTests(unittest.TestCase):
     def test_empty_or_garbage_returns_empty(self):
         self.assertEqual(parse_grok_findings(""), [])
         self.assertEqual(parse_grok_findings("no rows here, just prose."), [])
-
-
-class VerifyTests(unittest.TestCase):
-    def _findings(self):
-        return [
-            GrokFinding(name="Blender MCP", source_url="https://github.com/ahujasid/blender-mcp"),
-            GrokFinding(name="WhatsApp MCP", source_url="https://github.com/lharries/whatsapp-mcp"),
-            GrokFinding(name="MysteryServer", source_url=""),  # no source -> rejected
-        ]
-
-    def test_awesome_match_verifies_without_network(self):
-        findings = self._findings()
-        verify_candidates(
-            findings,
-            source_checker=lambda url: False,            # nothing resolves
-            known_names={"blender mcp"},                 # but Blender is in the awesome list
-        )
-        by = {f.name: f for f in findings}
-        self.assertEqual(by["Blender MCP"].verdict, "verified")     # matched known list
-        self.assertEqual(by["WhatsApp MCP"].verdict, "claimed")     # has source, didn't resolve
-        self.assertEqual(by["MysteryServer"].verdict, "rejected")   # no source at all
-
-    def test_resolving_url_verifies(self):
-        findings = self._findings()
-        verify_candidates(
-            findings,
-            source_checker=lambda url: "github.com" in url,  # both github urls resolve
-            known_names=set(),
-        )
-        by = {f.name: f for f in findings}
-        self.assertEqual(by["Blender MCP"].verdict, "verified")
-        self.assertEqual(by["WhatsApp MCP"].verdict, "verified")
-        self.assertEqual(by["MysteryServer"].verdict, "rejected")
-
-    def test_source_checker_failure_is_safe(self):
-        findings = [GrokFinding(name="X", source_url="https://x.test")]
-
-        def boom(url):
-            raise RuntimeError("network down")
-
-        verify_candidates(findings, source_checker=boom, known_names=set())
-        # network failure must not crash; falls back to claimed (has a source)
-        self.assertEqual(findings[0].verdict, "claimed")
 
 
 class EngagementTests(unittest.TestCase):
