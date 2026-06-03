@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import urllib.error
+import urllib.parse
 import urllib.request
 from typing import Dict, List, Set
 
@@ -50,9 +51,9 @@ def augment_catch_new(ctx, current: Dict[str, RegistryServerRecord], meta,
         for page in range(INCREMENTAL_MAX_PAGES):
             params = [f"limit={INCREMENTAL_PAGE_LIMIT}"]
             if since:
-                params.append(f"updated_since={since}")
+                params.append(f"updated_since={urllib.parse.quote(since, safe='')}")
             if cursor:
-                params.append(f"cursor={cursor}")
+                params.append(f"cursor={urllib.parse.quote(cursor, safe='')}")
             url = base + "?" + "&".join(params)
             body = ctx.fetch("catch_new", url, f"official-incremental-{page}")
             if not body:
@@ -113,7 +114,7 @@ def _github_post(query: str, token: str, timeout: int = 20) -> str:
 def github_momentum_for_candidates(candidates: List[RegistryServerRecord],
                                    meta, *, skip_network: bool = False) -> Dict[str, float]:
     """Candidate-only github momentum (needs GITHUB_TOKEN). Returns {identity ->
-    momentum in [0,1]} and updates meta.github_stars. Degrades to {} on any
+    momentum in [0,1]} and updates meta.github_snapshot. Degrades to {} on any
     failure — momentum is a bonus, never a requirement. NEVER scans all repos:
     only the bounded candidate list passed in, batched ≤100 per GraphQL call."""
     token = os.environ.get("GITHUB_TOKEN")
