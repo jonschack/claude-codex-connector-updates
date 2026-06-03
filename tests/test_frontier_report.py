@@ -3,6 +3,7 @@ import unittest
 from mcp_newsletter.frontier_report import (
     FrontierEntry,
     build_frontier,
+    frontier_events,
     radar_age_days,
     ranked_section,
     render_board,
@@ -149,6 +150,49 @@ class TeachingTests(unittest.TestCase):
         self.assertIn("Write Edition", art)
         self.assertIn("Comms", art)
         self.assertIn("send email", art.lower())
+
+
+class FrontierEventsTests(unittest.TestCase):
+    def test_write_verified_with_first_seen_flag(self):
+        prior = [{"identity": "a", "name": "A", "section": "emerging",
+                  "evidence_tier": "claimed_description", "power_tier": "high",
+                  "frontier_score": 1100}]
+        current = [
+            {"identity": "a", "name": "A", "section": "headline",
+             "evidence_tier": "verified_tools", "power_tier": "high",
+             "frontier_score": 4200},                                   # promoted
+            {"identity": "b", "name": "B", "section": "headline",
+             "evidence_tier": "verified_tools", "power_tier": "high",
+             "frontier_score": 4200},                                   # brand new
+        ]
+        verified = {e["identity"]: e for e in frontier_events(current, prior, threshold=2000)
+                    if e["event_type"] == "write_verified"}
+        self.assertEqual(set(verified), {"a", "b"})
+        self.assertFalse(verified["a"]["first_seen"])  # was on prior board
+        self.assertTrue(verified["b"]["first_seen"])    # never seen before
+
+    def test_frontier_capability_on_threshold_crossing(self):
+        prior = [{"identity": "a", "name": "A", "section": "emerging",
+                  "evidence_tier": "claimed_description", "frontier_score": 1100}]
+        current = [{"identity": "a", "name": "A", "section": "headline",
+                    "evidence_tier": "verified_tools", "power_tier": "high",
+                    "frontier_score": 4200}]
+        types = {e["event_type"] for e in frontier_events(current, prior, threshold=2000)}
+        self.assertIn("frontier_capability", types)
+
+    def test_no_event_when_already_above_threshold(self):
+        prior = [{"identity": "a", "name": "A", "section": "headline",
+                  "evidence_tier": "verified_tools", "frontier_score": 4200}]
+        current = [{"identity": "a", "name": "A", "section": "headline",
+                    "evidence_tier": "verified_tools", "power_tier": "high",
+                    "frontier_score": 4200}]
+        self.assertEqual(frontier_events(current, prior, threshold=2000), [])
+
+    def test_flood_cap(self):
+        current = [{"identity": str(i), "name": str(i), "section": "headline",
+                    "evidence_tier": "verified_tools", "power_tier": "high",
+                    "frontier_score": 4000 + i} for i in range(80)]
+        self.assertEqual(len(frontier_events(current, [], threshold=2000, cap=50)), 50)
 
 
 class OrchestratorTests(unittest.TestCase):

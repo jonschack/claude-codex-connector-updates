@@ -1,13 +1,15 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Set
 
 from .action_class import record_action_classes
-from .action_power import POWER_RANK, power_tier_for, record_power_tier
-from .classifier import EVIDENCE_TIER_RANK, evidence_tier
+from .action_power import power_tier_for, record_power
+from .classifier import EVIDENCE_TIER_RANK, evidence_tier, evidence_tiers
+from .frontier import freshness, score
 from .grok_research import load_radar_state
 from .registries.base import RegistryServerRecord
 from .registry_discovery import days_between
@@ -38,6 +40,9 @@ class FrontierEntry:
     source_url: str = ""
     engagement: int = 0                # viral only
     why: str = ""
+    confidence: str = "low"            # power-classification confidence (P3)
+    corroboration: int = 1            # distinct evidence tiers attesting (P3)
+    frontier_score: float = 0.0        # P3 lexicographic score (headline/emerging)
 
     def to_dict(self) -> dict:
         return {
@@ -46,6 +51,8 @@ class FrontierEntry:
             "recency": self.recency, "action_classes": self.action_classes,
             "example_prompt": self.example_prompt, "source_url": self.source_url,
             "engagement": self.engagement, "why": self.why,
+            "confidence": self.confidence, "corroboration": self.corroboration,
+            "frontier_score": round(self.frontier_score, 4),
         }
 
 
@@ -67,21 +74,28 @@ def _example_prompt(rec: RegistryServerRecord) -> str:
 
 
 def build_frontier(records: Dict[str, RegistryServerRecord],
-                   grok_state: Dict[str, dict]) -> List[FrontierEntry]:
+                   grok_state: Dict[str, dict], run_date: str = "") -> List[FrontierEntry]:
     """Build frontier entries from registry records (headline/emerging by evidence
-    tier) and the Grok radar (viral)."""
+    tier, scored by the P3 lexicographic frontier score) and the Grok radar
+    (viral, ranked separately on engagement)."""
     entries: List[FrontierEntry] = []
     for rec in records.values():
         tier = evidence_tier(rec.evidence)
         if tier == "none" and rec.write_confidence not in ("medium", "high"):
             continue  # no write signal at all
         section = "headline" if tier in HEADLINE_TIERS else "emerging"
+        power_tier, confidence = record_power(rec)
+        recency = _recency(rec)
+        corroboration = max(1, len(evidence_tiers(rec.evidence)))
         entries.append(FrontierEntry(
             identity=rec.identity, name=rec.name, section=section,
-            evidence_tier=tier, power_tier=record_power_tier(rec),
-            recency=_recency(rec), action_classes=record_action_classes(rec),
+            evidence_tier=tier, power_tier=power_tier, recency=recency,
+            action_classes=record_action_classes(rec),
             example_prompt=_example_prompt(rec),
             source_url=rec.repo_url or rec.remote_url,
+            confidence=confidence, corroboration=corroboration,
+            frontier_score=score(tier, power_tier, freshness(recency, run_date),
+                                  confidence, corroboration=corroboration),
         ))
     for key, g in grok_state.items():
         entries.append(FrontierEntry(
@@ -96,19 +110,14 @@ def build_frontier(records: Dict[str, RegistryServerRecord],
     return entries
 
 
-def _rank_key(e: FrontierEntry):
-    return (EVIDENCE_TIER_RANK.get(e.evidence_tier, 0),
-            POWER_RANK.get(e.power_tier, 0), e.recency)
-
-
 def ranked_section(entries: List[FrontierEntry], section: str) -> List[FrontierEntry]:
     """Entries in one section, ranked. Viral ranks by engagement; headline/emerging
-    by (evidence_tier -> power -> recency), name-stable for determinism."""
+    by the P3 frontier_score, name-stable for determinism."""
     items = [e for e in entries if e.section == section]
     if section == "viral":
         return sorted(items, key=lambda e: (-e.engagement, e.name.lower(), e.identity))
     items.sort(key=lambda e: (e.name.lower(), e.identity))
-    items.sort(key=_rank_key, reverse=True)
+    items.sort(key=lambda e: e.frontier_score, reverse=True)
     return items
 
 
@@ -211,6 +220,43 @@ def is_headline_high(entry) -> bool:
     return section == "headline" and power == "high"
 
 
+# frontier_capability fires at/above this score (declared+ tier with some power);
+# tunable via MCP_NEWSLETTER_FRONTIER_ALERT_THRESHOLD.
+FRONTIER_SCORE_THRESHOLD = 2000.0
+
+
+def frontier_events(current: List[dict], prior: List[dict],
+                    threshold: float = FRONTIER_SCORE_THRESHOLD,
+                    cap: int = 50) -> List[dict]:
+    """Derive frontier events by diffing the current board against the prior:
+      - `write_verified` (with `first_seen` flag): a server that entered a headline
+        evidence tier this run (merges the old new_write_tool + write_verified).
+      - `frontier_capability`: a server whose frontier_score crossed `threshold`
+        upward this run.
+    Flood-capped at `cap` (highest-score first)."""
+    prior_by_id = {d.get("identity"): d for d in prior}
+    events: List[dict] = []
+    for d in current:
+        if d.get("section") == "viral":
+            continue
+        prev = prior_by_id.get(d.get("identity"))
+        cur_head = d.get("evidence_tier") in HEADLINE_TIERS
+        prev_head = bool(prev) and prev.get("evidence_tier") in HEADLINE_TIERS
+        if cur_head and not prev_head:
+            events.append({"event_type": "write_verified", "identity": d.get("identity"),
+                           "name": d.get("name"), "first_seen": prev is None,
+                           "evidence_tier": d.get("evidence_tier"),
+                           "power_tier": d.get("power_tier"),
+                           "frontier_score": d.get("frontier_score", 0)})
+        cur_score = float(d.get("frontier_score", 0) or 0)
+        prev_score = float(prev.get("frontier_score", 0) or 0) if prev else 0.0
+        if cur_score >= threshold and prev_score < threshold:
+            events.append({"event_type": "frontier_capability", "identity": d.get("identity"),
+                           "name": d.get("name"), "frontier_score": cur_score})
+    events.sort(key=lambda e: e.get("frontier_score", 0), reverse=True)
+    return events[:cap]
+
+
 def select_alerts(entries: List[FrontierEntry],
                   prior_headline_high: Set[str]) -> List[FrontierEntry]:
     """Same-day alert bar (b): any tool that is high-power verified/declared NOW
@@ -261,9 +307,9 @@ def render_teaching_artifact(entries: List[FrontierEntry], run_date: str) -> str
         if cls == "other":
             continue
         lines.append(f"## {cls.replace('_', ' ').title()}")
-        # rank the (mixed headline+emerging) entries by evidence -> power -> recency
+        # rank the (mixed headline+emerging) entries by the P3 frontier score
         ranked = sorted(by_class[cls], key=lambda e: (e.name.lower(), e.identity))
-        ranked.sort(key=_rank_key, reverse=True)
+        ranked.sort(key=lambda e: e.frontier_score, reverse=True)
         seen = set()
         for e in ranked:
             if e.example_prompt in seen:
@@ -286,7 +332,7 @@ def run_frontier_report(root: Path, run_date: str,
     """
     cur = root / "data" / "current"
     grok_state = load_radar_state(cur / "grok_radar_state.jsonl")
-    entries = build_frontier(records, grok_state)
+    entries = build_frontier(records, grok_state, run_date)
 
     # alerts diff against the headline+high set on the PRIOR run's board (read it
     # BEFORE overwriting), so a brand-new OR newly-promoted high-power tool fires.
@@ -299,6 +345,12 @@ def run_frontier_report(root: Path, run_date: str,
     write_text(cur / "WRITE_FRONTIER_NOW.md", render_board(entries, run_date, grok_state))
     new_board = board_json(entries, run_date)
     write_json(current_path, new_board)
+
+    # frontier events (write_verified / frontier_capability) vs the prior board
+    threshold = float(os.environ.get("MCP_NEWSLETTER_FRONTIER_ALERT_THRESHOLD",
+                                     str(FRONTIER_SCORE_THRESHOLD)))
+    events = frontier_events(new_board["entries"], prior_entries, threshold)
+    write_json(cur / "write_frontier_events.json", {"run_date": run_date, "events": events})
 
     digest_due, digest_body = _weekly_digest_step(cur, run_date, new_board, meta)
 
@@ -314,6 +366,7 @@ def run_frontier_report(root: Path, run_date: str,
         "digest_body": digest_body,
         "radar_age_days": radar_age_days(grok_state, run_date),
         "entry_count": len(entries),
+        "events": events,
     }
 
 

@@ -92,6 +92,17 @@ def evidence_tier(evidence: Iterable[Dict[str, Any]]) -> str:
     return best
 
 
+def evidence_tiers(evidence: Iterable[Dict[str, Any]]) -> set:
+    """Distinct (non-`none`) evidence tiers present — corroboration is how many
+    independent tiers attest the write capability."""
+    tiers = set()
+    for item in evidence or []:
+        tier = _KIND_TO_TIER.get(item.get("kind"), "none")
+        if tier != "none":
+            tiers.add(tier)
+    return tiers
+
+
 def reportable(confidence: str) -> bool:
     return confidence in REPORTABLE
 
