@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List
 
+from .action_class import coverage_by_action_class
 from .classifier import reportable
 from .registries.base import RegistryServerRecord
 
@@ -38,6 +39,22 @@ def render_registry_section(
         lines.append(f"- Existing write-capable servers newly seen in another registry: {new_source_count}")
     lines.append(DOUBLE_COUNT_NOTE)
     lines.append("")
+
+    cov = coverage_by_action_class(records)
+    if cov:
+        lines += [
+            "### Write coverage by action class",
+            "",
+            "| Action class | Verified | Annotation | Declared | Claimed | Total |",
+            "| --- | --- | --- | --- | --- | --- |",
+        ]
+        for cls in sorted(cov, key=lambda c: (-cov[c].get("total", 0), c)):
+            b = cov[cls]
+            lines.append("| {c} | {v} | {a} | {d} | {cl} | {t} |".format(
+                c=cls, v=b.get("verified_tools", 0), a=b.get("annotation", 0),
+                d=b.get("declared_manifest", 0), cl=b.get("claimed_description", 0),
+                t=b.get("total", 0)))
+        lines.append("")
 
     table_events = [e for e in events if e["event_type"] != "new_source"]
     if table_events:

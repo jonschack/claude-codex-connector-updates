@@ -8,6 +8,7 @@ from typing import Dict, List, Optional
 
 from .capability import build_capability_feed, enrich_servers
 from .capability_report import render_capability_highlights
+from .action_class import coverage_by_action_class
 from .classifier import classify_all
 from .health import REGISTRY_FLOORS, VENDOR_FLOORS, floors_from_env, summarize_health
 from .novelty import notable_events
@@ -215,6 +216,7 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
         "per_source": dict(per_source),
         "per_source_raw": dict(collection.counts),
         "health": reg_health,
+        "coverage_by_action_class": coverage_by_action_class(new_state),
         "issues": [i.to_dict() for i in ctx.issues],
     }
     write_json(root / "data" / "current" / "registry_summary.json", summary)
