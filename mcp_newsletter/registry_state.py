@@ -36,6 +36,7 @@ class RegistryMeta:
     last_discovered: Dict[str, str] = field(default_factory=dict)  # identity -> date
     last_manifest_parsed: Dict[str, str] = field(default_factory=dict)  # identity -> date
     last_frontier_digest: str = ""  # date the weekly frontier digest last emitted
+    first_seen: Dict[str, str] = field(default_factory=dict)  # identity -> date first catalogued
 
     @classmethod
     def load(cls, path: Path) -> "RegistryMeta":
@@ -48,6 +49,7 @@ class RegistryMeta:
             last_discovered=data.get("last_discovered", {}),
             last_manifest_parsed=data.get("last_manifest_parsed", {}),
             last_frontier_digest=data.get("last_frontier_digest", ""),
+            first_seen=data.get("first_seen", {}),
         )
 
     def dump(self, path: Path) -> None:
@@ -58,6 +60,7 @@ class RegistryMeta:
             "last_discovered": self.last_discovered,
             "last_manifest_parsed": self.last_manifest_parsed,
             "last_frontier_digest": self.last_frontier_digest,
+            "first_seen": self.first_seen,
         }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
@@ -153,6 +156,7 @@ def diff_and_events(
             meta.liveness.pop(identity, None)
             meta.last_discovered.pop(identity, None)
             meta.last_manifest_parsed.pop(identity, None)
+            meta.first_seen.pop(identity, None)
             # dropped from new_state (truly gone)
         else:
             meta.liveness[identity] = misses

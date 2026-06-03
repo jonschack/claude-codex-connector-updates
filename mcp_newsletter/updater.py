@@ -17,6 +17,7 @@ from .context import CollectContext
 from .providers import collect_all
 from .registries import collect_all_registries, enabled_sources
 from .registries.merge import merge_entries, build_alias_map
+from .frontier import BACKFILL_DATE
 from .frontier_report import run_frontier_report
 from .manifest import run_manifest_pass, select_manifest_candidates
 from .registry_classify import OBSERVED_EVIDENCE_KINDS, classify_registry_record
@@ -194,6 +195,11 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
     # P1-0 annotation-merge fix would silently revert. classify_registry_record
     # union-merges these with this run's catalog evidence.
     current = {rec.identity: rec for rec in records}
+    for identity in current:
+        # Stamp registry first_seen: pre-existing servers get the backfill sentinel
+        # (no novelty credit); genuinely-new servers get this run_date. Drives the
+        # frontier's backfill suppression (frontier.is_backfilled).
+        meta.first_seen.setdefault(identity, run_date if identity not in prior else BACKFILL_DATE)
     for identity, rec in current.items():
         if identity not in prior:
             continue

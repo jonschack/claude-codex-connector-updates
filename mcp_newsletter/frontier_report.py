@@ -9,7 +9,7 @@ from typing import Dict, List, Optional, Set
 from .action_class import record_action_classes
 from .action_power import power_tier_for, record_power
 from .classifier import EVIDENCE_TIER_RANK, evidence_tier, evidence_tiers
-from .frontier import freshness, score
+from .frontier import freshness, is_backfilled, score
 from .grok_research import load_radar_state
 from .registries.base import RegistryServerRecord
 from .registry_discovery import days_between
@@ -74,10 +74,14 @@ def _example_prompt(rec: RegistryServerRecord) -> str:
 
 
 def build_frontier(records: Dict[str, RegistryServerRecord],
-                   grok_state: Dict[str, dict], run_date: str = "") -> List[FrontierEntry]:
+                   grok_state: Dict[str, dict], run_date: str,
+                   first_seen: Optional[Dict[str, str]] = None) -> List[FrontierEntry]:
     """Build frontier entries from registry records (headline/emerging by evidence
     tier, scored by the P3 lexicographic frontier score) and the Grok radar
-    (viral, ranked separately on engagement)."""
+    (viral, ranked separately on engagement). `first_seen` (identity -> date)
+    drives backfill suppression: servers catalogued before the tracker epoch get
+    no recency credit."""
+    first_seen = first_seen or {}
     entries: List[FrontierEntry] = []
     for rec in records.values():
         tier = evidence_tier(rec.evidence)
@@ -87,6 +91,8 @@ def build_frontier(records: Dict[str, RegistryServerRecord],
         power_tier, confidence = record_power(rec)
         recency = _recency(rec)
         corroboration = max(1, len(evidence_tiers(rec.evidence)))
+        # backfilled (pre-tracker) servers get 0 freshness so they don't flood as "new"
+        fresh = 0.0 if is_backfilled(first_seen.get(rec.identity, "")) else freshness(recency, run_date)
         entries.append(FrontierEntry(
             identity=rec.identity, name=rec.name, section=section,
             evidence_tier=tier, power_tier=power_tier, recency=recency,
@@ -94,8 +100,8 @@ def build_frontier(records: Dict[str, RegistryServerRecord],
             example_prompt=_example_prompt(rec),
             source_url=rec.repo_url or rec.remote_url,
             confidence=confidence, corroboration=corroboration,
-            frontier_score=score(tier, power_tier, freshness(recency, run_date),
-                                  confidence, corroboration=corroboration),
+            frontier_score=score(tier, power_tier, fresh, confidence,
+                                  corroboration=corroboration),
         ))
     for key, g in grok_state.items():
         entries.append(FrontierEntry(
@@ -332,7 +338,8 @@ def run_frontier_report(root: Path, run_date: str,
     """
     cur = root / "data" / "current"
     grok_state = load_radar_state(cur / "grok_radar_state.jsonl")
-    entries = build_frontier(records, grok_state, run_date)
+    entries = build_frontier(records, grok_state, run_date,
+                             first_seen=getattr(meta, "first_seen", None))
 
     # alerts diff against the headline+high set on the PRIOR run's board (read it
     # BEFORE overwriting), so a brand-new OR newly-promoted high-power tool fires.

@@ -35,7 +35,7 @@ class BuildFrontierTests(unittest.TestCase):
         grok = {"k1": {"name": "ViralOne", "peak_engagement": 5000,
                        "why_viral": "5k likes", "source_url": "https://x/y",
                        "capability": "send", "last_seen": "2026-05-30"}}
-        entries = build_frontier(records, grok)
+        entries = build_frontier(records, grok, "2026-05-30")
         by_section = {}
         for e in entries:
             by_section.setdefault(e.section, []).append(e.identity)
@@ -45,7 +45,7 @@ class BuildFrontierTests(unittest.TestCase):
 
     def test_no_write_signal_excluded(self):
         records = {"n": _rec("n", None, power_desc="reads weather", conf="unknown")}
-        self.assertEqual(build_frontier(records, {}), [])
+        self.assertEqual(build_frontier(records, {}, "2026-05-30"), [])
 
 
 class RankingTests(unittest.TestCase):
@@ -56,7 +56,7 @@ class RankingTests(unittest.TestCase):
             "strong": _rec("strong", "tool_text", power_desc="charge a card",
                            recency="2026-01-01"),                     # verified + high power
         }
-        entries = build_frontier(records, {})
+        entries = build_frontier(records, {}, "2026-05-30")
         ranked = ranked_section(entries, "headline")
         self.assertEqual(ranked[0].identity, "strong")  # verified+high beats declared+low
 
@@ -65,15 +65,41 @@ class RankingTests(unittest.TestCase):
             "a": {"name": "A", "peak_engagement": 100, "last_seen": "2026-05-30"},
             "b": {"name": "B", "peak_engagement": 9000, "last_seen": "2026-05-30"},
         }
-        entries = build_frontier({}, grok)
+        entries = build_frontier({}, grok, "2026-05-30")
         ranked = ranked_section(entries, "viral")
         self.assertEqual([e.name for e in ranked], ["B", "A"])
+
+    def test_recency_breaks_ties_within_band(self):
+        # two identical tier+power tools; the more recently-updated one ranks first
+        records = {
+            "old": _rec("old", "tool_text", power_desc="charge a card", recency="2026-01-01"),
+            "new": _rec("new", "tool_text", power_desc="charge a card", recency="2026-05-29"),
+        }
+        ranked = ranked_section(build_frontier(records, {}, "2026-05-30"), "headline")
+        self.assertEqual(ranked[0].identity, "new")
+
+    def test_backfill_suppression_zeroes_recency(self):
+        # a recently-updated server first seen BEFORE the tracker epoch gets no
+        # recency credit -> ranks below an identical server first seen after epoch
+        records = {
+            "backfilled": _rec("backfilled", "tool_text", power_desc="charge a card",
+                               recency="2026-05-29"),
+            "fresh": _rec("fresh", "tool_text", power_desc="charge a card",
+                          recency="2026-05-29"),
+        }
+        first_seen = {"backfilled": "2000-01-01", "fresh": "2026-06-05"}  # epoch=2026-06-02
+        ranked = ranked_section(
+            build_frontier(records, {}, "2026-06-10", first_seen=first_seen), "headline")
+        self.assertEqual(ranked[0].identity, "fresh")
+        backfilled = next(e for e in ranked if e.identity == "backfilled")
+        fresh = next(e for e in ranked if e.identity == "fresh")
+        self.assertLess(backfilled.frontier_score, fresh.frontier_score)
 
     def test_low_power_viral_never_enters_headline(self):
         # a 50k-like viral item stays in viral; a verified write stays headline
         grok = {"v": {"name": "Hype", "peak_engagement": 50000, "last_seen": "2026-05-30"}}
         records = {"r": _rec("r", "tool_text", power_desc="charge a card")}
-        entries = build_frontier(records, grok)
+        entries = build_frontier(records, grok, "2026-05-30")
         headline_ids = [e.identity for e in ranked_section(entries, "headline")]
         self.assertEqual(headline_ids, ["r"])
         self.assertNotIn("grok:v", headline_ids)
@@ -124,7 +150,7 @@ class AlertTests(unittest.TestCase):
             "new_lo": _rec("new_lo", "tool_text", power_desc="reads weather"),
             "old_hi": _rec("old_hi", "tool_text", power_desc="deploy to prod"),
         }
-        entries = build_frontier(records, {})
+        entries = build_frontier(records, {}, "2026-05-30")
         alerts = select_alerts(entries, prior_headline_high={"old_hi"})
         ids = {e.identity for e in alerts}
         self.assertIn("new_hi", ids)
@@ -134,7 +160,7 @@ class AlertTests(unittest.TestCase):
     def test_newly_verified_promotion_alerts(self):
         # a tool that was emerging yesterday and becomes headline+high today fires
         records = {"promoted": _rec("promoted", "tool_text", power_desc="charge a card")}
-        entries = build_frontier(records, {})
+        entries = build_frontier(records, {}, "2026-05-30")
         # prior board had it but NOT as headline+high (it was emerging/claimed)
         alerts = select_alerts(entries, prior_headline_high=set())
         self.assertIn("promoted", {e.identity for e in alerts})
@@ -146,7 +172,7 @@ class TeachingTests(unittest.TestCase):
                              tools=[ToolRecord(provider="r", server_id="s",
                                                name="send_email", native_surface="r",
                                                description="Send")])}
-        art = render_teaching_artifact(build_frontier(records, {}), "2026-05-30")
+        art = render_teaching_artifact(build_frontier(records, {}, "2026-05-30"), "2026-05-30")
         self.assertIn("Write Edition", art)
         self.assertIn("Comms", art)
         self.assertIn("send email", art.lower())

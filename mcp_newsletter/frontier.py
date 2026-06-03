@@ -20,6 +20,19 @@ ATTENTION_CAP = 0.15  # attention re-orders by at most 15% of the within-band ra
 RECENCY_HORIZON_DAYS = 180.0  # linear freshness decay to 0 over ~6 months
 _CONFIDENCE_FACTOR = {"high": 1.0, "medium": 0.75, "low": 0.5}
 
+# The write-frontier tracker's epoch. Servers first seen in the registry BEFORE
+# this get NO recency credit, so the P1 claimed->verified backfill (which promotes
+# servers that have been catalogued for months) can't flood the digest as "new".
+# Pre-existing servers are stamped with BACKFILL_DATE at first run; genuinely-new
+# servers are stamped with their actual run_date.
+TRACKER_EPOCH = "2026-06-02"
+BACKFILL_DATE = "2000-01-01"
+
+
+def is_backfilled(first_seen: str) -> bool:
+    """True if the server predates the tracker (no novelty/recency credit)."""
+    return bool(first_seen) and first_seen < TRACKER_EPOCH
+
 
 def freshness(recency: str, run_date: str, horizon: float = RECENCY_HORIZON_DAYS) -> float:
     """Source-attested recency as freshness in [0,1]. Unknown/empty -> 0; anything
@@ -29,7 +42,9 @@ def freshness(recency: str, run_date: str, horizon: float = RECENCY_HORIZON_DAYS
     wants (no stale tools masquerading as new)."""
     if not recency:
         return 0.0
-    age = days_between(recency[:10], run_date)
+    # days_between is magnitude-only; a future-dated (clock-skewed/typo'd) recency
+    # must not earn credit, so treat anything >= run_date as "today" (age 0).
+    age = 0 if recency[:10] >= run_date else days_between(recency[:10], run_date)
     if age >= horizon:
         return 0.0
     return max(0.0, 1.0 - age / horizon)
@@ -48,7 +63,11 @@ def score(evidence_tier: str, power_tier: str, recency_freshness: float,
     """Lexicographic frontier score (higher = closer to the headline)."""
     tier_rank = EVIDENCE_TIER_RANK.get(evidence_tier, 0)
     conf = _CONFIDENCE_FACTOR.get(confidence, 0.5)
-    eff_power = POWER_RANK.get(power_tier, 0) * conf       # confidence damps power
+    # Confidence damps power. Note: damping is vacuous at low power (rank 0) and
+    # deliberately lets a high-power/low-conf read TIE a medium-power/high-conf one
+    # (both eff_power=1.0) — a low-confidence guess sits exactly at the verified
+    # tier below it, broken by recency, never crossing the 1000-pt evidence gap.
+    eff_power = POWER_RANK.get(power_tier, 0) * conf
     attention = ATTENTION_CAP * _attention(corroboration, momentum)
     within = max(0.0, min(1.0, recency_freshness)) * (1 - ATTENTION_CAP) + attention
     return tier_rank * _TIER_W + eff_power * _POWER_W + within * _WITHIN_W

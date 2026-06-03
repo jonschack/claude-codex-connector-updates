@@ -35,8 +35,11 @@ _CLASS_RES = {
 
 def action_classes_for(text: str) -> List[str]:
     """Action classes whose keywords appear in `text` (order stable), or
-    `["other"]` if none match."""
-    hits = [name for name, rx in _CLASS_RES.items() if rx.search(text or "")]
+    `["other"]` if none match. Underscores are split to spaces first, so
+    snake_case tool names (`deploy_service`, `charge_card`) match the
+    whole-word (`\\b`-anchored) keyword regexes."""
+    norm = (text or "").replace("_", " ")
+    hits = [name for name, rx in _CLASS_RES.items() if rx.search(norm)]
     return hits or ["other"]
 
 
@@ -48,9 +51,8 @@ def record_action_classes(rec: RegistryServerRecord) -> List[str]:
         " ".join(rec.tags or []),
         " ".join(f"{t.name} {t.description}" for t in rec.tools),
     ])
-    # tool names AND tags are often snake_case (deploy_service, data_write); split
-    # on `_` so they match the whole-word keyword regexes.
-    return action_classes_for(blob.replace("_", " "))
+    # action_classes_for normalizes snake_case (deploy_service, data_write) itself.
+    return action_classes_for(blob)
 
 
 def coverage_by_action_class(records: Dict[str, RegistryServerRecord]) -> Dict[str, Dict[str, int]]:
