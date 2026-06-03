@@ -53,6 +53,44 @@ WRITE_RE = re.compile(r"\b(" + "|".join(sorted(WRITE_TERMS)) + r")\b", flags=re.
 READ_RE = re.compile(r"\b(" + "|".join(sorted(READ_TERMS)) + r")\b", flags=re.I)
 
 
+# --- evidence tiers (the one canonical ranking, shared by all tiers) -----------
+# Quality ordering of write evidence, strongest last. The frontier ranker (P3)
+# imports this so the "declared_manifest ranks between claimed and annotation"
+# rule lives in exactly one place.
+EVIDENCE_TIER_RANK = {
+    "none": 0,
+    "claimed_description": 1,
+    "declared_manifest": 2,
+    "annotation": 3,
+    "verified_tools": 4,
+}
+
+# Map each evidence `kind` (see _evidence below) to its tier. Anything from a live
+# probe of the actual tool list (tool_text / tool_rollup) is `verified_tools`;
+# MCP annotation hints are their own `annotation` tier; static manifest parses are
+# `declared_manifest`; catalog/description heuristics are merely `claimed`.
+_KIND_TO_TIER = {
+    "tool_text": "verified_tools",
+    "tool_rollup": "verified_tools",
+    "mcp_annotation": "annotation",
+    "declared_manifest": "declared_manifest",
+    "catalog_capability": "claimed_description",
+    "catalog_description": "claimed_description",
+    "registry_description": "claimed_description",
+}
+
+
+def evidence_tier(evidence: Iterable[Dict[str, Any]]) -> str:
+    """Strongest evidence tier present in `evidence` (an unknown kind is treated
+    as `claimed_description`, never silently dropped to `none`)."""
+    best = "none"
+    for item in evidence or []:
+        tier = _KIND_TO_TIER.get(item.get("kind"), "claimed_description")
+        if EVIDENCE_TIER_RANK[tier] > EVIDENCE_TIER_RANK[best]:
+            best = tier
+    return best
+
+
 def reportable(confidence: str) -> bool:
     return confidence in REPORTABLE
 

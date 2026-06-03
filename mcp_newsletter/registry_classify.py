@@ -6,6 +6,16 @@ from typing import List
 from .classifier import RANK, WRITE_RE, classify_catalog
 from .registries.base import RegistryServerRecord
 
+# Evidence kinds produced by observing the *actual* server (live tool probe in
+# registry_discovery, or static manifest parse) — these are gathered by other
+# steps and must survive re-classification. Catalog kinds are regenerated here
+# each run, so only these observed kinds are carried across the merge.
+_OBSERVED_KINDS = {"tool_text", "tool_rollup", "mcp_annotation", "declared_manifest"}
+
+
+def _evidence_key(item: dict) -> tuple:
+    return (item.get("kind"), str(item.get("value")), item.get("confidence"))
+
 # Tags/categories that imply the server can take action.
 WRITE_TAGS = {
     "write", "automation", "actions", "productivity", "crm", "email",
@@ -41,7 +51,20 @@ def classify_registry_record(rec: RegistryServerRecord, run_date: str) -> None:
                                       "value": "write verb in description",
                                       "confidence": "medium"}]
     rec.confidence_by_source["catalog"] = {"confidence": catalog_conf, "date": run_date}
-    rec.evidence = evidence
+
+    # Union-merge: preserve observed evidence (live tool probe / annotations /
+    # declared manifest) appended by discovery or carried from prior state, then
+    # add this run's freshly-derived catalog evidence under a stable dedup key.
+    # (Was `rec.evidence = evidence`, which clobbered annotation/tool evidence —
+    # the P1-0 bug that left 0/31,664 records with annotation evidence.)
+    merged = [ev for ev in rec.evidence if ev.get("kind") in _OBSERVED_KINDS]
+    seen = {_evidence_key(ev) for ev in merged}
+    for ev in evidence:
+        key = _evidence_key(ev)
+        if key not in seen:
+            merged.append(ev)
+            seen.add(key)
+    rec.evidence = merged
 
     effective = "unknown"
     for source in ("catalog", "tools"):

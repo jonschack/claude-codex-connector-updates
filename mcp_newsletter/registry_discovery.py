@@ -72,14 +72,16 @@ def run_discovery(
             tool.write_confidence, tool.evidence = classify_tool(tool)
         confs = [t.write_confidence for t in tools]
         rec.confidence_by_source["tools"] = {"confidence": max_confidence(confs), "date": run_date}
-        # Propagate mcp_annotation evidence items (deduplicated by kind/value/confidence)
+        # Propagate observed write evidence from the live probe (deduped by
+        # kind/value/confidence): mcp_annotation hints AND tool_text write verbs —
+        # the latter is what lifts a probed record to the `verified_tools` tier.
         existing_keys = {
             (item.get("kind"), item.get("value"), item.get("confidence"))
             for item in rec.evidence
         }
         for tool in tools:
             for ev in tool.evidence:
-                if ev.get("kind") == "mcp_annotation":
+                if ev.get("kind") in ("mcp_annotation", "tool_text"):
                     key = (ev.get("kind"), ev.get("value"), ev.get("confidence"))
                     if key not in existing_keys:
                         rec.evidence.append(ev)
