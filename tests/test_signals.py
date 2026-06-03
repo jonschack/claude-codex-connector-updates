@@ -4,7 +4,7 @@ from pathlib import Path
 from unittest import mock
 
 from mcp_newsletter.context import CollectContext
-from mcp_newsletter.signals import collect_signals, parse_feed
+from mcp_newsletter.signals import collect_signals, parse_feed, parse_hn_algolia
 
 ATOM = """<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -48,6 +48,27 @@ class ParseFeedTests(unittest.TestCase):
 
     def test_garbage_returns_empty(self):
         self.assertEqual(parse_feed("not xml", "x"), [])
+
+
+class HnAlgoliaTests(unittest.TestCase):
+    def test_parses_hits_with_url_and_text_fallback(self):
+        import json
+        payload = {"hits": [
+            {"title": "Show HN: my MCP server", "url": "https://github.com/a/b",
+             "objectID": "111", "created_at": "2026-06-01T00:00:00Z"},
+            {"title": "Ask HN: best MCP setup?", "url": "", "objectID": "222",
+             "created_at": "2026-06-02T00:00:00Z", "story_text": "what do you use"},
+            {"title": "", "objectID": "333"},  # no title -> skipped
+        ]}
+        out = parse_hn_algolia(json.dumps(payload))
+        self.assertEqual([r.title for r in out],
+                         ["Show HN: my MCP server", "Ask HN: best MCP setup?"])
+        self.assertEqual(out[0].url, "https://github.com/a/b")
+        self.assertEqual(out[1].url, "https://news.ycombinator.com/item?id=222")  # text-post fallback
+        self.assertEqual(out[0].source, "hackernews")
+
+    def test_garbage_is_empty(self):
+        self.assertEqual(parse_hn_algolia("not json"), [])
 
 
 class CollectSignalsTests(unittest.TestCase):

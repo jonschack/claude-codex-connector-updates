@@ -37,6 +37,8 @@ class RegistryMeta:
     last_manifest_parsed: Dict[str, str] = field(default_factory=dict)  # identity -> date
     last_frontier_digest: str = ""  # date the weekly frontier digest last emitted
     first_seen: Dict[str, str] = field(default_factory=dict)  # identity -> date first catalogued
+    official_cursor: str = ""  # P4: updated_since high-watermark for incremental pulls
+    github_stars: Dict[str, int] = field(default_factory=dict)  # P4: candidate star snapshot
 
     @classmethod
     def load(cls, path: Path) -> "RegistryMeta":
@@ -50,6 +52,8 @@ class RegistryMeta:
             last_manifest_parsed=data.get("last_manifest_parsed", {}),
             last_frontier_digest=data.get("last_frontier_digest", ""),
             first_seen=data.get("first_seen", {}),
+            official_cursor=data.get("official_cursor", ""),
+            github_stars=data.get("github_stars", {}),
         )
 
     def dump(self, path: Path) -> None:
@@ -61,6 +65,8 @@ class RegistryMeta:
             "last_manifest_parsed": self.last_manifest_parsed,
             "last_frontier_digest": self.last_frontier_digest,
             "first_seen": self.first_seen,
+            "official_cursor": self.official_cursor,
+            "github_stars": self.github_stars,
         }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 

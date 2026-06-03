@@ -75,13 +75,16 @@ def _example_prompt(rec: RegistryServerRecord) -> str:
 
 def build_frontier(records: Dict[str, RegistryServerRecord],
                    grok_state: Dict[str, dict], run_date: str,
-                   first_seen: Optional[Dict[str, str]] = None) -> List[FrontierEntry]:
+                   first_seen: Optional[Dict[str, str]] = None,
+                   momentum: Optional[Dict[str, float]] = None) -> List[FrontierEntry]:
     """Build frontier entries from registry records (headline/emerging by evidence
     tier, scored by the P3 lexicographic frontier score) and the Grok radar
     (viral, ranked separately on engagement). `first_seen` (identity -> date)
     drives backfill suppression: servers catalogued before the tracker epoch get
-    no recency credit."""
+    no recency credit. `momentum` (identity -> [0,1]) feeds the bounded attention
+    factor (P4 github star/release velocity)."""
     first_seen = first_seen or {}
+    momentum = momentum or {}
     entries: List[FrontierEntry] = []
     for rec in records.values():
         tier = evidence_tier(rec.evidence)
@@ -101,7 +104,8 @@ def build_frontier(records: Dict[str, RegistryServerRecord],
             source_url=rec.repo_url or rec.remote_url,
             confidence=confidence, corroboration=corroboration,
             frontier_score=score(tier, power_tier, fresh, confidence,
-                                  corroboration=corroboration),
+                                  corroboration=corroboration,
+                                  momentum=momentum.get(rec.identity, 0.0)),
         ))
     for key, g in grok_state.items():
         entries.append(FrontierEntry(
@@ -329,7 +333,8 @@ def render_teaching_artifact(entries: List[FrontierEntry], run_date: str) -> str
 # --- orchestrator (daily run: board + alerts + idempotent weekly digest) -------
 
 def run_frontier_report(root: Path, run_date: str,
-                        records: Dict[str, RegistryServerRecord], meta) -> dict:
+                        records: Dict[str, RegistryServerRecord], meta,
+                        momentum: Optional[Dict[str, float]] = None) -> dict:
     """Render the daily board + JSON, select same-day alerts (diffed against the
     PRIOR run's board), emit the weekly digest when due (idempotent on
     meta.last_frontier_digest), and draft the meetup teaching artifact. Does NOT
@@ -339,7 +344,8 @@ def run_frontier_report(root: Path, run_date: str,
     cur = root / "data" / "current"
     grok_state = load_radar_state(cur / "grok_radar_state.jsonl")
     entries = build_frontier(records, grok_state, run_date,
-                             first_seen=getattr(meta, "first_seen", None))
+                             first_seen=getattr(meta, "first_seen", None),
+                             momentum=momentum)
 
     # alerts diff against the headline+high set on the PRIOR run's board (read it
     # BEFORE overwriting), so a brand-new OR newly-promoted high-power tool fires.

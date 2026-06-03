@@ -19,6 +19,7 @@ from .registries import collect_all_registries, enabled_sources
 from .registries.merge import merge_entries, build_alias_map
 from .frontier import BACKFILL_DATE
 from .frontier_report import run_frontier_report
+from .ingest.catch_new import augment_catch_new, github_momentum_for_candidates
 from .manifest import run_manifest_pass, select_manifest_candidates
 from .registry_classify import OBSERVED_EVIDENCE_KINDS, classify_registry_record
 from .registry_discovery import select_discovery_candidates, run_discovery
@@ -214,16 +215,24 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
             if info:
                 rec.confidence_by_source.setdefault(src, info)
 
+    # P4 catch-new: additively fold incremental + package-watch sources into the
+    # record set (full pull still owns liveness); returns the new identities that
+    # become discovery's priority-1 bucket.
+    new_ids = augment_catch_new(ctx, current, meta, run_date)
+
     # live discovery (deterministic, capped, rotating)
+    frontier_momentum: Dict[str, float] = {}
     if not skip_network:
         cap = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DISCOVERY_CAP", "150"))
         cadence = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DISCOVERY_CADENCE_DAYS", "3"))
         workers = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_DISCOVERY_WORKERS", "8"))
-        # new_identities (priority bucket 1) is fed by the P4 incremental cursor;
-        # until P4 lands it stays empty (default).
-        candidates = select_discovery_candidates(list(current.values()), cap, meta.last_discovered, cadence, run_date)
+        candidates = select_discovery_candidates(list(current.values()), cap, meta.last_discovered,
+                                                 cadence, run_date, new_identities=new_ids)
         discovered = run_discovery(candidates, run_date, workers=workers)
         meta.last_discovered.update(discovered)
+
+        # P4 momentum: candidate-only github star/release velocity (GITHUB_TOKEN-gated).
+        frontier_momentum = github_momentum_for_candidates(candidates, meta, skip_network=skip_network)
 
         # static manifest pass: lift stdio servers (no remote_url) we can't probe
         m_cap = int(os.environ.get("MCP_NEWSLETTER_REGISTRY_MANIFEST_CAP", "100"))
@@ -241,7 +250,7 @@ def run_registry_update(root: Path, run_date: Optional[str] = None, skip_network
 
     # Phase 2: always-current write-frontier board + same-day alerts + idempotent
     # weekly digest (mutates meta.last_frontier_digest before it's dumped below).
-    frontier = run_frontier_report(root, run_date, new_state, meta)
+    frontier = run_frontier_report(root, run_date, new_state, meta, momentum=frontier_momentum)
     age = frontier.get("radar_age_days")
     if frontier.get("digest_due") and (age is None or age > 7):
         ctx.add_issue("frontier", "grok_radar",

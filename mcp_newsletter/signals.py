@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
@@ -20,7 +21,13 @@ DEFAULT_FEEDS: Dict[str, str] = {
     "anthropic_news": "https://raw.githubusercontent.com/taobojlen/anthropic-rss-feed/main/anthropic_news_rss.xml",
     "simonwillison": "https://simonwillison.net/atom/everything/",
     "latent_space": "https://www.latent.space/feed",
+    "github_changelog": "https://github.blog/changelog/feed/",  # vendor changelog (P4)
 }
+
+# HN Algolia: free, keyword-queryable, surfaces Show HN / launch threads the RSS
+# feeds miss. JSON (not RSS), so it has its own parser + fetch (P4 recall).
+HN_ALGOLIA_URL = ("https://hn.algolia.com/api/v1/search_by_date"
+                  "?query=MCP%20server&tags=story&hitsPerPage=50")
 
 
 @dataclass
@@ -89,6 +96,29 @@ def parse_feed(xml_text: str, source: str) -> List[SignalRecord]:
     return out
 
 
+def parse_hn_algolia(json_text: str, source: str = "hackernews") -> List[SignalRecord]:
+    """Parse HN Algolia `hits` into SignalRecords (story URL, or the HN item page
+    for text posts)."""
+    try:
+        data = json.loads(json_text or "")
+    except (json.JSONDecodeError, TypeError):
+        return []
+    out: List[SignalRecord] = []
+    for hit in (data.get("hits") if isinstance(data, dict) else None) or []:
+        title = (hit.get("title") or "").strip()
+        if not title:
+            continue
+        url = hit.get("url") or ""
+        if not url and hit.get("objectID"):
+            url = f"https://news.ycombinator.com/item?id={hit['objectID']}"
+        out.append(SignalRecord(
+            source=source, title=title, url=url,
+            published=hit.get("created_at", ""),
+            summary=(hit.get("story_text") or "")[:500],
+        ))
+    return out
+
+
 def _feeds_from_env() -> Optional[Dict[str, str]]:
     raw = os.environ.get("MCP_NEWSLETTER_SIGNAL_FEEDS")
     if not raw:
@@ -114,4 +144,11 @@ def collect_signals(ctx: CollectContext, feeds: Optional[Dict[str, str]] = None)
         if not records:
             ctx.add_issue("signals", url, f"no entries parsed from feed '{name}'", severity="info")
         out.extend(records)
+
+    # HN Algolia (JSON, not RSS) — only on the default feed set (env override
+    # replaces the whole set and is assumed self-contained).
+    if feeds is DEFAULT_FEEDS:
+        body = ctx.fetch("signals", HN_ALGOLIA_URL, "feed-hackernews")
+        if body:
+            out.extend(parse_hn_algolia(body))
     return out
