@@ -124,11 +124,19 @@ class AlertTests(unittest.TestCase):
             "old_hi": _rec("old_hi", "tool_text", power_desc="deploy to prod"),
         }
         entries = build_frontier(records, {})
-        alerts = select_alerts(entries, prior_identities={"old_hi"})
+        alerts = select_alerts(entries, prior_headline_high={"old_hi"})
         ids = {e.identity for e in alerts}
         self.assertIn("new_hi", ids)
         self.assertNotIn("new_lo", ids)   # low power excluded
-        self.assertNotIn("old_hi", ids)   # already known excluded
+        self.assertNotIn("old_hi", ids)   # already headline+high -> not new
+
+    def test_newly_verified_promotion_alerts(self):
+        # a tool that was emerging yesterday and becomes headline+high today fires
+        records = {"promoted": _rec("promoted", "tool_text", power_desc="charge a card")}
+        entries = build_frontier(records, {})
+        # prior board had it but NOT as headline+high (it was emerging/claimed)
+        alerts = select_alerts(entries, prior_headline_high=set())
+        self.assertIn("promoted", {e.identity for e in alerts})
 
 
 class TeachingTests(unittest.TestCase):

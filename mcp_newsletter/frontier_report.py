@@ -48,17 +48,6 @@ class FrontierEntry:
             "engagement": self.engagement, "why": self.why,
         }
 
-    @classmethod
-    def from_dict(cls, d: dict) -> "FrontierEntry":
-        return cls(
-            identity=d.get("identity", ""), name=d.get("name", ""),
-            section=d.get("section", ""), evidence_tier=d.get("evidence_tier", "none"),
-            power_tier=d.get("power_tier", "low"), recency=d.get("recency", ""),
-            action_classes=d.get("action_classes", []),
-            example_prompt=d.get("example_prompt", ""), source_url=d.get("source_url", ""),
-            engagement=int(d.get("engagement", 0) or 0), why=d.get("why", ""),
-        )
-
 
 def _recency(rec: RegistryServerRecord) -> str:
     return max((s.get("last_updated", "") for s in rec.sources), default="")
@@ -97,6 +86,8 @@ def build_frontier(records: Dict[str, RegistryServerRecord],
     for key, g in grok_state.items():
         entries.append(FrontierEntry(
             identity="grok:" + key, name=g.get("name", ""), section="viral",
+            # power_tier is informational in the JSON only; viral ranks on
+            # engagement and never participates in the headline score.
             power_tier=power_tier_for(f"{g.get('name', '')} {g.get('capability', '')}"),
             action_classes=[], example_prompt=g.get("example_prompt", ""),
             source_url=g.get("source_url", ""),
@@ -207,17 +198,28 @@ def weekly_delta(current: List[dict], prior: List[dict]) -> dict:
         prev_rank = EVIDENCE_TIER_RANK.get(prev.get("evidence_tier", "none"), 0)
         if cur_rank > prev_rank and d.get("evidence_tier") in HEADLINE_TIERS:
             newly_verified.append(d)
-        if d.get("section") == "viral" and int(d.get("engagement", 0)) > int(prev.get("engagement", 0)):
+        if d.get("section") == "viral" and int(d.get("engagement", 0) or 0) > int(prev.get("engagement", 0) or 0):
             risen.append(d)
     return {"new": new, "newly_verified": newly_verified, "risen": risen}
 
 
-def select_alerts(entries: List[FrontierEntry], prior_identities: Set[str]) -> List[FrontierEntry]:
-    """Same-day alert bar (b): newly-discovered high-power verified/declared write
-    tools — regardless of vendor fame or virality."""
+def is_headline_high(entry) -> bool:
+    """Headline-tier (verified/declared) AND high action power — the alert bar."""
+    tier = entry["evidence_tier"] if isinstance(entry, dict) else entry.evidence_tier
+    section = entry["section"] if isinstance(entry, dict) else entry.section
+    power = entry["power_tier"] if isinstance(entry, dict) else entry.power_tier
+    return section == "headline" and power == "high"
+
+
+def select_alerts(entries: List[FrontierEntry],
+                  prior_headline_high: Set[str]) -> List[FrontierEntry]:
+    """Same-day alert bar (b): any tool that is high-power verified/declared NOW
+    and was NOT already in that set — so a brand-new tool AND a tool freshly
+    promoted from emerging→headline (newly verified) both fire, regardless of
+    vendor fame or virality. `prior_headline_high` = the identities that were
+    headline+high on the prior run's board."""
     return [e for e in entries
-            if e.section == "headline" and e.power_tier == "high"
-            and e.identity not in prior_identities]
+            if is_headline_high(e) and e.identity not in prior_headline_high]
 
 
 def render_digest(delta: dict, run_date: str) -> str:
@@ -286,39 +288,19 @@ def run_frontier_report(root: Path, run_date: str,
     grok_state = load_radar_state(cur / "grok_radar_state.jsonl")
     entries = build_frontier(records, grok_state)
 
-    # alerts: identities newly on the board since the PRIOR run's current.json
+    # alerts diff against the headline+high set on the PRIOR run's board (read it
+    # BEFORE overwriting), so a brand-new OR newly-promoted high-power tool fires.
     current_path = cur / "write_frontier_current.json"
-    prior_ids: Set[str] = set()
-    if current_path.exists():
-        try:
-            prior = json.loads(current_path.read_text(encoding="utf-8"))
-            prior_ids = {e.get("identity") for e in prior.get("entries", [])}
-        except (json.JSONDecodeError, OSError):
-            prior_ids = set()
-    alerts = select_alerts(entries, prior_ids)
+    prior_entries = _read_entries(current_path)
+    prior_headline_high = {e.get("identity") for e in prior_entries if is_headline_high(e)}
+    alerts = select_alerts(entries, prior_headline_high)
 
     # write the always-current board + json (board reflects THIS run)
     write_text(cur / "WRITE_FRONTIER_NOW.md", render_board(entries, run_date, grok_state))
     new_board = board_json(entries, run_date)
     write_json(current_path, new_board)
 
-    # idempotent weekly digest
-    digest_due = (not meta.last_frontier_digest
-                  or days_between(meta.last_frontier_digest, run_date) >= DIGEST_WINDOW_DAYS)
-    digest_body = ""
-    if digest_due:
-        baseline_path = cur / "write_frontier_last_digest.json"
-        baseline = []
-        if baseline_path.exists():
-            try:
-                baseline = json.loads(baseline_path.read_text(encoding="utf-8")).get("entries", [])
-            except (json.JSONDecodeError, OSError):
-                baseline = []
-        delta = weekly_delta(new_board["entries"], baseline)
-        digest_body = render_digest(delta, run_date)
-        write_text(cur / "WRITE_FRONTIER.md", digest_body)
-        write_json(baseline_path, new_board)      # next week diffs against this
-        meta.last_frontier_digest = run_date
+    digest_due, digest_body = _weekly_digest_step(cur, run_date, new_board, meta)
 
     # meetup teaching artifact draft (human-approved; never auto-published)
     teaching_dir = root / "meetup-hormozi" / "assets"
@@ -333,3 +315,27 @@ def run_frontier_report(root: Path, run_date: str,
         "radar_age_days": radar_age_days(grok_state, run_date),
         "entry_count": len(entries),
     }
+
+
+def _read_entries(path: Path) -> List[dict]:
+    if not path.exists():
+        return []
+    try:
+        return json.loads(path.read_text(encoding="utf-8")).get("entries", [])
+    except (json.JSONDecodeError, OSError):
+        return []
+
+
+def _weekly_digest_step(cur: Path, run_date: str, new_board: dict, meta):
+    """Emit the weekly digest iff due (idempotent on meta.last_frontier_digest).
+    Stamps meta and snapshots the baseline so next week's delta is correct."""
+    due = (not meta.last_frontier_digest
+           or days_between(meta.last_frontier_digest, run_date) >= DIGEST_WINDOW_DAYS)
+    if not due:
+        return False, ""
+    baseline = _read_entries(cur / "write_frontier_last_digest.json")
+    body = render_digest(weekly_delta(new_board["entries"], baseline), run_date)
+    write_text(cur / "WRITE_FRONTIER.md", body)
+    write_json(cur / "write_frontier_last_digest.json", new_board)
+    meta.last_frontier_digest = run_date
+    return True, body

@@ -165,6 +165,9 @@ def _emit_frontier_email(ctx, root: Path, run_date: str, frontier: Dict[str, obj
                              f"{e.example_prompt}" for e in alerts)
             send_alert(f"Write Frontier — {len(alerts)} new high-power write tool(s) {run_date}", body)
         if frontier.get("digest_due") and frontier.get("digest_body"):
+            # Use send_alert (arbitrary subject+body) rather than send_daily_report,
+            # which is hard-bound to reports/<date>.md — the digest is its own
+            # artifact (WRITE_FRONTIER.md), so send_alert is the right primitive.
             send_alert(f"Write Frontier — Weekly Digest {run_date}", str(frontier["digest_body"]))
     except Exception as exc:  # email must never break the pipeline
         ctx.add_issue("frontier", "email", f"frontier email failed: {exc}", severity="warning")
