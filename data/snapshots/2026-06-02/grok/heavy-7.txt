@@ -1,0 +1,6 @@
+GitHub MCP Server | repo access, PRs/issues, secret/dependency scanning | 34 likes/3 reposts (May 5) | https://github.com/github/github-mcp-server | Claude, review open PRs, scan for secrets, suggest fixes
+TablePlus MCP Server | DB schema inspection, query optimization, metrics (Postgres/MySQL) | 156 likes/4 reposts (Jun 1) | https://tableplus.com/ | Claude, analyze my Postgres schema and optimize slow queries on orders
+Playwright MCP | browser automation and E2E testing | 68 likes | https://github.com/microsoft/playwright-mcp | Claude, automate the login flow on staging, run E2E tests, report failures
+GSD-Browser MCP | browser automation (62 tools: navigation, scraping, interaction) | 39 likes (May 29) | https://github.com/gsd-build/gsd-browser | Claude, scrape the competitor pricing page and summarize changes
+Mintlify MCP | docs: AI search, generation, admin actions, llms.txt | 84 likes/2 reposts (Jun 1) | https://www.mintlify.com/docs/ai/model-context-protocol | Claude, generate API reference docs from this code change and publish
+Context7 MCP | real-time library/framework docs to avoid hallucinations | 68 likes | https://github.com/upstash/context7 | Claude, implement this using the latest Next.js App Router docs

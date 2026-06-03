@@ -1,38 +1,53 @@
-# MCP Write-Capability Report: 2026-05-30
+# MCP Write-Capability Report: 2026-06-01
 
 ## Write Alerts
 
-| Event | Provider | Server | Tool | Confidence | Summary |
-| --- | --- | --- | --- | --- | --- |
-| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_instance` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_instance |
-| tool_schema_changed | gemini | `bigtable-bigtable` | `create_table` | high | Write-capable tool changed: gemini/bigtable-bigtable/create_table |
-| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_table` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_table |
-| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_logical_view` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_logical_view |
+No high- or medium-confidence write-capability changes were detected today.
 
 ## Coverage
 
-- Normalized servers: 383
-- Write-capable servers: 68
+- Normalized servers: 248
+- Write-capable servers: 20
 - claude: 24 servers, 8 write-capable
-- codex: 148 servers, 52 write-capable
-- gemini: 202 servers, 8 write-capable
+- cline: 198 servers, 11 write-capable
+- cloudflare: 17 servers, 1 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues
 
-- gemini: 2 issue(s)
+- codex: 1 issue(s)
+- continue: 1 issue(s)
+- cursor: 2 issue(s)
+- gemini: 1 issue(s)
 - grok: 2 issue(s)
+- openai: 2 issue(s)
+- vscode: 2 issue(s)
 
-- `gemini` `warning` `https://github.com/OutlineDriven/outline-driven-development`: Manifest not found or invalid after probing common paths
-- `gemini` `warning` `https://github.com/Paulessus/odin-gemini-mcp-bridge`: Manifest not found or invalid after probing common paths
+- `codex` `warning` `/Users/jon/.codex/.tmp/plugins/.agents/plugins/marketplace.json`: Codex plugin marketplace not found
+- `gemini` `warning` `https://geminicli.com/extensions/`: response exceeded 5242880 bytes
 - `grok` `warning` `https://docs.x.ai/grok/connectors/catalog`: HTTP Error 404: Not Found
 - `grok` `warning` `https://x.ai/news/grok-connectors`: HTTP Error 403: Forbidden
+- `openai` `warning` `https://platform.openai.com/docs/connectors`: HTTP Error 404: Not Found
+- `openai` `warning` `https://platform.openai.com/docs/connectors`: no records parsed; DOM may have changed
+- `cursor` `warning` `https://cursor.directory/mcp`: HTTP Error 429: Too Many Requests
+- `cursor` `warning` `https://cursor.directory/mcp`: no records parsed; DOM may have changed
+- `vscode` `warning` `https://raw.githubusercontent.com/microsoft/mcp/main/registry.json`: HTTP Error 404: Not Found
+- `vscode` `warning` `https://raw.githubusercontent.com/microsoft/mcp/main/registry.json`: invalid gallery JSON
+- `continue` `warning` `https://continue.dev/api/blocks?type=mcpServer`: invalid blocks JSON
 
 ## Notes
 
 - Local/stdio MCP servers are not executed in v1; they are classified from manifests until Docker/Podman sandboxing is added.
 - MCP tool annotations are treated as evidence, not as trusted truth.
 - The SQLite state file is the diff source for first-seen and changed write events.
+
+## Ecosystem Registries
+
+- Indexed servers (deduped): 31664 across 7 registries
+- Write-capable (medium+): 5495
+- New/changed write-capable today: 0
+- Per registry (sums exceed deduped total): docker 278 · github_servers 14 · glama 24861 · mcpso 32 · official 6285 · smithery 247
+- Note: a server may also appear in the vendor-tier coverage above; the two tiers are counted independently.
 
 ## Running Locally
 

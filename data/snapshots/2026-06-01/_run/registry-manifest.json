@@ -1,0 +1,26 @@
+{
+  "issues": [
+    {
+      "message": "MCP_NEWSLETTER_PULSEMCP_KEY not set; skipping collector",
+      "provider": "pulsemcp",
+      "severity": "info",
+      "source": "https://api.pulsemcp.com/v0.1/servers"
+    },
+    {
+      "message": "demoted: count=0 collapsed vs history=0",
+      "provider": "pulsemcp",
+      "severity": "error",
+      "source": "parser-break-floor"
+    }
+  ],
+  "run_date": "2026-06-01",
+  "source_ok": {
+    "docker": true,
+    "github_servers": true,
+    "glama": true,
+    "mcpso": true,
+    "official": true,
+    "pulsemcp": false,
+    "smithery": true
+  }
+}

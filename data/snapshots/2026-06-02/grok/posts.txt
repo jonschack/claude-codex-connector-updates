@@ -1,0 +1,45 @@
+7593 | https://x.com/claudeai/status/2056645485696315581 | @claudeai | Claude MCP Tunnels | Self-hosted sandboxes (beta) + MCP tunnels (preview) for Claude Managed Agents to securely connect to private MCP servers
+5747 | https://x.com/peteoxenham/status/2061466735174393911 | @peteoxenham | Strava MCP | strava mcp launched today lfg
+5520 | https://x.com/unitygames/status/2051316135836995774 | @unitygames | Unity AI MCP Server | Unity AI Open Beta: connect AI tools via AI Gateway and MCP Server
+4808 | https://x.com/dashboardlim/status/2050998908835246591 | @dashboardlim | Meta Ads MCP connector | Meta Ads connected to Claude via MCP (mcp.facebook.com/ads), full read/write
+4220 | https://x.com/base/status/2059305907385704529 | @base | Base MCP | Introducing Base MCP: agent gateway to Base for swaps, trades, portfolio, app plugins
+2900 | https://x.com/ClaudeDevs/status/2056740346529468717 | @ClaudeDevs | Claude MCP Tunnels | MCP tunnels for Claude Managed Agents self-hosted sandboxes
+2608 | https://x.com/paperseasons/status/2054031088625082792 | @paperseasons | Mobbin MCP | Mobbin MCP so AI agents can search 600,000+ real app screens
+912 | https://x.com/UnslothAI/status/2061469454102638988 | @UnslothAI | Unsloth MCP | Using MCP with local LLMs (Qwen3.6, Gemma 4) for tools, files, APIs
+787 | https://x.com/tom_doerr/status/2059591669146612043 | @tom_doerr | CVE MCP Server | Claude access to 27 security-intelligence tools via cve-mcp-server
+490 | https://x.com/expo/status/2059351778714583068 | @expo | Expo MCP Server | Expo MCP Server now available for AI coding assistants
+485 | https://x.com/garrytan/status/2053306243704410460 | @garrytan | GBrain MCP thin client | GBrain v0.31.1 ships MCP thin client support, one home GBrain server
+388 | https://x.com/Lovable/status/2052418950118650358 | @Lovable | Lovable MCP server | Lovable MCP server (Research Preview) to create, iterate, deploy apps from agents
+378 | https://x.com/milesdeutscher/status/2053900786833453082 | @milesdeutscher | Crypto MCP servers | 100+ MCP crypto servers at mcpservers.org for AI agents in research and trading
+357 | https://x.com/Polkadot/status/2061505808119255204 | @Polkadot | Polkadot MCP Server | Official Polkadot MCP server for AI tools to access trusted ecosystem docs
+301 | https://x.com/awsdevelopers/status/2054956679632941444 | @awsdevelopers | AWS MCP Server | AWS MCP server with full API coverage, sandboxed execution, real-time docs
+245 | https://x.com/sabrinaesaquino/status/2056826633344975178 | @sabrinaesaquino | Venice MCP Server | Venice MCP Server live with 31 tools (chat, image, video, audio, search)
+232 | https://x.com/higgsfield/status/2061520692756332677 | @higgsfield | Higgsfield MCP | Claude is now your real estate marketing agency using Higgsfield MCP
+178 | https://x.com/ManusAI/status/2061885820890456184 | @ManusAI | Manus MCP connectors | Native MCP connectors + Skills for a personal Chief of Staff in Manus
+164 | https://x.com/karrisaarinen/status/2055476478952059227 | @karrisaarinen | Linear MCP servers | Running agent work through Linear with MCP servers (Granola/Slack/Notion)
+156 | https://x.com/TablePlus/status/2061302138408669311 | @TablePlus | TablePlus MCP Server | Upcoming TablePlus MCP Server for AI DB tasks with safety controls
+148 | https://x.com/ChromiumDev/status/2056848811020923023 | @ChromiumDev | Chrome DevTools MCP Server | Chrome DevTools for agents now stable via MCP server
+134 | https://x.com/sjsandeep_jain/status/2060331023003775174 | @sjsandeep_jain | MCP server patterns | 5 MCP server patterns (Tool/Resource/Prompt/Gateway/Proxy) for production agents
+126 | https://x.com/darshal_/status/2057356663989153973 | @darshal_ | Apollo MCP connector | Apollo.io connected to Claude via MCP for sales prospecting/enrichment
+120 | https://x.com/tom_doerr/status/2061647080829956157 | @tom_doerr | Docker MCP servers | Build and deploy MCP servers with Docker tutorial
+103 | https://x.com/OpenShorex/status/2061315022652092681 | @OpenShorex | Polkadot MCP | Tutorial: connect AI tools to Polkadot's official documentation MCP server
+93 | https://x.com/AiwithZohaib/status/2061211076801581105 | @AiwithZohaib | MCP Architecture | Everyone talking MCP but not the 5 server patterns for AI infra
+84 | https://x.com/mintlify/status/2061540563871236593 | @mintlify | Mintlify MCP server | New MCP server for admin actions, API specs, docs-from-code, llms.txt
+79 | https://x.com/charliejhills/status/2059650939565252960 | @charliejhills | Zapier MCP server | Claude has 375+ native MCP connectors; add 9,000+ via Zapier MCP in 3 steps
+76 | https://x.com/n8n_io/status/2059182944380400059 | @n8n_io | n8n MCP server | n8n agents as team members in M365 that call workflows and MCP servers
+75 | https://x.com/TechFundies/status/2061870683068748046 | @TechFundies | FDS MCP connector | FDS clients trialing MCP connector, 100% conversion, 15-20% contract uplift
+73 | https://x.com/ashiqur_ai/status/2061306066445664413 | @ashiqur_ai | MCP server patterns | 5 MCP server patterns matter more than prompts for production agents
+72 | https://x.com/Atenov_D/status/2061807438098043249 | @Atenov_D | Tavily/Playwright/Context7 MCP | Five MCP servers turn Claude into a full agent (Tavily, Playwright, Context7...)
+70 | https://x.com/lennyzeltser/status/2060085225515082226 | @lennyzeltser | Decoy MCP server | Decoy MCP server honeypot for detecting intrusions via AI agent configs
+57 | https://x.com/n8n_io/status/2059651061002977727 | @n8n_io | n8n MCP | n8n ships MCP credentials integration for AI Agents
+45 | https://x.com/OpenCovenant/status/2061509788681293963 | @OpenCovenant | Covenant MCP | Covenant connects agents to tools via MCP with permission tokens and logging
+45 | https://x.com/0xWorkHQ/status/2061491748539691328 | @0xWorkHQ | Higgsfield MCP connector | Higgsfield MCP connector now live for 0xWork Agents
+26 | https://x.com/sailorpepe_eth/status/2061892437917024434 | @sailorpepe_eth | LitecoinVM MCP server | 6-tool MCP server for AI agents with on-chain RWA oracle on LitecoinVM
+24 | https://x.com/AbstractChain/status/2061864143620059379 | @AbstractChain | Abstract MCP Server | Abstract MCP Server for AI agents to manage global wallets and interact onchain
+23 | https://x.com/Lightyearb22989/status/2061923804683612419 | @Lightyearb22989 | Injective MCP server | Injective MCP server lets AI agents do real on-chain actions in plain English
+22 | https://x.com/himself65/status/2061956922258149733 | @himself65 | IBKR MCP server | IBKR now supports MCP server for buying stocks by typing
+22 | https://x.com/0xWorkHQ/status/2061853457708196008 | @0xWorkHQ | Base MCP connector | Base MCP connector live for 0xWork agents
+19 | https://x.com/meyusufdemirci/status/2061413844077981748 | @meyusufdemirci | Mobbin MCP server | Mobbin released MCP server for Claude + Figma workflows
+17 | https://x.com/AnatoliKopadze/status/2061966906194563360 | @AnatoliKopadze | Higgsfield MCP connector | Claude + Higgsfield MCP for generating UGC ads and full company building
+13 | https://x.com/yousukezan/status/2061065365732692091 | @yousukezan | MCP Toolbox | CVE-2026-9739 vulnerability discovered in MCP Toolbox for enterprise DB connections
+11 | https://x.com/realpython/status/2061862934070915403 | @realpython | Python MCP Client | Build a Python MCP Client to test servers from your terminal

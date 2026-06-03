@@ -1,0 +1,20 @@
+name: mongodb
+image: mcp/mongodb
+type: server
+meta:
+  category: database
+  tags:
+    - mongodb
+    - database
+about:
+  title: MongoDB
+  icon: https://avatars.githubusercontent.com/u/11214950?v=4
+source:
+  project: https://github.com/mongodb-js/mongodb-mcp-server
+  commit: 458b3c8f826640d21f17f5d71c526173f62bbd8b
+config:
+  description: Configure the connection to MongoDB
+  secrets:
+    - name: mongodb.connection_string
+      env: MDB_MCP_CONNECTION_STRING
+      example: mongodb+srv://username:password@cluster.mongodb.net/myDatabase

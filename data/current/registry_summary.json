@@ -1,0 +1,55 @@
+{
+  "enabled_sources": [
+    "official",
+    "github_servers",
+    "docker",
+    "pulsemcp",
+    "smithery",
+    "glama",
+    "mcpso"
+  ],
+  "event_count": 0,
+  "indexed": 31664,
+  "issues": [
+    {
+      "message": "MCP_NEWSLETTER_PULSEMCP_KEY not set; skipping collector",
+      "provider": "pulsemcp",
+      "severity": "info",
+      "source": "https://api.pulsemcp.com/v0.1/servers"
+    },
+    {
+      "message": "demoted: count=0 collapsed vs history=0",
+      "provider": "pulsemcp",
+      "severity": "error",
+      "source": "parser-break-floor"
+    }
+  ],
+  "per_source": {
+    "docker": 278,
+    "github_servers": 14,
+    "glama": 24861,
+    "mcpso": 32,
+    "official": 6285,
+    "smithery": 247
+  },
+  "per_source_raw": {
+    "docker": 329,
+    "github_servers": 14,
+    "glama": 25000,
+    "mcpso": 47,
+    "official": 6287,
+    "pulsemcp": 0,
+    "smithery": 500
+  },
+  "run_date": "2026-06-01",
+  "source_ok": {
+    "docker": true,
+    "github_servers": true,
+    "glama": true,
+    "mcpso": true,
+    "official": true,
+    "pulsemcp": false,
+    "smithery": true
+  },
+  "write_capable": 5495
+}

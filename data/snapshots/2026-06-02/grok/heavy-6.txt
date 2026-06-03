@@ -1,0 +1,5 @@
+Injective MCP Server | AI on-chain DeFi (perps, spot, sends, bridging, market data) on Injective | 251 likes; official ann. 437/106 | https://github.com/InjectiveLabs/mcp-server | Claude, open a TSLA position with 20x leverage using $100
+Symbiosis Public MCP Server | any-to-any cross-chain swaps/bridging across 50+ chains | 129 likes/26 reposts (TRON, May 29) | https://github.com/symbiosis-finance/symbiosis-public-mcp | Claude, bridge my ETH from Base to USDT on TRON
+MPP32 MCP Server | Universal payments for agents: x402 payments, session budgets, velocity limits | 211 likes/25 reposts (May 15) | https://github.com/MPP32/MPP32 | Claude, pay for this API call using USDC with a $5 session budget
+MetaTrader MCP Server | NL trading bridge for MT5 (forex/crypto/futures analysis + orders) | 93 likes | https://github.com/ariadng/metatrader-mcp-server | Claude, market buy EURUSD 0.1 lot if RSI below 30
+Carbon DeFi MCP Server | AI creates/manages on-chain strategies (limit/range/recurring, liquidity) | 27 likes/7 reposts | https://mcp.carbondefi.xyz/ | Claude, create a recurring buy-low-sell-high ETH/USDC strategy with 5% spread

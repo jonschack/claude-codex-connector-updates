@@ -1,36 +1,25 @@
 from __future__ import annotations
 
-import re
 from typing import Dict, List
 
-from ..utils import slugify
+from ..identity import canonical_key, canonical_repo
 from .base import RawRegistryEntry, RegistryServerRecord
 
-
-def _normalize_repo(repo_url: str) -> str:
-    """github.com/acme/solo  (host lowercased, scheme/.git/trailing slash stripped)."""
-    if not repo_url:
-        return ""
-    url = repo_url.strip()
-    url = re.sub(r"^https?://", "", url, flags=re.I)
-    url = url.rstrip("/")
-    url = re.sub(r"\.git$", "", url, flags=re.I)
-    # drop /tree/<ref>/... or /blob/... suffixes
-    url = re.sub(r"/(tree|blob)/.*$", "", url)
-    return "/".join(p for p in url.split("/") if p).lower()
+# The canonical normalizer lives in mcp_newsletter.identity (shared by all tiers).
+_normalize_repo = canonical_repo
 
 
 def identity(entry: RawRegistryEntry) -> str:
-    if entry.official_name:
-        return entry.official_name.lower()
-    repo = _normalize_repo(entry.repo_url)
-    if repo:
-        if entry.subpath:
-            return f"repo:{repo}#{entry.subpath.strip('/').lower()}"
-        return f"repo:{repo}"
     # Prefer source_id (the registry's UNIQUE key, e.g. Smithery qualifiedName,
     # mcp.so uuid) over the display name, which collides across distinct servers.
-    return f"{entry.source}:{slugify(entry.source_id or entry.name)}"
+    return canonical_key(
+        official_name=entry.official_name,
+        repo_url=entry.repo_url,
+        subpath=entry.subpath,
+        source=entry.source,
+        source_id=entry.source_id,
+        name=entry.name,
+    )
 
 
 def _alias_keys(entry: RawRegistryEntry) -> List[str]:

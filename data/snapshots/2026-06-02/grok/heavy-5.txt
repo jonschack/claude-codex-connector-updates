@@ -1,0 +1,6 @@
+Venice MCP Server | image/video/audio/music generation (31 tools) | 245 likes/44 reposts May 19 | https://github.com/veniceai/venice-mcp-server | Claude, generate a 30s cyberpunk cityscape video with synthwave soundtrack and narration
+Higgsfield MCP Server | cinematic image/video gen, 3D tours, product ads | 2279 likes/199 reposts June 1 | https://higgsfield.ai/mcp | Claude, create a 15s UGC ad video plus hero images for a luxury smartwatch
+Figma MCP Server | design/UI/UX context extraction, layer gen, file editing | design posts 19-100+ likes | https://developers.figma.com/docs/figma-mcp-server | Claude, pull styles/components from my Figma and implement the mobile dashboard in Tailwind
+Mobbin MCP Server | design inspiration from 600k+ app/UI screens | 19 likes post | https://mobbin.com/mcp | Claude, reference top banking UIs and generate wireframes for my fintech app
+Runway MCP Server | video generation/editing (Gen-4.5) | 22 likes post | https://github.com/runwayml/runway-api-mcp-server | Claude, turn this track into an 8s neon abstract animation
+AceDataCloud Creative MCPs | image (Midjourney/Flux), video (Luma/Sora/Veo), music (Suno) gen | 17 likes post (11 creative MCPs) | https://github.com/AceDataCloud/MCPMidjourney | Claude, generate a Flux robot image then a Luma video of it dancing to a Suno track

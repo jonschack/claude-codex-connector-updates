@@ -1,0 +1,5 @@
+Arkon | self-hosted enterprise MCP for RAG over internal KB/policies/docs | 125 likes/22 reposts (May 21) | https://github.com/nduckmink/arkon | Claude, search our KB for incidents like this outage and suggest resolution
+metatrader-mcp-server | NL trading/position mgmt/market data on MT5 | 93 likes/11 reposts (May 27) | https://github.com/ariadng/metatrader-mcp-server | Claude, check EURUSD and open a 0.5-lot sell if price > 1.1000
+TablePlus MCP Server | per-connection DB schema inspection, query optimization, metrics | 156 likes/4 reposts (Jun 1) | https://tableplus.com/ | Claude, analyze our sales DB schema and generate a metrics report
+Decoy MCP Honeypot | honeypot MCP to detect/alert on attacker pivots to AI agent configs | 70 likes/16 reposts (May 28) | https://zeltser.com/decoy-mcp-server-honeypot | Claude, configure a decoy MCP pointing to a Cloudflare Worker to catch unauthorized access
+Veilnet Private MCP Server | FHE-encrypted private data storage, shielded DeFi, private agent context | 35 likes/11 reposts (Jun 2) | https://veilnet.net/ | Claude, execute a shielded on-chain transfer using encrypted wallet context

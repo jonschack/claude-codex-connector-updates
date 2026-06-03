@@ -1,0 +1,15 @@
+name: youtube_transcript
+image: mcp/youtube-transcript
+type: server
+meta:
+  category: search
+  tags:
+    - youtube
+    - search
+about:
+  title: YouTube Transcripts
+  description: Retrieves transcripts for given YouTube video URLs
+  icon: https://avatars.githubusercontent.com/u/4052902?s=200&v=4
+source:
+  project: https://github.com/jkawamoto/mcp-youtube-transcript
+  commit: 14b3a56a0ffb0e679712446bd85b5673ba7c3bfe

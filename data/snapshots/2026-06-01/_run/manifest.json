@@ -1,0 +1,72 @@
+{
+  "issues": [
+    {
+      "message": "Codex plugin marketplace not found",
+      "provider": "codex",
+      "severity": "warning",
+      "source": "/Users/jon/.codex/.tmp/plugins/.agents/plugins/marketplace.json"
+    },
+    {
+      "message": "response exceeded 5242880 bytes",
+      "provider": "gemini",
+      "severity": "warning",
+      "source": "https://geminicli.com/extensions/"
+    },
+    {
+      "message": "HTTP Error 404: Not Found",
+      "provider": "grok",
+      "severity": "warning",
+      "source": "https://docs.x.ai/grok/connectors/catalog"
+    },
+    {
+      "message": "HTTP Error 403: Forbidden",
+      "provider": "grok",
+      "severity": "warning",
+      "source": "https://x.ai/news/grok-connectors"
+    },
+    {
+      "message": "HTTP Error 404: Not Found",
+      "provider": "openai",
+      "severity": "warning",
+      "source": "https://platform.openai.com/docs/connectors"
+    },
+    {
+      "message": "no records parsed; DOM may have changed",
+      "provider": "openai",
+      "severity": "warning",
+      "source": "https://platform.openai.com/docs/connectors"
+    },
+    {
+      "message": "HTTP Error 429: Too Many Requests",
+      "provider": "cursor",
+      "severity": "warning",
+      "source": "https://cursor.directory/mcp"
+    },
+    {
+      "message": "no records parsed; DOM may have changed",
+      "provider": "cursor",
+      "severity": "warning",
+      "source": "https://cursor.directory/mcp"
+    },
+    {
+      "message": "HTTP Error 404: Not Found",
+      "provider": "vscode",
+      "severity": "warning",
+      "source": "https://raw.githubusercontent.com/microsoft/mcp/main/registry.json"
+    },
+    {
+      "message": "invalid gallery JSON",
+      "provider": "vscode",
+      "severity": "warning",
+      "source": "https://raw.githubusercontent.com/microsoft/mcp/main/registry.json"
+    },
+    {
+      "message": "invalid blocks JSON",
+      "provider": "continue",
+      "severity": "warning",
+      "source": "https://continue.dev/api/blocks?type=mcpServer"
+    }
+  ],
+  "run_date": "2026-06-01",
+  "snapshot_hash": "c290838b340987b6fb584a32866bb52a80795a6003d6770452a7e0aab2707ae0"
+}

@@ -1,0 +1,6 @@
+{
+  "content_type": "",
+  "error": "HTTP Error 429: Too Many Requests",
+  "status": 429,
+  "url": "https://cursor.directory/mcp"
+}

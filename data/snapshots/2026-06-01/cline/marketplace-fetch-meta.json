@@ -1,0 +1,6 @@
+{
+  "content_type": "application/json",
+  "error": "",
+  "status": 200,
+  "url": "https://api.cline.bot/v1/mcp/marketplace"
+}

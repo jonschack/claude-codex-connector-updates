@@ -149,10 +149,13 @@ def extract_engagement(text: str) -> int:
 
 
 def finding_key(finding: GrokFinding) -> str:
-    """Stable dedup key: normalized source URL, else slugified name."""
-    url = (finding.source_url or "").strip().lower()
-    if url:
-        return re.sub(r"^https?://", "", url).rstrip("/")
+    """Stable dedup key: canonical source URL (shared normalizer, so a grok
+    finding fuses with the same repo seen by the registry/npm/github tiers),
+    else slugified name."""
+    from .identity import canonical_repo
+    repo = canonical_repo(finding.source_url)
+    if repo:
+        return repo
     from .utils import slugify
     return "name:" + slugify(finding.name)
 
