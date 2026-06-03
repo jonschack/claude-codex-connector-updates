@@ -1,134 +1,121 @@
 # Design: MCP Write-Frontier Tracker
 
-- **Date:** 2026-06-02
+- **Date:** 2026-06-02 (rev. 2 — after multi-perspective review loop)
 - **Status:** Draft — pending review & per-phase implementation plans
-- **Scope:** Keep the operator on the **absolute frontier of cutting-edge MCP capabilities, prioritizing WRITE-capable tools** (tools that take real actions). Turn the pipeline from "broad but shallow" into a system that (1) *verifies* write-capability, (2) scores how new/powerful each write tool is, (3) catches new ones the moment they appear, and (4) **pushes a weekly Write-Frontier digest + alerts**.
-- **Predecessors:** Builds on [2026-05-30 Ecosystem Registry & Vendor Sources](2026-05-30-ecosystem-registry-sources-design.md) and [2026-06-01 Pipeline Hardening & Re-Aim](2026-06-01-pipeline-hardening-and-reaim-design.md) (capability layer, novelty, signals, Grok radar). This spec is the write-focused capstone.
+- **Scope:** Keep the operator on the **absolute frontier of cutting-edge MCP capabilities, prioritizing WRITE-capable tools** (tools that take real actions). Make verified-write trustworthy, surface the newest + most *powerful* actions (not the most popular), catch new tools the moment they appear, and **push a weekly Write-Frontier digest + an always-current daily board + same-day alerts**.
+- **Predecessors:** [2026-05-30 Registry & Vendor Sources](2026-05-30-ecosystem-registry-sources-design.md), [2026-06-01 Pipeline Hardening & Re-Aim](2026-06-01-pipeline-hardening-and-reaim-design.md) (capability layer, novelty, signals, Grok radar). This is the write-focused capstone.
 
 ## 1. Goal, Decisions & Non-Goals
 
 ### Goal
-A weekly, push-delivered view of the newest, most powerful, **verified** write-capable MCP tools — so the operator is never more than a week behind the frontier (and same-day on standouts), with the exact prompt to use each one.
+Be never more than a week behind the write-capable frontier (same-day on standouts), with an always-current ranked board in between — every item carrying its action class, evidence tier, and the exact prompt to use it.
 
 ### Locked decisions (from brainstorming)
-- **Delivery:** **weekly digest** (push email + committed report) **+ same-day alerts** on standouts.
-- **Scope:** **both, tiered** — curated high-signal surfaces (official registry, vendor connectors, Grok/X viral, news/changelogs) drive the digest *headline*; **registry-wide write-prioritized verification runs in the background** to surface hidden gems.
-- **Verification:** **remote `tools/list`, write-prioritized + scaled**, plus annotation capture. **No sandboxed stdio execution** (deferred — see Non-Goals).
-- **Build:** full spec → per-phase implementation plans (P1→P4), each TDD'd and reviewed.
+- **Delivery:** **weekly digest + always-current daily board + same-day alerts** on standouts.
+- **Scope:** **both, tiered** — curated surfaces (official registry, vendor connectors, Grok/X viral, news) drive the digest *headline*; registry-wide write-prioritized verification runs in the background.
+- **Verification:** **remote `tools/list`, write-prioritized + scaled**, annotation capture, **plus a no-execution static `declared_manifest` tier** (review fix — see §4). **No sandboxed stdio execution.**
+- **Build order:** **P1 verify → P2 push (digest) → P3 score → P4 recall** (reordered per review: ship the pushed digest before the scoring engine, so real output calibrates scoring).
 
-### The core gap this closes
-"Frontier of write-capable tools" = the intersection of four things the system is weak on today: **verified write** (only 40 of 5,538 are `verified_tools`; the rest are description keyword-matches), **recency** (no write-specific novelty), **action power** (no money/comms/deploy ranking), and **proactive delivery** (everything is pull).
+### Grounding (accurate, measured 2026-06-02)
+- 31,664 indexed servers; **only ~2,696 (8.5%) have a `remote_url`** → that is the live-`tools/list`-probeable universe (the other 91.5% are stdio/local). **~30,310 (95.7%) have a `repo_url`** → the static-manifest + GitHub-watch universe.
+- Write evidence today: **40 `verified_tools`, 0 `annotation`, 5,538 `claimed_description`, 26,857 none.** The "0 annotation" is a *bug*, not absence (see §4 P1-0).
+
+### The core gap
+"Frontier of write-capable tools" = newest × most-powerful × **verified** actions. Today: verification is broken (0 annotations persisted), biased (remote-only excludes the powerful stdio tools), keyword-circular, and there's no proactive or always-current delivery.
 
 ### Out of scope (explicit)
-- **Sandboxed stdio/local execution** — the majority of registry servers are stdio with no remote URL and stay unverifiable; the digest labels them "emerging/claimed", never "verified". Deferred (needs Docker/Podman; large lift).
-- **Autonomous actions** — we only *catalog and rank* write tools; we never execute their write actions.
-- **Replacing existing outputs** — the write-capability report, LANDSCAPE_REPORT, and capability feed remain; the Write-Frontier digest is a new, parallel output.
-- **Non-English tool/desc NLP** — action-power classification is English-keyword + schema-based; non-EN stays low-confidence (pre-existing limitation).
+- **Sandboxed stdio/local execution** (deferred; the `declared_manifest` static tier is the cheap mitigation instead).
+- **Executing write actions** — we catalog/rank only, never invoke a tool's write.
+- **Reddit / Discord / Product Hunt / ChatGPT-apps-directory / awesome-list diffs** as ingestion sources — declined for v1 (low marginal recall vs. cost/auth; HN + Grok + npm/PyPI + registry cover the same ground earlier). Documented decision, not oversight.
+- **Replacing existing outputs** (write-capability report, LANDSCAPE_REPORT, capability feed) — additive only.
 
 ## 2. Design Principles
-1. **Verified write is the spine.** Headlines cite only `verified_tools`/`annotation` evidence; `claimed_description` is a clearly-labeled "emerging" section, never presented as confirmed.
-2. **Extend, don't rewrite.** Reuse `registry_discovery`, `classifier`, `novelty`, `signals`, `capability`, `emailer`, evidence tiers, `CrawlIssue`, env config. New logic lives in small, focused modules.
-3. **Tiered fusion.** One ranked frontier view fuses registry + vendor + Grok radar + news/GitHub, deduped, with a cross-source corroboration boost.
-4. **Weekly cadence, same-day alerts.** Routine items wait for the weekly digest; standouts page immediately.
-5. **Transparent, tunable scoring.** The Write-Frontier score is component-summed and env-weighted; nothing is a black box.
-6. **Never break the daily run.** Additive, env-gated, phased.
+1. **Verified write is the spine, but verification must not be biased.** Headlines gate on observed evidence (`verified_tools`/`annotation`) **or** static `declared_manifest`; keyword `claimed_description` is a labeled "emerging" section. Report verified coverage **per action class**, never a flattering aggregate.
+2. **Power and novelty outrank popularity.** The ranking is **lexicographic: evidence → action-power → recency**; momentum/virality is a hard-capped tiebreaker that can re-order *within* a power band but can never promote a low-power tool above a high-power one. **Engagement-only sources (Grok/X) may surface a candidate but never contribute to its score.**
+3. **Don't trust what you can't probe — but don't ignore it either.** Static manifest parsing (no execution) lifts stdio tools above keyword-only without faking verification.
+4. **Discovery must explore, not just exploit.** A reserved slice of the discovery budget probes unclassified/never-seen servers so the frontier can surface what the keyword classifier can't predict.
+5. **One canonical identity everywhere.** A single normalizer reconciles registry / vendor / Grok / package sources; corroboration counts *distinct tiers after canonicalization*, never duplicate mentions.
+6. **Extend, don't rewrite; additive; phased; never break the daily run.**
 
-## 3. Target Module Layout (additions by phase)
+## 3. Target Module Layout (by phase)
 ```
 mcp_newsletter/
-  registry_discovery.py     # CHANGE [P1] write-prioritized candidate selection; capture annotations
-  registry_classify.py      # CHANGE [P1] promote claimed->annotation/verified when tools/annotations observed
-  action_power.py           # NEW [P2] classify a write tool's action class + power weight
-  frontier.py               # NEW [P2] frontier_score + frontier events (new_write_tool, write_verified, frontier_capability)
-  ingest/                   # NEW [P3] incremental "what's new" sources
-    official_incremental.py #   official MCP registry updated_since cursor
-    github_watch.py         #   release/star deltas for repos the registry already tracks
-  signals.py                # CHANGE [P3] add vendor changelog feeds
-  frontier_report.py        # NEW [P4] weekly Write-Frontier digest (fusion + ranking + example prompts)
-  cli.py / updater.py       # CHANGE [P4] `frontier` command + weekly cadence + alert wiring
+  identity.py               # NEW [P1] single canonical repo/name normalizer (shared by all tiers)
+  registry_classify.py      # FIX [P1] MERGE evidence (stop overwriting annotation/tool evidence)
+  registry_discovery.py     # CHANGE [P1] write-priority + reserved exploration slice; persist annotations
+  manifest.py               # NEW [P1] no-execution static tool-declaration parse (package.json/server.json/README)
+  registries/base.py        # CHANGE [P1] RegistryServerRecord carries top-N write ToolRecords
+  frontier_report.py        # NEW [P2] daily WRITE_FRONTIER_NOW board + weekly digest + teaching artifact
+  action_power.py           # NEW [P3] per-TOOL action class -> 3 power tiers (high/med/low)
+  frontier.py               # NEW [P3] lexicographic frontier rank + events; source-attested recency
+  ingest/                   # NEW [P4]
+    official_incremental.py #   updated_since cursor (additive-merge, no false delist)
+    package_watch.py        #   npm/PyPI newest-MCP-package feeds (unattended, pre-registry)
+    github_watch.py         #   release/star momentum — frontier candidates only, GraphQL batch
+  signals.py                # CHANGE [P4] add HN Algolia + vendor changelog feeds
+  registry_state.py         # CHANGE [P4] official_cursor + last_frontier_digest (idempotent weekly)
 data/current/
-  write_frontier.jsonl      # NEW persistent frontier state (scores, first_write_seen, momentum)
-  WRITE_FRONTIER.md         # NEW the weekly digest artifact
+  WRITE_FRONTIER_NOW.md + write_frontier_current.json   # always-current daily board
+  WRITE_FRONTIER.md                                     # weekly digest (delta narrative)
+  write_frontier.jsonl                                  # persistent frontier state
 ```
 
 ## 4. Phase 1 — Trust the write signal (verification foundation)
 
-**Goal:** grow `verified_tools`/`annotation` write coverage fast, *where it matters* — so the frontier rests on observed behavior, not keywords.
+**P1-0 (bug-fix prerequisite): stop destroying annotation evidence.** `run_discovery` appends `mcp_annotation` evidence (registry_discovery.py:80), but `classify_registry_record` then does `rec.evidence = evidence` (registry_classify.py:44), wiping it — confirmed: **0 of 31,664 records carry annotation evidence.** Fix: **merge** (preserve all `mcp_annotation`/`tool_text` evidence, union with catalog evidence under a stable key). Add an **integration test** running `run_discovery → classify_registry_record` asserting the annotation survives and yields a headline-gateable tier. *Without this, P2–P4 build on sand.*
 
 | Workstream | Design |
 | --- | --- |
-| **Write-prioritized discovery** | Replace the round-robin discovery selection (`registry_discovery.select_discovery_candidates`) with a `write_priority(record)` ranker: prioritize records that are (a) **claimed write** (classifier said medium/high from description/tags), (b) **never-discovered or new** (`first_seen` recent / no tool evidence), (c) **high source-authority** (official/vendor > community). Take the top-N by priority (cap raised, env-tunable), so each run converts the highest-value *claimed* writes into *verified*. Still deterministic + rotating to avoid flapping. |
-| **Annotation capture** | Persist tool MCP annotations (`destructiveHint`, `readOnlyHint`, `idempotentHint`, `openWorldHint`) on the discovered `ToolRecord`/server record. `readOnlyHint=false`/`destructiveHint=true` is **direct write evidence** (tier `annotation`), stronger than keywords. |
-| **Tier promotion** | In `registry_classify`, when a server gains observed tools/annotations, promote its evidence from `claimed_description` → `annotation`/`verified_tools` and record the transition (feeds the `write_verified` event in P2). |
-| **Coverage telemetry** | Track and report verified-write coverage over time (e.g. `verified_write_count` in the landscape/summary), so we can see the 40 → hundreds climb. |
+| **Per-tool storage on registry records** | `RegistryServerRecord` today holds no tools (base.py) — but P2/P3 need per-tool action class + example prompt. Add a bounded `tools: List[ToolRecord]` (top-N **write** tools only, to cap size) + jsonl (de)serialization. Vendor `capability.py`/`novelty.py` then work on both record types. |
+| **Write-priority + exploration** | Replace round-robin `select_discovery_candidates` with priority buckets: **(1) new since last run** (from P4 incremental cursor — top priority, reserved slots), (2) source-authority (official/vendor), (3) claimed-write (keyword) as a *boost not a gate*, **(4) reserved ε-slice (~20%) for unclassified/`none`-tier/never-probed remote servers** so discovery samples outside the keyword prior. Deterministic + rotating. |
+| **Annotation capture (persisted)** | Persist `destructiveHint`/`readOnlyHint`/`idempotentHint`/`openWorldHint`; `readOnlyHint=false`/`destructiveHint=true` = `annotation`-tier write evidence; `destructive`+`openWorld` flags the highest-blast-radius actions (feeds power in P3). |
+| **`declared_manifest` static tier** (`manifest.py`) | For stdio servers (the 91.5% with no remote_url) parse the repo's published `package.json`/`server.json`/README **tool declarations** (names + descriptions + input schemas are often static) — **no execution**. New evidence tier `declared_manifest`, ranked between `claimed_description` and `annotation`. Narrows the stdio blind spot where the most powerful local writes live. |
+| **Per-action-class coverage telemetry** | Report verified/declared/claimed counts **per action class** (so "0% of system_control verified" is visible), not just an aggregate verified count. |
 
-**Done when:** a run measurably converts claimed→verified writes (target: verified-write count climbs run-over-run), annotations are persisted, and discovery demonstrably targets write-likely servers first.
+**Done when:** annotations survive end-to-end (integration test green); the discovery ε-slice converts some non-keyword servers to verified (proving the prior is leaky); `declared_manifest` lifts stdio servers; coverage is reported per action class.
 
-## 5. Phase 2 — Score the frontier (action power + events)
+## 5. Phase 2 — Push it (digest + always-current board + alerts) — *ships before scoring*
 
-**Goal:** rank write tools by *how new and how powerful* their action is.
+**Goal:** get the pushed, prompt-ready frontier into the operator's hands now, ranked by a simple, defensible key (no full score yet).
 
-- **`action_power.py`** — classify each write tool into an **action class** from name/description/annotations: `money` (trade/pay/transfer), `comms` (send/email/message/call), `deploy` (deploy/release/provision), `data_write` (create/update/delete records), `system_control` (run/exec/control device/browser), `social` (post/publish), `physical` (IoT/robot), else `other`. Each class carries a tunable **power weight** (e.g. money/comms/deploy/system highest). Transparent keyword+schema rules; confidence flagged.
-- **`frontier.py`** — `frontier_score(record, seen_before, run_date, weights)` = weighted sum of: **verified_write tier** (verified > annotation ≫ claimed), **recency** (first_write_seen within window), **action_power**, **momentum** (stars/likes rising — from P3), **source_authority**, **corroboration** (number of independent sources). Bounded [0,1], component breakdown logged.
-- **Frontier events** (first-class, write-focused — distinct from objective-(a) write deltas): `new_write_tool` (a verified write tool seen first time), `write_verified` (claimed→verified transition from P1), `frontier_capability` (score ≥ threshold). Flood-capped per source (reuse the `notable_source` aggregate pattern from novelty.py).
+- **`frontier_report.py`** renders, every **daily** run, **`WRITE_FRONTIER_NOW.md` + `write_frontier_current.json`** — the always-current ranked board (the scoring already runs daily; don't withhold it for a week). Ranking key (P2-lite): **(evidence_tier, action_power_tier, recency desc)** — the 3 power tiers from §6, no momentum yet. Sections: **Verified/Declared headline** vs **Emerging (claimed)** vs **Viral (Grok)**.
+- **Weekly `WRITE_FRONTIER.md`** = the *delta narrative* layered on the board ("new / newly-verified / risen since last week"), emailed via `emailer.send_daily_report`. **Idempotent weekly cadence:** gate on persisted `last_frontier_digest` (emit when `run_date - last ≥ 7`, then stamp) so a missed/repeated cron day doesn't skip/double-send.
+- **Same-day alerts (two triggers):** (a) the existing high bar, **plus (b) a lower bar: any newly-discovered `high`-power verified/declared write tool, regardless of vendor fame or virality** (review fix — power+novelty alerts even when obscure).
+- **Grok radar freshness contract:** the Viral section prints the radar's `last_run` age; if older than the digest window it degrades **loudly** ("radar stale (N days) — viral coverage incomplete") and emits a `CrawlIssue` nudging a sweep *before* the weekly fires.
+- **Meetup teaching artifact:** also emit a **prompt-first, action-class-grouped** rendering ("What You Can Now Ask Your AI To Do — Write Edition") and draft it into the predecessor's `meetup-hormozi` lead-magnet path (human-approved; no auto-publish). Serves the second stated use.
 
-**Done when:** every write tool has an action class + frontier score; the three frontier events fire deterministically and are unit-tested.
+**Done when:** a daily board + weekly email + standout alerts ship; the meetup teaching draft is produced; Grok staleness is loud.
 
-## 6. Phase 3 — Catch new instantly (incremental ingestion)
+## 6. Phase 3 — Score & classify properly (replaces P2-lite sort key)
 
-**Goal:** minimize time-to-surface for a brand-new write tool.
+- **`action_power.py` — per-TOOL, ordinal, 3 tiers.** Classify each *write tool* (not server) into **`high`** (money/comms/deploy/system-control), **`medium`** (data-write/social/physical), **`low/none`**, from name + description + **schema/annotations** (preferred over keywords). A server's power = **max over its verified write tools** (power = most dangerous thing it can do). `destructive`+`openWorld` annotations bump within-tier. Each classification carries a **confidence** (schema/annotation-derived = high; keyword-only = low). (Fine-grained 7-class labels deferred until calibrated.)
+- **`frontier.py` — lexicographic, popularity-capped.** Rank by **(evidence_tier → action_power_tier → recency)** dominant; a single **bounded attention factor** (≤~15%, collapsing momentum+corroboration so they're not triple-counted) only re-orders within a band. **Engagement-only sources excluded from the score.** **Classification confidence damps** the score (low-confidence can't reach the headline). Golden-file test asserts a low-power viral item never outranks a high-power new one, and that the top-decile has discriminating spread.
+- **Source-attested recency.** Derive recency from **published/updated/first-release timestamps** (official registry, GitHub), `first_write_seen` only as flagged fallback. **Suppress recency credit for servers whose registry `first_seen` predates the tracker** so the P1 claimed→verified backfill doesn't flood digests with stale tools masquerading as new.
+- **Events:** merge `new_write_tool`+`write_verified` into one `write_verified{first_seen flag}`; keep `frontier_capability` (score threshold). Flood-capped (reuse `notable_source` aggregate).
 
-- **`ingest/official_incremental.py`** — use the official MCP registry's `updated_since` cursor (deferred in the predecessor spec) to fetch only **new/changed** servers each run; persist the cursor in `registry_meta`. This is the cleanest "what's new" feed and the frontier's backbone.
-- **`ingest/github_watch.py`** — for servers with a GitHub `repo_url` (the registry stores these), fetch latest **release** + **star count** via `gh`/API; detect new releases and star spikes → **momentum** signal feeding the frontier score. Cache star snapshots in state; respect rate limits (gh auth + cap per run).
-- **`signals.py`** — add a few **vendor changelog/release feeds** (Anthropic connectors, OpenAI, MCP blog already present) so announcements of new write connectors are caught and cross-linked.
-- **Cross-link** ingested signals to registry/vendor records by repo_url/name → drives the corroboration boost.
+**Done when:** ranking is power/novelty-dominant (tested against rank-inversion), tool-level + confidence-aware, with attested recency; the board/digest swap to the real score.
 
-**Done when:** a newly-published official-registry write server appears in the next run (not a full re-pull), and star/release momentum is captured for tracked repos.
+## 7. Phase 4 — Catch new instantly + widen recall
 
-## 7. Phase 4 — Push the frontier (weekly digest + alerts + fusion)
+- **`ingest/official_incremental.py`:** official registry **`updated_since` cursor** (verified to exist: supports `updated_since`+`cursor`+`limit≤100`). **Additive-merge only** — incremental absence is NOT a delist (full liveness/delisting stays on the periodic full pull); honor `status=deleted` tombstones as the only incremental delete.
+- **`ingest/package_watch.py`:** poll **npm `_changes`/keyword + PyPI newest** filtered to MCP packages — unattended, and sees a new TS/Python server *before* any registry. New package → `claimed` candidate + repo cross-link → momentum/corroboration.
+- **`ingest/github_watch.py`:** release/star deltas **for frontier candidates only** (verified-write + write-priority top-N — NOT all 30k repos), via **GraphQL batch (100 repos/call)** to stay in rate limits. Degrade to no-momentum on limit, never crash.
+- **`signals.py`:** add **HN Algolia** (free, keyword-queryable) + vendor changelog feeds.
+- **Fusion via `identity.py`:** all tiers cross-link on the single canonical normalizer; corroboration = distinct tiers after canonicalization (engagement-only excluded). Test that `repo.git` / `repo/tree/main` / `www.` variants collapse to one row with corroboration = N tiers.
 
-**Goal:** the operator is pushed the frontier, ranked and prompt-ready.
+**Done when:** a newly-published registry/npm/PyPI write server surfaces next run; github momentum tracks only candidates; fusion dedups variants correctly.
 
-- **`frontier_report.py`** — render **`WRITE_FRONTIER.md`**, the weekly digest:
-  - **Headline section (verified):** top new/rising **verified** write tools by frontier score, grouped by action class, each with `{tool, action class, what it does, example prompt, source, first_seen, evidence tier, corroboration}`.
-  - **Emerging section (claimed):** high-momentum but unverified writes, clearly labeled "claimed / not yet verified."
-  - **Viral section:** the Grok/X radar's top write-capable items (engagement-ranked), fused + deduped against the above.
-- **Fusion + corroboration** — merge frontier candidates from registry + vendor + Grok radar + news; dedup (by repo_url/normalized name — fixing the URL-variant edge from the radar); boost score by independent-source count.
-- **Delivery** — a `frontier` CLI command renders the digest; **weekly cadence** (env: run on a chosen weekday, or `frontier --weekly`); `emailer.send_alert`/`send_daily_report` ships it. **Same-day alerts**: when a `frontier_capability` clears a high bar (e.g. major-vendor new verified write, or a viral write tool), fire an alert on the *daily* run regardless of the weekly digest.
-- Persist `write_frontier.jsonl` (scores, first_write_seen, momentum) for week-over-week dedup/rising.
+## 8. Data Model, State, Config, Testing, Risks, Metrics
 
-**Done when:** `WRITE_FRONTIER.md` generates a ranked, grouped, prompt-ready digest; weekly email + standout alerts wire through the existing emailer; the Grok radar is fused in.
+**Model/state:** `RegistryServerRecord.tools` (bounded write tools); evidence tiers gain `declared_manifest`; per-tool `action_class`/`action_power`/`confidence`; `frontier_score`+`first_write_seen`+`verified_at`; `write_frontier.jsonl`; `registry_meta` gains `official_cursor`, github star snapshots, `last_frontier_digest`. **Verified-evidence freshness:** `verified_at` + re-verification cadence; decay/flag evidence older than N weeks so the digest reflects *current* behavior.
 
-## 8. Data Model, State & Config
-- **Additive fields:** tool/server records gain `annotations` (P1, ToolRecord already has it), `action_class` + `action_power` (P2), `frontier_score` + `first_write_seen` (P2), `momentum` (P3, stars/likes).
-- **New events:** `new_write_tool`, `write_verified`, `frontier_capability`.
-- **New state:** `write_frontier.jsonl` (frontier dedup/rising, like the Grok radar state); `registry_meta` gains `official_cursor` + GitHub star snapshots.
-- **Config (env):** `MCP_NEWSLETTER_DISCOVERY_CAP` (raised), `..._WRITE_PRIORITY_WEIGHTS`, `..._ACTION_POWER_WEIGHTS`, `..._FRONTIER_WEIGHTS`, `..._FRONTIER_ALERT_THRESHOLD`, `..._FRONTIER_WEEKDAY`, `GITHUB_TOKEN`/gh, changelog feed list. Migration additive; first run seeds frontier baseline silently (cold-start gate, reused).
+**Config (minimal per YAGNI review):** hardcode constants; expose **only** `MCP_NEWSLETTER_DISCOVERY_CAP` (cost lever) and `MCP_NEWSLETTER_FRONTIER_ALERT_THRESHOLD` (noise lever) as env. Promote weight vectors to env only when calibration demands.
 
-## 9. Testing & CI
-- **Pure + offline (TDD):** `action_power` classification (per class + ambiguous), `frontier_score` (bounded, weight-merge, ordering), tier-promotion logic, write-priority ranker (deterministic ordering), digest rendering (golden file), markdown-safety (reuse the capability_report sanitizers).
-- **Fixtures:** official-incremental parsing, github_watch delta parsing (mocked API), changelog feeds.
-- **Live-contract (scheduled, non-blocking):** official `updated_since` returns data; a sample of write-likely remote servers verify via `tools/list`.
-- **No regressions:** the existing daily run + reports unchanged; additive only.
+**Testing:** TDD the pure pieces (identity normalizer incl. variant-collapse; manifest parse; action_power per tier incl. multi-action max + confidence; lexicographic frontier rank incl. rank-inversion + top-decile spread; recency backfill-suppression; weekly idempotency). Integration test for the **P1-0 annotation-merge fix**. Fixtures for incremental/package/github/HN parsers. Scheduled live-contract (non-blocking) for `updated_since` + a remote `tools/list` sample. No regressions to the daily run/reports.
 
-## 10. Risks & Trade-offs
-| Risk | Mitigation |
-| --- | --- |
-| Discovery cost/time scaling `tools/list` | Write-prioritized cap + rotation + per-host throttle (existing netguard); cap is env-tunable; runs on the Eastern-time box. |
-| stdio servers stay unverifiable | Explicitly out of scope; digest labels them "emerging/claimed"; documented coverage gap. |
-| GitHub API rate limits | gh auth + cached star snapshots + per-run cap; degrade to no-momentum, never crash. |
-| Action-power heuristic is fuzzy | Transparent keyword/schema rules, env-tunable weights, confidence flag; calibrate against the Grok radar + spot checks. |
-| Weekly latency for non-alerts | Same-day alerts cover the urgent; weekly is for the rounded-up rest. |
-| Score gaming / corroboration noise | Corroboration counts *independent* sources only; headlines gate on verified evidence. |
+**Risks:** discovery cost (real probeable pond is ~2.7k, not 31k — size the cap to that); github_watch must never iterate all repos (candidates-only + GraphQL); stdio still partly opaque (declared_manifest mitigates, doesn't solve — labeled honestly); action-power fuzzy (ordinal tiers + confidence + schema-preference); weekly latency (daily board + same-day alerts cover it); ranking gaming (power/novelty-dominant, engagement excluded from score).
 
-## 11. Success Metrics
-- **Verified-write coverage** climbs materially (40 → hundreds) within a few weekly cycles.
-- **Time-to-surface** a new major write connector ≤ 1 week (≤ 1 day for standout alerts).
-- Every digest item ships with `{action class, evidence tier, example prompt, source, recency}`; headline items are all verified.
-- Operator spot-check: the weekly digest's top-10 matches independent "what's new in write-capable MCP" judgment (and the Grok radar).
+**Success metrics:** (1) verified+declared write coverage climbs, **reported per action class**; (2) **frontier-recall metric** — reconcile each week's surfaced write tools against an *external, capability-based* ground-truth set (hand-labeled / vendor release notes — **not** the Grok set used for calibration, to avoid circularity) and track **miss count + median surfacing latency**; (3) time-to-surface a new high-power write ≤ 1 run to discover, ≤ 1 day to alert; (4) every item ships `{action tier, evidence tier, confidence, example prompt, attested recency}`.
 
-## 12. Sequencing & Next Step
-Dependency-ordered **P1 → P2 → P3 → P4** (verify → score → catch-new → push). Each phase becomes its own `writing-plans` implementation plan, TDD'd and reviewed (matching the pipeline-hardening cadence). Recommended first plan: **P1** (write-prioritized verification + annotation capture) — the trust foundation everything else ranks on.
-
-## 13. Operational Note
-The added discovery/ingestion runtime lands on the daily job (Eastern-time machine). The weekly digest is emitted on a configured weekday; standout alerts ride the daily run. Claude-in-Chrome / Grok radar stays operator-run and is fused into the digest when fresh radar data exists.
+## 9. Sequencing & Operational Note
+**P1 (verify, incl. the annotation-merge bug-fix) → P2 (push the digest/board) → P3 (real scoring) → P4 (catch-new + recall).** Each phase → its own `writing-plans` plan, TDD'd + reviewed (pipeline-hardening cadence). Discovery/ingestion runtime lands on the daily job (Eastern-time box); the weekly digest is gated on persisted state; alerts ride the daily run; the Grok radar stays operator-run and is fused (with a loud staleness contract) when fresh.
