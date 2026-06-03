@@ -67,7 +67,7 @@ def classify_registry_record(rec: RegistryServerRecord, run_date: str) -> None:
     rec.evidence = merged
 
     effective = "unknown"
-    for source in ("catalog", "tools"):
+    for source in ("catalog", "tools", "manifest"):
         info = rec.confidence_by_source.get(source)
         if info:
             effective = _max_conf(effective, info["confidence"])
