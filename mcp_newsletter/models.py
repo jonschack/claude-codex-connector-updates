@@ -49,6 +49,25 @@ class ToolRecord:
             data["capability_tier"] = self.capability_tier
         return data
 
+    @classmethod
+    def from_dict(cls, data: JsonDict) -> "ToolRecord":
+        return cls(
+            provider=data.get("provider", ""),
+            server_id=data.get("server_id", ""),
+            name=data.get("name", ""),
+            native_surface=data.get("native_surface", ""),
+            description=data.get("description", ""),
+            input_schema=data.get("input_schema", {}) or {},
+            annotations=data.get("annotations", {}) or {},
+            source_urls=data.get("source_urls", []) or [],
+            raw=data.get("raw", {}) or {},
+            write_confidence=data.get("write_confidence", "unknown"),
+            evidence=data.get("evidence", []) or [],
+            capability_summary=data.get("capability_summary", ""),
+            example_prompt=data.get("example_prompt", ""),
+            capability_tier=data.get("capability_tier", ""),
+        )
+
 
 @dataclass
 class ServerRecord:

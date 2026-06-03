@@ -7,6 +7,9 @@ from typing import Dict, List, Tuple
 from .mcp_discovery import discover_remote_tools
 from .registries.base import RegistryServerRecord
 
+# Cap of write tools persisted per record (keeps state small; P2/P3 read these).
+TOP_N_WRITE_TOOLS = 12
+
 
 def _days_between(a: str, b: str) -> int:
     try:
@@ -51,7 +54,7 @@ def run_discovery(
     {identity: discovered_date} for those probed; mutates each record's
     confidence_by_source['tools'] on the MAIN thread after the pool joins.
     """
-    from .classifier import classify_tool, max_confidence
+    from .classifier import RANK, classify_tool, max_confidence
 
     def probe(rec: RegistryServerRecord) -> Tuple[str, list, dict]:
         tools, result = discover_remote_tools("registry", rec.identity, "registry", rec.remote_url, timeout=timeout)
@@ -72,6 +75,12 @@ def run_discovery(
             tool.write_confidence, tool.evidence = classify_tool(tool)
         confs = [t.write_confidence for t in tools]
         rec.confidence_by_source["tools"] = {"confidence": max_confidence(confs), "date": run_date}
+        # Persist the top-N WRITE tools (most-confident first, then by name for a
+        # deterministic tie-break) so P2/P3 have per-tool action class + prompts
+        # without re-probing — bounded so the record stays small.
+        write_tools = [t for t in tools if t.write_confidence in ("medium", "high")]
+        write_tools.sort(key=lambda t: (-RANK.get(t.write_confidence, 0), t.name))
+        rec.tools = write_tools[:TOP_N_WRITE_TOOLS]
         # Propagate observed write evidence from the live probe (deduped by
         # kind/value/confidence): mcp_annotation hints AND tool_text write verbs —
         # the latter is what lifts a probed record to the `verified_tools` tier.

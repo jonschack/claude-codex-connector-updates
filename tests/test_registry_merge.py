@@ -1,7 +1,44 @@
 import unittest
 
+from mcp_newsletter.models import ToolRecord
 from mcp_newsletter.registries.base import RawRegistryEntry, RegistryServerRecord
 from mcp_newsletter.registries.merge import identity, merge_entries
+
+
+class ToolRecordRoundTripTests(unittest.TestCase):
+    def test_to_dict_from_dict_roundtrip(self):
+        t = ToolRecord(provider="registry", server_id="a", name="create_issue",
+                       native_surface="registry", description="Create an issue",
+                       input_schema={"type": "object"}, annotations={"readOnlyHint": False},
+                       write_confidence="high",
+                       evidence=[{"kind": "tool_text", "value": "create", "confidence": "high"}],
+                       capability_summary="Creates issues", example_prompt="Claude, file a bug",
+                       capability_tier="verified_tools")
+        back = ToolRecord.from_dict(t.to_dict())
+        self.assertEqual(back.to_dict(), t.to_dict())
+        self.assertEqual(back.name, "create_issue")
+        self.assertEqual(back.write_confidence, "high")
+
+
+class RegistryRecordToolsRoundTripTests(unittest.TestCase):
+    def test_tools_survive_jsonl_roundtrip(self):
+        rec = RegistryServerRecord(
+            identity="repo:github.com/acme/x", name="X",
+            tools=[ToolRecord(provider="registry", server_id="repo:github.com/acme/x",
+                              name="send_email", native_surface="registry",
+                              description="Send an email", write_confidence="high",
+                              evidence=[{"kind": "tool_text", "value": "send", "confidence": "high"}])],
+        )
+        back = RegistryServerRecord.from_jsonl(rec.to_jsonl())
+        self.assertEqual(len(back.tools), 1)
+        self.assertEqual(back.tools[0].name, "send_email")
+        self.assertEqual(back.tools[0].write_confidence, "high")
+        self.assertEqual(back.to_jsonl(), rec.to_jsonl())
+
+    def test_no_tools_roundtrips_to_empty_list(self):
+        rec = RegistryServerRecord(identity="x", name="X")
+        back = RegistryServerRecord.from_jsonl(rec.to_jsonl())
+        self.assertEqual(back.tools, [])
 
 
 class ModelTests(unittest.TestCase):

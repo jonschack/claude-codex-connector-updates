@@ -82,6 +82,22 @@ class RunDiscoveryTests(unittest.TestCase):
         self.assertIn("tools", rec.confidence_by_source)
         self.assertTrue(any(e.get("kind") == "mcp_annotation" for e in rec.evidence))
 
+    def test_stores_bounded_top_n_write_tools_only(self):
+        rec = _rec("a")
+        writes = [ToolRecord(provider="registry", server_id="a", name=f"create_{i}",
+                             native_surface="registry", description="Create a thing")
+                  for i in range(registry_discovery.TOP_N_WRITE_TOOLS + 5)]
+        reads = [ToolRecord(provider="registry", server_id="a", name="list_things",
+                            native_surface="registry", description="List things",
+                            annotations={"readOnlyHint": True})]
+        with mock.patch.object(registry_discovery, "discover_remote_tools",
+                               return_value=(writes + reads, {"ok": True})):
+            run_discovery([rec], run_date="2026-05-30", workers=2)
+        # only write tools are persisted, capped at TOP_N_WRITE_TOOLS
+        self.assertEqual(len(rec.tools), registry_discovery.TOP_N_WRITE_TOOLS)
+        self.assertTrue(all(t.write_confidence in ("medium", "high") for t in rec.tools))
+        self.assertNotIn("list_things", [t.name for t in rec.tools])
+
     def test_swallows_per_endpoint_exceptions(self):
         good = _rec("good")
         bad = _rec("bad")
