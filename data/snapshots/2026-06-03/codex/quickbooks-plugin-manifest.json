@@ -1,0 +1,31 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "QuickBooks accounting, invoices, expenses, customers, and payment context",
+  "homepage": "https://quickbooks.intuit.com",
+  "interface": {
+    "brandColor": "#2CA01C",
+    "capabilities": [],
+    "category": "Corporate Finance",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Find overdue QuickBooks invoices and summarize who needs follow-up.",
+      "Pull QuickBooks expenses by category this month and flag anomalies.",
+      "Review QuickBooks customers and recent payments for this account."
+    ],
+    "developerName": "QuickBooks",
+    "displayName": "QuickBooks",
+    "logo": "./assets/logo.png",
+    "longDescription": "QuickBooks accounting, invoices, expenses, customers, and payment context",
+    "privacyPolicyURL": "https://www.intuit.com/privacy/statement/",
+    "screenshots": [],
+    "shortDescription": "QuickBooks accounting, invoices, expenses, customers, and payment context",
+    "termsOfServiceURL": "https://quickbooks.intuit.com/legal/",
+    "websiteURL": "https://quickbooks.intuit.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "quickbooks",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Image editing, creative assets, and design workflows from Picsart",
+  "homepage": "https://picsart.com",
+  "interface": {
+    "brandColor": "#C209C8",
+    "capabilities": [],
+    "category": "Creative Production",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Use Picsart to edit this image for a campaign and summarize the output options.",
+      "Find Picsart templates or assets matching this brand style and shortlist the best fits.",
+      "Remove the background or enhance this image in Picsart while preserving the subject."
+    ],
+    "developerName": "Picsart",
+    "displayName": "Picsart",
+    "logo": "./assets/logo.png",
+    "longDescription": "Image editing, creative assets, and design workflows from Picsart",
+    "screenshots": [],
+    "shortDescription": "Image editing, creative assets, and design workflows from Picsart",
+    "websiteURL": "https://picsart.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "picsart",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

@@ -109,6 +109,35 @@
   },
   {
     "capabilities": [
+      "Read & write"
+    ],
+    "description": "Adobe Customer Journey Analytics | Claude Meet Claude Products Claude Claude Code Claude Cowork Claude Security Features Claude for Chrome Claude for Slack Claude for Microsoft 365 Skills Models Opus Sonnet Haiku Platform Overview Developer docs Pricing Console login Solutions Use cases AI agents Coding Company size Startups Enterprise Departments Legal Security Industries Customer support Education Financial services Government Healthcare Life sciences Nonprofits Pricing Overview API Plans Pro Max Team Enterprise Resources Insights Blog Customer stories Anthropic news Learn Anthropic Academy Courses Tutorials Use cases Tools Connectors Plugins Connect Events Community Login Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Meet Claude Prod",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "metadata": {
+      "catalog_text_hash_source": "detail_page"
+    },
+    "name": "Adobe Customer Journey Analytics",
+    "native_surface": "connector",
+    "provider": "claude",
+    "remote_url": "",
+    "server_id": "adobe-cja",
+    "source_urls": [
+      "https://claude.com/connectors",
+      "https://claude.com/connectors/adobe-cja"
+    ],
+    "transport": "catalog",
+    "write_confidence": "high"
+  },
+  {
+    "capabilities": [
       "Interactive"
     ],
     "description": "Adobe for creativity | Claude Meet Claude Products Claude Claude Code Claude Cowork Claude Security Features Claude for Chrome Claude for Slack Claude for Microsoft 365 Skills Models Opus Sonnet Haiku Platform Overview Developer docs Pricing Console login Solutions Use cases AI agents Coding Company size Startups Enterprise Departments Legal Security Industries Customer support Education Financial services Government Healthcare Life sciences Nonprofits Pricing Overview API Plans Pro Max Team Enterprise Resources Insights Blog Customer stories Anthropic news Learn Anthropic Academy Courses Tutorials Use cases Tools Connectors Plugins Connect Events Community Login Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Contact sales Contact sales Contact sales Try Claude Try Claude Try Claude Meet Claude Products Claude ",
@@ -2564,8 +2593,12 @@
     "write_confidence": "unknown"
   },
   {
-    "capabilities": [],
-    "description": "Daloopa supplies high quality fundamental data sourced from SEC Filings, investor presentations and any pub...",
+    "capabilities": [
+      "Analysis",
+      "File generation",
+      "Research"
+    ],
+    "description": "Financial analysis skills powered by Daloopa's institutional-grade data.",
     "evidence": [],
     "metadata": {
       "app_manifest": {
@@ -2596,8 +2629,8 @@
     "remote_url": "",
     "server_id": "daloopa",
     "source_urls": [
-      "https://daloopa.com/",
-      "https://github.com/openai/plugins"
+      "https://daloopa.com",
+      "https://github.com/daloopa/daloopa-plugin-codex"
     ],
     "transport": "app",
     "write_confidence": "unknown"
@@ -16951,6 +16984,31 @@
   },
   {
     "capabilities": [],
+    "description": "Let AI agents message, watch, and spawn each other across terminals. Claude Code, Gemini CLI, Codex, OpenCode.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "description": "Let AI agents message, watch, and spawn each other across terminals. Claude Code, Gemini CLI, Codex, OpenCode.",
+        "name": "kore",
+        "version": "1.0.0"
+      }
+    },
+    "name": "kore",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "kore",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Solar2004/kore",
+      "https://raw.githubusercontent.com/Solar2004/kore/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Repo-local Gemini extension for Kudlit Flutter frontend and design-system work",
     "evidence": [],
     "metadata": {
@@ -19430,6 +19488,32 @@
   },
   {
     "capabilities": [],
+    "description": "Agent skill for NVIDIA-accelerated Mean-CVaR portfolio optimization with cuOpt: optimal portfolios, efficient frontier, backtesting, and rebalancing.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "contextFileName": "AGENTS.md",
+        "description": "Agent skill for NVIDIA-accelerated Mean-CVaR portfolio optimization with cuOpt: optimal portfolios, efficient frontier, backtesting, and rebalancing.",
+        "name": "nvidia-cufolio-skills",
+        "version": "25.10.00"
+      }
+    },
+    "name": "nvidia-cufolio-skills",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "nvidia-cufolio-skills",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/NVIDIA-AI-Blueprints/cuFOLIO",
+      "https://raw.githubusercontent.com/NVIDIA-AI-Blueprints/cuFOLIO/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Agent skills for NVIDIA cuOpt optimization engine: routing, LP/MILP/QP, installation, and server.",
     "evidence": [],
     "metadata": {
@@ -20705,7 +20789,7 @@
             "name": "PostHog MCP URL"
           }
         ],
-        "version": "1.0.24"
+        "version": "1.0.25"
       },
       "mcp_server": {
         "args": [
@@ -23152,6 +23236,32 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
+              "version": "5.0.7"
+            }
+          },
+          "name": "superpowers",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "superpowers",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/JustinDube21/superpowers",
+            "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        },
+        {
+          "capabilities": [],
+          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
+              "name": "superpowers",
               "version": "5.0.6"
             }
           },
@@ -23211,9 +23321,11 @@
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/FuZhiyu/superRA",
+      "https://github.com/JustinDube21/superpowers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
       "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
     ],

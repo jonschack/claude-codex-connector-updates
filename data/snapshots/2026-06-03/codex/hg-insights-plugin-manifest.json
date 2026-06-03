@@ -1,0 +1,31 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Access HG Insights revenue growth intelligence, account data, buyer intent, technographics, and GTM signals from Codex.",
+  "homepage": "https://hginsights.com",
+  "interface": {
+    "brandColor": "#015AA0",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find high-fit accounts in HG Insights showing buyer intent and summarize the best sales plays.",
+      "Use HG Insights to size this market and identify priority segments for our GTM plan.",
+      "Enrich these target accounts with HG Insights technographics, spend data, and buying signals."
+    ],
+    "developerName": "HG Insights",
+    "displayName": "HG Insights",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "HG Insights connects Codex to revenue growth intelligence for market sizing, account prioritization, technographics, spend data, buyer intent, and GTM planning.",
+    "privacyPolicyURL": "https://hginsights.com/privacy-page/",
+    "screenshots": [],
+    "shortDescription": "Use HG Insights revenue intelligence and GTM signals from Codex.",
+    "termsOfServiceURL": "https://hginsights.com/terms-of-service/",
+    "websiteURL": "https://hginsights.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "hg-insights",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

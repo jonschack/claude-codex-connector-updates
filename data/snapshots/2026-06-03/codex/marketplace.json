@@ -1,0 +1,2069 @@
+{
+  "interface": {
+    "displayName": "Codex official"
+  },
+  "name": "openai-curated",
+  "plugins": [
+    {
+      "category": "Productivity",
+      "name": "linear",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/linear",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "atlassian-rovo",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/atlassian-rovo",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "google-calendar",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/google-calendar",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "gmail",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/gmail",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "slack",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/slack",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "teams",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/teams",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "sharepoint",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/sharepoint",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "outlook-email",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/outlook-email",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "outlook-calendar",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/outlook-calendar",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Design",
+      "name": "canva",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/canva",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Design",
+      "name": "figma",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/figma",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "hugging-face",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/hugging-face",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "jam",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/jam",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "netlify",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/netlify",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "stripe",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/stripe",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "vercel",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/vercel",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "game-studio",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/game-studio",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "superpowers",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/superpowers",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "box",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/box",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "github",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/github",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "circleci",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/circleci",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "google-drive",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/google-drive",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "deepnote",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/deepnote",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "notion",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/notion",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "cloudflare",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/cloudflare",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "sentry",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/sentry",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "build-ios-apps",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/build-ios-apps",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "build-macos-apps",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/build-macos-apps",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "build-web-apps",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/build-web-apps",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "build-web-data-visualization",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/build-web-data-visualization",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "test-android-apps",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/test-android-apps",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "life-science-research",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/life-science-research",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "zotero",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/zotero",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "expo",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/expo",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "coderabbit",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/coderabbit",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "neon-postgres",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/neon-postgres",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Design",
+      "name": "remotion",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/remotion",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "plugin-eval",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/plugin-eval",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "alpaca",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/alpaca",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "amplitude",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/amplitude",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "attio",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/attio",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "binance",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/binance",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Design",
+      "name": "biorender",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/biorender",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "brand24",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/brand24",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "brex",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/brex",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "carta-crm",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/carta-crm",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "cb-insights",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/cb-insights",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "channel99",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/channel99",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "circleback",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/circleback",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "clickup",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/clickup",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "cloudinary",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/cloudinary",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Lifestyle",
+      "name": "cogedim",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/cogedim",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "common-room",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/common-room",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "conductor",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/conductor",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "coupler-io",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/coupler-io",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "coveo",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/coveo",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "cube",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/cube",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "daloopa",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/daloopa",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "demandbase",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/demandbase",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "dnb-finance-analytics",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/dnb-finance-analytics",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "docket",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/docket",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "domotz-preview",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/domotz-preview",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "dovetail",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/dovetail",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "dow-jones-factiva",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/dow-jones-factiva",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "egnyte",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/egnyte",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Lifestyle",
+      "name": "finn",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/finn",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "fireflies",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/fireflies",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "fyxer",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/fyxer",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "govtribe",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/govtribe",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "granola",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/granola",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "happenstance",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/happenstance",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "help-scout",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/help-scout",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "highlevel",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/highlevel",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "hostinger",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/hostinger",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "hubspot",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/hubspot",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "keybid-puls",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/keybid-puls",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "marcopolo",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/marcopolo",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "mem",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/mem",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "monday-com",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/monday-com",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "moody-s",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/moody-s",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "morningstar",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/morningstar",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "motherduck",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/motherduck",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "mt-newswires",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/mt-newswires",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Lifestyle",
+      "name": "myregistry-com",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/myregistry-com",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "network-solutions",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/network-solutions",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "omni-analytics",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/omni-analytics",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "otter-ai",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/otter-ai",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "particl-market-research",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/particl-market-research",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "pipedrive",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/pipedrive",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "pitchbook",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/pitchbook",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "policynote",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/policynote",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "pylon",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/pylon",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "quartr",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/quartr",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "quicknode",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/quicknode",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "ranked-ai",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/ranked-ai",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "razorpay",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/razorpay",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "read-ai",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/read-ai",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "readwise",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/readwise",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "responsive",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/responsive",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "scite",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/scite",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "semrush",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/semrush",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "sendgrid",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/sendgrid",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Lifestyle",
+      "name": "setu-bharat-connect-billpay",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/setu-bharat-connect-billpay",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "signnow",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/signnow",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "skywatch",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/skywatch",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "statsig",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/statsig",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "streak",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/streak",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "taxdown",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/taxdown",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "teamwork-com",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/teamwork-com",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "third-bridge",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/third-bridge",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "tinman-ai",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/tinman-ai",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "united-rentals",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/united-rentals",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "vantage",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/vantage",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "waldo",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/waldo",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Lifestyle",
+      "name": "weatherpromise",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/weatherpromise",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "windsor-ai",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/windsor-ai",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "yepcode",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/yepcode",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "render",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/render",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "temporal",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/temporal",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Design",
+      "name": "hyperframes",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/hyperframes",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Design",
+      "name": "heygen",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/heygen",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "supabase",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/supabase",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Security",
+      "name": "codex-security",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/codex-security",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "twilio-developer-kit",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/twilio-developer-kit",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "openai-developers",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE",
+        "products": [
+          "CODEX"
+        ]
+      },
+      "source": {
+        "path": "./plugins/openai-developers",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "asana",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/asana",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "datadog",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/datadog",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "zoom",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/zoom",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "similarweb",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/similarweb",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "lseg",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/lseg",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "s-p",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/s-p",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "datasite",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/datasite",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "factset",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/factset",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "zoominfo",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/zoominfo",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "docusign",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/docusign",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "mixpanel",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/mixpanel",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "mixpanel-headless",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/mixpanel-headless",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "aiera",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/aiera",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "close",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/close",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "apollo",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/apollo",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "meticulate",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/meticulate",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "thoughtspot",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/thoughtspot",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "midpage",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/midpage",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "clay",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/clay",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "calendly",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/calendly",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "rox",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/rox",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "hg-insights",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/hg-insights",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "airtable",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/airtable",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "convex",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/convex",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "outreach",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/outreach",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Design",
+      "name": "shutterstock",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/shutterstock",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "replit",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/replit",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "lovable",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/lovable",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "quickbooks",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/quickbooks",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "intercom",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/intercom",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "chronograph",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/chronograph",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "nvidia",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/nvidia",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "posthog",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/posthog",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "metabase",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/metabase",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "actively",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/actively",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "zoho",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/zoho",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "fiscal-ai",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/fiscal-ai",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Design",
+      "name": "picsart",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/picsart",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Productivity",
+      "name": "alation",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/alation",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Design",
+      "name": "fal",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/fal",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Research",
+      "name": "hebbia",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/hebbia",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "wix",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/wix",
+        "source": "local"
+      }
+    },
+    {
+      "category": "Developer Tools",
+      "name": "base44",
+      "policy": {
+        "authentication": "[REDACTED]",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/base44",
+        "source": "local"
+      }
+    }
+  ]
+}

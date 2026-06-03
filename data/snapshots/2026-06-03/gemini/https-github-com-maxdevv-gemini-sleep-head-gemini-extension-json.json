@@ -1,0 +1,13 @@
+{
+  "name": "gemini-sleep",
+  "version": "1.0.0",
+  "description": "Lets Gemini wait, sleep, pause, delay, or idle for a specified time without wasting requests. Zero polling, no tmux required. Keywords: sleep, wait, pause, delay, idle, timer, background, task, polling",
+  "mcpServers": {
+    "gemini-sleep": {
+      "command": "node",
+      "args": ["${extensionPath}${/}server.js"],
+      "timeout": 86400000
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}

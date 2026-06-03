@@ -1,26 +1,18 @@
-# MCP Write-Capability Report: 2026-06-02
+# MCP Write-Capability Report: 2026-06-03
 
 ## Write Alerts
 
 | Event | Provider | Server | Tool | Confidence | Summary |
 | --- | --- | --- | --- | --- | --- |
-| new_write_server | codex | `nvidia` |  | high | New write-capable codex plugin: NVIDIA |
-| new_write_server | codex | `posthog` |  | high | New write-capable codex plugin: PostHog |
-| new_write_server | codex | `metabase` |  | high | New write-capable codex plugin: Metabase |
-| new_write_server | codex | `wix` |  | high | New write-capable codex plugin: Wix |
-| new_write_server | codex | `base44` |  | high | New write-capable codex plugin: Base44 |
-| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_instance` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_instance |
-| tool_schema_changed | gemini | `bigtable-bigtable` | `create_table` | high | Write-capable tool changed: gemini/bigtable-bigtable/create_table |
-| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_table` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_table |
-| tool_schema_changed | gemini | `bigtable-bigtable` | `delete_logical_view` | high | Write-capable tool changed: gemini/bigtable-bigtable/delete_logical_view |
+| new_write_server | claude | `adobe-cja` |  | high | New write-capable claude connector: Adobe Customer Journey Analytics |
 
 ## Coverage
 
-- Normalized servers: 425
-- Write-capable servers: 74
-- claude: 24 servers, 8 write-capable
+- Normalized servers: 401
+- Write-capable servers: 75
+- claude: 24 servers, 9 write-capable
 - codex: 168 servers, 58 write-capable
-- gemini: 224 servers, 8 write-capable
+- gemini: 200 servers, 8 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues

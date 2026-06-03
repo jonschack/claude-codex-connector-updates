@@ -1,226 +1,23 @@
 [
   {
     "confidence": "high",
-    "current_hash": "35cfe82207428f3bb184386cd4108b56bfe9314ecfdf68a1dbe93dd7c68e71b7",
+    "current_hash": "b3bec21e1d3385c925f9633ed5dab82207dbeff4e5864ad90fc02f899d176a04",
     "event_type": "new_write_server",
     "evidence": [
       {
         "confidence": "high",
         "kind": "catalog_capability",
         "value": [
-          "Interactive",
-          "Write"
+          "Read & write"
         ]
       }
     ],
-    "id": 90,
+    "id": 99,
     "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-06-02",
-    "server_id": "nvidia",
-    "summary": "New write-capable codex plugin: NVIDIA",
+    "provider": "claude",
+    "run_date": "2026-06-03",
+    "server_id": "adobe-cja",
+    "summary": "New write-capable claude connector: Adobe Customer Journey Analytics",
     "tool_name": null
-  },
-  {
-    "confidence": "high",
-    "current_hash": "55707174f5a914315806be647bab236f5027ca5f65c2cc01fd2ab2ee74410779",
-    "event_type": "new_write_server",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Interactive",
-          "Read",
-          "Write"
-        ]
-      }
-    ],
-    "id": 91,
-    "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-06-02",
-    "server_id": "posthog",
-    "summary": "New write-capable codex plugin: PostHog",
-    "tool_name": null
-  },
-  {
-    "confidence": "high",
-    "current_hash": "ae91e8f27a6146c8cd4301d8d8996f3c97d3289898f053e28c03f2558cf8fb90",
-    "event_type": "new_write_server",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Read",
-          "Write"
-        ]
-      }
-    ],
-    "id": 92,
-    "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-06-02",
-    "server_id": "metabase",
-    "summary": "New write-capable codex plugin: Metabase",
-    "tool_name": null
-  },
-  {
-    "confidence": "high",
-    "current_hash": "bc2019fbaffb8b8d8d289ab9731e4070b0ccc3433d151258ce81046df86cfa86",
-    "event_type": "new_write_server",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Interactive",
-          "Read",
-          "Write"
-        ]
-      }
-    ],
-    "id": 93,
-    "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-06-02",
-    "server_id": "wix",
-    "summary": "New write-capable codex plugin: Wix",
-    "tool_name": null
-  },
-  {
-    "confidence": "high",
-    "current_hash": "888c05432fb2b28a989e28a81da8e90d9a2c3a0c07a085dbfb79ff920bfa1418",
-    "event_type": "new_write_server",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Interactive",
-          "Read",
-          "Write"
-        ]
-      }
-    ],
-    "id": 94,
-    "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-06-02",
-    "server_id": "base44",
-    "summary": "New write-capable codex plugin: Base44",
-    "tool_name": null
-  },
-  {
-    "confidence": "high",
-    "current_hash": "764302ecacdec93a28d094cebfb88d4b67da819cd2be65756186972cb4eb9032",
-    "event_type": "tool_schema_changed",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "mcp_annotation",
-        "value": "destructiveHint=true"
-      },
-      {
-        "confidence": "medium",
-        "kind": "mcp_annotation",
-        "value": "readOnlyHint=false"
-      },
-      {
-        "confidence": "high",
-        "kind": "tool_text",
-        "value": "delete"
-      }
-    ],
-    "id": 95,
-    "previous_hash": "efa23a58975d434b919f9e7c181a99751971c79f109455062a83d5cef6e6b5ee",
-    "provider": "gemini",
-    "run_date": "2026-06-02",
-    "server_id": "bigtable-bigtable",
-    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/delete_instance",
-    "tool_name": "delete_instance"
-  },
-  {
-    "confidence": "high",
-    "current_hash": "4c18bf2c49901424f2f6c46eb3fb508b14e48da4af09cb3ac734f4eb2a27a93e",
-    "event_type": "tool_schema_changed",
-    "evidence": [
-      {
-        "confidence": "medium",
-        "kind": "mcp_annotation",
-        "value": "readOnlyHint=false"
-      },
-      {
-        "confidence": "high",
-        "kind": "tool_text",
-        "value": "create"
-      }
-    ],
-    "id": 96,
-    "previous_hash": "40971e0e007b0c092ca30054538effc206a0180140a17c2b71e7574c08323d00",
-    "provider": "gemini",
-    "run_date": "2026-06-02",
-    "server_id": "bigtable-bigtable",
-    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/create_table",
-    "tool_name": "create_table"
-  },
-  {
-    "confidence": "high",
-    "current_hash": "0def02c1d63c5298099f057b65a48175a6009a9e432224dd6ef2478fbaf16fff",
-    "event_type": "tool_schema_changed",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "mcp_annotation",
-        "value": "destructiveHint=true"
-      },
-      {
-        "confidence": "medium",
-        "kind": "mcp_annotation",
-        "value": "readOnlyHint=false"
-      },
-      {
-        "confidence": "high",
-        "kind": "tool_text",
-        "value": "delete"
-      }
-    ],
-    "id": 97,
-    "previous_hash": "878a738d27fdd4790a4747addfa5e01ba278abf6e309329cd8b19bca6c103f02",
-    "provider": "gemini",
-    "run_date": "2026-06-02",
-    "server_id": "bigtable-bigtable",
-    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/delete_table",
-    "tool_name": "delete_table"
-  },
-  {
-    "confidence": "high",
-    "current_hash": "7d61f72dfe62aa71ab6eeb85e2e0688ab24e8ba03d8dd8bd74940b80ea866eba",
-    "event_type": "tool_schema_changed",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "mcp_annotation",
-        "value": "destructiveHint=true"
-      },
-      {
-        "confidence": "medium",
-        "kind": "mcp_annotation",
-        "value": "readOnlyHint=false"
-      },
-      {
-        "confidence": "high",
-        "kind": "tool_text",
-        "value": "set"
-      }
-    ],
-    "id": 98,
-    "previous_hash": "ff627051c324f3a2c58c5e3492f83dbc36f436cb198a1bfaa9aafc7e78f96245",
-    "provider": "gemini",
-    "run_date": "2026-06-02",
-    "server_id": "bigtable-bigtable",
-    "summary": "Write-capable tool changed: gemini/bigtable-bigtable/delete_logical_view",
-    "tool_name": "delete_logical_view"
   }
 ]

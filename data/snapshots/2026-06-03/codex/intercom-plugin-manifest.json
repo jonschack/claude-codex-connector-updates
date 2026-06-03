@@ -1,0 +1,31 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Customer conversations, contacts, tickets, and support workflows from Intercom",
+  "homepage": "https://www.intercom.com",
+  "interface": {
+    "brandColor": "#1F8DED",
+    "capabilities": [],
+    "category": "User Ops",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Search Intercom for open billing conversations and summarize top issues.",
+      "Find Intercom contacts from example.com and pull recent conversation history.",
+      "Fetch this Intercom conversation and draft next steps."
+    ],
+    "developerName": "Intercom",
+    "displayName": "Intercom",
+    "logo": "./assets/logo.png",
+    "longDescription": "Customer conversations, contacts, tickets, and support workflows from Intercom",
+    "privacyPolicyURL": "https://www.intercom.com/legal/privacy",
+    "screenshots": [],
+    "shortDescription": "Customer conversations, contacts, tickets, and support workflows from Intercom",
+    "termsOfServiceURL": "https://www.intercom.com/legal/terms-and-policies",
+    "websiteURL": "https://www.intercom.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "intercom",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.0"
+}

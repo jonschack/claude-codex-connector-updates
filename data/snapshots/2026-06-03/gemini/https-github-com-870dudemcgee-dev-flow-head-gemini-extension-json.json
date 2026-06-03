@@ -1,0 +1,6 @@
+{
+  "name": "devmode",
+  "description": "DevMode discipline pack: mode gating, token budget, TDD, debugging, and Dev-Flow coordination",
+  "version": "0.1.0",
+  "contextFileName": "GEMINI.md"
+}
