@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation.",
+  "homepage": "https://dovetail.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find the relevant customer insights in Dovetail"
+    ],
+    "developerName": "Dovetail",
+    "displayName": "Dovetail ",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation. Search your Dovetail workspace for relevant projects, notes, docs, and themes, and get results back instantly. Ask things like \u201cSummarize top friction points impacting enterprise renewal conversations\u201d to surface evidence in seconds.",
+    "privacyPolicyURL": "https://dovetail.com/privacy/privacy-policy/",
+    "screenshots": [],
+    "shortDescription": "Connect Dovetail inside Codex to turn customer feedback into decisions without leaving your conversation.",
+    "termsOfServiceURL": "https://dovetail.com/legal/user-terms-of-service/",
+    "websiteURL": "https://dovetail.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "dovetail",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.1"
+}

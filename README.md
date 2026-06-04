@@ -1,18 +1,20 @@
-# MCP Write-Capability Report: 2026-06-03
+# MCP Write-Capability Report: 2026-06-04
 
 ## Write Alerts
 
 | Event | Provider | Server | Tool | Confidence | Summary |
 | --- | --- | --- | --- | --- | --- |
-| new_write_server | claude | `adobe-cja` |  | high | New write-capable claude connector: Adobe Customer Journey Analytics |
+| new_write_server | codex | `ngs-analysis` |  | high | New write-capable codex plugin: Life Sciences NGS Analysis |
+| new_write_server | codex | `superhuman` |  | high | New write-capable codex plugin: Superhuman Mail |
+| new_write_server | codex | `shopify` |  | high | New write-capable codex plugin: Shopify |
 
 ## Coverage
 
-- Normalized servers: 401
-- Write-capable servers: 75
+- Normalized servers: 403
+- Write-capable servers: 78
 - claude: 24 servers, 9 write-capable
-- codex: 168 servers, 58 write-capable
-- gemini: 200 servers, 8 write-capable
+- codex: 171 servers, 61 write-capable
+- gemini: 199 servers, 8 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues

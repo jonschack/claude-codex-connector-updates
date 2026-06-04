@@ -1,0 +1,36 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Build and deploy Wix apps and headless websites, and manage your Wix business. Includes CLI development skills, Wix Headless for any frontend framework, and Wix MCP server for eCommerce, CMS, dashboard extensions, and more.",
+  "homepage": "https://dev.wix.com/docs/api-reference/articles/ai-tools/about-wix-skills",
+  "interface": {
+    "brandColor": "#116DFF",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Coding",
+    "composerIcon": "./assets/logo.svg",
+    "defaultPrompt": [
+      "Build a Wix app extension with Wix Design System UI",
+      "Build a Wix app with a shipping fee service plugin",
+      "Set up Wix Stores products, pickup, or CMS data"
+    ],
+    "developerName": "Wix",
+    "displayName": "Wix",
+    "logo": "./assets/logo.svg",
+    "longDescription": "Build and deploy Wix apps and headless websites, and manage your Wix business with Codex. Includes Wix CLI development skills for dashboard extensions, backend APIs, site widgets, service plugins, and data collections. Build headless websites with Wix Headless \u2014 from fully-hosted Astro apps to self-hosted in any framework \u2014 powered by Wix's backend for eCommerce, bookings, CMS, events, and members. Also includes recipes for Wix business solution management.",
+    "privacyPolicyURL": "https://www.wix.com/about/privacy",
+    "screenshots": [],
+    "shortDescription": "Build Wix apps, headless websites, and manage your Wix business from Codex",
+    "termsOfServiceURL": "https://www.wix.com/about/terms-of-use",
+    "websiteURL": "https://dev.wix.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "wix",
+  "repository": "https://github.com/wix/skills",
+  "skills": "./skills/",
+  "version": "1.1.1"
+}

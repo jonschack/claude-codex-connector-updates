@@ -1,23 +1,70 @@
 [
   {
     "confidence": "high",
-    "current_hash": "b3bec21e1d3385c925f9633ed5dab82207dbeff4e5864ad90fc02f899d176a04",
+    "current_hash": "7485a11938cf6d47144d5cd3720dcd15dae53f11d5c7aa88b232c40a334c363d",
     "event_type": "new_write_server",
     "evidence": [
       {
         "confidence": "high",
         "kind": "catalog_capability",
         "value": [
-          "Read & write"
+          "Interactive",
+          "Read",
+          "Write"
         ]
       }
     ],
-    "id": 99,
+    "id": 100,
     "previous_hash": null,
-    "provider": "claude",
-    "run_date": "2026-06-03",
-    "server_id": "adobe-cja",
-    "summary": "New write-capable claude connector: Adobe Customer Journey Analytics",
+    "provider": "codex",
+    "run_date": "2026-06-04",
+    "server_id": "ngs-analysis",
+    "summary": "New write-capable codex plugin: Life Sciences NGS Analysis",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "5cf6eafa6b1c3e0fff6a3ab0f31e69c317cfd6eb5ce046625ad08a18c1e15922",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 101,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-06-04",
+    "server_id": "superhuman",
+    "summary": "New write-capable codex plugin: Superhuman Mail",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "2a0c7dac7be418fb77e47565594198286e7251ebb9ff34d44bdc318f341cf0f1",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "id": 102,
+    "previous_hash": null,
+    "provider": "codex",
+    "run_date": "2026-06-04",
+    "server_id": "shopify",
+    "summary": "New write-capable codex plugin: Shopify",
     "tool_name": null
   }
 ]

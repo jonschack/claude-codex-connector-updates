@@ -1,0 +1,9 @@
+{
+  "name": "multai-tdd",
+  "version": "1.0.1",
+  "description": "Autonomous Technical Disclosure Document (TDD) generator for IP protection.",
+  "author": "MultAI Technologies Inc.",
+  "repository": "https://github.com/MultAI-Technologies-Inc/multai-tdd",
+  "commands": ["commands/tdd.toml"],
+  "contextFileName": "GEMINI.md"
+}

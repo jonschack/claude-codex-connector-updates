@@ -1,0 +1,33 @@
+{
+  "author": "[REDACTED]",
+  "description": "Build, run, test, debug, instrument, and implement local macOS apps using Xcode, SwiftUI, AppKit interop, unified logging, and shell-first desktop workflows.",
+  "homepage": "https://openai.com/",
+  "interface": {
+    "brandColor": "#1F6FEB",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Developer Tools",
+    "composerIcon": "./assets/build-macos-apps-small.svg",
+    "defaultPrompt": [
+      "Build/refactor native macOS UI, inspect AppKit interop, add telemetry, or debug a macOS app"
+    ],
+    "developerName": "OpenAI",
+    "displayName": "Build macOS Apps",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "macOS development workflows for discovering local projects, building and running desktop apps, implementing native SwiftUI scenes, bridging into AppKit when necessary, adding lightweight Logger telemetry, triaging test failures, inspecting signing and entitlements, and debugging desktop-specific build or runtime errors.",
+    "privacyPolicyURL": "https://openai.com/policies/privacy-policy/",
+    "screenshots": [],
+    "shortDescription": "Build, debug, instrument, and implement macOS apps with SwiftUI and AppKit guidance",
+    "termsOfServiceURL": "https://openai.com/policies/terms-of-use/",
+    "websiteURL": "https://openai.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "build-macos-apps",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "0.1.3"
+}
