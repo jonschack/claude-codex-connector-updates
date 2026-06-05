@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Attio connects Codex directly to your CRM workspace, letting you manage customer relationships through na...",
+  "homepage": "https://attio.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find the latest notes and next steps in Attio"
+    ],
+    "developerName": "Attio Ltd",
+    "displayName": "Attio",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Attio connects Codex directly to your CRM workspace, letting you manage customer relationships through natural conversation. \n\nSearch and filter contacts, companies, and deals with flexible queries. Create, update, and organize records without switching between screens. Add notes, manage tasks, and track your sales pipeline\u2014all through simple requests. \n\nKey capabilities: \n- Search records using powerful filters (find companies by size, industry, last contact date) \n- Create and update people, companies, and deal records \n- Manage notes attached to any record \n- Track and complete tasks \n- Navigate lists and organize your data \n\nWhether you're preparing for a meeting, updating deal stages, or researching prospects, Attio brings your CRM data into your conversation \u2014 no manual data entry required.",
+    "privacyPolicyURL": "https://attio.com/legal/privacy",
+    "screenshots": [],
+    "shortDescription": "Attio connects Codex directly to your CRM workspace, letting you manage customer relationships through na...",
+    "termsOfServiceURL": "https://attio.com/legal/terms-and-conditions",
+    "websiteURL": "https://attio.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "attio",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.1"
+}

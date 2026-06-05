@@ -1,20 +1,18 @@
-# MCP Write-Capability Report: 2026-06-04
+# MCP Write-Capability Report: 2026-06-05
 
 ## Write Alerts
 
 | Event | Provider | Server | Tool | Confidence | Summary |
 | --- | --- | --- | --- | --- | --- |
-| new_write_server | codex | `ngs-analysis` |  | high | New write-capable codex plugin: Life Sciences NGS Analysis |
-| new_write_server | codex | `superhuman` |  | high | New write-capable codex plugin: Superhuman Mail |
-| new_write_server | codex | `shopify` |  | high | New write-capable codex plugin: Shopify |
+| new_write_server | codex | `magicpath` |  | high | New write-capable codex plugin: MagicPath |
 
 ## Coverage
 
 - Normalized servers: 403
 - Write-capable servers: 78
 - claude: 24 servers, 9 write-capable
-- codex: 171 servers, 61 write-capable
-- gemini: 199 servers, 8 write-capable
+- codex: 172 servers, 62 write-capable
+- gemini: 198 servers, 7 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues

@@ -4491,6 +4491,53 @@
     "write_confidence": "unknown"
   },
   {
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "description": "Use MagicPath to find, inspect, install, create, and edit UI components from Codex.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {},
+      "discovery": {},
+      "marketplace": {
+        "category": "Developer Tools",
+        "name": "magicpath",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/magicpath",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "MagicPath",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "magicpath",
+    "source_urls": [
+      "https://github.com/MagicPathAI/agent-skills",
+      "https://www.magicpath.ai/"
+    ],
+    "transport": "plugin",
+    "write_confidence": "high"
+  },
+  {
     "capabilities": [],
     "description": "MarcoPolo spins up a secure container where Codex can work with your actual data.",
     "evidence": [],
@@ -8381,7 +8428,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "aegis",
-        "version": "2.0.4"
+        "version": "2.0.6"
       }
     },
     "name": "aegis",
@@ -8492,11 +8539,38 @@
     "description": "",
     "evidence": [],
     "metadata": {
+      "duplicates": [
+        {
+          "capabilities": [],
+          "description": "",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "name": "agent-skills",
+              "version": "1.0.0"
+            }
+          },
+          "name": "agent-skills",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "agent-skills",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/Olshansk/agent-skills",
+            "https://raw.githubusercontent.com/Olshansk/agent-skills/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        }
+      ],
       "gallery_text_seen": true,
       "manifest": {
         "contextFileName": "GEMINI.md",
         "name": "agent-skills",
-        "version": "1.0.0"
+        "version": "0.1.0"
       }
     },
     "name": "agent-skills",
@@ -8506,7 +8580,9 @@
     "server_id": "agent-skills",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/MV011/agent-skills",
       "https://github.com/Olshansk/agent-skills",
+      "https://raw.githubusercontent.com/MV011/agent-skills/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Olshansk/agent-skills/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
@@ -8567,6 +8643,31 @@
       "https://geminicli.com/extensions/",
       "https://github.com/ArtemioPadilla/agent-triforce",
       "https://raw.githubusercontent.com/ArtemioPadilla/agent-triforce/HEAD/gemini-extension.json"
+    ],
+    "transport": "catalog",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "Agent Skills for PMBOK- and Scrum-shaped project management artifacts \u2014 40 skills across Ideation, Initiation, Planning, Execution, and Closing.",
+    "evidence": [],
+    "metadata": {
+      "gallery_text_seen": true,
+      "manifest": {
+        "description": "Agent Skills for PMBOK- and Scrum-shaped project management artifacts \u2014 40 skills across Ideation, Initiation, Planning, Execution, and Closing.",
+        "name": "agentic-pm-kit",
+        "version": "0.1.1"
+      }
+    },
+    "name": "agentic-pm-kit",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "agentic-pm-kit",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Agentic-Engineering-Agency/agentic-pm-kit",
+      "https://raw.githubusercontent.com/Agentic-Engineering-Agency/agentic-pm-kit/HEAD/gemini-extension.json"
     ],
     "transport": "catalog",
     "write_confidence": "unknown"
@@ -20919,6 +21020,50 @@
   },
   {
     "capabilities": [],
+    "description": "12 PM skills covering the full product-management lifecycle. Install once, use across Gemini CLI and every other compatible agent harness.",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "description": "12 PM skills covering the full product-management lifecycle. Install once, use across Gemini CLI and every other compatible agent harness.",
+        "mcpServers": {
+          "pm-skills": {
+            "args": [
+              "${PLUGIN_ROOT}/mcp/pm_skills_mcp_server.py"
+            ],
+            "command": "python"
+          }
+        },
+        "name": "pm-skills",
+        "version": "2.1.0"
+      },
+      "mcp_server": {
+        "args": [
+          "${PLUGIN_ROOT}/mcp/pm_skills_mcp_server.py"
+        ],
+        "command": "python"
+      }
+    },
+    "name": "pm-skills: pm-skills",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "pm-skills-pm-skills",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/Avyayalaya/pm-skills-arsenal",
+      "https://raw.githubusercontent.com/Avyayalaya/pm-skills-arsenal/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
     "description": "Use when starting a product initiative, writing or reviewing a PRD, clarifying ambiguous requirements, planning a feature, or comparing product trade-offs.",
     "evidence": [],
     "metadata": {
@@ -22216,7 +22361,7 @@
           "skills/root/SKILL.md",
           "skills/mcp-local-rag/SKILL.md"
         ],
-        "version": "2.7.0"
+        "version": "2.8.0"
       },
       "mcp_server": {
         "args": [
@@ -22289,7 +22434,7 @@
           "skills/root/SKILL.md",
           "skills/mcp-local-rag/SKILL.md"
         ],
-        "version": "2.7.0"
+        "version": "2.8.0"
       },
       "mcp_server": {
         "args": [
@@ -23424,7 +23569,7 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
-              "version": "5.0.7"
+              "version": "0.2.0"
             }
           },
           "name": "superpowers",
@@ -23434,8 +23579,34 @@
           "server_id": "superpowers",
           "source_urls": [
             "https://geminicli.com/extensions/",
-            "https://github.com/JustinDube21/superpowers",
-            "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json"
+            "https://github.com/FuZhiyu/superRA",
+            "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json"
+          ],
+          "transport": "catalog",
+          "write_confidence": "unknown"
+        },
+        {
+          "capabilities": [],
+          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
+          "evidence": [],
+          "metadata": {
+            "gallery_text_seen": true,
+            "manifest": {
+              "contextFileName": "GEMINI.md",
+              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
+              "name": "superpowers",
+              "version": "5.1.0"
+            }
+          },
+          "name": "superpowers",
+          "native_surface": "extension",
+          "provider": "gemini",
+          "remote_url": "",
+          "server_id": "superpowers",
+          "source_urls": [
+            "https://geminicli.com/extensions/",
+            "https://github.com/GIT-PHOENIX-HUB/Phoenix-powers",
+            "https://raw.githubusercontent.com/GIT-PHOENIX-HUB/Phoenix-powers/HEAD/gemini-extension.json"
           ],
           "transport": "catalog",
           "write_confidence": "unknown"
@@ -23498,7 +23669,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "superpowers",
-        "version": "0.2.0"
+        "version": "5.0.7"
       }
     },
     "name": "superpowers",
@@ -23508,12 +23679,14 @@
     "server_id": "superpowers",
     "source_urls": [
       "https://geminicli.com/extensions/",
+      "https://github.com/DavidEran/Claude-Skills",
       "https://github.com/FuZhiyu/superRA",
-      "https://github.com/JustinDube21/superpowers",
+      "https://github.com/GIT-PHOENIX-HUB/Phoenix-powers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
+      "https://raw.githubusercontent.com/DavidEran/Claude-Skills/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
-      "https://raw.githubusercontent.com/JustinDube21/superpowers/HEAD/gemini-extension.json",
+      "https://raw.githubusercontent.com/GIT-PHOENIX-HUB/Phoenix-powers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/Quon/superpowers/HEAD/gemini-extension.json"
     ],

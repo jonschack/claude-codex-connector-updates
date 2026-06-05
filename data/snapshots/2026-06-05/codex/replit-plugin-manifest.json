@@ -1,0 +1,31 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Work with Replit projects, apps, deployments, and workspace context",
+  "homepage": "https://replit.com",
+  "interface": {
+    "brandColor": "#FD5402",
+    "capabilities": [],
+    "category": "Developer Tools",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Find my Replit projects and summarize the most recent activity.",
+      "Open a Replit workspace and explain the app structure.",
+      "Review Replit deployments for this project and flag issues."
+    ],
+    "developerName": "Replit",
+    "displayName": "Replit",
+    "logo": "./assets/logo.png",
+    "longDescription": "Work with Replit projects, apps, deployments, and workspace context",
+    "privacyPolicyURL": "https://replit.com/site/privacy",
+    "screenshots": [],
+    "shortDescription": "Work with Replit projects, apps, deployments, and workspace context",
+    "termsOfServiceURL": "https://replit.com/site/terms",
+    "websiteURL": "https://replit.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "replit",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.1"
+}

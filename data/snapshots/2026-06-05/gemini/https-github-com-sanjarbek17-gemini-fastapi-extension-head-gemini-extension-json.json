@@ -1,0 +1,6 @@
+{
+  "name": "fastapi",
+  "description": "Enables several FastAPI and Python-related commands and context.",
+  "version": "0.1.0",
+  "contextFileName": "fastapi.md"
+}
