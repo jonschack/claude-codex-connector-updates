@@ -1,0 +1,12 @@
+{
+  "name": "memogemini-mcp-server",
+  "version": "1.0.0",
+  "contextFileName": "GEMINI.md",
+  "mcpServers": {
+    "dockerServer": {
+      "command": "docker",
+      "args": ["compose", "run", "--rm", "-T", "memogemini"],
+      "cwd": "${extensionPath}"
+    }
+  }
+}

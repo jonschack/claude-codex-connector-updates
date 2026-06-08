@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Agreement envelopes, signing status, recipients, and contract dates",
+  "homepage": "https://www.docusign.com",
+  "interface": {
+    "brandColor": "#FFCC00",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Find DocuSign envelopes waiting on me and summarize what needs action.",
+      "Search for agreements with a customer and pull signing status, recipients, and key dates.",
+      "Review recently completed envelopes and extract renewal or obligation dates."
+    ],
+    "developerName": "Docusign",
+    "displayName": "Docusign",
+    "logo": "./assets/logo.png",
+    "longDescription": "Agreement envelopes, signing status, recipients, and contract dates",
+    "screenshots": [],
+    "shortDescription": "Agreement envelopes, signing status, recipients, and contract dates",
+    "websiteURL": "https://www.docusign.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "docusign",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.1"
+}

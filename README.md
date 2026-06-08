@@ -1,18 +1,19 @@
-# MCP Write-Capability Report: 2026-06-05
+# MCP Write-Capability Report: 2026-06-08
 
 ## Write Alerts
 
 | Event | Provider | Server | Tool | Confidence | Summary |
 | --- | --- | --- | --- | --- | --- |
-| new_write_server | codex | `magicpath` |  | high | New write-capable codex plugin: MagicPath |
+| new_write_server | claude | `adobe-workfront` |  | high | New write-capable claude connector: Adobe Workfront |
+| new_write_server | claude | `attention` |  | high | New write-capable claude connector: Attention |
 
 ## Coverage
 
-- Normalized servers: 403
+- Normalized servers: 402
 - Write-capable servers: 78
-- claude: 24 servers, 9 write-capable
+- claude: 24 servers, 11 write-capable
 - codex: 172 servers, 62 write-capable
-- gemini: 198 servers, 7 write-capable
+- gemini: 197 servers, 5 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues

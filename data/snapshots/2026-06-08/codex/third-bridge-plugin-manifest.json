@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Seamlessly incorporate critical context and trusted insights from industry experts as part of your financia...",
+  "homepage": "https://www.thirdbridge.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Competitive analysis based on Third Bridge expert network"
+    ],
+    "developerName": "Third Bridge Group",
+    "displayName": "Third Bridge",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Seamlessly incorporate critical context and trusted insights from industry experts as part of your financial and business analysis. Refocus on extracting high-quality, reliable information by querying Third Bridge\u2019s best-in-class substantial Library of expert content and data.\n\nOur MCP systematically and securely instructs Large Language Models (LLMs) to query insights from our database into their systems, streamlining your workflows and improving your output.",
+    "privacyPolicyURL": "https://www.thirdbridge.com/en-us/about-us/compliance/policies/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Seamlessly incorporate critical context and trusted insights from industry experts as part of your financia...",
+    "termsOfServiceURL": "https://www.thirdbridge.com/en-us/about-us/compliance/policies/third-bridge-mcp-pilot-terms",
+    "websiteURL": "https://www.thirdbridge.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "third-bridge",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.1"
+}

@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Company financials, ratings context, market research, and industry data",
+  "homepage": "https://www.spglobal.com",
+  "interface": {
+    "brandColor": "#D80028",
+    "capabilities": [],
+    "category": "Research",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Pull S&P Global company financials and ratings context for a ticker and summarize the main risks.",
+      "Compare revenue growth, margins, and valuation multiples for a company and its peers in S&P Global.",
+      "Find recent S&P Global research or industry outlook items for a sector and summarize the takeaways."
+    ],
+    "developerName": "S&P Global",
+    "displayName": "S&P Global",
+    "logo": "./assets/logo.png",
+    "longDescription": "Company financials, ratings context, market research, and industry data",
+    "screenshots": [],
+    "shortDescription": "Company financials, ratings context, market research, and industry data",
+    "websiteURL": "https://www.spglobal.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "s-p",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.2"
+}

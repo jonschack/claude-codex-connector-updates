@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Tinman AI helps loan officers and underwriters quickly underwrite home financing scenarios and answer compl...",
+  "homepage": "https://better.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "I have borrower at 52% DTI who wants HELOC w/ $450/month"
+    ],
+    "developerName": "Better",
+    "displayName": "Tinman AI",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Tinman AI helps loan officers and underwriters quickly underwrite home financing scenarios and answer complex eligibility questions using trusted credit decision data and underwriting logic. Instead of navigating fragmented systems, scattered guidelines, or manual spreadsheets, users can evaluate eligibility, DTI restructuring, and income calculations across a broad set of lenders and investors, instantly identifying which investors a loan qualifies for and why. Tinman AI turns what used to take days or weeks into real-time, compliant decisions that keep loans moving and deals alive.",
+    "privacyPolicyURL": "https://better.com/about-us/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Tinman AI helps loan officers and underwriters quickly underwrite home financing scenarios and answer compl...",
+    "termsOfServiceURL": "https://better.com/about-us/terms-of-use",
+    "websiteURL": "https://better.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "tinman-ai",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.1"
+}

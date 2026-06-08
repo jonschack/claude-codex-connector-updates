@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want!",
+  "homepage": "https://www.myregistry.com/",
+  "interface": {
+    "capabilities": [],
+    "category": "Lifestyle",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Find the relevant registry details in MyRegistry.com"
+    ],
+    "developerName": "MyRegistry.com",
+    "displayName": "MyRegistry.com",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want! Create a universal gift list for weddings, baby showers, birthdays, or any celebration and add gifts from any store.",
+    "privacyPolicyURL": "https://www.myregistry.com/Info/Privacy.aspx",
+    "screenshots": [],
+    "shortDescription": "MyRegistry.com helps make gift-giving easy for friends & family to get you the gifts you really want!",
+    "termsOfServiceURL": "https://www.myregistry.com/Info/terms.aspx",
+    "websiteURL": "https://www.myregistry.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "myregistry-com",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.1"
+}

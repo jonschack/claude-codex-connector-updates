@@ -1,25 +1,44 @@
 [
   {
     "confidence": "high",
-    "current_hash": "0326df41c15b4806be8917a7ba79b26ac5d68e9277aa3caacc1d90eede8982bf",
+    "current_hash": "92bc563353c6176d833b7972375515a1bd943630348c0d45e8cbc71f5e1a3eb4",
     "event_type": "new_write_server",
     "evidence": [
       {
         "confidence": "high",
         "kind": "catalog_capability",
         "value": [
-          "Interactive",
-          "Read",
-          "Write"
+          "Read & write"
         ]
       }
     ],
-    "id": 103,
+    "id": 104,
     "previous_hash": null,
-    "provider": "codex",
-    "run_date": "2026-06-05",
-    "server_id": "magicpath",
-    "summary": "New write-capable codex plugin: MagicPath",
+    "provider": "claude",
+    "run_date": "2026-06-08",
+    "server_id": "adobe-workfront",
+    "summary": "New write-capable claude connector: Adobe Workfront",
+    "tool_name": null
+  },
+  {
+    "confidence": "high",
+    "current_hash": "30f6d288af41d6749976c1bc76acb5201c437dbc9bf7a4397e648314e5e8eb13",
+    "event_type": "new_write_server",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "Read & write"
+        ]
+      }
+    ],
+    "id": 105,
+    "previous_hash": null,
+    "provider": "claude",
+    "run_date": "2026-06-08",
+    "server_id": "attention",
+    "summary": "New write-capable claude connector: Attention",
     "tool_name": null
   }
 ]
