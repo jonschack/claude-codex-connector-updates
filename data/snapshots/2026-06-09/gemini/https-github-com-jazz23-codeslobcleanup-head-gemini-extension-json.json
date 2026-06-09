@@ -1,0 +1,5 @@
+{
+  "name": "code-slob-cleanup",
+  "description": "A coding agent skill that automatically identifies, refactors, and verifies Python code to remove technical debt ('code slob') introduced by AI agents or rapid development. Uses static analysis and Hypothesis property-based testing to safely apply and verify refactorings.",
+  "version": "1.0.0"
+}

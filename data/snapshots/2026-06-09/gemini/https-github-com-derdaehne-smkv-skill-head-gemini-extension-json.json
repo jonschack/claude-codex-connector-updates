@@ -1,0 +1,12 @@
+{
+  "name": "smkv-skill",
+  "version": "1.0.0",
+  "skills": {
+    "smkv": {
+      "name": "smkv",
+      "description": "Activates smkv-mode: the AI prioritises epistemic precision over social harmony, challenges your assumptions, demands reasoning, and responds in plain prose instead of bullet points.",
+      "triggers": ["smkv", "challenge me", "epistemisch", "think harder", "critical mode"],
+      "path": "${extensionPath}"
+    }
+  }
+}

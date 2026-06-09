@@ -1,0 +1,31 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Sales engagement, prospects, sequences, and deal activity context",
+  "homepage": "https://www.outreach.io",
+  "interface": {
+    "brandColor": "#5951FF",
+    "capabilities": [],
+    "category": "Business & Operations",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Find stalled Outreach prospects and summarize the next best follow-up.",
+      "Search Outreach sequences for this account and summarize recent engagement.",
+      "Draft a concise Outreach follow-up using recent prospect activity."
+    ],
+    "developerName": "Outreach",
+    "displayName": "Outreach",
+    "logo": "./assets/logo.png",
+    "longDescription": "Sales engagement, prospects, sequences, and deal activity context",
+    "privacyPolicyURL": "https://www.outreach.io/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Sales engagement, prospects, sequences, and deal activity context",
+    "termsOfServiceURL": "https://www.outreach.io/terms-of-service",
+    "websiteURL": "https://www.outreach.io"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "outreach",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.2"
+}

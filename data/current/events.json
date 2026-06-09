@@ -1,44 +1,25 @@
 [
   {
     "confidence": "high",
-    "current_hash": "92bc563353c6176d833b7972375515a1bd943630348c0d45e8cbc71f5e1a3eb4",
+    "current_hash": "517dfb6c022af518e8461ea24a34a851c14be96aa796c92ddeed699849fb5a9d",
     "event_type": "new_write_server",
     "evidence": [
       {
         "confidence": "high",
         "kind": "catalog_capability",
         "value": [
-          "Read & write"
+          "MCP",
+          "Read",
+          "Write"
         ]
       }
     ],
-    "id": 104,
+    "id": 106,
     "previous_hash": null,
-    "provider": "claude",
-    "run_date": "2026-06-08",
-    "server_id": "adobe-workfront",
-    "summary": "New write-capable claude connector: Adobe Workfront",
-    "tool_name": null
-  },
-  {
-    "confidence": "high",
-    "current_hash": "30f6d288af41d6749976c1bc76acb5201c437dbc9bf7a4397e648314e5e8eb13",
-    "event_type": "new_write_server",
-    "evidence": [
-      {
-        "confidence": "high",
-        "kind": "catalog_capability",
-        "value": [
-          "Read & write"
-        ]
-      }
-    ],
-    "id": 105,
-    "previous_hash": null,
-    "provider": "claude",
-    "run_date": "2026-06-08",
-    "server_id": "attention",
-    "summary": "New write-capable claude connector: Attention",
+    "provider": "codex",
+    "run_date": "2026-06-09",
+    "server_id": "catalyst-by-zoho",
+    "summary": "New write-capable codex plugin: Catalyst by Zoho",
     "tool_name": null
   }
 ]

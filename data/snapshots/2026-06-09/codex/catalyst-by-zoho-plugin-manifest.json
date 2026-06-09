@@ -1,0 +1,35 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Extend Codex with Catalyst by Zoho's capabilities.",
+  "homepage": "https://catalyst.zoho.com/",
+  "interface": {
+    "brandColor": "#226DB4",
+    "capabilities": [
+      "MCP",
+      "Read",
+      "Write"
+    ],
+    "category": "Development Tools",
+    "composerIcon": "./assets/catalyst_logo.svg",
+    "defaultPrompt": [
+      "Help me work with Catalyst by Zoho.",
+      "Show me available Catalyst by Zoho capabilities.",
+      "Guide my Catalyst project setup."
+    ],
+    "developerName": "Catalyst by Zoho",
+    "displayName": "Catalyst by Zoho",
+    "logo": "./assets/catalyst_logo.svg",
+    "longDescription": "Catalyst by Zoho plugin extends Codex with MCP-backed workflows and skills for building, managing, and operating Catalyst projects.",
+    "privacyPolicyURL": "https://www.zoho.com/privacy.html",
+    "shortDescription": "Use Catalyst by Zoho capabilities in Codex.",
+    "termsOfServiceURL": "https://www.zoho.com/terms.html",
+    "websiteURL": "https://catalyst.zoho.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "catalyst-by-zoho",
+  "repository": "https://github.com/catalystbyzoho",
+  "skills": "./skills/",
+  "version": "0.0.1"
+}

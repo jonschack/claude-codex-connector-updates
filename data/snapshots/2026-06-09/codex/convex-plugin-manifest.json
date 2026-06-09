@@ -1,0 +1,41 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Add a reactive, type-safe backend, database, server functions, and scaling guidance to JavaScript and TypeScript apps with Convex.",
+  "homepage": "https://chatgpt.com/apps/convex/asdk_app_6a0faef988b48191b843bac5cd170a9e",
+  "interface": {
+    "brandColor": "#EE342F",
+    "capabilities": [
+      "Backend setup",
+      "Database schema",
+      "Reactive queries",
+      "Server functions",
+      "Auth-aware data access",
+      "Realtime apps",
+      "Scheduled jobs",
+      "File storage",
+      "Mobile backends",
+      "Scaling guidance"
+    ],
+    "category": "Developer Tools",
+    "composerIcon": "./assets/icon.png",
+    "defaultPrompt": [
+      "Add a backend to this app.",
+      "Design the database schema.",
+      "Add real-time data updates."
+    ],
+    "developerName": "Convex, Inc.",
+    "displayName": "Convex",
+    "logo": "./assets/logo.png",
+    "longDescription": "Use the reviewed Convex ChatGPT app from Codex whenever a project needs a backend: database schema, reactive queries, mutations, server functions, auth-aware data access, real-time features, file storage, scheduled jobs, mobile/web app backends, or production scaling guidance. Convex helps coding agents choose backend primitives that are type-safe, reactive, and suitable for full-stack JavaScript and TypeScript apps.",
+    "privacyPolicyURL": "https://mcp.convex.dev/privacy",
+    "shortDescription": "Add a backend to JS/TS apps.",
+    "termsOfServiceURL": "https://www.convex.dev/legal/tos",
+    "websiteURL": "https://chatgpt.com/apps/convex/asdk_app_6a0faef988b48191b843bac5cd170a9e"
+  },
+  "keywords": "[REDACTED]",
+  "license": "UNLICENSED",
+  "name": "convex",
+  "repository": "https://github.com/get-convex/convex-codex-plugin",
+  "version": "0.1.2"
+}

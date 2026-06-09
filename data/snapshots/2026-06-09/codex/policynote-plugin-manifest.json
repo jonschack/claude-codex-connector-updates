@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Use the PolicyNote app to access structured policy and regulatory intelligence from around the world.",
+  "homepage": "https://fiscalnote.com/products/policynote-api",
+  "interface": {
+    "capabilities": [],
+    "category": "Education & Research",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Summarize the relevant policy context from PolicyNote"
+    ],
+    "developerName": "FiscalNote",
+    "displayName": "PolicyNote",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Use the PolicyNote app to access structured policy and regulatory intelligence from around the world. Search legislation, regulatory actions, policy updates, and government activity across jurisdictions.\n\nThe app enables developers, analysts, and policy professionals to retrieve policy data programmatically and integrate it into internal tools, research workflows, dashboards, or monitoring systems. Queries return structured information about policy developments, government sources, and regulatory changes.\n\nPolicyNote helps teams track public policy activity, build alerts, power analysis tools, and integrate government intelligence into their applications.",
+    "privacyPolicyURL": "https://fiscalnote.com/privacy",
+    "screenshots": [],
+    "shortDescription": "Use the PolicyNote app to access structured policy and regulatory intelligence from around the world.",
+    "termsOfServiceURL": "https://data.policynote.com/terms",
+    "websiteURL": "https://fiscalnote.com/products/policynote-api"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "policynote",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.2"
+}

@@ -847,7 +847,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "actively",
         "policy": {
           "authentication": "[REDACTED]",
@@ -886,7 +886,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "aiera",
         "policy": {
           "authentication": "[REDACTED]",
@@ -976,7 +976,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "alation",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1015,7 +1015,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "alpaca",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1054,7 +1054,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "amplitude",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1092,7 +1092,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "apollo",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1239,7 +1239,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "attio",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1332,7 +1332,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "binance",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1371,7 +1371,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Design",
+        "category": "Creativity",
         "name": "biorender",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1488,7 +1488,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Finance",
         "name": "brex",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1512,6 +1512,57 @@
     ],
     "transport": "app",
     "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "description": "Connect Codex to BrightHire interview intelligence data through the BrightHire app connector.",
+    "evidence": [
+      {
+        "confidence": "low",
+        "kind": "catalog_capability",
+        "value": [
+          "Interactive",
+          "Read"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "brighthire": {
+            "id": "asdk_app_6a0b4c582dd881919fd81aeec8796674"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Productivity",
+        "name": "brighthire",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/brighthire",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "BrightHire",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "brighthire",
+    "source_urls": [
+      "https://github.com/brighthire/brighthire-codex-plugin",
+      "https://www.brighthire.com"
+    ],
+    "transport": "app",
+    "write_confidence": "low"
   },
   {
     "capabilities": [
@@ -1783,7 +1834,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Design",
+        "category": "Creativity",
         "name": "canva",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1822,7 +1873,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "carta-crm",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1848,6 +1899,59 @@
     "write_confidence": "unknown"
   },
   {
+    "capabilities": [
+      "MCP",
+      "Read",
+      "Write"
+    ],
+    "description": "Extend Codex with Catalyst by Zoho's capabilities.",
+    "evidence": [
+      {
+        "confidence": "high",
+        "kind": "catalog_capability",
+        "value": [
+          "MCP",
+          "Read",
+          "Write"
+        ]
+      }
+    ],
+    "metadata": {
+      "app_manifest": {
+        "apps": {
+          "catalyst-by-zoho": {
+            "id": "asdk_app_6a16bcb9a37081919b0db1d81010fb2f"
+          }
+        }
+      },
+      "discovery": {},
+      "marketplace": {
+        "category": "Developer Tools",
+        "name": "catalyst-by-zoho",
+        "policy": {
+          "authentication": "[REDACTED]",
+          "installation": "AVAILABLE"
+        },
+        "source": {
+          "path": "./plugins/catalyst-by-zoho",
+          "source": "local"
+        }
+      },
+      "mcp_servers": {}
+    },
+    "name": "Catalyst by Zoho",
+    "native_surface": "plugin",
+    "provider": "codex",
+    "remote_url": "",
+    "server_id": "catalyst-by-zoho",
+    "source_urls": [
+      "https://catalyst.zoho.com/",
+      "https://github.com/catalystbyzoho"
+    ],
+    "transport": "app",
+    "write_confidence": "high"
+  },
+  {
     "capabilities": [],
     "description": "Unleash Codex as your private markets research agent.",
     "evidence": [],
@@ -1861,7 +1965,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "cb-insights",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1939,7 +2043,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "chronograph",
         "policy": {
           "authentication": "[REDACTED]",
@@ -1978,7 +2082,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "circleback",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2062,7 +2166,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "clay",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2139,7 +2243,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "close",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2380,7 +2484,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Lifestyle",
+        "category": "Other",
         "name": "cogedim",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2547,7 +2651,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "coupler-io",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2625,7 +2729,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "cube",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2668,7 +2772,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "daloopa",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2811,7 +2915,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "deepnote",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2850,7 +2954,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "demandbase",
         "policy": {
           "authentication": "[REDACTED]",
@@ -2897,7 +3001,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "dnb-finance-analytics",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3098,7 +3202,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "dow-jones-factiva",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3227,7 +3331,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "factset",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3266,7 +3370,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Design",
+        "category": "Creativity",
         "name": "fal",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3319,7 +3423,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Design",
+        "category": "Creativity",
         "name": "figma",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3358,7 +3462,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Lifestyle",
+        "category": "Travel",
         "name": "finn",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3397,7 +3501,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "fireflies",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3436,7 +3540,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "fiscal-ai",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3475,7 +3579,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "fyxer",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3625,7 +3729,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "gmail",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3766,7 +3870,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "govtribe",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3805,7 +3909,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "granola",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3883,7 +3987,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Business & Operations",
         "name": "hebbia",
         "policy": {
           "authentication": "[REDACTED]",
@@ -3973,7 +4077,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Design",
+        "category": "Creativity",
         "name": "heygen",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4143,7 +4247,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "hubspot",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4241,7 +4345,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Design",
+        "category": "Creativity",
         "name": "hyperframes",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4283,7 +4387,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "intercom",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4359,7 +4463,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Finance",
         "name": "keybid-puls",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4406,7 +4510,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "life-science-research",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4523,7 +4627,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "lseg",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4699,7 +4803,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "metabase",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4776,7 +4880,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "midpage",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4829,7 +4933,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "mixpanel",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4876,7 +4980,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "mixpanel-headless",
         "policy": {
           "authentication": "[REDACTED]",
@@ -4971,7 +5075,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "moody-s",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5025,7 +5129,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "morningstar",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5064,7 +5168,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "motherduck",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5103,7 +5207,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "mt-newswires",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5142,7 +5246,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Lifestyle",
+        "category": "Other",
         "name": "myregistry-com",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5331,7 +5435,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "ngs-analysis",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5469,7 +5573,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "omni-analytics",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5572,7 +5676,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "otter-ai",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5674,7 +5778,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "outlook-email",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5713,7 +5817,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "outreach",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5752,7 +5856,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "particl-market-research",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5791,7 +5895,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Design",
+        "category": "Creativity",
         "name": "picsart",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5830,7 +5934,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "pipedrive",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5869,7 +5973,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "pitchbook",
         "policy": {
           "authentication": "[REDACTED]",
@@ -5956,7 +6060,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "policynote",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6009,7 +6113,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "posthog",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6094,7 +6198,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "quartr",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6133,7 +6237,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Finance",
         "name": "quickbooks",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6256,7 +6360,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Finance",
         "name": "razorpay",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6295,7 +6399,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "read-ai",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6334,7 +6438,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "readwise",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6379,7 +6483,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Design",
+        "category": "Creativity",
         "name": "remotion",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6583,7 +6687,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "s-p",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6622,7 +6726,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "scite",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6784,7 +6888,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Lifestyle",
+        "category": "Finance",
         "name": "setu-bharat-connect-billpay",
         "policy": {
           "authentication": "[REDACTED]",
@@ -6925,7 +7029,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Design",
+        "category": "Creativity",
         "name": "shutterstock",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7003,7 +7107,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "similarweb",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7093,7 +7197,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "slack",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7171,7 +7275,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "streak",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7210,7 +7314,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Finance",
         "name": "stripe",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7314,7 +7418,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "superhuman",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7403,7 +7507,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "taxdown",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7454,7 +7558,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "teams",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7625,7 +7729,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "third-bridge",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7664,7 +7768,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "thoughtspot",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7703,7 +7807,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Finance",
         "name": "tinman-ai",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7956,7 +8060,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Lifestyle",
+        "category": "Travel",
         "name": "weatherpromise",
         "policy": {
           "authentication": "[REDACTED]",
@@ -7995,7 +8099,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Data & Analytics",
         "name": "windsor-ai",
         "policy": {
           "authentication": "[REDACTED]",
@@ -8127,7 +8231,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "zoho",
         "policy": {
           "authentication": "[REDACTED]",
@@ -8180,7 +8284,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Communication",
         "name": "zoom",
         "policy": {
           "authentication": "[REDACTED]",
@@ -8219,7 +8323,7 @@
       },
       "discovery": {},
       "marketplace": {
-        "category": "Productivity",
+        "category": "Business & Operations",
         "name": "zoominfo",
         "policy": {
           "authentication": "[REDACTED]",
@@ -8266,7 +8370,7 @@
       "app_manifest": {},
       "discovery": {},
       "marketplace": {
-        "category": "Research",
+        "category": "Education & Research",
         "name": "zotero",
         "policy": {
           "authentication": "[REDACTED]",
@@ -10507,17 +10611,17 @@
         "mcpServers": {
           "chrome-devtools": {
             "args": [
-              "chrome-devtools-mcp@1.1.1"
+              "chrome-devtools-mcp@1.2.0"
             ],
             "command": "npx"
           }
         },
         "name": "chrome-devtools-mcp",
-        "version": "1.1.1"
+        "version": "1.2.0"
       },
       "mcp_server": {
         "args": [
-          "chrome-devtools-mcp@1.1.1"
+          "chrome-devtools-mcp@1.2.0"
         ],
         "command": "npx"
       }
@@ -13011,7 +13115,7 @@
         "contextFileName": "GEMINI.md",
         "description": "\u901a\u7528\u5171\u8bc6\u5f0f\u7814\u53d1 skills \u5e93\uff1a\u504f\u7f6e\u72ec\u7acb\u7684\u591a\u89d2\u5ea6\u5171\u8bc6\u6784\u5efa\u5f15\u64ce",
         "name": "consensus-rnd",
-        "version": "1.0.0-beta.11"
+        "version": "1.0.0-beta.13"
       }
     },
     "name": "consensus-rnd",
@@ -15513,47 +15617,6 @@
         "ok": false,
         "reason": "local_or_unconfigured_mcp_discovery_deferred"
       },
-      "duplicates": [
-        {
-          "capabilities": [],
-          "description": "Gemini CLI extension for Google Kubernetes Engine.",
-          "evidence": [],
-          "metadata": {
-            "discovery": {
-              "ok": false,
-              "reason": "local_or_unconfigured_mcp_discovery_deferred"
-            },
-            "excludeTools": null,
-            "includeTools": null,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Gemini CLI extension for Google Kubernetes Engine.",
-              "mcpServers": {
-                "gke": {
-                  "command": "${extensionPath}${/}gke-mcp"
-                }
-              },
-              "name": "gke-mcp",
-              "version": "0.13.0"
-            },
-            "mcp_server": {
-              "command": "${extensionPath}${/}gke-mcp"
-            }
-          },
-          "name": "gke-mcp: gke",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "gke-mcp-gke",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/GoogleCloudPlatform/gke-mcp",
-            "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
-          ],
-          "transport": "stdio",
-          "write_confidence": "unknown"
-        }
-      ],
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
@@ -15565,7 +15628,7 @@
           }
         },
         "name": "gke-mcp",
-        "version": "0.11.1"
+        "version": "0.13.0"
       },
       "mcp_server": {
         "command": "${extensionPath}${/}gke-mcp"
@@ -15578,9 +15641,7 @@
     "server_id": "gke-mcp-gke",
     "source_urls": [
       "https://geminicli.com/extensions/",
-      "https://github.com/AravG7/gke-mcp",
       "https://github.com/GoogleCloudPlatform/gke-mcp",
-      "https://raw.githubusercontent.com/AravG7/gke-mcp/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/GoogleCloudPlatform/gke-mcp/HEAD/gemini-extension.json"
     ],
     "transport": "stdio",
@@ -15661,6 +15722,60 @@
       "excludeTools": null,
       "includeTools": null,
       "manifest": {
+        "contextFileName": "./plugin/GEMINI.md",
+        "mcpServers": {
+          "db-context-engineering": {
+            "args": [
+              "google-cloud-db-context-engineering@0.5.1"
+            ],
+            "command": "uvx"
+          },
+          "toolbox": {
+            "args": [
+              "-y",
+              "@toolbox-sdk/server",
+              "--config",
+              "autoctx/tools.yaml",
+              "--stdio"
+            ],
+            "command": "npx"
+          }
+        },
+        "name": "google-cloud-db-context-engineering",
+        "version": "0.5.1"
+      },
+      "mcp_server": {
+        "args": [
+          "google-cloud-db-context-engineering@0.5.1"
+        ],
+        "command": "uvx"
+      }
+    },
+    "name": "google-cloud-db-context-engineering: db-context-engineering",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "google-cloud-db-context-engineering-db-context-engineering",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/GoogleCloudPlatform/db-context-enrichment",
+      "https://raw.githubusercontent.com/GoogleCloudPlatform/db-context-enrichment/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
         "contextFileName": "./GEMINI.md",
         "mcpServers": {
           "mcp_db_context_engineering": {
@@ -15691,6 +15806,64 @@
     "provider": "gemini",
     "remote_url": "",
     "server_id": "google-cloud-db-context-engineering-mcp-db-context-engineering",
+    "source_urls": [
+      "https://geminicli.com/extensions/",
+      "https://github.com/GoogleCloudPlatform/db-context-enrichment",
+      "https://raw.githubusercontent.com/GoogleCloudPlatform/db-context-enrichment/HEAD/gemini-extension.json"
+    ],
+    "transport": "stdio",
+    "write_confidence": "unknown"
+  },
+  {
+    "capabilities": [],
+    "description": "",
+    "evidence": [],
+    "metadata": {
+      "discovery": {
+        "ok": false,
+        "reason": "local_or_unconfigured_mcp_discovery_deferred"
+      },
+      "excludeTools": null,
+      "includeTools": null,
+      "manifest": {
+        "contextFileName": "./plugin/GEMINI.md",
+        "mcpServers": {
+          "db-context-engineering": {
+            "args": [
+              "google-cloud-db-context-engineering@0.5.1"
+            ],
+            "command": "uvx"
+          },
+          "toolbox": {
+            "args": [
+              "-y",
+              "@toolbox-sdk/server",
+              "--config",
+              "autoctx/tools.yaml",
+              "--stdio"
+            ],
+            "command": "npx"
+          }
+        },
+        "name": "google-cloud-db-context-engineering",
+        "version": "0.5.1"
+      },
+      "mcp_server": {
+        "args": [
+          "-y",
+          "@toolbox-sdk/server",
+          "--config",
+          "autoctx/tools.yaml",
+          "--stdio"
+        ],
+        "command": "npx"
+      }
+    },
+    "name": "google-cloud-db-context-engineering: toolbox",
+    "native_surface": "extension",
+    "provider": "gemini",
+    "remote_url": "",
+    "server_id": "google-cloud-db-context-engineering-toolbox",
     "source_urls": [
       "https://geminicli.com/extensions/",
       "https://github.com/GoogleCloudPlatform/db-context-enrichment",
@@ -18923,7 +19096,7 @@
           }
         },
         "name": "mcp-server-kubernetes",
-        "version": "3.8.0"
+        "version": "3.9.0"
       },
       "mcp_server": {
         "args": [
@@ -19132,7 +19305,7 @@
         "author": "[REDACTED]",
         "description": "Keep your coding agent up to date with the latest web best practices",
         "name": "modern-web-guidance",
-        "version": "0.0.170"
+        "version": "0.0.172"
       }
     },
     "name": "modern-web-guidance",
@@ -19817,7 +19990,7 @@
         "contextFileName": "CLAUDE.md",
         "description": "AI application security \u2014 generate an AI Bill of Materials (AI-SBOM), run static analysis, behavioral validation, and adversarial red-team testing for AI agents and LLM-powered applications. Slash-command exposure is host-dependent and not claimed by this manifest.",
         "name": "nuguard",
-        "version": "0.5.10"
+        "version": "0.6.2"
       }
     },
     "name": "nuguard",
@@ -21180,7 +21353,7 @@
             "name": "PostHog MCP URL"
           }
         ],
-        "version": "1.0.26"
+        "version": "1.0.28"
       },
       "mcp_server": {
         "args": [
@@ -23148,7 +23321,7 @@
             "sensitive": false
           }
         ],
-        "version": "2026.06.07.1"
+        "version": "2026.06.07.2"
       },
       "mcp_server": {
         "httpUrl": "https://mcp.${SIGNOZ_REGION}.signoz.cloud/mcp",
@@ -23716,32 +23889,6 @@
               "contextFileName": "GEMINI.md",
               "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
               "name": "superpowers",
-              "version": "0.2.0"
-            }
-          },
-          "name": "superpowers",
-          "native_surface": "extension",
-          "provider": "gemini",
-          "remote_url": "",
-          "server_id": "superpowers",
-          "source_urls": [
-            "https://geminicli.com/extensions/",
-            "https://github.com/FuZhiyu/superRA",
-            "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json"
-          ],
-          "transport": "catalog",
-          "write_confidence": "unknown"
-        },
-        {
-          "capabilities": [],
-          "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-          "evidence": [],
-          "metadata": {
-            "gallery_text_seen": true,
-            "manifest": {
-              "contextFileName": "GEMINI.md",
-              "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-              "name": "superpowers",
               "version": "5.1.0"
             }
           },
@@ -23816,7 +23963,7 @@
         "contextFileName": "GEMINI.md",
         "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
         "name": "superpowers",
-        "version": "5.0.7"
+        "version": "0.2.0"
       }
     },
     "name": "superpowers",
@@ -23826,12 +23973,10 @@
     "server_id": "superpowers",
     "source_urls": [
       "https://geminicli.com/extensions/",
-      "https://github.com/DavidEran/Claude-Skills",
       "https://github.com/FuZhiyu/superRA",
       "https://github.com/GIT-PHOENIX-HUB/Phoenix-powers",
       "https://github.com/QtImM/mySuperPower",
       "https://github.com/Quon/superpowers",
-      "https://raw.githubusercontent.com/DavidEran/Claude-Skills/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/FuZhiyu/superRA/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/GIT-PHOENIX-HUB/Phoenix-powers/HEAD/gemini-extension.json",
       "https://raw.githubusercontent.com/QtImM/mySuperPower/HEAD/gemini-extension.json",

@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "HighLevel gives agencies a unified CRM, automation, and client communication platform.",
+  "homepage": "https://www.gohighlevel.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Give me overview of how things have been"
+    ],
+    "developerName": "HighLevel",
+    "displayName": "HighLevel",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "HighLevel gives agencies a unified CRM, automation, and client communication platform. This connector lets you securely bring HighLevel data\u2014contacts, opportunities, appointments, conversations and more\u2014into GPT, turning raw records into clear summaries, next-step recommendations, and ready-to-use content. Analyze pipelines, qualify leads, and prepare follow-ups in seconds without leaving the chat.",
+    "privacyPolicyURL": "https://www.gohighlevel.com/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "HighLevel gives agencies a unified CRM, automation, and client communication platform.",
+    "termsOfServiceURL": "https://www.gohighlevel.com/terms-of-service",
+    "websiteURL": "https://www.gohighlevel.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "highlevel",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.2"
+}
