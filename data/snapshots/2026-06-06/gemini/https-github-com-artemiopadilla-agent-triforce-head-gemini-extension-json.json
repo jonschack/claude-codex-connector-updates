@@ -1,6 +1,0 @@
-{
-  "name": "agent-triforce",
-  "description": "PM/Dev/QA multi-agent development system with checklist methodology",
-  "version": "0.9.0",
-  "contextFileName": "GEMINI.md"
-}

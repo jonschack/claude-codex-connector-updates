@@ -1,7 +1,0 @@
-{
-  "name": "humanizer",
-  "version": "1.0.0",
-  "description": "Transforms AI-generated text into natural, human-sounding prose. Based on Wikipedia guidelines. Adapted from the humanizer project by blader.",
-  "instructions": "This extension includes the 'humanizer' skill and a slash command. When activated, it will audit and rewrite text to remove 'AI fingerprints' like verbose, sycophantic, and formulaic patterns.",
-  "skills": ["skills/humanizer"]
-}

@@ -1,5 +1,0 @@
-{
-  "name": "gemini-security-skills",
-  "version": "2.0.0",
-  "description": "A Gemini CLI extension that bundles 24 Agent Skills for offensive security, defensive operations, cloud and Kubernetes hardening, detection engineering, threat intel fusion, AI red-teaming, DFIR, bug bounty, Web3 audit, OSINT, API security, purple team automation, programming, reverse engineering, prompt enhancement, and multilingual work."
-}

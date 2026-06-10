@@ -1,8 +1,0 @@
-{
-  "name": "claude-sustain",
-  "version": "0.5.0",
-  "description": "Token-efficiency rules and skill routing for Gemini CLI; defers to AGENTS.md for the canonical rule set.",
-  "entrypoint": "GEMINI.md",
-  "compatibleAgents": ["gemini-cli"],
-  "license": "MIT"
-}

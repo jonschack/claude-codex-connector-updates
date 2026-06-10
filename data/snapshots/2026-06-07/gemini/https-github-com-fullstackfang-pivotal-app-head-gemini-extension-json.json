@@ -1,6 +1,0 @@
-{
-  "name": "career-ops",
-  "description": "AI job search command center: evaluate offers, generate CVs, scan portals, track applications.",
-  "version": "1.0.0",
-  "contextFileName": "GEMINI.md"
-}

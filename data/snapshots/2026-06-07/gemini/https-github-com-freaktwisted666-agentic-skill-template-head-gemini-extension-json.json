@@ -1,6 +1,0 @@
-{
-  "name": "agentic-skill-template",
-  "version": "1.0.0",
-  "description": "An Agentic Ready skill template packaging a PRD",
-  "contextFileName": "GEMINI.md"
-}

@@ -1,6 +1,0 @@
-{
-  "name": "coder-workflow",
-  "description": "Orchestrator-driven coding workflow with graph-first codebase understanding.",
-  "version": "0.3.0",
-  "contextFileName": "CLAUDE.md"
-}

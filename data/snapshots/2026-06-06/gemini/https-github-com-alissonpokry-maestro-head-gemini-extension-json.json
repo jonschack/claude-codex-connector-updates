@@ -1,6 +1,0 @@
-{
-    "name":  "maestro",
-    "description":  "Route tasks to project skill bundles with /maestro, refresh bundle keywords with /maestro-fetch, and change the saved bundle folder with /maestro-set.",
-    "version":  "0.1.0",
-    "contextFileName":  "GEMINI.md"
-}

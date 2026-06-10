@@ -1,7 +1,0 @@
-{
-  "name": "taxonomy-architect",
-  "version": "0.1.0",
-  "description": "A multi-agent pipeline for creating strict, logic-based taxonomies (Visual, Functional, etc.)",
-  "publisher": "Kwentar",
-  "license": "MIT"
-}

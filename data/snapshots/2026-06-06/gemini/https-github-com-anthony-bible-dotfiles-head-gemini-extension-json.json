@@ -1,6 +1,0 @@
-{
-  "name": "anthony-dotfiles",
-  "version": "1.0.4",
-  "description": "Anthony's development environment extension, including custom TDD agents and Deadpool mode.",
-  "contextFileName": "GEMINI.md"
-}
