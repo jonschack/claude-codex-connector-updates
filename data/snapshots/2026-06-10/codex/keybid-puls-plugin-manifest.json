@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Unlock the profitability of short-term rental investments with our ROI Calculator app, tailored for platfor...",
+  "homepage": "https://keybid.eu",
+  "interface": {
+    "capabilities": [],
+    "category": "Finance",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Is this apartment worth buying for short-term"
+    ],
+    "developerName": "KeyBid",
+    "displayName": "KeyBid Puls",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Unlock the profitability of short-term rental investments with our ROI Calculator app, tailored for platforms like Airbnb, Booking.com, and VRBO. Users can paste property URLs from sites such as idealista.com, imobiliare.ro, storia.ro, and spitogatos.gr (with more integrations on the way), or upload screenshots from other real estate platforms. The app analyzes the data to deliver instant revenue projections, detailed reports, and a concise conclusion on whether the property is worth purchasing for short-term rentals. Covering 56 countries and over 191 cities, it supports multiple languages including English, Romanian, Spanish, and Greek for seamless global use. Ideal for property owners and investors seeking data-driven insights to evaluate vacation rental opportunities. Explore more at https://keybid.eu/keybid-puls.",
+    "privacyPolicyURL": "https://keybid.eu/confidentialitate",
+    "screenshots": [],
+    "shortDescription": "Unlock the profitability of short-term rental investments with our ROI Calculator app, tailored for platfor...",
+    "termsOfServiceURL": "https://keybid.eu/termeni",
+    "websiteURL": "https://keybid.eu"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "keybid-puls",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.2"
+}

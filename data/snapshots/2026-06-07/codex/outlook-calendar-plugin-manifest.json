@@ -1,0 +1,31 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Connect Outlook Calendar for scheduling, daily briefs, event prep, and safe meeting changes.",
+  "homepage": "https://www.microsoft.com/en-us/microsoft-365/outlook/calendar-app",
+  "interface": {
+    "brandColor": "#0078D4",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": "Summarize my day, compare availability, explain Outlook status, and draft the right event update",
+    "developerName": "OpenAI",
+    "displayName": "Outlook Calendar",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Use Outlook Calendar to summarize a day, compare availability, prepare for meetings, explain Outlook status semantics, and schedule, reschedule, or cancel events through the connected Microsoft Outlook app.",
+    "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
+    "screenshots": [],
+    "shortDescription": "Manage Outlook schedules and meeting changes",
+    "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
+    "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/outlook/calendar-app"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "outlook-calendar",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "0.1.1"
+}

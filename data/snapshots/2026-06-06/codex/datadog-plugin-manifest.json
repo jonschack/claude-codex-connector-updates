@@ -1,0 +1,34 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Investigate Datadog telemetry and workflows from Codex",
+  "homepage": "https://www.datadoghq.com/",
+  "interface": {
+    "brandColor": "#632CA6",
+    "capabilities": [
+      "Interactive",
+      "Writes"
+    ],
+    "category": "Developer Tools",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "What are the top errors in my services? Include links and widgets.",
+      "What monitors are alerting right now for my team's services?",
+      "How does the p99 latency for services with the most traffic compare to what we usually see? Provide evidence"
+    ],
+    "developerName": "Datadog",
+    "displayName": "Datadog (Preview)",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Analyze, investigate, and act on your Datadog telemetry directly from Codex using natural language. Ask questions about your production applications, identify, visualize, and remediate issues in your critical services. Run agentic loops to ensure you continue to maintain good observability and service management posture.",
+    "privacyPolicyURL": "https://www.datadoghq.com/legal/privacy/",
+    "screenshots": [],
+    "shortDescription": "Investigate logs, metrics, traces, and incidents",
+    "termsOfServiceURL": "https://www.datadoghq.com/legal/terms/",
+    "websiteURL": "https://www.datadoghq.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "Apache-2.0",
+  "name": "datadog",
+  "repository": "https://github.com/openai/plugins",
+  "version": "0.1.1"
+}

@@ -1,0 +1,33 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Work with Outlook Email using the configured Microsoft Outlook app connector.",
+  "homepage": "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook",
+  "interface": {
+    "brandColor": "#0078D4",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Triage inbox, summarize thread, or draft reply or forward"
+    ],
+    "developerName": "OpenAI",
+    "displayName": "Outlook Email",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Use Outlook Email to triage inboxes, summarize threads, extract actions, and draft replies or forwards through the connected Microsoft Outlook app.",
+    "privacyPolicyURL": "https://www.microsoft.com/en-us/privacy/privacystatement",
+    "screenshots": [],
+    "shortDescription": "Triage Outlook inboxes and draft replies",
+    "termsOfServiceURL": "https://www.microsoft.com/en-us/servicesagreement/",
+    "websiteURL": "https://www.microsoft.com/en-us/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "outlook-email",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "0.1.1"
+}

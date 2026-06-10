@@ -1,0 +1,15 @@
+{
+  "name": "sast-mcp-server",
+  "version": "0.3.0",
+  "description": "SAST vulnerability scanner for AI agents — supports 7 scanners including Bandit, njsscan, Bearer, Semgrep, Trivy, CodeQL, and Checkov",
+  "mcpServers": {
+    "sast": {
+      "command": "uvx",
+      "args": ["sast-mcp-server"],
+      "env": {
+        "SAST_MCP_TIMEOUT": "300",
+        "SAST_MCP_LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations.",
+  "homepage": "https://www.hubspot.com/",
+  "interface": {
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Review pipeline health and flag risky open deals",
+      "Prepare an account brief for a customer meeting",
+      "Find CRM records with stale or missing data"
+    ],
+    "developerName": "HubSpot",
+    "displayName": "HubSpot",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations. Read from and write to deals, contacts, companies, tickets, engagements, and other objects you have permission to access. Prepare reports, update deal stages, log calls and emails, create tasks, or review pipeline details before meetings. Use it for quick updates in chat or comprehensive CRM management, all grounded in your actual HubSpot data.",
+    "privacyPolicyURL": "https://legal.hubspot.com/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Work with your HubSpot data to analyze patterns, create and update records, and manage your CRM operations.",
+    "termsOfServiceURL": "https://legal.hubspot.com/terms-of-service",
+    "websiteURL": "https://www.hubspot.com/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "hubspot",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "2.0.1"
+}

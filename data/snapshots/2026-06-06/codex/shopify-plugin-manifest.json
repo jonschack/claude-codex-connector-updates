@@ -1,0 +1,35 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Search Shopify docs, generate and validate GraphQL, Liquid, and UI extension code.",
+  "homepage": "https://github.com/Shopify/Shopify-AI-Toolkit",
+  "interface": {
+    "brandColor": "#008060",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "category": "Developer Tools",
+    "composerIcon": "./assets/shopify_glyph.svg",
+    "defaultPrompt": [
+      "Build a Shopify app or theme with current docs.",
+      "Generate and validate a Shopify GraphQL operation.",
+      "Use Shopify CLI to run or troubleshoot a store workflow."
+    ],
+    "developerName": "Shopify",
+    "displayName": "Shopify",
+    "logo": "./assets/shopify_glyph.svg",
+    "longDescription": "Shopify developer tools for searching Shopify documentation, generating and validating GraphQL, Liquid, Hydrogen, Functions, UI extension, and CLI workflows. Skill scripts send usage telemetry to shopify.dev by default; set OPT_OUT_INSTRUMENTATION=true to disable.",
+    "privacyPolicyURL": "https://www.shopify.com/legal/privacy",
+    "screenshots": [],
+    "shortDescription": "Build Shopify apps, themes, storefronts, and APIs",
+    "termsOfServiceURL": "https://www.shopify.com/legal/terms",
+    "websiteURL": "https://shopify.dev/"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "shopify",
+  "repository": "https://github.com/Shopify/Shopify-AI-Toolkit",
+  "skills": "./skills/",
+  "version": "1.3.1"
+}

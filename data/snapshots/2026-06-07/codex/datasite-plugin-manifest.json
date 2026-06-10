@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Deal room documents, diligence materials, and Q&A workflows",
+  "homepage": "https://www.datasite.com",
+  "interface": {
+    "brandColor": "#F89820",
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Search Datasite for documents related to customer contracts and summarize key diligence issues.",
+      "Find recently uploaded files in this Datasite project and flag missing diligence items.",
+      "Summarize open Q&A items assigned to me in Datasite with owners and next steps."
+    ],
+    "developerName": "Datasite",
+    "displayName": "Datasite",
+    "logo": "./assets/logo.png",
+    "longDescription": "Deal room documents, diligence materials, and Q&A workflows",
+    "screenshots": [],
+    "shortDescription": "Deal room documents, diligence materials, and Q&A workflows",
+    "websiteURL": "https://www.datasite.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "datasite",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.1"
+}

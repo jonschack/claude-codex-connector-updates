@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex.",
+  "homepage": "https://www.responsive.io",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Pull the relevant proposal content from Responsive"
+    ],
+    "developerName": "RFPIO Inc. (d/b/a Responsive)",
+    "displayName": "Responsive",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex. Search your Content Library and generate responses so you can move faster with trusted information and without switching tools.",
+    "privacyPolicyURL": "https://www.responsive.io/legal/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "The Responsive App makes it easy to work with your organization\u2019s data inside Codex.",
+    "termsOfServiceURL": "https://www.responsive.io/legal",
+    "websiteURL": "https://www.responsive.io"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "responsive",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.1"
+}

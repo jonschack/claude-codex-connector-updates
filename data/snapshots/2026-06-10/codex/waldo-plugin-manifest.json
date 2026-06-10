@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Waldo is an AI-powered strategy platform for agencies and brands.",
+  "homepage": "https://www.waldo.fyi",
+  "interface": {
+    "capabilities": [],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Check the relevant mobile test coverage in Waldo"
+    ],
+    "developerName": "Curiosities, Inc.",
+    "displayName": "Waldo",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Waldo is an AI-powered strategy platform for agencies and brands. Run strategy agent, explore collected signals \u2014 paid ads, brand mentions, audience conversations, trending topics, and more \u2014 and retrieve data across your team's brand spaces.",
+    "privacyPolicyURL": "https://www.waldo.fyi/privacy",
+    "screenshots": [],
+    "shortDescription": "Waldo is an AI-powered strategy platform for agencies and brands.",
+    "termsOfServiceURL": "https://www.waldo.fyi/tos",
+    "websiteURL": "https://www.waldo.fyi"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "waldo",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.2"
+}

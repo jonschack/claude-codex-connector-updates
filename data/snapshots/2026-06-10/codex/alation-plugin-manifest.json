@@ -1,0 +1,29 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Data catalog search, lineage, governance, and documentation from Alation",
+  "homepage": "https://www.alation.com",
+  "interface": {
+    "brandColor": "#FF7A1A",
+    "capabilities": [],
+    "category": "Data & Analytics",
+    "composerIcon": "./assets/logo.webp",
+    "defaultPrompt": [
+      "Search Alation for data assets related to this metric and summarize owners and definitions.",
+      "Find certified Alation tables for this analysis and explain lineage, quality, and caveats.",
+      "Review Alation documentation for this dataset and draft a query-ready data brief."
+    ],
+    "developerName": "Alation",
+    "displayName": "Alation",
+    "logo": "./assets/logo.webp",
+    "longDescription": "Data catalog search, lineage, governance, and documentation from Alation",
+    "screenshots": [],
+    "shortDescription": "Data catalog search, lineage, governance, and documentation",
+    "websiteURL": "https://www.alation.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "alation",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.2"
+}

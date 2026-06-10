@@ -1,0 +1,28 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.",
+  "homepage": "https://brex.com",
+  "interface": {
+    "capabilities": [],
+    "category": "Finance",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "How much did I spend on Delta last year"
+    ],
+    "developerName": "Brex Inc.",
+    "displayName": "Brex",
+    "logo": "./assets/app-icon.png",
+    "longDescription": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.\n\nFor finance teams: Analyze spend, detect anomalies, and run custom queries and reports instantly to accelerate decisions and do more with less.\n\nFor employees: See how much you can spend, ask policy questions, check reimbursement status, manage travel, and more right in Codex.\n\nAccess is role-aware by default: employees see only what applies to them, while admins retain full visibility and control.",
+    "privacyPolicyURL": "https://www.brex.com/legal/privacy",
+    "screenshots": [],
+    "shortDescription": "Connect Brex to Codex and review your company finances through natural conversation \u2014 at Codex speed.",
+    "termsOfServiceURL": "https://www.brex.com/legal/platform-agreement",
+    "websiteURL": "https://brex.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "brex",
+  "repository": "https://github.com/openai/plugins",
+  "version": "1.0.2"
+}

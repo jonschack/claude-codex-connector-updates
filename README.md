@@ -1,18 +1,16 @@
-# MCP Write-Capability Report: 2026-06-09
+# MCP Write-Capability Report: 2026-06-10
 
 ## Write Alerts
 
-| Event | Provider | Server | Tool | Confidence | Summary |
-| --- | --- | --- | --- | --- | --- |
-| new_write_server | codex | `catalyst-by-zoho` |  | high | New write-capable codex plugin: Catalyst by Zoho |
+No high- or medium-confidence write-capability changes were detected today.
 
 ## Coverage
 
-- Normalized servers: 408
-- Write-capable servers: 82
+- Normalized servers: 405
+- Write-capable servers: 81
 - claude: 24 servers, 11 write-capable
-- codex: 174 servers, 63 write-capable
-- gemini: 201 servers, 8 write-capable
+- codex: 173 servers, 62 write-capable
+- gemini: 199 servers, 8 write-capable
 - grok: 9 servers, 0 write-capable
 
 ## Crawl Issues

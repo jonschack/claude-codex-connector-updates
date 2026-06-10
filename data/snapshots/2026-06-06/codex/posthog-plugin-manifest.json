@@ -1,0 +1,39 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Query product analytics and manage feature flags, experiments, and errors in PostHog.",
+  "homepage": "https://posthog.com/docs",
+  "interface": {
+    "brandColor": "#1D4AFF",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "category": "Productivity",
+    "composerIcon": "./assets/app-icon.png",
+    "defaultPrompt": [
+      "Show me signups this month",
+      "Create a feature flag for the new checkout",
+      "Why are users dropping off in onboarding?"
+    ],
+    "developerName": "PostHog",
+    "displayName": "PostHog",
+    "logo": "./assets/logo.png",
+    "longDescription": "Bring PostHog into ChatGPT and Codex. Ask product-analytics questions in plain language and run HogQL, create and manage feature flags, launch and read experiments, triage error-tracking issues, explore session replays and surveys, inspect LLM analytics, and build dashboards \u2014 all grounded in your real PostHog data. With the PostHog app connected, the assistant reasons about your product alongside your code and decisions, and discovers the right PostHog tools and skills at runtime instead of relying on stale knowledge.",
+    "privacyPolicyURL": "https://posthog.com/privacy",
+    "screenshots": [
+      "./assets/screenshot-1.png",
+      "./assets/screenshot-2.png"
+    ],
+    "shortDescription": "Query analytics, flags, experiments, and errors",
+    "termsOfServiceURL": "https://posthog.com/terms",
+    "websiteURL": "https://posthog.com"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "posthog",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "0.1.1"
+}

@@ -1,0 +1,32 @@
+{
+  "apps": "./.app.json",
+  "author": "[REDACTED]",
+  "description": "Private capital portfolio monitoring, fund metrics, and company updates",
+  "homepage": "https://www.chronograph.pe",
+  "interface": {
+    "brandColor": "#414B4B",
+    "capabilities": [],
+    "category": "Financial Markets",
+    "composerIcon": "./assets/logo.png",
+    "defaultPrompt": [
+      "Find Chronograph portfolio updates and summarize key performance changes.",
+      "Pull Chronograph fund metrics for this quarter and highlight risks.",
+      "Compare Chronograph portfolio KPIs and flag outliers."
+    ],
+    "developerName": "Chronograph",
+    "displayName": "Chronograph",
+    "logo": "./assets/logo.png",
+    "longDescription": "Private capital portfolio monitoring, fund metrics, and company updates",
+    "privacyPolicyURL": "https://www.chronograph.pe/privacy-policy",
+    "screenshots": [],
+    "shortDescription": "Private capital portfolio monitoring, fund metrics, and company updates",
+    "termsOfServiceURL": "https://www.chronograph.pe/terms-of-service",
+    "websiteURL": "https://www.chronograph.pe"
+  },
+  "keywords": "[REDACTED]",
+  "license": "MIT",
+  "name": "chronograph",
+  "repository": "https://github.com/openai/plugins",
+  "skills": "./skills/",
+  "version": "1.0.1"
+}

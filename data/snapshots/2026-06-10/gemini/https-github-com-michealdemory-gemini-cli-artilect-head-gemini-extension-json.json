@@ -1,0 +1,12 @@
+{
+  "name": "master-artilect",
+  "version": "1.0.0",
+  "description": "Expert engineering persona with access to the 'Master Artilect' reference library.",
+  "contextFiles": ["GEMINI.md"],
+  "mcpServers": {
+    "reference-library": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "./knowledge"]
+    }
+  }
+}
