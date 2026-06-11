@@ -7,3 +7,6 @@ __pycache__/
 tmp/
 data/snapshots/*/registries/
 
+
+# Firecrawl research scrape cache (ad-hoc, not source)
+.firecrawl/
